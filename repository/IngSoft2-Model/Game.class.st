@@ -66,6 +66,14 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 		ifFalse: [ self lostBattle: aSpaceShip2 ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> can: aSpaceShipID play: aCard [
+
+	(aSpaceShipID = nextSpaceShipToMove and: aCard type = 'Instantaneous')
+		ifFalse: [
+		Error signal: 'The ship cannot play this card if its not its turn.' ]
+]
+
 { #category : 'whats left of race positions' }
 Game >> create: aNumberOfSpaceShips [
 
@@ -274,7 +282,9 @@ Game >> use: aCard on: aSpaceShipID [
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-
+		
+	self can: aSpaceShipID play: aCard.
 
 	(spaceShipActiveCards at: aSpaceShipID) add: (aShip has: aCard)
+
 ]

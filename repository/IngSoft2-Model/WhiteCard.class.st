@@ -8,11 +8,7 @@ Class {
 { #category : 'operations' }
 WhiteCard class >> create [
 
-	^self new initialize
-]
-
-{ #category : 'class initialization' }
-WhiteCard class >> initialize [
+	^self new initializes
 ]
 
 { #category : 'as yet unclassified' }
@@ -27,7 +23,6 @@ WhiteCard >> effectAll [
 	^ Position at: 0 withLaps: 0
 ]
 
-{ #category : 'activation' }
-WhiteCard >> initialize [
-
+{ #category : 'as yet unclassified' }
+WhiteCard >> initializes [
 ]

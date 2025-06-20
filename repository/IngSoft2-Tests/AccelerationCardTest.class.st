@@ -17,6 +17,32 @@ AccelerationCardTest >> should: anErrorBlock raise: anErrorClass withMessageText
 ]
 
 { #category : 'tests' }
+AccelerationCardTest >> testWhenASpaceShipThatIsNotItsTurnToMoveUsesAInmediateCardThenItNotifiesTheShip [
+
+	| aGame aBoard spaceShipID |
+	spaceShipID := 2.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (AccelerationCard with: 1).
+					           WhiteCard create.
+					           (AccelerationCard with: 1) })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: (RiggedDice new initializeWith: { 5 })
+		         wonAfter: 1.
+
+	self
+		should: [ aGame use: (AccelerationCard with: 1) on: spaceShipID ]
+		raise: Error
+		withMessageText:
+		'The ship cannot play this card if its not its turn.'
+]
+
+{ #category : 'tests' }
 AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsTossIncrementsInOne [
 
 	| aGame aBoard spaceShipID |

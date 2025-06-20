@@ -35,3 +35,9 @@ AccelerationCard >> initializeWith: aTossIncrement [
 	increment := aTossIncrement.
 	type:= 'Instantaneous'.
 ]
+
+{ #category : 'accessing' }
+AccelerationCard >> type [
+
+	^ type
+]
