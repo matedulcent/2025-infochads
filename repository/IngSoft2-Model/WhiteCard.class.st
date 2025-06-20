@@ -10,3 +10,9 @@ WhiteCard >> effect [
 
 	^ Position at: 0 withLaps: 0
 ]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> effectAll [
+
+	^ Position at: 0 withLaps: 0
+]
