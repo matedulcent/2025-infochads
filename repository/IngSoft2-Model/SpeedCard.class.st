@@ -23,7 +23,7 @@ SpeedCard class >> with: aTossIncrement [
 ]
 
 { #category : 'as yet unclassified' }
-SpeedCard >> applyEffect [
+SpeedCard >> effect [
 
 	^ Position at: increment withLaps: 0
 ]

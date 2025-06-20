@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-WhiteCard >> applyEffect [
+WhiteCard >> effect [
 
 	^ Position at: 0 withLaps: 0
 ]

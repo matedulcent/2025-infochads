@@ -55,10 +55,11 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 { #category : 'as yet unclassified' }
 Game >> applyCardEffectOn: aSpaceShip [
 
-	spaceShipPositions
-		at: aSpaceShip id
-		put: ((spaceShipPositions at: aSpaceShip id) sumTo:
-				 (spaceShipCards at: aSpaceShip id) first applyEffect)
+	(spaceShipCards at: aSpaceShip id) do: [ :card |
+		spaceShipPositions
+			at: aSpaceShip id
+			put:
+			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ]
 ]
 
 { #category : 'as yet unclassified' }

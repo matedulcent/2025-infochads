@@ -17,6 +17,27 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 ]
 
 { #category : 'tests' }
+SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecDivisionAnd10JumpsThenItMoves10JumpsOverThePlusOne [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 10 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 100. 0. 0. 50. 1. 10. 6 }.
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: aConfigureDiceSet.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 2.
+	aGame use: (SpeedCard with: 1) on: 1.
+	aGame start.
+	self assert: (aGame positionOf: 1) equals: 22
+]
+
+{ #category : 'tests' }
 SpeedCardTest >> testWhenASpaceShipUsesASpeedCardThenItsTossIncrementsInOne [
 
 	| aGame aBoard spaceShipID |
