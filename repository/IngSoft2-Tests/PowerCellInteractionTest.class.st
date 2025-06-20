@@ -37,6 +37,7 @@ PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivi
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -64,6 +65,7 @@ PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositions
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -87,6 +89,7 @@ PowerCellInteractionTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItTh
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -110,6 +113,7 @@ PowerCellInteractionTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAn
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -132,6 +136,7 @@ PowerCellInteractionTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivi
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -156,6 +161,7 @@ PowerCellInteractionTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDiv
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -180,6 +186,7 @@ PowerCellInteractionTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToA
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 35 endingAt: 4)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -197,10 +204,12 @@ PowerCellInteractionTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 49. 10 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+		                     { 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -226,6 +235,7 @@ PowerCellInteractionTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spac
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -248,6 +258,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAn
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -270,6 +281,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesFor
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -293,6 +305,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryS
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -317,6 +330,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryS
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -341,6 +355,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegat
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -365,6 +380,7 @@ PowerCellInteractionTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -387,6 +403,7 @@ PowerCellInteractionTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItSta
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -411,6 +428,7 @@ PowerCellInteractionTest >> testWhenTheProbabilitiesDontSum100ThenCreationFails 
 			Board
 				withSize: 100
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				playedWith: (OrderedCollection with: WhiteCard new)
 				andACellConfiguration: aConfigureDiceSet ]
 		raise: Error
 		withMessageText: 'The probabilites dont sum 100.'

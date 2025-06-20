@@ -32,6 +32,7 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -70,6 +71,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -91,6 +93,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -111,6 +114,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -132,6 +136,7 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -150,6 +155,7 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

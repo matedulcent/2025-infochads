@@ -184,12 +184,17 @@ Game >> move: aSpaceShip after: aDiceRoll [
 			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
 			 withTotalLaps: laps).
 			
-	self applyCardEffectOn: aSpaceShip.
-	
+	"self applyCardEffectOn: aSpaceShip."
 	board
-		applyEffecOfPowerUpUponA: aSpaceShip
+		applyEffectOfCardUponA: aSpaceShip
 		andAll: spaceShips
-		andIts: spaceShipPositions.
+		andIts: spaceShipPositions
+		dependingOn: spaceShipCards.
+	
+	"board
+		applyEffectOfPowerUpUponA: aSpaceShip
+		andAll: spaceShips
+		andIts: spaceShipPositions."
 
 	self
 		replacePositionOf: aSpaceShip
@@ -281,5 +286,6 @@ Game >> updateNextShipToMove: spaceShipID [
 { #category : 'as yet unclassified' }
 Game >> use: aCard on: aSpaceShipID [
 	"id not valid"
+	board validateThatDeckContains: aCard.
 	(spaceShipCards at: aSpaceShipID) add: aCard
 ]
