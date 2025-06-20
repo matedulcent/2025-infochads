@@ -17,6 +17,49 @@ AccelerationCardTest >> should: anErrorBlock raise: anErrorClass withMessageText
 ]
 
 { #category : 'tests' }
+AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsTossIncrementsInOne [
+
+	| aGame aBoard spaceShipID |
+	spaceShipID := 1.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: (RiggedDice new initializeWith: { 5 })
+		         wonAfter: 1.
+	
+	aGame use: (SpeedCard with: 1) on: spaceShipID.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 7
+]
+
+{ #category : 'tests' }
+AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenItsTossIncrementsInOne [
+
+	| aGame aBoard spaceShipID |
+	spaceShipID := 1.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: (RiggedDice new initializeWith: { 5. 10 })
+		         wonAfter: 1.
+	
+	aGame use: (AccelerationCard with: 1) on: spaceShipID.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 7.
+	self assert: (aGame positionOf: 2) equals: 7
+]
+
+{ #category : 'tests' }
 AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNegativeThenCreationFails [
 
 	self

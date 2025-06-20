@@ -59,7 +59,12 @@ Game >> applyCardEffectOn: aSpaceShip [
 		spaceShipPositions
 			at: aSpaceShip id
 			put:
-			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ]
+			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
+		
+	"spaceShipPositions
+			at: aSpaceShip id
+			put:
+			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ]."
 ]
 
 { #category : 'as yet unclassified' }
