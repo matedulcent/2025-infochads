@@ -1,6 +1,6 @@
 Class {
 	#name : 'SpeedCard',
-	#superclass : 'Object',
+	#superclass : 'WhiteCard',
 	#instVars : [
 		'increment'
 	],
@@ -20,6 +20,12 @@ SpeedCard class >> with: aTossIncrement [
 
 	self mustBeOne: aTossIncrement.
 	^ self new initializeWith: aTossIncrement
+]
+
+{ #category : 'as yet unclassified' }
+SpeedCard >> applyEffect [
+
+	^ Position at: increment withLaps: 0
 ]
 
 { #category : 'initialization' }

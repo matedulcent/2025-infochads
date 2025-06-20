@@ -8,7 +8,8 @@ Class {
 		'numberOfSpaceShips',
 		'laps',
 		'board',
-		'spaceShipPositions'
+		'spaceShipPositions',
+		'spaceShipCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -52,6 +53,15 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
+Game >> applyCardEffectOn: aSpaceShip [
+
+	spaceShipPositions
+		at: aSpaceShip id
+		put: ((spaceShipPositions at: aSpaceShip id) sumTo:
+				 (spaceShipCards at: aSpaceShip id) first applyEffect)
+]
+
+{ #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 |
@@ -75,9 +85,9 @@ Game >> create: aNumberOfSpaceShips [
 	spaceShipPositions := OrderedDictionary new.
 
 	1 to: aNumberOfSpaceShips do: [ :id |
-		spaceShips add:
-			(SpaceShip with: id andStartingWith: aShield).
-		spaceShipPositions at: id put: aPosition ]
+		spaceShips add: (SpaceShip with: id andStartingWith: aShield).
+		spaceShipPositions at: id put: aPosition.
+		spaceShipCards at: id put: (OrderedCollection with: WhiteCard new) ]
 ]
 
 { #category : 'informationTest' }
@@ -101,13 +111,16 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	board := aBoard.
 	
 	spaceShipPositions := OrderedDictionary new.
+	spaceShipCards := OrderedDictionary new.
 	self create: aNumberOfSpaceShips.
 	
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
-	^ self
+	
+	"availableCards := OrderedCollection new"
+
 ]
 
 { #category : 'whats left of race positions' }
@@ -160,11 +173,13 @@ Game >> move: aSpaceShip after: aDiceRoll [
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
 
 	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
-
+	
 	self sumTo: aSpaceShip the: (board
 			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
 			 withTotalLaps: laps).
-
+			
+	self applyCardEffectOn: aSpaceShip.
+	
 	board
 		applyEffecOfPowerUpUponA: aSpaceShip
 		andAll: spaceShips
@@ -255,4 +270,10 @@ Game >> updateNextShipToMove: spaceShipID [
 	nextSpaceShipToMove := spaceShipID + 1.
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
 		nextSpaceShipToMove := 1 ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> use: aCard on: aSpaceShipID [
+	"id not valid"
+	(spaceShipCards at: aSpaceShipID) add: aCard
 ]

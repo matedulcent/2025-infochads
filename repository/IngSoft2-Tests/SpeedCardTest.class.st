@@ -17,6 +17,27 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 ]
 
 { #category : 'tests' }
+SpeedCardTest >> testWhenASpaceShipUsesASpeedCardThenItsTossIncrementsInOne [
+
+	| aGame aBoard spaceShipID |
+	spaceShipID := 1.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: (RiggedDice new initializeWith: { 5 })
+		         wonAfter: 1.
+	
+	aGame use: (SpeedCard with: 1) on: spaceShipID.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 7
+]
+
+{ #category : 'tests' }
 SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNegativeThenCreationFails [
 
 	self
