@@ -9,7 +9,8 @@ Class {
 		'laps',
 		'board',
 		'spaceShipPositions',
-		'spaceShipCards'
+		'spaceShipCards',
+		'spaceShipActiveCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -53,21 +54,6 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
-Game >> applyCardEffectOn: aSpaceShip [
-
-	(spaceShipCards at: aSpaceShip id) do: [ :card |
-		spaceShipPositions
-			at: aSpaceShip id
-			put:
-			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
-		
-	"spaceShipPositions
-			at: aSpaceShip id
-			put:
-			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ]."
-]
-
-{ #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 |
@@ -90,10 +76,15 @@ Game >> create: aNumberOfSpaceShips [
 	spaceShips := OrderedCollection new.
 	spaceShipPositions := OrderedDictionary new.
 
+
 	1 to: aNumberOfSpaceShips do: [ :id |
-		spaceShips add: (SpaceShip with: id andStartingWith: aShield).
+		spaceShips add: (SpaceShip
+				 with: id
+				 startingWith: board pickACard
+				 and: board pickACard
+				 with: aShield).
 		spaceShipPositions at: id put: aPosition.
-		spaceShipCards at: id put: (OrderedCollection with: WhiteCard new) ]
+		spaceShipActiveCards at: id put: OrderedCollection new ]
 ]
 
 { #category : 'informationTest' }
@@ -115,18 +106,17 @@ Game >> getRanking [
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-	
+
 	spaceShipPositions := OrderedDictionary new.
-	spaceShipCards := OrderedDictionary new.
+	spaceShipActiveCards := OrderedDictionary new.
 	self create: aNumberOfSpaceShips.
-	
+
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
-	laps := aNumberOfLaps.
-	
-	"availableCards := OrderedCollection new"
+	laps := aNumberOfLaps
 
+	"availableCards := OrderedCollection new"
 ]
 
 { #category : 'whats left of race positions' }
@@ -184,17 +174,11 @@ Game >> move: aSpaceShip after: aDiceRoll [
 			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
 			 withTotalLaps: laps).
 			
-	"self applyCardEffectOn: aSpaceShip."
 	board
 		applyEffectOfCardUponA: aSpaceShip
 		andAll: spaceShips
 		andIts: spaceShipPositions
-		dependingOn: spaceShipCards.
-	
-	"board
-		applyEffectOfPowerUpUponA: aSpaceShip
-		andAll: spaceShips
-		andIts: spaceShipPositions."
+		dependingOn: spaceShipActiveCards .
 
 	self
 		replacePositionOf: aSpaceShip
@@ -285,7 +269,12 @@ Game >> updateNextShipToMove: spaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> use: aCard on: aSpaceShipID [
-	"id not valid"
-	board validateThatDeckContains: aCard.
-	(spaceShipCards at: aSpaceShipID) add: aCard
+
+	| aShip |
+	aShip := spaceShips
+		         detect: [ :ship | ship id = aSpaceShipID ]
+		         ifNone: [ Error signal: 'The ship doesnt exist' ].
+
+
+	(spaceShipActiveCards at: aSpaceShipID) add: (aShip has: aCard)
 ]

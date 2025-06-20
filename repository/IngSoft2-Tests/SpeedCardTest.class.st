@@ -34,7 +34,28 @@ SpeedCardTest >> testWhenACardIsNotInDeckThenUsageFails [
 	self
 		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
 		raise: Error
-		withMessageText: 'The card is not in the deck'
+		withMessageText: 'The card is not in the ships deck'
+]
+
+{ #category : 'tests' }
+SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
+
+	| aGame aBoard deckOfCards |
+	deckOfCards := OrderedCollection withAll: { WhiteCard new }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: deckOfCards
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: (RiggedDice new initializeWith: { 5. 6 })
+		         wonAfter: 1.
+	self
+		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
+		raise: Error
+		withMessageText: 'The card is not in the ships deck'
 ]
 
 { #category : 'tests' }
@@ -47,7 +68,9 @@ SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecD
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (SpeedCard with: 1))
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           WhiteCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -89,7 +112,11 @@ SpeedCardTest >> testWhenASpaceShipUsesASpeedCardTwiceThenItsTossIncrementsInTwo
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (SpeedCard with: 1))
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           (SpeedCard with: 1).
+					           (SpeedCard with: 1).
+					           (SpeedCard with: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -138,7 +165,11 @@ SpeedCardTest >> testWhenTwoSpaceShipUseASpeedCardThenItsTossIncrementsInOne [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (SpeedCard with: 1))
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           (SpeedCard with: 1).
+					           (SpeedCard with: 1).
+					           (SpeedCard with: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

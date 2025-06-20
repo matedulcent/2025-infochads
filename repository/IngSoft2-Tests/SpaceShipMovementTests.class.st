@@ -45,7 +45,7 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (OrderedCollection new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'shield',
 		'spaceShipID',
-		'loseTurn'
+		'loseTurn',
+		'cards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,12 +26,12 @@ SpaceShip class >> itMustHaveThree: aShield [
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip class >> with: anId andStartingWith: aShield [
+SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield [
 
 	self itMustHaveThree: aShield.
 	self itMustHaveAnID: anId.
 
-	^ self new initializeWithShield: aShield and: anId
+	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
 { #category : 'testing' }
@@ -45,6 +46,19 @@ SpaceShip >> getShield [
 	^ shield
 ]
 
+{ #category : 'testing' }
+SpaceShip >> has: aCard [
+
+	| pickedCard |
+	pickedCard := cards
+		              detect: [ :card | card class = aCard class ]
+		              ifNone: [
+		              Error signal: 'The card is not in the ships deck' ].
+
+	cards remove: pickedCard.
+	^ pickedCard
+]
+
 { #category : 'getters' }
 SpaceShip >> id [
 
@@ -52,12 +66,13 @@ SpaceShip >> id [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWithShield: aNumberOfShields and: aSpaceShipID [
+SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
-	spaceShipID := aSpaceShipID.
-	shield := aNumberOfShields.
+	spaceShipID := anId.
+	shield := aShield.
 	loseTurn := 0.
-	^ self
+	cards := OrderedCollection withAll: { aCard. anotherCard }
+	
 ]
 
 { #category : 'shield' }

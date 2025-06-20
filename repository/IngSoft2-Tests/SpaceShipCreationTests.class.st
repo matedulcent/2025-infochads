@@ -18,8 +18,10 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
 
+	| aCard anotherCard |
+	aCard := anotherCard := WhiteCard create.
 	self
-		should: [ SpaceShip with: '' andStartingWith: 3 ]
+		should: [ SpaceShip with: '' startingWith: aCard and: anotherCard with: 3 ]
 		raise: Error
 		withMessageText: 'The ship must be identifiable.'
 ]
@@ -48,8 +50,15 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
 
+	| aCard anotherCard |
+	aCard := anotherCard := WhiteCard create.
 	self
-		should: [ SpaceShip with: 1 andStartingWith: 11 ]
+		should: [
+			SpaceShip
+				with: 1
+				startingWith: aCard
+				and: anotherCard
+				with: 11 ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
 ]
@@ -57,8 +66,15 @@ SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCrea
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
 
+	| aCard anotherCard |
+	aCard := anotherCard := WhiteCard create.
 	self
-		should: [ SpaceShip with: 1 andStartingWith: '11' ]
+		should: [
+			SpaceShip
+				with: 1
+				startingWith: aCard
+				and: anotherCard
+				with: '11' ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
 ]

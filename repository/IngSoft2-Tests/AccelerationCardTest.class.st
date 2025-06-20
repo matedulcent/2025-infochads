@@ -24,14 +24,15 @@ AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsT
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: (AccelerationCard with: 1))
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
-	
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
+
+	aGame use: (AccelerationCard with: 1) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7
@@ -45,18 +46,19 @@ AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenItsTossIncreme
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: (AccelerationCard with: 1))
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
-		         throwing: (RiggedDice new initializeWith: { 5. 10 })
+		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
-	
+
 	aGame use: (AccelerationCard with: 1) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7.
-	self assert: (aGame positionOf: 2) equals: 7
+	self assert: (aGame positionOf: 2) equals: 8
 ]
 
 { #category : 'tests' }

@@ -30,14 +30,6 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjust: spaceShips positionAnd: totalLaps [
-
-	spaceShips do: [ :ship |
-		ship storeageNewPosition:
-			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
-]
-
-{ #category : 'as yet unclassified' }
 Board >> applyEffectOfCardUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions dependingOn: spaceShipCards [
 
 	self
@@ -57,8 +49,12 @@ Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceS
 
 	| cell |
 	gameBoard ifNotEmpty: [
-		cell := gameBoard at: (spaceShipPositions at: aSpaceShip id ) position.
-		cell takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions ]
+		cell := gameBoard at:
+			        (spaceShipPositions at: aSpaceShip id) position.
+		cell
+			takeActionOver: aSpaceShip
+			or: spaceShips
+			thatArePlaced: spaceShipPositions ]
 ]
 
 { #category : 'accessing' }
@@ -73,23 +69,15 @@ Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips d
 	(spaceShipCards at: aSpaceShip id) do: [ :card |
 		spaceShipPositions
 			at: aSpaceShip id
-			put:
-			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
-		
-	"spaceShipPositions
-			at: aSpaceShip id
-			put:
-			((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ]."
-]
+			put: ((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
 
-{ #category : 'as yet unclassified' }
-Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
-	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at: aSpaceShip getPosition.
-		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
-
+	spaceShipCards associationsDo: [ :shipCards |
+		shipCards value do: [ :card |
+			spaceShipPositions
+				at: aSpaceShip id
+				put:
+				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -134,15 +122,15 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 ]
 
 { #category : 'as yet unclassified' }
+Board >> pickACard [
+
+	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
+	^ WhiteCard create
+]
+
+{ #category : 'as yet unclassified' }
 Board >> the: aPosition hasReached: totalLaps [
 
 	^ aPosition position + (aPosition lap * boardSize)
 	  >= (totalLaps * boardSize)
-]
-
-{ #category : 'as yet unclassified' }
-Board >> validateThatDeckContains: aCard [
-
-	deckOfCards detect: [ :card | card class = aCard class]
-	ifNone: [ Error signal: 'The card is not in the deck' ].
 ]

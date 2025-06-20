@@ -2,7 +2,8 @@ Class {
 	#name : 'SpeedCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'increment'
+		'increment',
+		'type'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -31,5 +32,6 @@ SpeedCard >> effect [
 { #category : 'initialization' }
 SpeedCard >> initializeWith: aTossIncrement [
 
-	increment := aTossIncrement
+	increment := aTossIncrement.
+	type := 'Instantaneous'.
 ]
