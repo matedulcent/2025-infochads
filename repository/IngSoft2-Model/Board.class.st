@@ -65,9 +65,8 @@ Board >> boardSize [
 
 { #category : 'as yet unclassified' }
 Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips dependingOn: spaceShipPositions [
-	
+
 	| mercenary |
-	
 	(spaceShipCards at: aSpaceShip id) do: [ :card |
 		spaceShipPositions
 			at: aSpaceShip id
@@ -81,18 +80,29 @@ Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips d
 				put:
 				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
 
-	"rotura de encapsulamiento"
 	(spaceShipCards at: aSpaceShip id) do: [ :card |
-		card used ifFalse: [
-			mercenary := spaceShips detect: [ :ship |
-				             ship id = (card mercenary: aSpaceShip id) ].
-			mercenary setAsHelperOf: aSpaceShip ] ]
+		(card activateMercenaryOn: aSpaceShip id) ifTrue: [
+			mercenary := spaceShips detect: [ :ship | ship id = card helper ].
+
+			
+			mercenary isHelpingOthers ifTrue: [
+				Error signal: 'A mercenary cant help multiple ships.' ] ] ]
 ]
 
 { #category : 'as yet unclassified' }
 Board >> checkForWormHole: aPosition [
 
 	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
+]
+
+{ #category : 'as yet unclassified' }
+Board >> does: mercenaryId appearsInOther: spaceShipCards [
+
+	spaceShipCards associationsDo: [ :shipCard |
+		((shipCard value collect: [ :card | card helper = mercenaryId ]) size > 1)
+			ifTrue: [ ^ true ] ].
+
+	^ false
 ]
 
 { #category : 'initialization' }

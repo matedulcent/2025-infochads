@@ -56,15 +56,20 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 { #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
-	| throwSpaceShip1 throwSpaceShip2 |
+	| throwSpaceShip1 throwSpaceShip2 numberOfTosses2 numberOfTosses1 |
+	numberOfTosses2 := (spaceShipActiveCards at: aSpaceShip2 id) select: [
+		                   :card | MercenaryCard = card class ].
+	numberOfTosses1 := (spaceShipActiveCards at: aSpaceShip1 id) select: [
+		                   :card | MercenaryCard = card class ].
+
 	[
 	throwSpaceShip2 := 0.
 	throwSpaceShip1 := 0.
 
-	1 to: aSpaceShip2 mercenaries size + 1 do: [ :mercenary |
+	1 to: numberOfTosses2 size + 1 do: [ :mercenary |
 	throwSpaceShip2 := throwSpaceShip2 + diceSet toss ].
 
-	1 to: aSpaceShip1 mercenaries size + 1 do: [ :mercenary |
+	1 to: numberOfTosses1 size + 1 do: [ :mercenary |
 	throwSpaceShip1 := throwSpaceShip1 + diceSet toss ].
 
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
@@ -80,7 +85,6 @@ Game >> can: aShip play: aCard [
 		ifTrue: [ aShip pending: aCard ].
 
 	"(Cancelation) cond 1 que haya cartas permanentes en juego"
-	aCard type = 'Instantaneous' ifTrue: [ self playCancelation: aCard of: aShip ].
 
 	"(Repete) cond 2 que se hayan tirado los dados, sino no tiene efecto""(Redo) cond 3 Tuvo que haber tirado una carta antes"
 ]
@@ -167,8 +171,10 @@ Game >> lookForBattle: aSpaceShip [
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	((opponentShip mercenaries includes: aSpaceShip id) or:
-		 opponentShip isHelping = aSpaceShip id) ifTrue: [ ^ self ].
+	(((spaceShipActiveCards at: aSpaceShip id) anySatisfy: [ :card |
+		  aSpaceShip id = card helper ]) or:
+		 ((spaceShipActiveCards at: opponentShip id) anySatisfy: [ :card |
+			  aSpaceShip id = card helper ])) ifTrue: [ ^ self ].
 
 	opponentShip == aSpaceShip ifFalse: [
 		self battleBetween: aSpaceShip and: opponentShip ]
@@ -177,6 +183,7 @@ Game >> lookForBattle: aSpaceShip [
 { #category : 'as yet unclassified' }
 Game >> lostBattle: aSpaceShip [
 
+	| mercenaries |
 	spaceShipPositions
 		at: aSpaceShip id
 		put: ((spaceShipPositions at: aSpaceShip id) sumTo: (Position
@@ -184,7 +191,12 @@ Game >> lostBattle: aSpaceShip [
 					  withLaps: 0)).
 	aSpaceShip loseShield.
 
-	aSpaceShip mercenaries do: [ :shipId |
+	mercenaries := (spaceShipActiveCards at: aSpaceShip id) collect: [
+		               :card | card helper ].
+
+
+
+	mercenaries do: [ :shipId |
 		spaceShipPositions
 			at: shipId
 			put: ((spaceShipPositions at: shipId) sumTo: (Position
@@ -249,8 +261,8 @@ Game >> playCancelation: aCard of: aShip [
 		        ifNone: [
 			        Error signal:
 				        'This card cant be played if the card to be canceled is not active.' ].
-
-	(spaceShipActiveCards at: (aCard objective: aShip id)) remove: card
+	(spaceShipActiveCards at:( aCard objective: aShip id)) remove: card.
+	aShip deMercenarize.
 ]
 
 { #category : 'informationTest' }
@@ -314,18 +326,24 @@ Game >> updateNextShipToMove: spaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> use: aCard on: aSpaceShipID [
-	"testeo error"
 
 	| aShip |
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
 
-	self can: aShip play: aCard.
+	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
+		ifTrue: [
+			aShip pending: aCard.
+			^ self ].
 
-	
-	lastCardPlayed := aShip has: aCard.
-	(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed
+	aCard type = 'Permanent' ifTrue: [
+		lastCardPlayed := aShip has: aCard.
+		(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed ].
+
+	aCard type = 'Instantaneous' ifFalse: [ ^ self ].
+	self playCancelation: aCard of: aShip.
+	lastCardPlayed := aShip has: aCard
 ]
 
 { #category : 'as yet unclassified' }

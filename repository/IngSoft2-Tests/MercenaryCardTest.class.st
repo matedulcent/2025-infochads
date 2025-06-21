@@ -130,9 +130,9 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
 					           (MercenaryCard withHelpOf: 3).
+					           WhiteCard new.
 					           (MercenaryCard withHelpOf: 3).
-					           (MercenaryCard withHelpOf: 3).
-					           (MercenaryCard withHelpOf: 3) })
+					           WhiteCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -143,10 +143,10 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame use: (MercenaryCard withHelpOf: 3) on: 2.
 
-	self 
-	should: [ aGame start ]
-	raise: Error
-	withMessageText: 'A mercenary cant help multiple ships.'
+	self
+		should: [ aGame start ]
+		raise: Error
+		withMessageText: 'A mercenary cant help multiple ships.'
 ]
 
 { #category : 'tests' }

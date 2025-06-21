@@ -15,6 +15,12 @@ WhiteCard class >> create [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> activateMercenaryOn: aSpaceShipID [
+
+	^ false
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> cardObjective: aCard [
 
 	^ aCard class
@@ -32,26 +38,14 @@ WhiteCard >> effectAll [
 	^ Position at: 0 withLaps: 0
 ]
 
+{ #category : 'accessing' }
+WhiteCard >> helper [
+
+	^ false
+]
+
 { #category : 'as yet unclassified' }
 WhiteCard >> initializes [
 
 	used := false
-]
-
-{ #category : 'as yet unclassified' }
-WhiteCard >> mercenary: aSpaceShipID [
-
-	^ aSpaceShipID
-]
-
-{ #category : 'as yet unclassified' }
-WhiteCard >> objective: aShipId [
-
-	^ aShipId
-]
-
-{ #category : 'accessing' }
-WhiteCard >> used [
-
-	^ used
 ]

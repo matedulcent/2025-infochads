@@ -8,7 +8,8 @@ Class {
 		'cards',
 		'helper',
 		'helperOf',
-		'pendingCards'
+		'pendingCards',
+		'helpingOthers'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -40,13 +41,20 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 { #category : 'adding' }
 SpaceShip >> addMercenary: aMercenary [
 
-	helper add: aMercenary
+	"helper add: aMercenary"
 ]
 
 { #category : 'testing' }
 SpaceShip >> canBattle [
 
 	^ shield > 0 and: loseTurn = 0
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> deMercenarize [
+
+	helperOf := spaceShipID.
+	helpingOthers := false
 ]
 
 { #category : 'getters' }
@@ -89,13 +97,22 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 			         anotherCard }.
 	pendingCards := OrderedCollection new.
 	helperOf := spaceShipID.
-	helper := OrderedCollection new.
+	helpingOthers := false
 ]
 
 { #category : 'testing' }
 SpaceShip >> isHelping [
 
 	^ helperOf
+]
+
+{ #category : 'testing' }
+SpaceShip >> isHelpingOthers [
+
+	(helpingOthers = false) ifTrue: [
+		helpingOthers := true.
+		^ false ].
+	^ true
 ]
 
 { #category : 'shield' }
@@ -108,7 +125,7 @@ SpaceShip >> loseShield [
 { #category : 'as yet unclassified' }
 SpaceShip >> mercenaries [
 
-	^ helper
+	"^ helper"
 ]
 
 { #category : 'as yet unclassified' }
