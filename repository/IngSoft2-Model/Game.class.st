@@ -73,11 +73,10 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> can: aSpaceShipID play: aCard [
+Game >> can: aShip play: aCard [
+	"aCard type = 'Instantaneous'"
 
-	(aSpaceShipID = nextSpaceShipToMove and: aCard type = 'Instantaneous')
-		ifFalse: [
-		Error signal: 'The ship cannot play this card if its not its turn.' ]
+	aShip id = nextSpaceShipToMove ifFalse: [ aShip pending: aCard ]
 ]
 
 { #category : 'whats left of race positions' }
@@ -185,7 +184,7 @@ Game >> lostBattle: aSpaceShip [
 			put: ((spaceShipPositions at: shipId) sumTo: (Position
 						  at: (spaceShipPositions at: shipId) position negated + 1
 						  withLaps: 0)).
-		aSpaceShip loseShield ]
+		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -199,6 +198,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
 			 withTotalLaps: laps).
 			
+	self usePendingCardsFrom: aSpaceShip.
 	board
 		applyEffectOfCardUponA: aSpaceShip
 		andAll: spaceShips
@@ -300,8 +300,14 @@ Game >> use: aCard on: aSpaceShipID [
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
 		
-	self can: aSpaceShipID play: aCard.
+	self can: aShip play: aCard.
 
 	(spaceShipActiveCards at: aSpaceShipID) add: (aShip has: aCard)
 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> usePendingCardsFrom: aSpaceShip [
+
+	aSpaceShip pendingCard do: [ :card | self use: card on: aSpaceShip id ]
 ]

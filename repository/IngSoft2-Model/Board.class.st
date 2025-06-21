@@ -65,8 +65,9 @@ Board >> boardSize [
 
 { #category : 'as yet unclassified' }
 Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips dependingOn: spaceShipPositions [
-
+	
 	| mercenary |
+	
 	(spaceShipCards at: aSpaceShip id) do: [ :card |
 		spaceShipPositions
 			at: aSpaceShip id

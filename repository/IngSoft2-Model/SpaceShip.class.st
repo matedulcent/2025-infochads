@@ -7,7 +7,8 @@ Class {
 		'loseTurn',
 		'cards',
 		'helper',
-		'helperOf'
+		'helperOf',
+		'pendingCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -82,6 +83,7 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	cards := OrderedCollection withAll: {
 			         aCard.
 			         anotherCard }.
+	pendingCards := OrderedCollection new.
 	helperOf := spaceShipID.
 	helper := OrderedCollection new.
 ]
@@ -103,6 +105,18 @@ SpaceShip >> loseShield [
 SpaceShip >> mercenaries [
 
 	^ helper
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> pending: aCard [
+
+	pendingCards add: aCard 
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> pendingCard [
+
+	^ pendingCards
 ]
 
 { #category : 'shield' }
