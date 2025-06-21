@@ -78,17 +78,6 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 		ifFalse: [ self lostBattle: aSpaceShip2 ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> can: aShip play: aCard [
-
-	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
-		ifTrue: [ aShip pending: aCard ].
-
-	"(Cancelation) cond 1 que haya cartas permanentes en juego"
-
-	"(Repete) cond 2 que se hayan tirado los dados, sino no tiene efecto""(Redo) cond 3 Tuvo que haber tirado una carta antes"
-]
-
 { #category : 'whats left of race positions' }
 Game >> create: aNumberOfSpaceShips [
 
@@ -211,27 +200,38 @@ Game >> move: aSpaceShip after: aDiceRoll [
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
 
 	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
-	
-	self sumTo: aSpaceShip the: (board
-			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
-			 withTotalLaps: laps).
-			
-	self usePendingCardsFrom: aSpaceShip.
-	board
-		applyEffectOfCardUponA: aSpaceShip
-		andAll: spaceShips
-		andIts: spaceShipPositions
-		dependingOn: spaceShipActiveCards .
-
-	self
-		replacePositionOf: aSpaceShip
-		with:
-		(board checkForWormHole: (spaceShipPositions at: aSpaceShip id)).
 
 	spaceShips do: [ :ship |
 		self sumTo: ship the: (board
 				 limitAdjustment: (spaceShipPositions at: ship id)
 				 withTotalLaps: laps) ].
+
+	self usePendingCardsFrom: aSpaceShip.
+
+	board
+		checkFor: spaceShipActiveCards
+		andItsEffectsOver: aSpaceShip
+		or: spaceShips
+		dependingOn: spaceShipPositions.
+
+	spaceShips do: [ :ship |
+		self sumTo: ship the: (board
+				 limitAdjustment: (spaceShipPositions at: ship id)
+				 withTotalLaps: laps) ].
+	board
+		applyEffectOfPowerUpUponA: aSpaceShip
+		andAll: spaceShips
+		andIts: spaceShipPositions.
+
+	spaceShips do: [ :ship |
+		self sumTo: ship the: (board
+				 limitAdjustment: (spaceShipPositions at: ship id)
+				 withTotalLaps: laps) ].
+
+	self
+		replacePositionOf: aSpaceShip
+		with:
+		(board checkForWormHole: (spaceShipPositions at: aSpaceShip id)).
 
 	self lookForBattle: aSpaceShip
 ]
@@ -361,6 +361,9 @@ Game >> use: aCard on: aSpaceShipID [
 		(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed.
 		^ self ].
 
+	self isGameOver ifTrue: [
+		Error signal:
+			'Instantaneous cards cant be played after the game is over.' ].
 
 	self playCancelation: aCard of: aShip.
 	lastCardPlayed := aShip has: aCard.

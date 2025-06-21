@@ -33,16 +33,17 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 { #category : 'as yet unclassified' }
 Board >> applyEffectOfCardUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions dependingOn: spaceShipCards [
 
-	self
+	"self
 		checkFor: spaceShipCards
 		andItsEffectsOver: aSpaceShip
 		or: spaceShips
 		dependingOn: spaceShipPositions.
-
+	
+	
 	self
 		applyEffectOfPowerUpUponA: aSpaceShip
 		andAll: spaceShips
-		andIts: spaceShipPositions
+		andIts: spaceShipPositions"
 		
 ]
 
@@ -50,16 +51,15 @@ Board >> applyEffectOfCardUponA: aSpaceShip andAll: spaceShips andIts: spaceShip
 Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
 	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at:
-			        (spaceShipPositions at: aSpaceShip id) position.
+	gameBoard ifEmpty: [ ^ self ].
+	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
 
-		lastCellPlayed := cell.
+	lastCellPlayed := cell.
 
-		cell
-			takeActionOver: aSpaceShip
-			or: spaceShips
-			thatArePlaced: spaceShipPositions ]
+	cell
+		takeActionOver: aSpaceShip
+		or: spaceShips
+		thatArePlaced: spaceShipPositions
 ]
 
 { #category : 'accessing' }
