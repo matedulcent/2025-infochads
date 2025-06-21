@@ -255,14 +255,33 @@ Game >> obtainOponentShip: aSpaceShip [
 Game >> playCancelation: aCard of: aShip [
 
 	| card |
+	(aCard objective: aShip id) = '' ifTrue: [ ^ self ].
 	card := (spaceShipActiveCards at: (aCard objective: aShip id))
 		        detect: [ :cardOfShip |
 		        cardOfShip class = (aCard cardObjective: aCard) class ]
 		        ifNone: [
 			        Error signal:
 				        'This card cant be played if the card to be canceled is not active.' ].
-	(spaceShipActiveCards at:( aCard objective: aShip id)) remove: card.
-	aShip deMercenarize.
+	(spaceShipActiveCards at: (aCard objective: aShip id)) remove: card.
+	aShip deMercenarize
+]
+
+{ #category : 'as yet unclassified' }
+Game >> playRepeat: aCard on: aShip [
+
+	| cell |
+	aCard lastPowerUpPlayed: board lastCellEffect.
+
+	cell := aCard replicateCell.
+	cell
+		takeActionOver: aShip
+		or: spaceShips
+		thatArePlaced: spaceShipPositions.
+		
+	spaceShips do: [ :ship |
+		self sumTo: ship the: (board
+				 limitAdjustment: (spaceShipPositions at: ship id)
+				 withTotalLaps: laps) ]
 ]
 
 { #category : 'informationTest' }
@@ -339,11 +358,14 @@ Game >> use: aCard on: aSpaceShipID [
 
 	aCard type = 'Permanent' ifTrue: [
 		lastCardPlayed := aShip has: aCard.
-		(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed ].
+		(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed.
+		^ self ].
 
-	aCard type = 'Instantaneous' ifFalse: [ ^ self ].
+
 	self playCancelation: aCard of: aShip.
-	lastCardPlayed := aShip has: aCard
+	lastCardPlayed := aShip has: aCard.
+
+	self playRepeat: aCard on: aShip
 ]
 
 { #category : 'as yet unclassified' }

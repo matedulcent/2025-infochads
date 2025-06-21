@@ -1,9 +1,6 @@
 Class {
 	#name : 'WhiteCard',
 	#superclass : 'Object',
-	#instVars : [
-		'used'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -47,5 +44,23 @@ WhiteCard >> helper [
 { #category : 'as yet unclassified' }
 WhiteCard >> initializes [
 
-	used := false
+	^self
+]
+
+{ #category : 'accessing' }
+WhiteCard >> lastPowerUpPlayed: aCell [
+
+	^ self
+]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> objective: aSpaceShipId [
+
+	^ ''
+]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> replicateCell [
+
+	^ Cell has: NoEffect new
 ]

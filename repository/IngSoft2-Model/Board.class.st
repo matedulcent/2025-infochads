@@ -5,7 +5,8 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'deckOfCards'
+		'deckOfCards',
+		'lastCellPlayed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -42,6 +43,7 @@ Board >> applyEffectOfCardUponA: aSpaceShip andAll: spaceShips andIts: spaceShip
 		applyEffectOfPowerUpUponA: aSpaceShip
 		andAll: spaceShips
 		andIts: spaceShipPositions
+		
 ]
 
 { #category : 'as yet unclassified' }
@@ -51,6 +53,9 @@ Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceS
 	gameBoard ifNotEmpty: [
 		cell := gameBoard at:
 			        (spaceShipPositions at: aSpaceShip id) position.
+
+		lastCellPlayed := cell.
+
 		cell
 			takeActionOver: aSpaceShip
 			or: spaceShips
@@ -113,12 +118,18 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckO
 	gameBoard := CellPlacement new
 		             createBoardWithCellConfiguration: aConfigDiceSet
 		             andSize: boardSize.
-	
+
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
-	
-	deckOfCards := aDeckOfCards.
 
+	deckOfCards := aDeckOfCards.
+	lastCellPlayed := Cell has: NoEffect new
+]
+
+{ #category : 'accessing' }
+Board >> lastCellEffect [
+
+	^ lastCellPlayed
 ]
 
 { #category : 'as yet unclassified' }

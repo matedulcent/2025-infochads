@@ -1,12 +1,12 @@
 Class {
-	#name : 'CancelationTest',
+	#name : 'CancelationCardTest',
 	#superclass : 'SpeedCardTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'tests' }
-CancelationTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMercenaryIsUnRelatedToCardOwner [
+CancelationCardTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMercenaryIsUnRelatedToCardOwner [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -40,7 +40,7 @@ CancelationTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMercen
 ]
 
 { #category : 'tests' }
-CancelationTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasigned [
+CancelationCardTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasigned [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -74,7 +74,7 @@ CancelationTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasigned [
 ]
 
 { #category : 'tests' }
-CancelationTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsValidThenItCanBePlayed [
+CancelationCardTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsValidThenItCanBePlayed [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -106,7 +106,7 @@ CancelationTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsValidT
 ]
 
 { #category : 'tests' }
-CancelationTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancelationBeforeTheGameStartsThenSpeedCardIsEnabled [
+CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancelationBeforeTheGameStartsThenSpeedCardIsEnabled [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -136,7 +136,7 @@ CancelationTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancelatio
 ]
 
 { #category : 'tests' }
-CancelationTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCardsThenTheCardCantBePlayed [
+CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCardsThenTheCardCantBePlayed [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -165,7 +165,7 @@ CancelationTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCardsThe
 ]
 
 { #category : 'tests' }
-CancelationTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
+CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -194,7 +194,7 @@ CancelationTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 ]
 
 { #category : 'tests' }
-CancelationTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThenTheCadCantBePlayed [
+CancelationCardTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThenTheCadCantBePlayed [
 
 	| aGame aBoard |
 	aBoard := Board

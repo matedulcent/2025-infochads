@@ -32,7 +32,7 @@ CancelationCard >> initializeWithObjective: aCard of: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-CancelationCard >> objective: aShipId [
+CancelationCard >> objective: aSpaceShipId [
 
 	^ shipID
 ]
