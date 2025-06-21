@@ -32,8 +32,9 @@ SpeedCard >> effect [
 { #category : 'initialization' }
 SpeedCard >> initializeWith: aTossIncrement [
 
+	super initializes.
 	increment := aTossIncrement.
-	type := 'Instantaneous'.
+	type := 'Instantaneous'
 ]
 
 { #category : 'accessing' }

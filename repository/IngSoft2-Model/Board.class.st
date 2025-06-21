@@ -66,6 +66,7 @@ Board >> boardSize [
 { #category : 'as yet unclassified' }
 Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips dependingOn: spaceShipPositions [
 
+	| mercenary |
 	(spaceShipCards at: aSpaceShip id) do: [ :card |
 		spaceShipPositions
 			at: aSpaceShip id
@@ -77,7 +78,14 @@ Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips d
 			spaceShipPositions
 				at: aSpaceShip id
 				put:
-				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ]
+				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
+
+	"rotura de encapsulamiento"
+	(spaceShipCards at: aSpaceShip id) do: [ :card |
+		card used ifFalse: [
+			mercenary := spaceShips detect: [ :ship |
+				             ship id = (card mercenary: aSpaceShip id) ].
+			mercenary setAsHelperOf: aSpaceShip ] ]
 ]
 
 { #category : 'as yet unclassified' }

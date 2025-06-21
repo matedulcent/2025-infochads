@@ -32,8 +32,9 @@ AccelerationCard >> effectAll [
 { #category : 'initialization' }
 AccelerationCard >> initializeWith: aTossIncrement [
 
+	super initializes.
 	increment := aTossIncrement.
-	type:= 'Instantaneous'.
+	type := 'Instantaneous'
 ]
 
 { #category : 'accessing' }

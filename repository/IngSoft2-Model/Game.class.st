@@ -9,7 +9,6 @@ Class {
 		'laps',
 		'board',
 		'spaceShipPositions',
-		'spaceShipCards',
 		'spaceShipActiveCards'
 	],
 	#category : 'IngSoft2-Model',
@@ -58,8 +57,15 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 |
 	[
-	throwSpaceShip2 := diceSet toss.
-	throwSpaceShip1 := diceSet toss.
+	throwSpaceShip2 := 0.
+	throwSpaceShip1 := 0.
+
+	1 to: aSpaceShip2 mercenaries size + 1 do: [ :mercenary |
+	throwSpaceShip2 := throwSpaceShip2 + diceSet toss ].
+
+	1 to: aSpaceShip1 mercenaries size + 1 do: [ :mercenary |
+	throwSpaceShip1 := throwSpaceShip1 + diceSet toss ].
+
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
 	throwSpaceShip1 < throwSpaceShip2
 		ifTrue: [ self lostBattle: aSpaceShip1 ]
@@ -156,6 +162,9 @@ Game >> lookForBattle: aSpaceShip [
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
+	((opponentShip mercenaries includes: aSpaceShip id) or:
+		 opponentShip isHelping = aSpaceShip id) ifTrue: [ ^ self ].
+
 	opponentShip == aSpaceShip ifFalse: [
 		self battleBetween: aSpaceShip and: opponentShip ]
 ]
@@ -168,7 +177,15 @@ Game >> lostBattle: aSpaceShip [
 		put: ((spaceShipPositions at: aSpaceShip id) sumTo: (Position
 					  at: (spaceShipPositions at: aSpaceShip id) position negated + 1
 					  withLaps: 0)).
-	aSpaceShip loseShield
+	aSpaceShip loseShield.
+
+	aSpaceShip mercenaries do: [ :shipId |
+		spaceShipPositions
+			at: shipId
+			put: ((spaceShipPositions at: shipId) sumTo: (Position
+						  at: (spaceShipPositions at: shipId) position negated + 1
+						  withLaps: 0)).
+		aSpaceShip loseShield ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -277,7 +294,7 @@ Game >> updateNextShipToMove: spaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> use: aCard on: aSpaceShipID [
-
+	"testeo error"
 	| aShip |
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]

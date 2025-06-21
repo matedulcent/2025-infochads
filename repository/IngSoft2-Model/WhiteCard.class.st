@@ -1,6 +1,9 @@
 Class {
 	#name : 'WhiteCard',
 	#superclass : 'Object',
+	#instVars : [
+		'used'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -25,4 +28,18 @@ WhiteCard >> effectAll [
 
 { #category : 'as yet unclassified' }
 WhiteCard >> initializes [
+
+	used := false
+]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> mercenary: aSpaceShipID [
+
+	^ aSpaceShipID
+]
+
+{ #category : 'accessing' }
+WhiteCard >> used [
+
+	^ used
 ]
