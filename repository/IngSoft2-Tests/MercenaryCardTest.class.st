@@ -1,6 +1,6 @@
 Class {
 	#name : 'MercenaryCardTest',
-	#superclass : 'TestCase',
+	#superclass : 'SpeedCardTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }

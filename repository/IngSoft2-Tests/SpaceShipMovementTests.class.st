@@ -1,6 +1,6 @@
 Class {
 	#name : 'SpaceShipMovementTests',
-	#superclass : 'TestCase',
+	#superclass : 'SpaceShipCreationTests',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }

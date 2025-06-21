@@ -1,6 +1,6 @@
 Class {
 	#name : 'TurnsTests',
-	#superclass : 'TestCase',
+	#superclass : 'BattleTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }

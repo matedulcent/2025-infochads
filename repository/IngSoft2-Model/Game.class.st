@@ -9,7 +9,8 @@ Class {
 		'laps',
 		'board',
 		'spaceShipPositions',
-		'spaceShipActiveCards'
+		'spaceShipActiveCards',
+		'lastCardPlayed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -76,7 +77,12 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 Game >> can: aShip play: aCard [
 
 	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
-		ifTrue: [ aShip pending: aCard ]
+		ifTrue: [ aShip pending: aCard ].
+
+	"(Cancelation) cond 1 que haya cartas permanentes en juego"
+	aCard type = 'Instantaneous' ifTrue: [ self playCancelation: aCard of: aShip ].
+
+	"(Repete) cond 2 que se hayan tirado los dados, sino no tiene efecto""(Redo) cond 3 Tuvo que haber tirado una carta antes"
 ]
 
 { #category : 'whats left of race positions' }
@@ -233,6 +239,20 @@ Game >> obtainOponentShip: aSpaceShip [
 		  ifNone: [ aSpaceShip ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> playCancelation: aCard of: aShip [
+
+	| card |
+	card := (spaceShipActiveCards at: (aCard objective: aShip id))
+		        detect: [ :cardOfShip |
+		        cardOfShip class = (aCard cardObjective: aCard) class ]
+		        ifNone: [
+			        Error signal:
+				        'This card cant be played if the card to be canceled is not active.' ].
+
+	(spaceShipActiveCards at: (aCard objective: aShip id)) remove: card
+]
+
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
@@ -295,15 +315,17 @@ Game >> updateNextShipToMove: spaceShipID [
 { #category : 'as yet unclassified' }
 Game >> use: aCard on: aSpaceShipID [
 	"testeo error"
+
 	| aShip |
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-		
+
 	self can: aShip play: aCard.
 
-	(spaceShipActiveCards at: aSpaceShipID) add: (aShip has: aCard)
-
+	
+	lastCardPlayed := aShip has: aCard.
+	(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed
 ]
 
 { #category : 'as yet unclassified' }

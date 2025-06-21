@@ -1,6 +1,6 @@
 Class {
 	#name : 'RankingTests',
-	#superclass : 'TestCase',
+	#superclass : 'WinningConditionTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }

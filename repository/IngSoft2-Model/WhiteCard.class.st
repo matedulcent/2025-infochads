@@ -15,6 +15,12 @@ WhiteCard class >> create [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> cardObjective: aCard [
+
+	^ aCard class
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> effect [
 
 	^ Position at: 0 withLaps: 0
@@ -36,6 +42,12 @@ WhiteCard >> initializes [
 WhiteCard >> mercenary: aSpaceShipID [
 
 	^ aSpaceShipID
+]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> objective: aShipId [
+
+	^ aShipId
 ]
 
 { #category : 'accessing' }

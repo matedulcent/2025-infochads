@@ -1,6 +1,6 @@
 Class {
 	#name : 'DiceTests',
-	#superclass : 'TestCase',
+	#superclass : 'DiceSetTests',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }

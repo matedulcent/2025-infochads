@@ -1,6 +1,6 @@
 Class {
 	#name : 'LoopedBoardTest',
-	#superclass : 'TestCase',
+	#superclass : 'BoardTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }

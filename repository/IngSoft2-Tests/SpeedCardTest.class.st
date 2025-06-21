@@ -5,6 +5,13 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'as yet unclassified' }
+SpeedCardTest >> readme [
+	"The cards are withdrawn from the last included in the deck"
+
+	
+]
+
 { #category : 'asserting' }
 SpeedCardTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
@@ -56,6 +63,29 @@ SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
 		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
 		raise: Error
 		withMessageText: 'The card is not in the ships deck'
+]
+
+{ #category : 'tests' }
+SpeedCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
+
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 5. 6 }.
+
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           WhiteCard new })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 2.
+	aGame use: (SpeedCard with: 1) on: 1.
+	aGame start.
+	self assert: (aGame positionOf: 1) equals: 14
 ]
 
 { #category : 'tests' }
