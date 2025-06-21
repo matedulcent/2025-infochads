@@ -34,7 +34,7 @@ SpeedCard >> initializeWith: aTossIncrement [
 
 	super initializes.
 	increment := aTossIncrement.
-	type := 'Instantaneous'
+	type := 'Permanent'
 ]
 
 { #category : 'accessing' }

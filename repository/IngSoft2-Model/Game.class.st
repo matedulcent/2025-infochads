@@ -74,9 +74,9 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 { #category : 'as yet unclassified' }
 Game >> can: aShip play: aCard [
-	"aCard type = 'Instantaneous'"
 
-	aShip id = nextSpaceShipToMove ifFalse: [ aShip pending: aCard ]
+	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
+		ifTrue: [ aShip pending: aCard ]
 ]
 
 { #category : 'whats left of race positions' }

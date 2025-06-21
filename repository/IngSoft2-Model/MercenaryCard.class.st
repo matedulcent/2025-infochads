@@ -1,5 +1,5 @@
 Class {
-	#name : 'Mercenary',
+	#name : 'MercenaryCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
 		'helper',
@@ -10,28 +10,28 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Mercenary class >> withHelpOf: aSpaceShipID [
+MercenaryCard class >> withHelpOf: aSpaceShipID [
 
 	^ self new initializeWithHelpOf: aSpaceShipID
 ]
 
 { #category : 'initialization' }
-Mercenary >> initializeWithHelpOf: aHelper [
+MercenaryCard >> initializeWithHelpOf: aHelper [
 
 	super initializes.
 	helper := aHelper.
-	type := 'Instantaneous'
+	type := 'Permanent'
 ]
 
 { #category : 'as yet unclassified' }
-Mercenary >> mercenary: aSpaceShipID [
+MercenaryCard >> mercenary: aSpaceShipID [
 
 	used := true.
 	^ helper
 ]
 
 { #category : 'accessing' }
-Mercenary >> type [
+MercenaryCard >> type [
 
 	^ type
 ]

@@ -58,14 +58,18 @@ SpaceShip >> getShield [
 { #category : 'testing' }
 SpaceShip >> has: aCard [
 
-	| pickedCard |
-	pickedCard := cards
-		              detect: [ :card | card class = aCard class ]
-		              ifNone: [
-		              Error signal: 'The card is not in the ships deck' ].
+	| pickedCardFromCards pickedCardFromPending |
+	pickedCardFromPending := self remove: aCard from: pendingCards.
 
-	cards remove: pickedCard.
-	^ pickedCard
+	pickedCardFromCards := self remove: aCard from: cards.
+
+	pickedCardFromCards == pickedCardFromPending ifTrue: [
+		Error signal: 'The card is not in the ships deck' ].
+
+	"^ pickedCardFromCards"
+	pickedCardFromPending == aCard ifFalse: [ ^ pickedCardFromPending ].
+
+	^ pickedCardFromCards
 ]
 
 { #category : 'getters' }
@@ -125,6 +129,19 @@ SpaceShip >> rechargableShield: aDiceRoll [
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'removing' }
+SpaceShip >> remove: aCard from: aDeck [
+
+	| pickedCard |
+	pickedCard := aDeck
+		              detect: [ :card | card class = aCard class ]
+		              ifNone: [ ^ aCard ].
+
+	aDeck remove: pickedCard.
+
+	^ pickedCard
 ]
 
 { #category : 'initialization' }

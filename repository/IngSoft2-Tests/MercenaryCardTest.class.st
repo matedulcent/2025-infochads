@@ -25,8 +25,8 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndHasMercenaryWith3
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           (Mercenary withHelpOf: 3).
-					           (Mercenary withHelpOf: 4) })
+					           (MercenaryCard withHelpOf: 3).
+					           (MercenaryCard withHelpOf: 4) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -35,8 +35,8 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndHasMercenaryWith3
 		         (RiggedDice new initializeWith: { 5. 5. 1. 1. 1. 10 })
 		         wonAfter: 1.
 
-	aGame use: (Mercenary withHelpOf: 3) on: spaceShipID.
-	aGame use: (Mercenary withHelpOf: 4) on: spaceShipID.
+	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
+	aGame use: (MercenaryCard withHelpOf: 4) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -53,7 +53,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith:
-		          (OrderedCollection with: (Mercenary withHelpOf: 3))
+		          (OrderedCollection with: (MercenaryCard withHelpOf: 3))
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -62,7 +62,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 		         (RiggedDice new initializeWith: { 5. 5. 1. 2. 10 })
 		         wonAfter: 1.
 
-	aGame use: (Mercenary withHelpOf: 3) on: 1.
+	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -81,7 +81,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (Mercenary withHelpOf: 3))
+		          playedWith: (OrderedCollection with: (MercenaryCard withHelpOf: 3))
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -89,7 +89,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 		         throwing: (RiggedDice new initializeWith: { 5. 5. 10. 2. 1 })
 		         wonAfter: 1.
 
-	aGame use: (Mercenary withHelpOf: 2) on: spaceShipID.
+	aGame use: (MercenaryCard withHelpOf: 2) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -106,7 +106,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip3AndUsesMercenaryOn3T
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith:
-		          (OrderedCollection with: (Mercenary withHelpOf: 3))
+		          (OrderedCollection with: (MercenaryCard withHelpOf: 3))
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -114,7 +114,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip3AndUsesMercenaryOn3T
 		         throwing: (RiggedDice new initializeWith: { 5. 1. 5 })
 		         wonAfter: 1.
 
-	aGame use: (Mercenary withHelpOf: 3) on: spaceShipID.
+	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -129,10 +129,10 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           (Mercenary withHelpOf: 3).
-					           (Mercenary withHelpOf: 3).
-					           (Mercenary withHelpOf: 3).
-					           (Mercenary withHelpOf: 3) })
+					           (MercenaryCard withHelpOf: 3).
+					           (MercenaryCard withHelpOf: 3).
+					           (MercenaryCard withHelpOf: 3).
+					           (MercenaryCard withHelpOf: 3) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -140,8 +140,8 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 		         throwing: (RiggedDice new initializeWith: { 5. 5 })
 		         wonAfter: 1.
 
-	aGame use: (Mercenary withHelpOf: 3) on: 1.
-	aGame use: (Mercenary withHelpOf: 3) on: 2.
+	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
+	aGame use: (MercenaryCard withHelpOf: 3) on: 2.
 
 	self 
 	should: [ aGame start ]
@@ -158,7 +158,7 @@ MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWin
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith:
-		          (OrderedCollection with: (Mercenary withHelpOf: 3))
+		          (OrderedCollection with: (MercenaryCard withHelpOf: 3))
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -167,10 +167,60 @@ MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWin
 		         (RiggedDice new initializeWith: { 5. 5. 10. 1. 1. 5 })
 		         wonAfter: 1.
 
-	aGame use: (Mercenary withHelpOf: 3) on: spaceShipID.
+	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.
 	self assert: (aGame positionOf: 2) equals: 1.
 	self assert: (aGame positionOf: 3) equals: 6
+]
+
+{ #category : 'tests' }
+MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAccumulatedAndPlayedOnTheRightTurn [
+
+	| aGame aBoard |
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           WhiteCard new.
+					           (SpeedCard with: 1) })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: (RiggedDice new initializeWith: { 5. 6 })
+		         wonAfter: 1.
+
+	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: (SpeedCard with: 1) on: 2.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 7.
+	self assert: (aGame positionOf: 2) equals: 8
+]
+
+{ #category : 'tests' }
+MercenaryCardTest >> testWhenSpaceShipThatDoesntExistTryesToUseACardThenProcedureFails [
+
+	| aGame aBoard |
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           WhiteCard new.
+					           (SpeedCard with: 1) })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: (RiggedDice new initializeWith: { 5. 6 })
+		         wonAfter: 1.
+
+	self
+		should: [ aGame use: (SpeedCard with: 1) on: 10 ]
+		raise: Error
+		withMessageText: 'The ship doesnt exist'
 ]
