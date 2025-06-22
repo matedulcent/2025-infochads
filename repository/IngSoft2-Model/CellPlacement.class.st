@@ -47,7 +47,9 @@ CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice f
 
 	cards := OrderedCollection new.
 	1 to: numberOfCards do: [ :card |
-	cards addFirst: aDeckOfCards removeLast ].
+		card
+			ifNil: [ WhiteCard create ]
+			ifNotNil: [ cards addFirst: aDeckOfCards removeLast ] ].
 
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has: (CardEffect with: cards deepCopy) ].
