@@ -7,9 +7,9 @@ Class {
 
 { #category : 'as yet unclassified' }
 PowerCellInteractionTest >> readme [
-	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. -> (The sum of the values must be %100)
+	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. %CardCell -> (The sum of the values must be %100)
 
-	Parsecs. Len Array HyperJump. jump1. jump2. ... jumpN. -> (Jumps are the values in the array)
+	NumberOfCards. Parsecs. LightYears. Len Array HyperJump. jump1. jump2. ... jumpN. -> (Jumps are the values in the array)
 	
 	MoonWalk1. MoonWalk2. ... MoonWalkM.  } -> Config MoonWalk (Deduct values to ships)"
 

@@ -75,6 +75,27 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsercsThenTheJumpsExpresedIn
 ]
 
 { #category : 'tests' }
+LightYearsTests >> testWhenTheDistanceNeitherInParsecsOrLightYearsThenIsInvalid [
+
+	| aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
+
+	self
+		should: [
+			Board
+				withSize: 50
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				playedWith: (OrderedCollection with: WhiteCard new)
+				andACellConfiguration: aConfigureDiceSet ]
+		raise: Error
+		withMessageText:
+		'The ratio 1 parsec = 3 light years is not being respected'
+]
+
+{ #category : 'tests' }
 LightYearsTests >> testWhenTheDistanceOfTheGameIsExpresedInLightYearsAndParsecsThenTheJumpsAreExpresedInParsecs [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |

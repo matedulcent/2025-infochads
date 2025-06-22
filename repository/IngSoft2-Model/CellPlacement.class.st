@@ -45,10 +45,15 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 	| result |
 	result := aParsecValue + aLightYearValue.
 
+	aParsecValue = aLightYearValue ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ].
+		
 	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
 		^ result // boardSize ].
 
-	aLightYearValue // aParsecValue = 3 ifFalse: [
+
+	aLightYearValue // aParsecValue ~= 3 ifTrue: [
 		Error signal:
 			'The ratio 1 parsec = 3 light years is not being respected' ].
 
