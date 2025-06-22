@@ -11,8 +11,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-RedoCard class >> withTarget: aSpaceShipID [ 
+RedoCard class >> withFillOut: aSpaceShipID [ 
 	^self new initializeWithTarget: aSpaceShipID
+]
+
+{ #category : 'as yet unclassified' }
+RedoCard >> activateMercenaryOn [
+
+	mimic putHelperAs: targetID.
+	^ mimic activateMercenaryOn
 ]
 
 { #category : 'as yet unclassified' }
@@ -33,6 +40,13 @@ RedoCard >> effectAll [
 	^ mimic effectAll 
 ]
 
+{ #category : 'accessing' }
+RedoCard >> helper [
+
+	mimic class = MercenaryCard ifTrue: [ ^ targetID ].
+	^ ''
+]
+
 { #category : 'initialization' }
 RedoCard >> initializeWithTarget: aSpaceShipID [
 
@@ -42,15 +56,32 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 	myType := 'Instantaneous'
 ]
 
+{ #category : 'class membership' }
+RedoCard >> isMercenary [
+
+	^ true
+]
+
+{ #category : 'testing' }
+RedoCard >> isRedo [
+
+	^ true
+]
+
 { #category : 'as yet unclassified' }
 RedoCard >> lastPowerUpPlayed: aCell [
 
 	^ mimic lastPowerUpPlayed: aCell
 ]
 
+{ #category : 'accessing' }
+RedoCard >> mimic [
+
+	^ mimic
+]
+
 { #category : 'as yet unclassified' }
 RedoCard >> mimic: aCard [
-	"Mimic otro redo verrrr"
 
 	(mimic class = WhiteCard) ifTrue: [
 		mimic := aCard.

@@ -12,7 +12,7 @@ WhiteCard class >> create [
 ]
 
 { #category : 'as yet unclassified' }
-WhiteCard >> activateMercenaryOn: aSpaceShipID [
+WhiteCard >> activateMercenaryOn [
 
 	^ false
 ]
@@ -47,6 +47,18 @@ WhiteCard >> initializes [
 	^self
 ]
 
+{ #category : 'testing' }
+WhiteCard >> isMercenary [
+
+	^ false
+]
+
+{ #category : 'testing' }
+WhiteCard >> isRedo [
+
+	^ false
+]
+
 { #category : 'accessing' }
 WhiteCard >> lastPowerUpPlayed: aCell [
 
@@ -63,6 +75,12 @@ WhiteCard >> mimic: aCard [
 WhiteCard >> objective: aSpaceShipId [
 
 	^ ''
+]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> putHelperAs: aSpaceShipID [
+
+	^ true
 ]
 
 { #category : 'as yet unclassified' }

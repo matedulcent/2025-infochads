@@ -58,9 +58,9 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 numberOfTosses2 numberOfTosses1 |
 	numberOfTosses2 := (spaceShipActiveCards at: aSpaceShip2 id) select: [
-		                   :card | MercenaryCard = card class ].
+		                   :card | card isMercenary ].
 	numberOfTosses1 := (spaceShipActiveCards at: aSpaceShip1 id) select: [
-		                   :card | MercenaryCard = card class ].
+		                   :card | card isMercenary ].
 
 	[
 	throwSpaceShip2 := 0.
@@ -268,7 +268,11 @@ Game >> playCancelation: aCard of: aShip [
 { #category : 'as yet unclassified' }
 Game >> playRedo: aCard on: aShip [
 
-	aCard mimic: lastCardPlayed
+	lastCardPlayed isRedo ifFalse: [
+		aCard mimic: lastCardPlayed deepCopy.
+		^ self ].
+
+	aCard isRedo ifTrue: [ aCard mimic: lastCardPlayed mimic deepCopy ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -382,10 +386,10 @@ Game >> use: aCard on: aSpaceShipID [
 { #category : 'as yet unclassified' }
 Game >> usePendingCardsFrom: aSpaceShip [
 
-	| pendingCards |
+	"| pendingCards |
 	pendingCards := aSpaceShip pendingCard
 		                detect: [ :card | card isNotNil ]
-		                ifNone: [ ^ self ].
+		                ifNone: [ ^ self ]."
 
-	pendingCards do: [ :card | self use: card on: aSpaceShip id ]
+	aSpaceShip pendingCard do: [ :card | self use: card on: aSpaceShip id ]
 ]

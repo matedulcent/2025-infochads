@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'helper',
 		'type',
-		'helperOf',
 		'fixHelper'
 	],
 	#category : 'IngSoft2-Model',
@@ -18,10 +17,9 @@ MercenaryCard class >> withHelpOf: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-MercenaryCard >> activateMercenaryOn: aSpaceShipID [
+MercenaryCard >> activateMercenaryOn [
 
 	fixHelper ifFalse: [
-		helperOf := aSpaceShipID.
 		fixHelper := true.
 		^ true ].
 
@@ -39,9 +37,21 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 
 	super initializes.
 	helper := aHelper.
-	helperOf := aHelper.
 	fixHelper := false.
 	type := 'Permanent'
+]
+
+{ #category : 'testing' }
+MercenaryCard >> isMercenary [
+
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
+MercenaryCard >> putHelperAs: targetID [
+
+	helper := targetID.
+	fixHelper := false
 ]
 
 { #category : 'accessing' }

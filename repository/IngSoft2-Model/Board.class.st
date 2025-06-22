@@ -69,9 +69,8 @@ Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips d
 				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
 
 	(spaceShipCards at: aSpaceShip id) do: [ :card |
-		(card activateMercenaryOn: aSpaceShip id) ifTrue: [
+		(card activateMercenaryOn) ifTrue: [
 			mercenary := spaceShips detect: [ :ship | ship id = card helper ].
-
 			
 			mercenary isHelpingOthers ifTrue: [
 				Error signal: 'A mercenary cant help multiple ships.' ] ] ]
