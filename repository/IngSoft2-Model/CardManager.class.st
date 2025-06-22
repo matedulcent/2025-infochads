@@ -74,6 +74,12 @@ CardManager >> lastPlayed: aCell [
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> listOfMercenariesOf: aShip [
+
+	^(activeCards at: aShip id) collect: [ :card | card helper ]
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> numberOfMercenariesOf: aShip [
 
 	^ ((activeCards at: aShip id) select: [ :card | card isMercenary ])
