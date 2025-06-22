@@ -58,7 +58,7 @@ PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositions
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50. 49 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 30. 20. 20. 8. 2. 10. 10. 0. 100. 3. 30. 20. 10.
+		                     { 30. 20. 20. 8. 2. 10. 10. 1. 100. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7. 7. 7. 7. 7. 7. 10. 6. 4. 2. 5. 7.
 		                     7. 7. 7. 7. 7 }.
 
