@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'boardSize',
 		'wormHole',
-		'gameBoard'
+		'gameBoard',
+		'deckOfCards',
+		'lastCellPlayed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,30 +20,29 @@ Board class >> assertIsPositiveOverZero: aBoardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration: aConfigDiceSet [
+Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andACellConfiguration: aConfigDiceSet [
 
 	self assertIsPositiveOverZero: aBoardSize.
 	^ self new
 		  initializeWithSize: aBoardSize
 		  composedOf: aWormHole
+		  playedWith: aDeckOfCards
 		  andConfiguration: aConfigDiceSet
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjust: spaceShips positionAnd: totalLaps [
-
-	spaceShips do: [ :ship |
-		ship storeageNewPosition:
-			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
-]
-
-{ #category : 'as yet unclassified' }
-Board >> applyEffecOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
 	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at: (spaceShipPositions at: aSpaceShip id ) position.
-		cell takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions ]
+	gameBoard ifEmpty: [ ^ self ].
+	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
+
+	lastCellPlayed := cell.
+
+	cell
+		takeActionOver: aSpaceShip
+		or: spaceShips
+		thatArePlaced: spaceShipPositions
 ]
 
 { #category : 'accessing' }
@@ -51,13 +52,28 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
+Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips dependingOn: spaceShipPositions [
 
-	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at: aSpaceShip getPosition.
-		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
+	| mercenary |
+	(spaceShipCards at: aSpaceShip id) do: [ :card |
+		spaceShipPositions
+			at: aSpaceShip id
+			put: ((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
 
+
+	spaceShipCards associationsDo: [ :shipCards |
+		shipCards value do: [ :card |
+			spaceShipPositions
+				at: aSpaceShip id
+				put:
+				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
+
+	(spaceShipCards at: aSpaceShip id) do: [ :card |
+		(card activateMercenaryOn) ifTrue: [
+			mercenary := spaceShips detect: [ :ship | ship id = card helper ].
+			
+			mercenary isHelpingOthers ifTrue: [
+				Error signal: 'A mercenary cant help multiple ships.' ] ] ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -66,8 +82,18 @@ Board >> checkForWormHole: aPosition [
 	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> does: mercenaryId appearsInOther: spaceShipCards [
+
+	spaceShipCards associationsDo: [ :shipCard |
+		((shipCard value collect: [ :card | card helper = mercenaryId ]) size > 1)
+			ifTrue: [ ^ true ] ].
+
+	^ false
+]
+
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: aConfigDiceSet [
+Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
 
@@ -78,6 +104,14 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
 
+	deckOfCards := aDeckOfCards.
+	lastCellPlayed := Cell has: NoEffect new
+]
+
+{ #category : 'accessing' }
+Board >> lastCellEffect [
+
+	^ lastCellPlayed
 ]
 
 { #category : 'as yet unclassified' }
@@ -97,6 +131,13 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 	^ Position
 		  at: boardSize * (aPosition position // boardSize) negated
 		  withLaps: aPosition position // boardSize
+]
+
+{ #category : 'as yet unclassified' }
+Board >> pickACard [
+
+	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
+	^ WhiteCard create
 ]
 
 { #category : 'as yet unclassified' }

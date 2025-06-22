@@ -1,6 +1,6 @@
 Class {
 	#name : 'PowerCellUnitTest',
-	#superclass : 'TestCase',
+	#superclass : 'PowerCellInteractionTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
