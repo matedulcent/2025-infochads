@@ -16,7 +16,7 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMe
 					           (MercenaryCard withHelpOf: 3).
 					           (CancelationCard
 						            withObjective: (MercenaryCard withHelpOf: 3)
-						            ofSpaceShip: 1) })
+						            toShip: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -29,7 +29,7 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMe
 	aGame
 		use: (CancelationCard
 				 withObjective: (MercenaryCard withHelpOf: 3)
-				 ofSpaceShip: 1)
+				 toShip: 1)
 		on: 1.
 	aGame start.
 
@@ -50,7 +50,7 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasign
 					           (MercenaryCard withHelpOf: 3).
 					           (CancelationCard
 						            withObjective: (MercenaryCard withHelpOf: 3)
-						            ofSpaceShip: 1) })
+						            toShip: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -63,7 +63,7 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasign
 	aGame
 		use: (CancelationCard
 				 withObjective: (MercenaryCard withHelpOf: 3)
-				 ofSpaceShip: 1)
+				 toShip: 1)
 		on: 1.
 	aGame start.
 
@@ -81,13 +81,12 @@ CancelationCardTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsVa
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
+					           WhiteCard new.
+					           WhiteCard new.
+					           WhiteCard new.
 					           (CancelationCard
 						            withObjective: (SpeedCard with: 1)
-						            ofSpaceShip: 1).
-					           WhiteCard new.
-					           WhiteCard new.
-					           WhiteCard new.
-					           WhiteCard new.
+						            toShip: 1).
 					           (SpeedCard with: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
@@ -98,9 +97,8 @@ CancelationCardTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsVa
 
 	aGame use: (SpeedCard with: 1) on: 1.
 	aGame
-		use:
-		(CancelationCard withObjective: (SpeedCard with: 1) ofSpaceShip: 1)
-		on: 3.
+		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		on: 1.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6
 ]
@@ -113,11 +111,12 @@ CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancel
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
+					           WhiteCard new.
+					           WhiteCard new.
+					           (SpeedCard with: 1).
 					           (CancelationCard
 						            withObjective: (SpeedCard with: 1)
-						            ofSpaceShip: 1).
-					           WhiteCard new.
-					           (SpeedCard with: 1) })
+						            toShip: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -127,12 +126,11 @@ CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancel
 
 	aGame use: (SpeedCard with: 1) on: 1.
 	aGame
-		use:
-		(CancelationCard withObjective: (SpeedCard with: 1) ofSpaceShip: 1)
-		on: 2.
+		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		on: 1.
 	aGame start.
 
-	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 1) equals: 6
 ]
 
 { #category : 'tests' }
@@ -145,7 +143,7 @@ CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCard
 		          playedWith: (OrderedCollection withAll: {
 					           (CancelationCard
 						            withObjective: (SpeedCard with: 1)
-						            ofSpaceShip: 1).
+						            toShip: 1).
 					           (SpeedCard with: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
@@ -158,10 +156,11 @@ CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCard
 		should: [
 			aGame
 				use:
-				(CancelationCard withObjective: (SpeedCard with: 1) ofSpaceShip: 1)
+				(CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
 				on: 1 ]
 		raise: Error
-		withMessageText: 'This card cant be played if the card to be canceled is not active.'
+		withMessageText:
+		'This card cant be played if the card to be canceled is not active.'
 ]
 
 { #category : 'tests' }
@@ -174,7 +173,7 @@ CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 		          playedWith: (OrderedCollection withAll: {
 					           (CancelationCard
 						            withObjective: (SpeedCard with: 1)
-						            ofSpaceShip: 1).
+						            toShip: 1).
 					           (SpeedCard with: 1) })
 		          andACellConfiguration: {  }.
 	aGame := Game
@@ -185,12 +184,11 @@ CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 
 	aGame use: (SpeedCard with: 1) on: 1.
 	aGame
-		use:
-		(CancelationCard withObjective: (SpeedCard with: 1) ofSpaceShip: 1)
+		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
 		on: 1.
 	aGame start.
 
-	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 1) equals: 6
 ]
 
 { #category : 'tests' }
@@ -203,7 +201,7 @@ CancelationCardTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThe
 		          playedWith: (OrderedCollection withAll: {
 					           (CancelationCard
 						            withObjective: (SpeedCard with: 1)
-						            ofSpaceShip: 1).
+						            toShip: 1).
 					           WhiteCard new.
 					           (SpeedCard with: 1) })
 		          andACellConfiguration: {  }.
@@ -219,7 +217,7 @@ CancelationCardTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThe
 		should: [
 			aGame
 				use:
-				(CancelationCard withObjective: (SpeedCard with: 1) ofSpaceShip: 1)
+				(CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
 				on: 1 ]
 		raise: Error
 		withMessageText: 'The card is not in the ships deck'

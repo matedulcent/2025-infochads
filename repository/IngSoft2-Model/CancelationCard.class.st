@@ -4,16 +4,16 @@ Class {
 	#instVars : [
 		'card',
 		'type',
-		'shipID'
+		'objective'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-CancelationCard class >> withObjective: aCard  ofSpaceShip: spaceShipID [
+CancelationCard class >> withObjective: aCard toShip: objective [
 
-	^ self new initializeWithObjective: aCard of: spaceShipID 
+	^ self new initializeWith: aCard and: objective
 ]
 
 { #category : 'as yet unclassified' }
@@ -23,18 +23,18 @@ CancelationCard >> cardObjective: aCard [
 ]
 
 { #category : 'initialization' }
-CancelationCard >> initializeWithObjective: aCard of: spaceShipID [ 
+CancelationCard >> initializeWith: aCard and: anObjective [
 
 	super initializes.
 	card := aCard.
-	shipID := spaceShipID.
+	objective := anObjective.
 	type := 'Instantaneous'
 ]
 
 { #category : 'as yet unclassified' }
 CancelationCard >> objective: aSpaceShipId [
 
-	^ shipID
+	^ objective 
 ]
 
 { #category : 'accessing' }

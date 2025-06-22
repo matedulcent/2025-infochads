@@ -44,11 +44,11 @@ RepeatCardTest >> testWhenTheGameIsOverThenCancelCardsCantBePlayed [
 		          playedWith: (OrderedCollection withAll: {
 					           (CancelationCard
 						            withObjective: (SpeedCard with: 1)
-						            ofSpaceShip: 1).
+						            toShip: 1).
 					           WhiteCard new.
 					           (SpeedCard with: 1) })
 		          andACellConfiguration: aConfigureDiceSet.
-		aGame := Game
+	aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
@@ -58,8 +58,7 @@ RepeatCardTest >> testWhenTheGameIsOverThenCancelCardsCantBePlayed [
 	self
 		should: [
 			aGame
-				use:
-				(CancelationCard withObjective: (SpeedCard with: 1) ofSpaceShip: 1)
+				use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
 				on: 1 ]
 		raise: Error
 		withMessageText:

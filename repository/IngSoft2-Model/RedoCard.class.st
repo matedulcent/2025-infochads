@@ -16,9 +16,21 @@ RedoCard class >> withTarget: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
+RedoCard >> cardObjective: aCard [
+
+	^ mimic cardObjective: aCard
+]
+
+{ #category : 'as yet unclassified' }
 RedoCard >> effect [
 
 	^ (mimic effect)
+]
+
+{ #category : 'as yet unclassified' }
+RedoCard >> effectAll [
+
+	^ mimic effectAll 
 ]
 
 { #category : 'initialization' }
@@ -39,6 +51,13 @@ RedoCard >> mimic: aCard [
 		^ true ].
 
 	^ false
+]
+
+{ #category : 'as yet unclassified' }
+RedoCard >> objective: aSpaceShipId [
+
+	mimic class = WhiteCard ifTrue: [ ^ '' ].
+	^ targetID
 ]
 
 { #category : 'accessing' }
