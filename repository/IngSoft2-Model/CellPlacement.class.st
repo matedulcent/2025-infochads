@@ -40,6 +40,22 @@ CellPlacement >> blackHoleCellsWithProbabilities: aProbability andDesplacemets: 
 ]
 
 { #category : 'as yet unclassified' }
+CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
+
+	| result |
+	result := aParsecValue + aLightYearValue.
+
+	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
+		^ result // boardSize ].
+
+	aLightYearValue // aParsecValue = 3 ifFalse: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ].
+
+	^ aParsecValue // boardSize
+]
+
+{ #category : 'as yet unclassified' }
 CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aDeckOfCards [
 
 	| newCells numberOfCards cards |
@@ -95,6 +111,7 @@ CellPlacement >> generateUniverseWith: aConfigDice andA: aDeckOfCards [
 	self
 		hyperJumpCellsWithProbabilites: (probabilities at: 4)
 		andParsecValue: aConfigDice toss
+		andLightYearValue: aConfigDice toss
 		andJumpList: aConfigDice.
 	self atomicBombCellsWithProbabilities: (probabilities at: 5) and: 0.
 	self
@@ -103,11 +120,13 @@ CellPlacement >> generateUniverseWith: aConfigDice andA: aDeckOfCards [
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aParsecValue andJumpList: aConfigDice [
+CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aParsecValue andLightYearValue: aLightYearValue andJumpList: aConfigDice [
 
-	| jumps amountOfJumps newCells |
+	| jumps amountOfJumps newCells relation |
 	amountOfJumps := aConfigDice toss.
 	jumps := OrderedCollection new: amountOfJumps.
+	
+	relation := self calculateRelationBetween: aParsecValue and: aLightYearValue.
 
 	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
@@ -115,7 +134,7 @@ CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aP
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has:
 			            (HyperJumpEffect
-				             with: aParsecValue // boardSize 
+				             with: relation
 				             andParsec: jumps) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]

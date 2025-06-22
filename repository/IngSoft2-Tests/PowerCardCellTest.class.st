@@ -22,7 +22,7 @@ PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAqui
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2. 10 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := OrderedCollection withAll: {
 			                       WhiteCard new.
 			                       WhiteCard new.
@@ -45,7 +45,7 @@ PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAqui
 	aGame use: (SpeedCard with: 1) on: 2.
 
 	self assert: (aGame positionOf: 1) equals: 3.
-	self assert: (aGame positionOf: 2) equals: 11.
+	self assert: (aGame positionOf: 2) equals: 11
 ]
 
 { #category : 'tests' }
@@ -54,7 +54,7 @@ PowerCardCellTest >> testWhenTheCardCellGrabsTheFirstCardFromTheDeckThenTheSecon
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := OrderedCollection withAll: {
 			                       (SpeedCard with: 1).
 			                       (SpeedCard with: 1).
@@ -84,7 +84,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatDistributesC
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 1. 1 }. 
+		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }. 
 	aDeckOfPosibleCards := OrderedCollection withAll: {
 			                       (AccelerationCard with: 1).
 			                       (CancelationCard
@@ -117,7 +117,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 2. 10. 1. 1 }. 
+		                     { 0. 0. 0. 0. 0. 0. 100. 2. 10. 0. 1. 1 }. 
 	aDeckOfPosibleCards := OrderedCollection withAll: {
 			                       (SpeedCard with: 1).
 			                       (RepeatCard withObjective: 1) }.
@@ -145,7 +145,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatOnlyHasAWhit
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := OrderedCollection withAll: { WhiteCard new }.
 	aBoard := Board
 		          withSize: 100
