@@ -278,7 +278,33 @@ RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffec
 ]
 
 { #category : 'tests' }
-RedoCardTest >> testWhenTheOnlyCardPlayedEsRedoThenTheCardHasNoEffect [
+RedoCardTest >> testWhenSpaceShipPlaysTwoRedoCardTogetherWithNoOtherCardToRedoThenNothingHappens [
+
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 19 }.
+
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (RedoCard withTarget: 1).
+					           (RedoCard withTarget: 1) })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	aGame use: (RedoCard withTarget: 1) on: 1.
+	aGame use: (RedoCard withTarget: 1) on: 1.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 20.
+]
+
+{ #category : 'tests' }
+RedoCardTest >> testWhenTheOnlyCardPlayedIsRedoThenTheCardHasNoEffect [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 7 }.

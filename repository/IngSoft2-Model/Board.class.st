@@ -31,23 +31,6 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> applyEffectOfCardUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions dependingOn: spaceShipCards [
-
-	"self
-		checkFor: spaceShipCards
-		andItsEffectsOver: aSpaceShip
-		or: spaceShips
-		dependingOn: spaceShipPositions.
-	
-	
-	self
-		applyEffectOfPowerUpUponA: aSpaceShip
-		andAll: spaceShips
-		andIts: spaceShipPositions"
-		
-]
-
-{ #category : 'as yet unclassified' }
 Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
 	| cell |

@@ -382,5 +382,10 @@ Game >> use: aCard on: aSpaceShipID [
 { #category : 'as yet unclassified' }
 Game >> usePendingCardsFrom: aSpaceShip [
 
-	aSpaceShip pendingCard do: [ :card | self use: card on: aSpaceShip id ]
+	| pendingCards |
+	pendingCards := aSpaceShip pendingCard
+		                detect: [ :card | card isNotNil ]
+		                ifNone: [ ^ self ].
+
+	pendingCards do: [ :card | self use: card on: aSpaceShip id ]
 ]
