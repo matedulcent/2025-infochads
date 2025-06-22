@@ -55,6 +55,15 @@ Cell >> effect [
 	^ effect 
 ]
 
+{ #category : 'as yet unclassified' }
+Cell >> giveCardsTo: aSpaceShip [
+
+	| card |
+	card := effect grabCard.
+
+	card class = WhiteCard ifFalse: [ aSpaceShip addA: card ]
+]
+
 { #category : 'initialization' }
 Cell >> initializeWithA: anEffect [
 
@@ -73,5 +82,7 @@ Cell >> takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositi
 
 	self affectTheShieldOf: aSpaceShip.
 
-	self affectTheShieldOfAll: spaceShips
+	self affectTheShieldOfAll: spaceShips.
+	
+	self giveCardsTo: aSpaceShip 
 ]

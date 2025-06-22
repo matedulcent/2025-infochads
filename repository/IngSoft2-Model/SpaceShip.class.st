@@ -37,6 +37,12 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
+{ #category : 'adding' }
+SpaceShip >> addA: card [
+
+	cards add: card
+]
+
 { #category : 'testing' }
 SpaceShip >> canBattle [
 

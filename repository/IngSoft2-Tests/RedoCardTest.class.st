@@ -333,10 +333,10 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBothHaveThePowerUpAgain [
 
 	| aGame aDiceSet aBoard aConfigureDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 19. 34}.
+	aDiceSet := RiggedDice new initializeWith: { 19. 34 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0.100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -392,8 +392,8 @@ RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffec
 	| aGame aDiceSet aBoard aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -410,7 +410,7 @@ RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffec
 	aGame use: (RepeatCard withObjective: 1) on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 
-	self assert: (aGame positionOf: 1) equals: 8.
+	self assert: (aGame positionOf: 1) equals: 8
 ]
 
 { #category : 'tests' }
