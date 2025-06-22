@@ -251,56 +251,11 @@ Game >> obtainOponentShip: aSpaceShip [
 		  ifNone: [ aSpaceShip ]
 ]
 
-{ #category : 'movingOut' }
-Game >> playCancelation: aCard of: aShip [
-
-	"| card |
-	(aCard objective: aShip id) = '' ifTrue: [ ^ self ].
-	card := (spaceShipActiveCards at: (aCard objective: aShip id))
-		        detect: [ :cardOfShip |
-		        cardOfShip class = (aCard cardObjective: aCard) class ]
-		        ifNone: [
-			        Error signal:
-				        'This card cant be played if the card to be canceled is not active.' ].
-	(spaceShipActiveCards at: (aCard objective: aShip id)) remove: card.
-	aShip deMercenarize"
-]
-
 { #category : 'as yet unclassified' }
 Game >> playPendingCardsOn: aSpaceShip [
 
 	aSpaceShip pendingCard do: [ :card |
 		self use: card on: aSpaceShip id ]
-]
-
-{ #category : 'movingOut' }
-Game >> playRedo: aCard on: aShip [
-
-	"lastCardPlayed isRedo ifFalse: [
-		aCard mimic: lastCardPlayed deepCopy.
-		^ self ].
-
-	aCard isRedo ifTrue: [ aCard mimic: lastCardPlayed mimic deepCopy ]"
-]
-
-{ #category : 'movingOut' }
-Game >> playRepeat: aCard on: aShip [
-
-	"| cell objectiveShip |
-	aCard lastPowerUpPlayed: board lastCellEffect.
-	((aCard target: aShip id) = '') ifTrue: [ ^self ].
-	cell := aCard replicateCell.
-	objectiveShip := spaceShips detect: [ :ship |
-		                 ship id = (aCard target: aShip id) ].
-	cell
-		takeActionOver: objectiveShip
-		or: spaceShips
-		thatArePlaced: spaceShipPositions.
-
-	spaceShips do: [ :ship |
-		self sumTo: ship the: (board
-				 limitAdjustment: (spaceShipPositions at: ship id)
-				 withTotalLaps: laps) ]"
 ]
 
 { #category : 'informationTest' }
@@ -386,24 +341,4 @@ Game >> use: aCard on: aSpaceShipID [
 				 limitAdjustment: (spaceShipPositions at: ship id)
 				 withTotalLaps: laps) ]
 
-	"self playRedo: aCard on: aShip.
-	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
-		ifTrue: [
-			aShip pending: aCard.
-			^ self ].
-
-	aCard type = 'Permanent' ifTrue: [
-		lastCardPlayed := aShip has: aCard.
-		(spaceShipActiveCards at: aSpaceShipID) add: lastCardPlayed.
-		^ self ].
-
-	self isGameOver ifTrue: [
-		Error signal:
-			'Instantaneous cards cant be played after the game is over.' ].
-
-	self playCancelation: aCard of: aShip.
-
-	self playRepeat: aCard on: aShip.
-
-	lastCardPlayed := aShip has: aCard"
 ]
