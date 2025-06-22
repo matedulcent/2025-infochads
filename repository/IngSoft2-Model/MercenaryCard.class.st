@@ -3,7 +3,6 @@ Class {
 	#superclass : 'WhiteCard',
 	#instVars : [
 		'helper',
-		'type',
 		'fixHelper'
 	],
 	#category : 'IngSoft2-Model',
@@ -38,7 +37,6 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 	super initializes.
 	helper := aHelper.
 	fixHelper := false.
-	type := 'Permanent'
 ]
 
 { #category : 'testing' }
@@ -58,10 +56,4 @@ MercenaryCard >> putHelperAs: targetID [
 
 	helper := targetID.
 	fixHelper := false
-]
-
-{ #category : 'accessing' }
-MercenaryCard >> type [
-
-	^ type
 ]

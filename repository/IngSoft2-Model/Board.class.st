@@ -5,10 +5,7 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'lastCellPlayed',
-		'cardManager',
-		'lastCardPlayed',
-		'spaceShipActiveCards'
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -36,12 +33,6 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 Board >> activeCards [
 
 	^ cardManager activeCards
-]
-
-{ #category : 'adding' }
-Board >> addNewActiveCardSlot: spaceShipID [
-
-	cardManager addNew: spaceShipID
 ]
 
 { #category : 'as yet unclassified' }

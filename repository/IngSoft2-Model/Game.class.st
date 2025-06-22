@@ -92,7 +92,7 @@ Game >> create: aNumberOfSpaceShips [
 				 and: board pickACard
 				 with: aShield).
 		positions at: id put: aPosition.
-		board addNewActiveCardSlot: id ]
+		board manageCards addNew: id ]
 ]
 
 { #category : 'informationTest' }
@@ -192,7 +192,6 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
 	
-	"board adjust: positions of: spaceShips."
 	spaceShips do: [ :ship |
 		self sumTo: ship the: (board
 				 limitAdjustment: (positions at: ship id)

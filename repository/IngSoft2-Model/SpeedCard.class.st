@@ -2,8 +2,7 @@ Class {
 	#name : 'SpeedCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'increment',
-		'type'
+		'increment'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -34,17 +33,10 @@ SpeedCard >> initializeWith: aTossIncrement [
 
 	super initializes.
 	increment := aTossIncrement.
-	type := 'Permanent'
 ]
 
 { #category : 'testing' }
 SpeedCard >> isPermanent [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-SpeedCard >> type [
-
-	^ type
 ]

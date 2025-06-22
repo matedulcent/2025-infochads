@@ -99,9 +99,3 @@ WhiteCard >> target: aSpaceShipId [
 
 	^ ''
 ]
-
-{ #category : 'accessing' }
-WhiteCard >> type [
-
-	^ 'Instantaneous'
-]

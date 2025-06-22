@@ -3,7 +3,6 @@ Class {
 	#superclass : 'WhiteCard',
 	#instVars : [
 		'targetID',
-		'myType',
 		'mimic'
 	],
 	#category : 'IngSoft2-Model',
@@ -53,7 +52,6 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 	super initializes.
 	targetID := aSpaceShipID.
 	mimic := WhiteCard new.
-	myType := 'Instantaneous'
 ]
 
 { #category : 'class membership' }
@@ -114,12 +112,4 @@ RedoCard >> target: aSpaceShipId [
 
 	mimic class = RepeatCard ifTrue: [ ^ targetID ].
 	^ ''
-]
-
-{ #category : 'accessing' }
-RedoCard >> type [
-
-	mimic class = WhiteCard ifTrue: [ ^ myType ].
-
-	^ mimic type
 ]
