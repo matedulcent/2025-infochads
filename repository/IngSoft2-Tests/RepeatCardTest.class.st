@@ -11,22 +11,23 @@ RepeatCardTest >> testWhenNoOneHasPlayedYetThenTeRepeatCardHasNoEffect [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 20 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (RepeatCard withObjective: 1 ))
+		          playedWith:
+		          (OrderedCollection with: (RepeatCard withObjective: 1))
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 1.
-		
-	aGame use: (RepeatCard withObjective: 1 ) on: 1.
+
+	aGame use: (RepeatCard withObjective: 1) on: 1.
 	aGame start.
-	
+
 	self assert: (aGame positionOf: 1) equals: 17
 ]
 
@@ -36,8 +37,8 @@ RepeatCardTest >> testWhenTheGameIsOverThenCancelCardsCantBePlayed [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 100. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 100. 0. 0. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -58,7 +59,8 @@ RepeatCardTest >> testWhenTheGameIsOverThenCancelCardsCantBePlayed [
 	self
 		should: [
 			aGame
-				use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+				use:
+				(CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
 				on: 1 ]
 		raise: Error
 		withMessageText:
@@ -71,15 +73,15 @@ RepeatCardTest >> testWhenTheGameIsOverThenRepeateCardsCantBePlayed [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 100. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 100. 0. 0. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           RepeatCard withObjective: 2.
+					           (RepeatCard withObjective: 2).
 					           WhiteCard new.
-					           RepeatCard withObjective: 2 })
+					           (RepeatCard withObjective: 2) })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -101,22 +103,23 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleAndTheRepeteCardWasPlayedOn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (RepeatCard withObjective: 1 ))
+		          playedWith:
+		          (OrderedCollection with: (RepeatCard withObjective: 1))
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 1.
-		
+
 	aGame start.
-	aGame use: (RepeatCard withObjective: 1 ) on: 1.
-	
+	aGame use: (RepeatCard withObjective: 1) on: 1.
+
 	self assert: (aGame positionOf: 1) equals: 12
 ]
 
@@ -126,15 +129,15 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleTriggerdByAnotherPlayerThen
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 14. 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
 					           (RepeatCard withObjective: 2).
 					           WhiteCard new.
-					           RepeatCard withObjective: 2 })
+					           (RepeatCard withObjective: 2) })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -155,15 +158,15 @@ RepeatCardTest >> testWhenTheLastPowerUpWasAnAtomicBombThenAllShieldsAreDeducted
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 14 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 6. 4.
-		                     2. 5. 7 }.
+		                     { 0. 0. 0. 0. 100. 0. 0. 0. 100. 3. 30. 20. 10.
+		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           RepeatCard withObjective: 2.
+					           (RepeatCard withObjective: 2).
 					           WhiteCard new.
-					           RepeatCard withObjective: 2 })
+					           (RepeatCard withObjective: 2) })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard

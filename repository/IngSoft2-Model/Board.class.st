@@ -96,10 +96,11 @@ Board >> does: mercenaryId appearsInOther: spaceShipCards [
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-
+	deckOfCards := aDeckOfCards.
 	gameBoard := CellPlacement new
-		             createBoardWithCellConfiguration: aConfigDiceSet
-		             andSize: boardSize.
+		             createBoardWith: aConfigDiceSet
+		             withComplementary: aDeckOfCards
+		             And: boardSize.
 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.

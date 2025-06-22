@@ -44,7 +44,6 @@ WhiteCard >> helper [
 { #category : 'as yet unclassified' }
 WhiteCard >> initializes [
 
-	^self
 ]
 
 { #category : 'testing' }
@@ -93,4 +92,10 @@ WhiteCard >> replicateCell [
 WhiteCard >> target: aSpaceShipId [
 
 	^ ''
+]
+
+{ #category : 'accessing' }
+WhiteCard >> type [
+
+	^ 'Instantaneous'
 ]
