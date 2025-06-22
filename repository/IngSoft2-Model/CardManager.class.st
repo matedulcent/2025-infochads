@@ -30,7 +30,7 @@ CardManager >> activatePermanent: aCard on: aShip [
 { #category : 'accessing' }
 CardManager >> activeCards [
 
-	^ activeCards 
+	^ activeCards deepCopy
 ]
 
 { #category : 'adding' }
