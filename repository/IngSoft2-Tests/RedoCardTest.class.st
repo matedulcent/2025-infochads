@@ -194,6 +194,63 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 ]
 
 { #category : 'tests' }
+RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBothHaveThePowerUpAgain [
+
+	| aGame aDiceSet aBoard aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 19. 34}.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     2. 5. 7 }.
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (RepeatCard withObjective: 1).
+					           (RedoCard withTarget: 2) })
+		          andACellConfiguration: aConfigureDiceSet.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
+	aGame start.
+	aGame use: (RepeatCard withObjective: 1) on: 1.
+	aGame use: (RedoCard withTarget: 2) on: 1.
+
+	self assert: (aGame positionOf: 1) equals: 12.
+	self assert: (aGame positionOf: 2) equals: 27
+]
+
+{ #category : 'tests' }
+RedoCardTest >> testWhenSpaceShip2PlaysSpeedCardAndSpaceShip1PlaysRedoCardThenRedoIsUselessDueToSpeedCardCantBePlayedInOthersTurn [
+
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 19. 30 }.
+
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (SpeedCard with: 1).
+					           WhiteCard new.
+					           (RedoCard withTarget: 2).
+					           WhiteCard new })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	aGame use: (SpeedCard with: 1) on: 2.
+	aGame use: (RedoCard withTarget: 2) on: 1.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 20.
+	self assert: (aGame positionOf: 2) equals: 32
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffectTwice [
 
 	| aGame aDiceSet aBoard aConfigureDiceSet |

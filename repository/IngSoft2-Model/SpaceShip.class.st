@@ -6,7 +6,6 @@ Class {
 		'spaceShipID',
 		'loseTurn',
 		'cards',
-		'helper',
 		'helperOf',
 		'pendingCards',
 		'helpingOthers'
@@ -38,12 +37,6 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
-{ #category : 'adding' }
-SpaceShip >> addMercenary: aMercenary [
-
-	"helper add: aMercenary"
-]
-
 { #category : 'testing' }
 SpaceShip >> canBattle [
 
@@ -73,10 +66,7 @@ SpaceShip >> has: aCard [
 
 	pickedCardFromCards == pickedCardFromPending ifTrue: [
 		Error signal: 'The card is not in the ships deck' ].
-
-	"^ pickedCardFromCards"
-	pickedCardFromPending == aCard ifFalse: [ ^ aCard ].
-
+	
 	^ aCard
 ]
 
@@ -101,12 +91,6 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 ]
 
 { #category : 'testing' }
-SpaceShip >> isHelping [
-
-	^ helperOf
-]
-
-{ #category : 'testing' }
 SpaceShip >> isHelpingOthers [
 
 	(helpingOthers = false) ifTrue: [
@@ -123,15 +107,10 @@ SpaceShip >> loseShield [
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip >> mercenaries [
-
-	"^ helper"
-]
-
-{ #category : 'as yet unclassified' }
 SpaceShip >> pending: aCard [
+	"encapsulation"
 
-	pendingCards add: aCard 
+	pendingCards add: aCard
 ]
 
 { #category : 'as yet unclassified' }
