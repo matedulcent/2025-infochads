@@ -6,6 +6,41 @@ Class {
 }
 
 { #category : 'tests' }
+RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThenRedoIsInvalid [
+
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 7. 10 }.
+
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (CancelationCard
+						            withObjective: (SpeedCard with: 1)
+						            toShip: 1).
+					           (RedoCard withTarget: 1).
+					           (SpeedCard with: 1).
+					           (AccelerationCard with: 1) })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
+	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: (AccelerationCard with: 1) on: 1.
+	aGame
+		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		on: 2.
+
+	self
+		should: [ aGame use: (RedoCard withTarget: 1) on: 2 ]
+		raise: Error
+		withMessageText:
+		'This card cant be played if the card to be canceled is not active.'
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testWhenShip1PlaysSpeedAndShip2PlaysSpeedThenShip3CancelsAndRedoThenBothCardsAreOut [
 
 	| aGame aDiceSet aBoard |
@@ -156,6 +191,33 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 10
+]
+
+{ #category : 'tests' }
+RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffectTwice [
+
+	| aGame aDiceSet aBoard aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 19 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 100. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     2. 5. 7 }.
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection withAll: {
+					           (RepeatCard withObjective: 1).
+					           (RedoCard withTarget: 1) })
+		          andACellConfiguration: aConfigureDiceSet.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+	aGame start.
+	aGame use: (RepeatCard withObjective: 1) on: 1.
+	aGame use: (RedoCard withTarget: 1) on: 1.
+
+	self assert: (aGame positionOf: 1) equals: 8.
 ]
 
 { #category : 'tests' }

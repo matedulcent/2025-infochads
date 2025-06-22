@@ -3,22 +3,24 @@ Class {
 	#superclass : 'WhiteCard',
 	#instVars : [
 		'type',
-		'cell'
+		'cell',
+		'objective'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-RepeatCard class >> withObjective [
+RepeatCard class >> withObjective: anObjective [
 	
-	^self new initializeWithObjective
+	^self new initializeWith: anObjective
 ]
 
 { #category : 'initialization' }
-RepeatCard >> initializeWithObjective [
+RepeatCard >> initializeWith: anObjective [
 
 	super initializes.
+	objective := anObjective.
 	cell := NoEffect new.
 	type := 'Instantaneous'
 ]
@@ -33,6 +35,12 @@ RepeatCard >> lastPowerUpPlayed: aCell [
 RepeatCard >> replicateCell [
 
 	^ cell
+]
+
+{ #category : 'as yet unclassified' }
+RepeatCard >> target: aSpaceShipId [
+
+	^ objective 
 ]
 
 { #category : 'accessing' }

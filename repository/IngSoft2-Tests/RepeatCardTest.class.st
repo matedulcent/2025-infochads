@@ -16,7 +16,7 @@ RepeatCardTest >> testWhenNoOneHasPlayedYetThenTeRepeatCardHasNoEffect [
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (RepeatCard withObjective ))
+		          playedWith: (OrderedCollection with: (RepeatCard withObjective: 1 ))
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -24,7 +24,7 @@ RepeatCardTest >> testWhenNoOneHasPlayedYetThenTeRepeatCardHasNoEffect [
 		         throwing: aDiceSet
 		         wonAfter: 1.
 		
-	aGame use: (RepeatCard withObjective ) on: 1.
+	aGame use: (RepeatCard withObjective: 1 ) on: 1.
 	aGame start.
 	
 	self assert: (aGame positionOf: 1) equals: 17
@@ -77,9 +77,9 @@ RepeatCardTest >> testWhenTheGameIsOverThenRepeateCardsCantBePlayed [
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           RepeatCard withObjective.
+					           RepeatCard withObjective: 2.
 					           WhiteCard new.
-					           RepeatCard withObjective })
+					           RepeatCard withObjective: 2 })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -89,7 +89,7 @@ RepeatCardTest >> testWhenTheGameIsOverThenRepeateCardsCantBePlayed [
 
 	aGame start.
 	self
-		should: [ aGame use: RepeatCard withObjective on: 2 ]
+		should: [ aGame use: (RepeatCard withObjective: 2) on: 2 ]
 		raise: Error
 		withMessageText:
 		'Instantaneous cards cant be played after the game is over.'
@@ -106,7 +106,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleAndTheRepeteCardWasPlayedOn
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (RepeatCard withObjective ))
+		          playedWith: (OrderedCollection with: (RepeatCard withObjective: 1 ))
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -115,7 +115,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleAndTheRepeteCardWasPlayedOn
 		         wonAfter: 1.
 		
 	aGame start.
-	aGame use: (RepeatCard withObjective ) on: 1.
+	aGame use: (RepeatCard withObjective: 1 ) on: 1.
 	
 	self assert: (aGame positionOf: 1) equals: 12
 ]
@@ -132,9 +132,9 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleTriggerdByAnotherPlayerThen
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           RepeatCard withObjective.
+					           (RepeatCard withObjective: 2).
 					           WhiteCard new.
-					           RepeatCard withObjective })
+					           RepeatCard withObjective: 2 })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -143,7 +143,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleTriggerdByAnotherPlayerThen
 		         wonAfter: 1.
 
 	aGame start.
-	aGame use: RepeatCard withObjective on: 2.
+	aGame use: (RepeatCard withObjective: 2) on: 2.
 
 	self assert: (aGame positionOf: 1) equals: 11.
 	self assert: (aGame positionOf: 2) equals: 12
@@ -161,9 +161,9 @@ RepeatCardTest >> testWhenTheLastPowerUpWasAnAtomicBombThenAllShieldsAreDeducted
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (OrderedCollection withAll: {
-					           RepeatCard withObjective.
+					           RepeatCard withObjective: 2.
 					           WhiteCard new.
-					           RepeatCard withObjective })
+					           RepeatCard withObjective: 2 })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -172,7 +172,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasAnAtomicBombThenAllShieldsAreDeducted
 		         wonAfter: 1.
 
 	aGame start.
-	aGame use: RepeatCard withObjective on: 2.
+	aGame use: (RepeatCard withObjective: 2) on: 2.
 
 	self assert: (aGame shieldOf: 1) equals: 1.
 	self assert: (aGame shieldOf: 2) equals: 1

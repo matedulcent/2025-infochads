@@ -274,15 +274,17 @@ Game >> playRedo: aCard on: aShip [
 { #category : 'as yet unclassified' }
 Game >> playRepeat: aCard on: aShip [
 
-	| cell |
+	| cell objectiveShip |
 	aCard lastPowerUpPlayed: board lastCellEffect.
-
+	((aCard target: aShip id) = '') ifTrue: [ ^self ].
 	cell := aCard replicateCell.
+	objectiveShip := spaceShips detect: [ :ship |
+		                 ship id = (aCard target: aShip id) ].
 	cell
-		takeActionOver: aShip
+		takeActionOver: objectiveShip
 		or: spaceShips
 		thatArePlaced: spaceShipPositions.
-		
+
 	spaceShips do: [ :ship |
 		self sumTo: ship the: (board
 				 limitAdjustment: (spaceShipPositions at: ship id)

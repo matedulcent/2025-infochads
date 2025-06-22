@@ -70,3 +70,9 @@ WhiteCard >> replicateCell [
 
 	^ Cell has: NoEffect new
 ]
+
+{ #category : 'accessing' }
+WhiteCard >> target: aSpaceShipId [
+
+	^ ''
+]

@@ -43,6 +43,12 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
+RedoCard >> lastPowerUpPlayed: aCell [
+
+	^ mimic lastPowerUpPlayed: aCell
+]
+
+{ #category : 'as yet unclassified' }
 RedoCard >> mimic: aCard [
 	"Mimic otro redo verrrr"
 
@@ -56,8 +62,21 @@ RedoCard >> mimic: aCard [
 { #category : 'as yet unclassified' }
 RedoCard >> objective: aSpaceShipId [
 
-	mimic class = WhiteCard ifTrue: [ ^ '' ].
-	^ targetID
+	mimic class = CancelationCard ifTrue: [ ^ targetID ].
+	^ ''
+]
+
+{ #category : 'as yet unclassified' }
+RedoCard >> replicateCell [
+
+	^ mimic replicateCell
+]
+
+{ #category : 'accessing' }
+RedoCard >> target: aSpaceShipId [
+
+	mimic class = RepeatCard ifTrue: [ ^ targetID ].
+	^ ''
 ]
 
 { #category : 'accessing' }
