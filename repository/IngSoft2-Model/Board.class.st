@@ -113,7 +113,7 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckO
 
 	boardSize := aBoardSize.
 	cardManager := CardManager createWith: aDeckOfCards.
-	"spaceShipActiveCards := OrderedDictionary new."
+
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
 		             withComplementary: cardManager
@@ -121,8 +121,7 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckO
 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
-	"lastCardPlayed := WhiteCard new.
-	lastCellPlayed := Cell has: NoEffect new"
+
 ]
 
 { #category : 'as yet unclassified' }
@@ -154,29 +153,6 @@ Board >> manageCards [
 Board >> pickACard [
 	
 	^ cardManager grabTopCard
-]
-
-{ #category : 'as yet unclassified' }
-Board >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove and: spaceShipPositions [
-
-	cardManager playRedo: aCard on: aShip.
-	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
-		aShip pending: aCard.
-		^ self ].
-	(cardManager activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
-	"	aCard type = 'Permanent' ifTrue: [
-		cardManager activatePermanent: aCard on: aShip.
-		^ self ]."
-
-	cardManager playCancelation: aCard on: aShip.
-
-	cardManager
-		playRepeat: aCard
-		on: aShip
-		and: spaceShips
-		dependingOn: spaceShipPositions.
-
-	cardManager lastCardPlayed: (aShip has: aCard)
 ]
 
 { #category : 'as yet unclassified' }

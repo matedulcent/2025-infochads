@@ -55,19 +55,17 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 numberOfTosses2 numberOfTosses1 |
-	numberOfTosses2 := (board activeCards at: aSpaceShip2 id) select: [
-		                   :card | card isMercenary ].
-	numberOfTosses1 := (board activeCards at: aSpaceShip1 id) select: [
-		                   :card | card isMercenary ].
+	numberOfTosses2 := board manageCards numberOfMercenariesOf: aSpaceShip2.
+	numberOfTosses1 := board manageCards numberOfMercenariesOf: aSpaceShip1.
 
 	[
 	throwSpaceShip2 := 0.
 	throwSpaceShip1 := 0.
 
-	1 to: numberOfTosses2 size + 1 do: [ :mercenary |
+	1 to: numberOfTosses2 do: [ :mercenary |
 	throwSpaceShip2 := throwSpaceShip2 + diceSet toss ].
 
-	1 to: numberOfTosses1 size + 1 do: [ :mercenary |
+	1 to: numberOfTosses1 do: [ :mercenary |
 	throwSpaceShip1 := throwSpaceShip1 + diceSet toss ].
 
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
@@ -325,20 +323,19 @@ Game >> use: aCard on: aSpaceShipID [
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
 
-	(self isGameOver and: aCard type = 'Instantaneous') ifTrue: [
+	(self isGameOver and: aCard isPermanent not) ifTrue: [
 		Error signal:
 			'Instantaneous cards cant be played after the game is over.' ].
 
-	board
+	board manageCards
 		play: aCard
 		on: aShip
 		thatIsIn: spaceShips
 		with: nextSpaceShipToMove
 		and: spaceShipPositions.
-		
+
 	spaceShips do: [ :ship |
 		self sumTo: ship the: (board
 				 limitAdjustment: (spaceShipPositions at: ship id)
 				 withTotalLaps: laps) ]
-
 ]

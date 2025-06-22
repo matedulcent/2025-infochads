@@ -74,6 +74,33 @@ CardManager >> lastPlayed: aCell [
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> numberOfMercenariesOf: aShip [
+
+	^ ((activeCards at: aShip id) select: [ :card | card isMercenary ])
+		  size + 1
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove and: spaceShipPositions [
+
+	self playRedo: aCard on: aShip.
+	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
+		aShip pending: aCard.
+		^ self ].
+	(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
+
+	self playCancelation: aCard on: aShip.
+
+	self
+		playRepeat: aCard
+		on: aShip
+		and: spaceShips
+		dependingOn: spaceShipPositions.
+
+	self lastCardPlayed: (aShip has: aCard)
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> playCancelation: aCard on: aShip [
 
 	| card |
