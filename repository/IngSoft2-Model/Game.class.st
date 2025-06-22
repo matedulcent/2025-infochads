@@ -126,9 +126,8 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
-	laps := aNumberOfLaps
-
-	"availableCards := OrderedCollection new"
+	laps := aNumberOfLaps.
+	lastCardPlayed := WhiteCard new.
 ]
 
 { #category : 'whats left of race positions' }
@@ -267,6 +266,12 @@ Game >> playCancelation: aCard of: aShip [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> playRedo: aCard on: aShip [
+
+	aCard mimic: lastCardPlayed
+]
+
+{ #category : 'as yet unclassified' }
 Game >> playRepeat: aCard on: aShip [
 
 	| cell |
@@ -350,7 +355,7 @@ Game >> use: aCard on: aSpaceShipID [
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-
+	self playRedo: aCard on: aShip.
 	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
 		ifTrue: [
 			aShip pending: aCard.
@@ -366,9 +371,10 @@ Game >> use: aCard on: aSpaceShipID [
 			'Instantaneous cards cant be played after the game is over.' ].
 
 	self playCancelation: aCard of: aShip.
-	lastCardPlayed := aShip has: aCard.
 
-	self playRepeat: aCard on: aShip
+	self playRepeat: aCard on: aShip.
+
+	lastCardPlayed := aShip has: aCard
 ]
 
 { #category : 'as yet unclassified' }

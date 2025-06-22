@@ -75,9 +75,9 @@ SpaceShip >> has: aCard [
 		Error signal: 'The card is not in the ships deck' ].
 
 	"^ pickedCardFromCards"
-	pickedCardFromPending == aCard ifFalse: [ ^ pickedCardFromPending ].
+	pickedCardFromPending == aCard ifFalse: [ ^ aCard ].
 
-	^ pickedCardFromCards
+	^ aCard
 ]
 
 { #category : 'getters' }

@@ -89,7 +89,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 		         throwing: (RiggedDice new initializeWith: { 5. 5. 10. 2. 1 })
 		         wonAfter: 1.
 
-	aGame use: (MercenaryCard withHelpOf: 2) on: spaceShipID.
+	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.

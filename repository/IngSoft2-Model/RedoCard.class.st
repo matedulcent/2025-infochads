@@ -2,41 +2,49 @@ Class {
 	#name : 'RedoCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'type',
-		'cell'
+		'targetID',
+		'myType',
+		'mimic'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-RedoCard class >> withObjective [
-	
-	^self new initializeWithObjective
-]
-
-{ #category : 'initialization' }
-RedoCard >> initializeWithObjective [
-
-	super initializes.
-	cell := NoEffect new.
-	type := 'Instantaneous'
-]
-
-{ #category : 'accessing' }
-RedoCard >> lastPowerUpPlayed: aCell [
-
-	cell := aCell
+RedoCard class >> withTarget: aSpaceShipID [ 
+	^self new initializeWithTarget: aSpaceShipID
 ]
 
 { #category : 'as yet unclassified' }
-RedoCard >> replicateCell [
+RedoCard >> effect [
 
-	^ cell
+	^ (mimic effect)
+]
+
+{ #category : 'initialization' }
+RedoCard >> initializeWithTarget: aSpaceShipID [
+
+	super initializes.
+	targetID := aSpaceShipID.
+	mimic := WhiteCard new.
+	myType := 'Instantaneous'
+]
+
+{ #category : 'as yet unclassified' }
+RedoCard >> mimic: aCard [
+	"Mimic otro redo verrrr"
+
+	(mimic class = WhiteCard) ifTrue: [
+		mimic := aCard.
+		^ true ].
+
+	^ false
 ]
 
 { #category : 'accessing' }
 RedoCard >> type [
 
-	^ type
+	mimic class = WhiteCard ifTrue: [ ^ myType ].
+
+	^ mimic type
 ]

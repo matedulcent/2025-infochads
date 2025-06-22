@@ -54,6 +54,12 @@ WhiteCard >> lastPowerUpPlayed: aCell [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> mimic: aCard [
+
+	^ false
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> objective: aSpaceShipId [
 
 	^ ''
