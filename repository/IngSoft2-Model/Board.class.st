@@ -29,35 +29,8 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 		  andConfiguration: aConfigDiceSet
 ]
 
-{ #category : 'accessing' }
-Board >> activeCards [
-
-	^ cardManager activeCards
-]
-
 { #category : 'as yet unclassified' }
-Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
-
-	| cell |
-	gameBoard ifEmpty: [ ^ self ].
-	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
-
-	cardManager lastPlayed: cell.
-
-	cell
-		takeActionOver: aSpaceShip
-		or: spaceShips
-		thatArePlaced: spaceShipPositions
-]
-
-{ #category : 'accessing' }
-Board >> boardSize [
-
-	^ boardSize
-]
-
-{ #category : 'as yet unclassified' }
-Board >> checkForCardEffectsOver: aSpaceShip
+Board >> applyCardEffectsOver: aSpaceShip
 		or: spaceShips
 		dependingOn: spaceShipPositions [
 
@@ -81,6 +54,27 @@ Board >> checkForCardEffectsOver: aSpaceShip
 			
 			mercenary isHelpingOthers ifTrue: [
 				Error signal: 'A mercenary cant help multiple ships.' ] ] ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+
+	| cell |
+	gameBoard ifEmpty: [ ^ self ].
+	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
+
+	cardManager lastPlayed: cell.
+
+	cell
+		takeActionOver: aSpaceShip
+		or: spaceShips
+		thatArePlaced: spaceShipPositions
+]
+
+{ #category : 'accessing' }
+Board >> boardSize [
+
+	^ boardSize
 ]
 
 { #category : 'as yet unclassified' }

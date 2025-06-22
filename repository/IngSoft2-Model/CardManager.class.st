@@ -40,12 +40,6 @@ CardManager >> addNew: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> getLastCardPlayed [
-
-	^ lastCardPlayed 
-]
-
-{ #category : 'as yet unclassified' }
 CardManager >> grabTopCard [
 
 	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
@@ -124,12 +118,12 @@ CardManager >> playCancelation: aCard on: aShip [
 { #category : 'as yet unclassified' }
 CardManager >> playRedo: aCard on: aShip [
 
-	self getLastCardPlayed isRedo ifFalse: [
-		aCard mimic: self getLastCardPlayed deepCopy.
+	lastCardPlayed isRedo ifFalse: [
+		aCard mimic: lastCardPlayed deepCopy.
 		^ self ].
 
 	aCard isRedo ifTrue: [
-		aCard mimic: self getLastCardPlayed mimic deepCopy ]
+		aCard mimic: lastCardPlayed mimic deepCopy ]
 ]
 
 { #category : 'as yet unclassified' }

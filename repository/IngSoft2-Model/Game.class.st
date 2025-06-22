@@ -154,9 +154,9 @@ Game >> lookForBattle: aSpaceShip [
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	(((board activeCards at: aSpaceShip id) anySatisfy: [ :card |
+	(((board manageCards activeCards at: aSpaceShip id) anySatisfy: [ :card |
 		  aSpaceShip id = card helper ]) or:
-		 ((board activeCards at: opponentShip id) anySatisfy: [ :card |
+		 ((board manageCards activeCards at: opponentShip id) anySatisfy: [ :card |
 			  aSpaceShip id = card helper ])) ifTrue: [ ^ self ].
 
 	opponentShip == aSpaceShip ifFalse: [
@@ -200,7 +200,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 	self playPendingCardsOn: aSpaceShip.
 
 	board
-		checkForCardEffectsOver: aSpaceShip
+		applyCardEffectsOver: aSpaceShip
 		or: spaceShips
 		dependingOn: positions.
 
@@ -209,7 +209,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 				 limitAdjustment: (positions at: ship id)
 				 withTotalLaps: laps) ].
 	board
-		applyEffectOfPowerUpUponA: aSpaceShip
+		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips
 		andIts: positions.
 
