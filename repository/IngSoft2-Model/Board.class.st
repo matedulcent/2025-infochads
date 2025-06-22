@@ -5,8 +5,10 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'deckOfCards',
-		'lastCellPlayed'
+		'lastCellPlayed',
+		'cardManager',
+		'lastCardPlayed',
+		'spaceShipActiveCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,6 +30,18 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 		  composedOf: aWormHole
 		  playedWith: aDeckOfCards
 		  andConfiguration: aConfigDiceSet
+]
+
+{ #category : 'accessing' }
+Board >> activeCards [
+
+	^ cardManager activeCards
+]
+
+{ #category : 'adding' }
+Board >> addNewActiveCardSlot: spaceShipID [
+
+	cardManager addNew: spaceShipID
 ]
 
 { #category : 'as yet unclassified' }
@@ -52,23 +66,25 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips dependingOn: spaceShipPositions [
+Board >> checkForCardEffectsOver: aSpaceShip
+		or: spaceShips
+		dependingOn: spaceShipPositions [
 
 	| mercenary |
-	(spaceShipCards at: aSpaceShip id) do: [ :card |
+	(cardManager activeCards at: aSpaceShip id) do: [ :card |
 		spaceShipPositions
 			at: aSpaceShip id
 			put: ((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
 
 
-	spaceShipCards associationsDo: [ :shipCards |
+	cardManager activeCards associationsDo: [ :shipCards |
 		shipCards value do: [ :card |
 			spaceShipPositions
 				at: aSpaceShip id
 				put:
 				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
 
-	(spaceShipCards at: aSpaceShip id) do: [ :card |
+	(cardManager activeCards at: aSpaceShip id) do: [ :card |
 		(card activateMercenaryOn) ifTrue: [
 			mercenary := spaceShips detect: [ :ship | ship id = card helper ].
 			
@@ -96,23 +112,17 @@ Board >> does: mercenaryId appearsInOther: spaceShipCards [
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	deckOfCards := aDeckOfCards.
+	cardManager := CardManager createWith: aDeckOfCards.
+	"spaceShipActiveCards := OrderedDictionary new."
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
-		             withComplementary: aDeckOfCards
+		             withComplementary: cardManager
 		             And: boardSize.
 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
-
-	deckOfCards := aDeckOfCards.
+	lastCardPlayed := WhiteCard new.
 	lastCellPlayed := Cell has: NoEffect new
-]
-
-{ #category : 'accessing' }
-Board >> lastCellEffect [
-
-	^ lastCellPlayed
 ]
 
 { #category : 'as yet unclassified' }
@@ -135,10 +145,82 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> pickACard [
+Board >> manageCards [
 
-	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
-	^ WhiteCard create
+	^ cardManager
+]
+
+{ #category : 'as yet unclassified' }
+Board >> pickACard [
+	
+	^ cardManager grabTopCard
+]
+
+{ #category : 'as yet unclassified' }
+Board >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove and: spaceShipPositions [
+
+	self playRedo: aCard on: aShip.
+	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
+		ifTrue: [
+			aShip pending: aCard.
+			^ self ].
+
+	aCard type = 'Permanent' ifTrue: [
+		lastCardPlayed := aShip has: aCard.
+		(cardManager activeCards at: aShip id) add: lastCardPlayed.
+		^ self ].
+
+	"self isGameOver ifTrue: [
+		Error signal:
+			'Instantaneous cards cant be played after the game is over.' ]."
+
+	self playCancelation: aCard of: aShip.
+
+	self playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShipPositions.
+
+	lastCardPlayed := aShip has: aCard
+]
+
+{ #category : 'as yet unclassified' }
+Board >> playCancelation: aCard of: aShip [
+
+	| card |
+	(aCard objective: aShip id) = '' ifTrue: [ ^ self ].
+	card := (cardManager activeCards at: (aCard objective: aShip id))
+		        detect: [ :cardOfShip |
+		        cardOfShip class = (aCard cardObjective: aCard) class ]
+		        ifNone: [
+			        Error signal:
+				        'This card cant be played if the card to be canceled is not active.' ].
+	(cardManager activeCards at: (aCard objective: aShip id)) remove: card.
+	aShip deMercenarize
+]
+
+{ #category : 'as yet unclassified' }
+Board >> playRedo: aCard on: aShip [
+
+	lastCardPlayed isRedo ifFalse: [
+		aCard mimic: lastCardPlayed deepCopy.
+		^ self ].
+
+	aCard isRedo ifTrue: [ aCard mimic: lastCardPlayed mimic deepCopy ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShipPositions [
+
+	| cell objectiveShip |
+	
+	aCard lastPowerUpPlayed: lastCellPlayed .
+	((aCard target: aShip id) = '') ifTrue: [ ^self ].
+	cell := aCard replicateCell.
+	objectiveShip := spaceShips detect: [ :ship |
+		                 ship id = (aCard target: aShip id) ].
+	cell
+		takeActionOver: objectiveShip
+		or: spaceShips
+		thatArePlaced: spaceShipPositions.
+
 ]
 
 { #category : 'as yet unclassified' }

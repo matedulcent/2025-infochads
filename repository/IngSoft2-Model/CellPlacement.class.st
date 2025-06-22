@@ -61,16 +61,13 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aDeckOfCards [
+CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aCardManager [ 
 
 	| newCells numberOfCards cards |
 	numberOfCards := aConfigDice toss.
 
 	cards := OrderedCollection new.
-	1 to: numberOfCards do: [ :card |
-		card
-			ifNil: [ WhiteCard create ]
-			ifNotNil: [ cards addFirst: aDeckOfCards removeLast ] ].
+	1 to: numberOfCards do: [ :card | cards add: (aCardManager grabTopCard) ] .
 
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has: (CardEffect with: cards deepCopy) ].
@@ -78,12 +75,12 @@ CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice f
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> createBoardWith: aConfigDice withComplementary: aDeckOfCards And: aBoardSize [
+CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager And: aBoardSize [
 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
-	self generateUniverseWith: aConfigDice andA: aDeckOfCards.
+	self generateUniverseWith: aConfigDice and: aCardManager.
 	^ self extractSample
 ]
 
@@ -98,14 +95,14 @@ CellPlacement >> extractSample [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> generateUniverseWith: aConfigDice andA: aDeckOfCards [
+CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 
 	| probabilities |
 	probabilities := self obtainProbabilities: aConfigDice.
 	self theProbabilitiesMustSum100: probabilities.
 	self
 		cardCellsWithProbabilities: (probabilities at: 7)
-		picking: aConfigDice from: aDeckOfCards.
+		picking: aConfigDice from: aCardManager.
 	self normalCellsWithProbabilitites: (probabilities at: 1).
 	self
 		blackHoleCellsWithProbabilities: (probabilities at: 2)

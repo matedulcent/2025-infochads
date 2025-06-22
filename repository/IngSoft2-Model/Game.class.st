@@ -8,9 +8,7 @@ Class {
 		'numberOfSpaceShips',
 		'laps',
 		'board',
-		'spaceShipPositions',
-		'spaceShipActiveCards',
-		'lastCardPlayed'
+		'spaceShipPositions'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -57,9 +55,9 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 numberOfTosses2 numberOfTosses1 |
-	numberOfTosses2 := (spaceShipActiveCards at: aSpaceShip2 id) select: [
+	numberOfTosses2 := (board activeCards at: aSpaceShip2 id) select: [
 		                   :card | card isMercenary ].
-	numberOfTosses1 := (spaceShipActiveCards at: aSpaceShip1 id) select: [
+	numberOfTosses1 := (board activeCards at: aSpaceShip1 id) select: [
 		                   :card | card isMercenary ].
 
 	[
@@ -96,7 +94,7 @@ Game >> create: aNumberOfSpaceShips [
 				 and: board pickACard
 				 with: aShield).
 		spaceShipPositions at: id put: aPosition.
-		spaceShipActiveCards at: id put: OrderedCollection new ]
+		board addNewActiveCardSlot: id ]
 ]
 
 { #category : 'informationTest' }
@@ -120,14 +118,13 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	board := aBoard.
 
 	spaceShipPositions := OrderedDictionary new.
-	spaceShipActiveCards := OrderedDictionary new.
+	"spaceShipActiveCards := OrderedDictionary new."
 	self create: aNumberOfSpaceShips.
 
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
-	lastCardPlayed := WhiteCard new.
 ]
 
 { #category : 'whats left of race positions' }
@@ -159,9 +156,9 @@ Game >> lookForBattle: aSpaceShip [
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	(((spaceShipActiveCards at: aSpaceShip id) anySatisfy: [ :card |
+	(((board activeCards at: aSpaceShip id) anySatisfy: [ :card |
 		  aSpaceShip id = card helper ]) or:
-		 ((spaceShipActiveCards at: opponentShip id) anySatisfy: [ :card |
+		 ((board activeCards at: opponentShip id) anySatisfy: [ :card |
 			  aSpaceShip id = card helper ])) ifTrue: [ ^ self ].
 
 	opponentShip == aSpaceShip ifFalse: [
@@ -179,7 +176,7 @@ Game >> lostBattle: aSpaceShip [
 					  withLaps: 0)).
 	aSpaceShip loseShield.
 
-	mercenaries := (spaceShipActiveCards at: aSpaceShip id) collect: [
+	mercenaries := (board activeCards at: aSpaceShip id) collect: [
 		               :card | card helper ].
 
 
@@ -205,13 +202,17 @@ Game >> move: aSpaceShip after: aDiceRoll [
 				 limitAdjustment: (spaceShipPositions at: ship id)
 				 withTotalLaps: laps) ].
 
-	self usePendingCardsFrom: aSpaceShip.
+	self playPendingCardsOn: aSpaceShip.
 
 	board
+		checkForCardEffectsOver: aSpaceShip
+		or: spaceShips
+		dependingOn: spaceShipPositions.
+	"board
 		checkFor: spaceShipActiveCards
 		andItsEffectsOver: aSpaceShip
 		or: spaceShips
-		dependingOn: spaceShipPositions.
+		dependingOn: spaceShipPositions."
 
 	spaceShips do: [ :ship |
 		self sumTo: ship the: (board
@@ -250,10 +251,10 @@ Game >> obtainOponentShip: aSpaceShip [
 		  ifNone: [ aSpaceShip ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'movingOut' }
 Game >> playCancelation: aCard of: aShip [
 
-	| card |
+	"| card |
 	(aCard objective: aShip id) = '' ifTrue: [ ^ self ].
 	card := (spaceShipActiveCards at: (aCard objective: aShip id))
 		        detect: [ :cardOfShip |
@@ -262,23 +263,30 @@ Game >> playCancelation: aCard of: aShip [
 			        Error signal:
 				        'This card cant be played if the card to be canceled is not active.' ].
 	(spaceShipActiveCards at: (aCard objective: aShip id)) remove: card.
-	aShip deMercenarize
+	aShip deMercenarize"
 ]
 
 { #category : 'as yet unclassified' }
+Game >> playPendingCardsOn: aSpaceShip [
+
+	aSpaceShip pendingCard do: [ :card |
+		self use: card on: aSpaceShip id ]
+]
+
+{ #category : 'movingOut' }
 Game >> playRedo: aCard on: aShip [
 
-	lastCardPlayed isRedo ifFalse: [
+	"lastCardPlayed isRedo ifFalse: [
 		aCard mimic: lastCardPlayed deepCopy.
 		^ self ].
 
-	aCard isRedo ifTrue: [ aCard mimic: lastCardPlayed mimic deepCopy ]
+	aCard isRedo ifTrue: [ aCard mimic: lastCardPlayed mimic deepCopy ]"
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'movingOut' }
 Game >> playRepeat: aCard on: aShip [
 
-	| cell objectiveShip |
+	"| cell objectiveShip |
 	aCard lastPowerUpPlayed: board lastCellEffect.
 	((aCard target: aShip id) = '') ifTrue: [ ^self ].
 	cell := aCard replicateCell.
@@ -292,7 +300,7 @@ Game >> playRepeat: aCard on: aShip [
 	spaceShips do: [ :ship |
 		self sumTo: ship the: (board
 				 limitAdjustment: (spaceShipPositions at: ship id)
-				 withTotalLaps: laps) ]
+				 withTotalLaps: laps) ]"
 ]
 
 { #category : 'informationTest' }
@@ -354,14 +362,31 @@ Game >> updateNextShipToMove: spaceShipID [
 		nextSpaceShipToMove := 1 ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'movingOut' }
 Game >> use: aCard on: aSpaceShipID [
 
 	| aShip |
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]
 		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-	self playRedo: aCard on: aShip.
+
+	(self isGameOver and: aCard type = 'Instantaneous') ifTrue: [
+		Error signal:
+			'Instantaneous cards cant be played after the game is over.' ].
+
+	board
+		play: aCard
+		on: aShip
+		thatIsIn: spaceShips
+		with: nextSpaceShipToMove
+		and: spaceShipPositions.
+		
+	spaceShips do: [ :ship |
+		self sumTo: ship the: (board
+				 limitAdjustment: (spaceShipPositions at: ship id)
+				 withTotalLaps: laps) ]
+
+	"self playRedo: aCard on: aShip.
 	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
 		ifTrue: [
 			aShip pending: aCard.
@@ -380,16 +405,5 @@ Game >> use: aCard on: aSpaceShipID [
 
 	self playRepeat: aCard on: aShip.
 
-	lastCardPlayed := aShip has: aCard
-]
-
-{ #category : 'as yet unclassified' }
-Game >> usePendingCardsFrom: aSpaceShip [
-
-	"| pendingCards |
-	pendingCards := aSpaceShip pendingCard
-		                detect: [ :card | card isNotNil ]
-		                ifNone: [ ^ self ]."
-
-	aSpaceShip pendingCard do: [ :card | self use: card on: aSpaceShip id ]
+	lastCardPlayed := aShip has: aCard"
 ]
