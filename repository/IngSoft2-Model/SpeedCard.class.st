@@ -37,6 +37,12 @@ SpeedCard >> initializeWith: aTossIncrement [
 	type := 'Permanent'
 ]
 
+{ #category : 'testing' }
+SpeedCard >> isPermanent [
+
+	^ true
+]
+
 { #category : 'accessing' }
 SpeedCard >> type [
 

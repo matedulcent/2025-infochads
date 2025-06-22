@@ -160,26 +160,16 @@ Board >> pickACard [
 Board >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove and: spaceShipPositions [
 
 	cardManager playRedo: aCard on: aShip.
-	(aShip id ~= nextSpaceShipToMove and: aCard type = 'Permanent')
-		ifTrue: [
-			aShip pending: aCard.
-			^ self ].
-
-	aCard type = 'Permanent' ifTrue: [
-		cardManager lastCardPlayed: (aShip has: aCard).
-		(cardManager activeCards at: aShip id) add:
-			cardManager getLastCardPlayed.
+	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
+		aShip pending: aCard.
 		^ self ].
-
+	(cardManager activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
+	"	aCard type = 'Permanent' ifTrue: [
+		cardManager activatePermanent: aCard on: aShip.
+		^ self ]."
 
 	cardManager playCancelation: aCard on: aShip.
 
-	"self
-		playRepeat: aCard
-		on: aShip
-		and: spaceShips
-		dependingOn: spaceShipPositions."
-		
 	cardManager
 		playRepeat: aCard
 		on: aShip

@@ -17,6 +17,16 @@ CardManager class >> createWith: aDeckOfCards [
 	^self new initializeWith: aDeckOfCards 
 ]
 
+{ #category : 'as yet unclassified' }
+CardManager >> activatePermanent: aCard on: aShip [
+
+	aCard isPermanent ifTrue: [
+		lastCardPlayed := aShip has: aCard.
+		(activeCards at: aShip id) add: lastCardPlayed.
+		^ true ].
+	^ false
+]
+
 { #category : 'accessing' }
 CardManager >> activeCards [
 

@@ -37,6 +37,12 @@ AccelerationCard >> initializeWith: aTossIncrement [
 	type := 'Permanent'
 ]
 
+{ #category : 'testing' }
+AccelerationCard >> isPermanent [
+
+	^ true
+]
+
 { #category : 'accessing' }
 AccelerationCard >> type [
 

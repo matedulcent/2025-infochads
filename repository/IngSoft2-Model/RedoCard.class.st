@@ -63,6 +63,12 @@ RedoCard >> isMercenary [
 ]
 
 { #category : 'testing' }
+RedoCard >> isPermanent [
+
+	^ mimic isPermanent 
+]
+
+{ #category : 'testing' }
 RedoCard >> isRedo [
 
 	^ true

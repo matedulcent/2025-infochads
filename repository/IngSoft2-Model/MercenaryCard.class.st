@@ -47,6 +47,12 @@ MercenaryCard >> isMercenary [
 	^ true
 ]
 
+{ #category : 'testing' }
+MercenaryCard >> isPermanent [
+
+	^ true
+]
+
 { #category : 'as yet unclassified' }
 MercenaryCard >> putHelperAs: targetID [
 

@@ -53,6 +53,12 @@ WhiteCard >> isMercenary [
 ]
 
 { #category : 'testing' }
+WhiteCard >> isPermanent [
+
+	^ false
+]
+
+{ #category : 'testing' }
 WhiteCard >> isRedo [
 
 	^ false
