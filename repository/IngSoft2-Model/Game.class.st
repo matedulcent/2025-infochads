@@ -52,6 +52,15 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
+Game >> adjustPosition [
+
+	spaceShips do: [ :ship |
+		manage sumAt: ship id with: (board
+				 limitAdjustment: (manage positions at: ship id)
+				 withTotalLaps: laps) ]
+]
+
+{ #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 numberOfTosses2 numberOfTosses1 |
@@ -182,39 +191,27 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
 
-	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
-
-	spaceShips do: [ :ship |
-		self sumTo: ship the: (board
-				 limitAdjustment: (manage positions at: ship id)
-				 withTotalLaps: laps) ].
-
+	manage sumAt: aSpaceShip id with: (Position at: aDiceRoll withLaps: 0).
+	self adjustPosition.
+	
 	self playPendingCardsOn: aSpaceShip.
 
 	board
 		applyCardEffectsOver: aSpaceShip
 		or: spaceShips
 		dependingOn: manage positions.
-
-	spaceShips do: [ :ship |
-		self sumTo: ship the: (board
-				 limitAdjustment: (manage positions at: ship id)
-				 withTotalLaps: laps) ].
+	self adjustPosition.
+	
 	board
 		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips
 		andIts: manage positions.
-
-	spaceShips do: [ :ship |
-		self sumTo: ship the: (board
-				 limitAdjustment: (manage positions at: ship id)
-				 withTotalLaps: laps) ].
+	self adjustPosition.
 
 	manage
 		at: aSpaceShip id
 		replacePositionWith:
 		(board checkForWormHole: (manage positions at: aSpaceShip id)).
-
 
 	self lookForBattle: aSpaceShip
 ]
@@ -272,14 +269,6 @@ Game >> start [
 
 		self updateNextShipToMove: nextSpaceShipToMove.
 		aDiceRoll := diceSet toss ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> sumTo: aSpaceShip the: aPosition [
-
-	manage positions
-		at: aSpaceShip id
-		put: ((manage positions at: aSpaceShip id) sumTo: aPosition)
 ]
 
 { #category : 'as yet unclassified' }
