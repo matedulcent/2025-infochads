@@ -40,6 +40,19 @@ CardManager >> addNew: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: positionManager [
+
+	self playSpeedOn: aSpaceShip basedOn: positionManager.
+
+	self
+		playAccelerationOn: aSpaceShip
+		thatMayBeIn: spaceShips
+		basedOn: positionManager.
+
+	self playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> grabTopCard [
 
 	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
@@ -101,6 +114,14 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 ]
 
 { #category : 'as yet unclassified' }
+CardManager >> playAccelerationOn: aSpaceShip thatMayBeIn: spaceShips basedOn: positionManager [
+
+	 activeCards associationsDo: [ :shipCards |
+		shipCards value do: [ :card |
+			positionManager sumAt: aSpaceShip id with: card effectAll ] ]
+]
+
+{ #category : 'as yet unclassified' }
 CardManager >> playCancelation: aCard on: aShip [
 
 	| card |
@@ -113,6 +134,18 @@ CardManager >> playCancelation: aCard on: aShip [
 				        'This card cant be played if the card to be canceled is not active.' ].
 	(activeCards at: (aCard objective: aShip id)) remove: card.
 	aShip deMercenarize
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playMercenaryOn: aSpaceShip [
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips [
+
+	(activeCards at: aSpaceShip id) do: [ :card |
+		card activateMercenaryOn ifTrue: [
+			self the: card mercenaryIsHelpingOther: spaceShips ] ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -141,6 +174,13 @@ CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShi
 		takeActionOver: objectiveShip
 		or: spaceShips
 		thatArePlaced: spaceShipPositions.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playSpeedOn: aSpaceShip basedOn: positionManager [
+
+	(activeCards at: aSpaceShip id) do: [ :card |
+		positionManager sumAt: aSpaceShip id with: card effect ]
 ]
 
 { #category : 'as yet unclassified' }

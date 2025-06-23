@@ -79,9 +79,7 @@ Game >> create: aNumberOfSpaceShips [
 
 	| aShield |
 	aShield := 3.
-
 	spaceShips := OrderedCollection new.
-
 
 	1 to: aNumberOfSpaceShips do: [ :id |
 		spaceShips add: (SpaceShip
@@ -195,17 +193,19 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
 
-	manage sumAt: aSpaceShip id with: (Position at: aDiceRoll withLaps: 0).
+	manage
+		sumAt: aSpaceShip id
+		with: (Position at: aDiceRoll withLaps: 0).
 	self adjustPosition.
-	
+
 	self playPendingCardsOn: aSpaceShip.
 
-	board
+	board manageCards
 		applyCardEffectsOver: aSpaceShip
 		or: spaceShips
 		dependingOn: manage.
 	self adjustPosition.
-	
+
 	board
 		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips

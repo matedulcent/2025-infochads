@@ -30,21 +30,6 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: positionManager [
-
-	(cardManager activeCards at: aSpaceShip id) do: [ :card |
-		positionManager sumAt: aSpaceShip id with: card effect ].
-
-	cardManager activeCards associationsDo: [ :shipCards |
-		shipCards value do: [ :card |
-			positionManager sumAt: aSpaceShip id with: card effectAll ] ].
-
-	(cardManager activeCards at: aSpaceShip id) do: [ :card |
-		card activateMercenaryOn ifTrue: [
-			cardManager the: card mercenaryIsHelpingOther: spaceShips ] ]
-]
-
-{ #category : 'as yet unclassified' }
 Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
 	| cell |
