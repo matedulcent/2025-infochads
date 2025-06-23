@@ -17,13 +17,22 @@ PositionManager class >> of: spaceShips [
 { #category : 'accessing' }
 PositionManager >> at: spaceShipID [
 
-	^positions at: spaceShipID
+	^ (positions at: spaceShipID) deepCopy
+]
+
+{ #category : 'accessing' }
+PositionManager >> at: aSpaceShipID replacePositionWith: aPosition [
+
+	positions
+		at: aSpaceShipID
+		put: ((positions at: aSpaceShipID) replacePositionWith: aPosition)
 ]
 
 { #category : 'initialization' }
 PositionManager >> initializeWith: spaceShips [
 
 	positions := OrderedDictionary new.
+
 	spaceShips do: [ :ship |
 		positions at: ship id put: (Position at: 1 withLaps: 0) ]
 ]

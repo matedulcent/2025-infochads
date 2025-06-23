@@ -142,3 +142,12 @@ CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShi
 		or: spaceShips
 		thatArePlaced: spaceShipPositions.
 ]
+
+{ #category : 'as yet unclassified' }
+CardManager >> the: opponentShip isMercenaryOf: aSpaceShip [
+
+	^ ((activeCards at: aSpaceShip id) anySatisfy: [ :card |
+		   aSpaceShip id = card helper ]) or:
+		  ((activeCards at: opponentShip id) anySatisfy: [ :card |
+			   aSpaceShip id = card helper ])
+]
