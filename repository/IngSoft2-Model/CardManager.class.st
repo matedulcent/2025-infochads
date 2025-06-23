@@ -151,3 +151,13 @@ CardManager >> the: opponentShip isMercenaryOf: aSpaceShip [
 		  ((activeCards at: opponentShip id) anySatisfy: [ :card |
 			   aSpaceShip id = card helper ])
 ]
+
+{ #category : 'as yet unclassified' }
+CardManager >> the: card mercenaryIsHelpingOther: spaceShips [
+
+	| mercenary |
+	mercenary := spaceShips detect: [ :ship | ship id = card helper ].
+
+	mercenary isHelpingOthers ifTrue: [
+		Error signal: 'A mercenary cant help multiple ships.' ]
+]

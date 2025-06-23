@@ -30,30 +30,18 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> applyCardEffectsOver: aSpaceShip
-		or: spaceShips
-		dependingOn: spaceShipPositions [
+Board >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: positionManager [
 
-	| mercenary |
 	(cardManager activeCards at: aSpaceShip id) do: [ :card |
-		spaceShipPositions
-			at: aSpaceShip id
-			put: ((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
-
+		positionManager sumAt: aSpaceShip id with: card effect ].
 
 	cardManager activeCards associationsDo: [ :shipCards |
 		shipCards value do: [ :card |
-			spaceShipPositions
-				at: aSpaceShip id
-				put:
-				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
+			positionManager sumAt: aSpaceShip id with: card effectAll ] ].
 
 	(cardManager activeCards at: aSpaceShip id) do: [ :card |
-		(card activateMercenaryOn) ifTrue: [
-			mercenary := spaceShips detect: [ :ship | ship id = card helper ].
-			
-			mercenary isHelpingOthers ifTrue: [
-				Error signal: 'A mercenary cant help multiple ships.' ] ] ]
+		card activateMercenaryOn ifTrue: [
+			cardManager the: card mercenaryIsHelpingOther: spaceShips ] ]
 ]
 
 { #category : 'as yet unclassified' }

@@ -199,7 +199,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 	board
 		applyCardEffectsOver: aSpaceShip
 		or: spaceShips
-		dependingOn: manage positions.
+		dependingOn: manage.
 	self adjustPosition.
 	
 	board
@@ -298,8 +298,5 @@ Game >> use: aCard on: aSpaceShipID [
 		with: nextSpaceShipToMove
 		and: manage positions.
 
-	spaceShips do: [ :ship |
-		self sumTo: ship the: (board
-				 limitAdjustment: (manage positions at: ship id)
-				 withTotalLaps: laps) ]
+	self adjustPosition
 ]
