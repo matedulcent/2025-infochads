@@ -74,6 +74,16 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 		ifFalse: [ self lostBattle: aSpaceShip2 ]
 ]
 
+{ #category : 'movingOut' }
+Game >> checkFor: aSpaceShipID [
+
+	| aShip |
+	aShip := spaceShips
+		         detect: [ :ship | ship id = aSpaceShipID ]
+		         ifNone: [ Error signal: 'The ship doesnt exist' ].
+	^ aShip
+]
+
 { #category : 'whats left of race positions' }
 Game >> create: aNumberOfSpaceShips [
 
@@ -220,6 +230,14 @@ Game >> move: aSpaceShip after: aDiceRoll [
 	self lookForBattle: aSpaceShip
 ]
 
+{ #category : 'movingOut' }
+Game >> noPermanent: aCard [
+
+	(self isGameOver and: aCard isPermanent not) ifTrue: [
+		Error signal:
+			'Instantaneous cards cant be played after the game is over.' ]
+]
+
 { #category : 'as yet unclassified' }
 Game >> obtainOponentShip: aSpaceShip [
 
@@ -287,13 +305,9 @@ Game >> updateNextShipToMove: spaceShipID [
 Game >> use: aCard on: aSpaceShipID [
 
 	| aShip |
-	aShip := spaceShips
-		         detect: [ :ship | ship id = aSpaceShipID ]
-		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-
-	(self isGameOver and: aCard isPermanent not) ifTrue: [
-		Error signal:
-			'Instantaneous cards cant be played after the game is over.' ].
+	aShip := self checkFor: aSpaceShipID.
+		
+	self noPermanent: aCard.
 
 	board manageCards
 		play: aCard
