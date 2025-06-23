@@ -63,19 +63,10 @@ Game >> adjustPosition [
 { #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
-	| throwSpaceShip1 throwSpaceShip2 numberOfTosses2 numberOfTosses1 |
-	numberOfTosses2 := board manageCards numberOfMercenariesOf: aSpaceShip2.
-	numberOfTosses1 := board manageCards numberOfMercenariesOf: aSpaceShip1.
-
+	| throwSpaceShip1 throwSpaceShip2 |
 	[
-	throwSpaceShip2 := 0.
-	throwSpaceShip1 := 0.
-
-	1 to: numberOfTosses2 do: [ :mercenary |
-	throwSpaceShip2 := throwSpaceShip2 + diceSet toss ].
-
-	1 to: numberOfTosses1 do: [ :mercenary |
-	throwSpaceShip1 := throwSpaceShip1 + diceSet toss ].
+	throwSpaceShip2 := self mercenaryHelpTo: aSpaceShip2.
+	throwSpaceShip1 := self mercenaryHelpTo: aSpaceShip1.
 
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
 	throwSpaceShip1 < throwSpaceShip2
@@ -184,6 +175,19 @@ Game >> lostBattle: aSpaceShip [
 					  at: (manage positions at: shipId) position negated + 1
 					  withLaps: 0).
 		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> mercenaryHelpTo: aSpaceShip [
+
+	| numberOfTosses throwSpaceShip |
+	numberOfTosses := board manageCards numberOfMercenariesOf: aSpaceShip.
+
+	throwSpaceShip := 0.
+	1 to: numberOfTosses do: [ :mercenary |
+	throwSpaceShip := throwSpaceShip + diceSet toss ].
+
+	^ throwSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
