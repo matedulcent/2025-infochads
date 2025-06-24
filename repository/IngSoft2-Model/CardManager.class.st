@@ -57,6 +57,7 @@ CardManager >> grabTopCard [
 
 	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
 	^ WhiteCard create
+	
 ]
 
 { #category : 'initialization' }

@@ -74,9 +74,7 @@ SpeedCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection withAll: {
-					           (SpeedCard with: 1).
-					           WhiteCard new })
+		          playedWith: (CardDeck withCards: { SpeedCard. WhiteCard })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -98,9 +96,7 @@ SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecD
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection withAll: {
-					           (SpeedCard with: 1).
-					           WhiteCard new })
+		          playedWith: (CardDeck withCards: { SpeedCard. WhiteCard })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -120,7 +116,7 @@ SpeedCardTest >> testWhenASpaceShipUsesASpeedCardThenItsTossIncrementsInOne [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: (SpeedCard with: 1))
+		          playedWith: (CardDeck withCards: { SpeedCard })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -142,11 +138,11 @@ SpeedCardTest >> testWhenASpaceShipUsesASpeedCardTwiceThenItsTossIncrementsInTwo
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection withAll: {
-					           (SpeedCard with: 1).
-					           (SpeedCard with: 1).
-					           (SpeedCard with: 1).
-					           (SpeedCard with: 1) })
+		          playedWith: (CardDeck withCards: {
+					           SpeedCard.
+					           SpeedCard.
+					           SpeedCard.
+					           SpeedCard })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
