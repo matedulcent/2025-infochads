@@ -53,6 +53,12 @@ WhiteCard >> isMercenary [
 ]
 
 { #category : 'testing' }
+WhiteCard >> isPermanent [
+
+	^ false
+]
+
+{ #category : 'testing' }
 WhiteCard >> isRedo [
 
 	^ false
@@ -92,10 +98,4 @@ WhiteCard >> replicateCell [
 WhiteCard >> target: aSpaceShipId [
 
 	^ ''
-]
-
-{ #category : 'accessing' }
-WhiteCard >> type [
-
-	^ 'Instantaneous'
 ]

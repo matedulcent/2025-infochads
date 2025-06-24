@@ -5,8 +5,7 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'deckOfCards',
-		'lastCellPlayed'
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -31,13 +30,13 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
 	| cell |
 	gameBoard ifEmpty: [ ^ self ].
 	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
 
-	lastCellPlayed := cell.
+	cardManager lastPlayed: cell.
 
 	cell
 		takeActionOver: aSpaceShip
@@ -49,31 +48,6 @@ Board >> applyEffectOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceS
 Board >> boardSize [
 
 	^ boardSize
-]
-
-{ #category : 'as yet unclassified' }
-Board >> checkFor: spaceShipCards andItsEffectsOver: aSpaceShip or: spaceShips dependingOn: spaceShipPositions [
-
-	| mercenary |
-	(spaceShipCards at: aSpaceShip id) do: [ :card |
-		spaceShipPositions
-			at: aSpaceShip id
-			put: ((spaceShipPositions at: aSpaceShip id) sumTo: card effect) ].
-
-
-	spaceShipCards associationsDo: [ :shipCards |
-		shipCards value do: [ :card |
-			spaceShipPositions
-				at: aSpaceShip id
-				put:
-				((spaceShipPositions at: aSpaceShip id) sumTo: card effectAll) ] ].
-
-	(spaceShipCards at: aSpaceShip id) do: [ :card |
-		(card activateMercenaryOn) ifTrue: [
-			mercenary := spaceShips detect: [ :ship | ship id = card helper ].
-			
-			mercenary isHelpingOthers ifTrue: [
-				Error signal: 'A mercenary cant help multiple ships.' ] ] ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -96,23 +70,16 @@ Board >> does: mercenaryId appearsInOther: spaceShipCards [
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	deckOfCards := aDeckOfCards.
+	cardManager := CardManager createWith: aDeckOfCards.
+
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
-		             withComplementary: aDeckOfCards
+		             withComplementary: cardManager
 		             And: boardSize.
 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
 
-	deckOfCards := aDeckOfCards.
-	lastCellPlayed := Cell has: NoEffect new
-]
-
-{ #category : 'accessing' }
-Board >> lastCellEffect [
-
-	^ lastCellPlayed
 ]
 
 { #category : 'as yet unclassified' }
@@ -135,10 +102,15 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> pickACard [
+Board >> manageCards [
 
-	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
-	^ WhiteCard create
+	^ cardManager
+]
+
+{ #category : 'as yet unclassified' }
+Board >> pickACard [
+	
+	^ cardManager grabTopCard
 ]
 
 { #category : 'as yet unclassified' }

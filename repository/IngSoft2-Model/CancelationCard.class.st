@@ -3,7 +3,6 @@ Class {
 	#superclass : 'WhiteCard',
 	#instVars : [
 		'card',
-		'type',
 		'objective'
 	],
 	#category : 'IngSoft2-Model',
@@ -28,17 +27,10 @@ CancelationCard >> initializeWith: aCard and: anObjective [
 	super initializes.
 	card := aCard.
 	objective := anObjective.
-	type := 'Instantaneous'
 ]
 
 { #category : 'as yet unclassified' }
 CancelationCard >> objective: aSpaceShipId [
 
 	^ objective 
-]
-
-{ #category : 'accessing' }
-CancelationCard >> type [
-
-	^ type
 ]

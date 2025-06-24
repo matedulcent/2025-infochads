@@ -2,7 +2,6 @@ Class {
 	#name : 'RepeatCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'type',
 		'cell',
 		'objective'
 	],
@@ -22,7 +21,6 @@ RepeatCard >> initializeWith: anObjective [
 	super initializes.
 	objective := anObjective.
 	cell := NoEffect new.
-	type := 'Instantaneous'
 ]
 
 { #category : 'accessing' }
@@ -41,10 +39,4 @@ RepeatCard >> replicateCell [
 RepeatCard >> target: aSpaceShipId [
 
 	^ objective 
-]
-
-{ #category : 'accessing' }
-RepeatCard >> type [
-
-	^ type
 ]
