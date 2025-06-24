@@ -56,8 +56,7 @@ CardManager >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: posi
 CardManager >> grabTopCard [
 
 	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
-	^ WhiteCard create
-	
+	^ WhiteCard
 ]
 
 { #category : 'initialization' }
