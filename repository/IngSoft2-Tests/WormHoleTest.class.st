@@ -132,10 +132,19 @@ WormHoleTest >> testWhenExitHoleIsNegativeThenIsInvalid [
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenWormHoleIsNotAnIntThenIsInvalid [
+WormHoleTest >> testWhenWormHoleEntryIsNotAnIntThenIsInvalid [
 
 	self
 		should: [ WormHole startingAt: '7' endingAt: 4 ]
+		raise: Error
+		withMessageText: 'WormHole must be a pair of integers.'
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenWormHoleExitIsNotAnIntThenIsInvalid [
+
+	self
+		should: [ WormHole startingAt: 4 endingAt: '4' ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
