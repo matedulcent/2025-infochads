@@ -30,7 +30,7 @@ RedoCard >> cardObjective: aCard [
 { #category : 'as yet unclassified' }
 RedoCard >> effect [
 
-	^ (mimic effect)
+	^ mimic effect
 ]
 
 { #category : 'as yet unclassified' }
