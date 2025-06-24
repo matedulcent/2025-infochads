@@ -26,13 +26,6 @@ WormHole class >> wormHoleExitMustBePositive: aWormHoleExit [
 			'WormHole must be a pair of integers.' ]
 ]
 
-{ #category : 'as yet unclassified' }
-WormHole class >> wormHoleExitMustNotBeEntry: aWormHole [
-
-	aWormHole first = aWormHole second ifTrue: [
-		Error signal: 'The WormHole Entry cannot be the exit.' ]
-]
-
 { #category : 'accessing' }
 WormHole >> if: aPosition isPlacedAt: oneEntry mustComeOutAt: anotherEntry [
 

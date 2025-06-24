@@ -86,6 +86,15 @@ WormHoleTest >> testWhenEntryWormHoleIsEqualsToExitWormHoleThenIsInvalid [
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testWhenExitHoleIsCeroThenIsInvalid [
+
+	self
+		should: [ WormHole startingAt: 7 endingAt: 0 ]
+		raise: Error
+		withMessageText: 'WormHole must be a pair of integers.'
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
 
 	self
@@ -114,10 +123,19 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testWhenExitHoleIsNegativeThenIsInvalid [
+
+	self
+		should: [ WormHole startingAt: 1 endingAt: -7 ]
+		raise: Error
+		withMessageText: 'WormHole must be a pair of integers.'
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenWormHoleIsNotAnIntThenIsInvalid [
 
 	self
-		should: [ WormHole startingAt: 4 endingAt: '7' ]
+		should: [ WormHole startingAt: '7' endingAt: 4 ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
