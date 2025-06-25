@@ -75,7 +75,7 @@ CardManager >> lastCardPlayed: aCard [
 ]
 
 { #category : 'accessing' }
-CardManager >> lastPlayed: aCell [
+CardManager >> lastCellPlayed: aCell [
 
 	lastCellPlayed := aCell 
 ]

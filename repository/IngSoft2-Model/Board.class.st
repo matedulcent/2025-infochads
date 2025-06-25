@@ -36,7 +36,7 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 	gameBoard ifEmpty: [ ^ self ].
 	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
 
-	cardManager lastPlayed: cell.
+	cardManager lastCellPlayed: cell.
 
 	cell
 		takeActionOver: aSpaceShip
