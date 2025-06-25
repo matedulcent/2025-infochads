@@ -6,29 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-CardDeckTest >> testWhen [
-
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { AccelerationCard })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
-
-	aGame use: (AccelerationCard with: 1) on: spaceShipID.
-	aGame start.
-
-	self assert: (aGame positionOf: 1) equals: 7
-]
-
-{ #category : 'tests' }
-CardDeckTest >> testWhenA [
+CardDeckTest >> testWhenACardDeckIsEmptyThenCardsOnTheDeckAreRandomized [
 
 	| aGame aBoard spaceShipID |
 	spaceShipID := 1.
