@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-CardDeckTest >> testWhenACardDeckIsEmptyThenCardsOnTheDeckAreRandomized [
+CardDeckTest >> testWhenACardDeckIsEmptyThenCardsOnTheDeckIsRandomizedAndProvidePlayability [
 
 	| aGame aBoard spaceShipID |
 	spaceShipID := 1.
