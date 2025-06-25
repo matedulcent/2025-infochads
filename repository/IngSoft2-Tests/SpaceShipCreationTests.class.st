@@ -18,8 +18,10 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
 
+	| aCard anotherCard |
+	aCard := anotherCard := WhiteCard create.
 	self
-		should: [ SpaceShip with: '' andStartingWith: 3 ]
+		should: [ SpaceShip with: '' startingWith: aCard and: anotherCard with: 3 ]
 		raise: Error
 		withMessageText: 'The ship must be identifiable.'
 ]
@@ -32,6 +34,7 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -47,8 +50,15 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
 
+	| aCard anotherCard |
+	aCard := anotherCard := WhiteCard create.
 	self
-		should: [ SpaceShip with: 1 andStartingWith: 11 ]
+		should: [
+			SpaceShip
+				with: 1
+				startingWith: aCard
+				and: anotherCard
+				with: 11 ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
 ]
@@ -56,8 +66,15 @@ SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCrea
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
 
+	| aCard anotherCard |
+	aCard := anotherCard := WhiteCard create.
 	self
-		should: [ SpaceShip with: 1 andStartingWith: '11' ]
+		should: [
+			SpaceShip
+				with: 1
+				startingWith: aCard
+				and: anotherCard
+				with: '11' ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
 ]
@@ -70,6 +87,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -91,6 +109,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -111,6 +130,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -132,6 +152,7 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -150,6 +171,7 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

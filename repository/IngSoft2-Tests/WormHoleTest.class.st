@@ -1,6 +1,6 @@
 Class {
 	#name : 'WormHoleTest',
-	#superclass : 'TestCase',
+	#superclass : 'BoardTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
@@ -23,6 +23,7 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 3 endingAt: 7)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -44,6 +45,7 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 3 endingAt: 7)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -84,6 +86,15 @@ WormHoleTest >> testWhenEntryWormHoleIsEqualsToExitWormHoleThenIsInvalid [
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testWhenExitHoleIsCeroThenIsInvalid [
+
+	self
+		should: [ WormHole startingAt: 7 endingAt: 0 ]
+		raise: Error
+		withMessageText: 'WormHole must be a pair of integers.'
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
 
 	self
@@ -91,6 +102,7 @@ WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
 			Board
 				withSize: 100
 				composedOf: (WormHole startingAt: 100 endingAt: 4)
+				playedWith: (OrderedCollection with: WhiteCard new)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
@@ -104,16 +116,35 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 			Board
 				withSize: 100
 				composedOf: (WormHole startingAt: 1000 endingAt: 4)
+				playedWith: (OrderedCollection with: WhiteCard new)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenWormHoleIsNotAnIntThenIsInvalid [
+WormHoleTest >> testWhenExitHoleIsNegativeThenIsInvalid [
 
 	self
-		should: [ WormHole startingAt: 4 endingAt: '7' ]
+		should: [ WormHole startingAt: 1 endingAt: -7 ]
+		raise: Error
+		withMessageText: 'WormHole must be a pair of integers.'
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenWormHoleEntryIsNotAnIntThenIsInvalid [
+
+	self
+		should: [ WormHole startingAt: '7' endingAt: 4 ]
+		raise: Error
+		withMessageText: 'WormHole must be a pair of integers.'
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenWormHoleExitIsNotAnIntThenIsInvalid [
+
+	self
+		should: [ WormHole startingAt: 4 endingAt: '4' ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]

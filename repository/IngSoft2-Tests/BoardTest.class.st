@@ -32,6 +32,7 @@ BoardTest >> testWhenBoardIsCreatedWithASizeZeroThenIsNotValid [
 			Board
 				withSize: 0
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				playedWith: (OrderedCollection with: WhiteCard new)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'
@@ -45,6 +46,7 @@ BoardTest >> testWhenBoardIsCreatedWithAStringSizeThenIsNotValid [
 			Board
 				withSize: '3'
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				playedWith: (OrderedCollection with: WhiteCard new)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'
@@ -57,6 +59,7 @@ BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 	aBoard := Board
 		          withSize: 13
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	self assert: aBoard boardSize equals: 13
 ]
@@ -69,6 +72,7 @@ BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 			Board
 				withSize: -5
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				playedWith: (OrderedCollection with: WhiteCard new)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'

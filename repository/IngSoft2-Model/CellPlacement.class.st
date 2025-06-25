@@ -20,32 +20,67 @@ CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 ]
 
 { #category : 'creation' }
-CellPlacement >> atomicBombCellsWithPercentage: aPercentage and: aDesplacement [
+CellPlacement >> atomicBombCellsWithProbabilities: aProbability and: aDesplacement [
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :cell |
+	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has:
 			            (AtomicBombEffect with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
-CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacement [
+CellPlacement >> blackHoleCellsWithProbabilities: aProbability andDesplacemets: aDesplacement [
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :cell |
+	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has:
 			            (BlackHoleEffect withBackTrack: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSize [
+CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
+
+	| result |
+	result := aParsecValue + aLightYearValue.
+
+	aParsecValue = aLightYearValue ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ].
+		
+	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
+		^ result // boardSize ].
+
+
+	aLightYearValue // aParsecValue ~= 3 ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ].
+
+	^ aParsecValue // boardSize
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aCardManager [ 
+
+	| newCells numberOfCards cards |
+	numberOfCards := aConfigDice toss.
+
+	cards := OrderedCollection new.
+	1 to: numberOfCards do: [ :card | cards add: (aCardManager grabTopCard) ] .
+
+	newCells := (1 to: aProbability) collect: [ :cell |
+		            Cell has: (CardEffect with: cards deepCopy) ].
+	rawCellDistribution := rawCellDistribution , newCells
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager And: aBoardSize [
 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
-	self generateUniverse: aConfigDice.
+	self generateUniverseWith: aConfigDice and: aCardManager.
 	^ self extractSample
 ]
 
@@ -60,55 +95,64 @@ CellPlacement >> extractSample [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> generateUniverse: aConfigDice [
+CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 
 	| probabilities |
 	probabilities := self obtainProbabilities: aConfigDice.
 	self theProbabilitiesMustSum100: probabilities.
-	
-	self normalCellsWithPercentage: (probabilities at: 1).
-	self blackHoleCellsWithPercentage: (probabilities at: 2) andDesplacemets: 4.
 	self
-		hyperSpaceJumpCellsWithPercantage: (probabilities at: 3)
+		cardCellsWithProbabilities: (probabilities at: 7)
+		picking: aConfigDice from: aCardManager.
+	self normalCellsWithProbabilitites: (probabilities at: 1).
+	self
+		blackHoleCellsWithProbabilities: (probabilities at: 2)
+		andDesplacemets: 4.
+	self
+		hyperSpaceJumpCellsWithProbabilities: (probabilities at: 3)
 		andDesplacements: 4.
 	self
-		hyperJumpCellsWithPercentage: (probabilities at: 4)
+		hyperJumpCellsWithProbabilites: (probabilities at: 4)
 		andParsecValue: aConfigDice toss
+		andLightYearValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self atomicBombCellsWithPercentage: (probabilities at: 5) and: 0.
-	self moonWalkCellsWithPercentage: (probabilities at: 6) andDisplacements: aConfigDice
+	self atomicBombCellsWithProbabilities: (probabilities at: 5) and: 0.
+	self
+		moonWalkCellsWithProbabilites: (probabilities at: 6)
+		andDisplacements: aConfigDice
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aParsecValue andJumpList: aConfigDice [
+CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aParsecValue andLightYearValue: aLightYearValue andJumpList: aConfigDice [
 
-	| jumps amountOfJumps newCells |
+	| jumps amountOfJumps newCells relation |
 	amountOfJumps := aConfigDice toss.
 	jumps := OrderedCollection new: amountOfJumps.
+	
+	relation := self calculateRelationBetween: aParsecValue and: aLightYearValue.
 
 	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
 
-	newCells := (1 to: aPercentage) collect: [ :cell |
+	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has:
 			            (HyperJumpEffect
-				             with: aParsecValue // boardSize 
+				             with: relation
 				             andParsec: jumps) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement [ 
+CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacements: aDesplacement [ 
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :cell |
+	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has: (HyperSpaceJumpEffect
 				             with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
-CellPlacement >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aConfigDice [
+CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: aConfigDice [
 
 	| newCells stepBackwards allDisplacements repeat |
 	stepBackwards := self obtainNextDisplacement: aConfigDice.
@@ -118,16 +162,16 @@ CellPlacement >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aCon
 		                    repeat timesRepeat: [
 			                    particular nextPutAll: stepBackwards ] ].
 
-	newCells := (1 to: aPercentage) collect: [ :particular |
+	newCells := (1 to: aProbability) collect: [ :particular |
 		            Cell has:
 			            (MoonWalkEffect with: (allDisplacements at: particular)) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
-CellPlacement >> normalCellsWithPercentage: aPercentage [
+CellPlacement >> normalCellsWithProbabilitites: aProbability [
 
-	1 to: aPercentage do: [ :cell |
+	1 to: aProbability do: [ :cell |
 	rawCellDistribution add: (Cell has: NoEffect new) ]
 ]
 
@@ -147,7 +191,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainProbabilities: aConfigureDice [
 
-	^ (1 to: 6) collect: [ :effect | aConfigureDice toss ]
+	^ (1 to: 7) collect: [ :effect | aConfigureDice toss ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -158,8 +202,8 @@ CellPlacement >> randomCellPicking [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> theProbabilitiesMustSum100: percentajes [
+CellPlacement >> theProbabilitiesMustSum100: aProbability [
 
-	(percentajes sum: [ :proba | proba ]) = 100 ifFalse: [
+	(aProbability sum: [ :proba | proba ]) = 100 ifFalse: [
 		Error signal: 'The probabilites dont sum 100.' ]
 ]

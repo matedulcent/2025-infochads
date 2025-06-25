@@ -8,7 +8,7 @@ Class {
 		'numberOfSpaceShips',
 		'laps',
 		'board',
-		'spaceShipPositions'
+		'manage'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -52,32 +52,52 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
+Game >> adjustPosition [
+
+	spaceShips do: [ :ship |
+		manage sumAt: ship id with: (board
+				 limitAdjustment: (manage positions at: ship id)
+				 withTotalLaps: laps) ]
+]
+
+{ #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 |
 	[
-	throwSpaceShip2 := diceSet toss.
-	throwSpaceShip1 := diceSet toss.
+	throwSpaceShip2 := self mercenaryHelpTo: aSpaceShip2.
+	throwSpaceShip1 := self mercenaryHelpTo: aSpaceShip1.
+
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
 	throwSpaceShip1 < throwSpaceShip2
 		ifTrue: [ self lostBattle: aSpaceShip1 ]
 		ifFalse: [ self lostBattle: aSpaceShip2 ]
 ]
 
+{ #category : 'movingOut' }
+Game >> checkFor: aSpaceShipID [
+
+	| aShip |
+	aShip := spaceShips
+		         detect: [ :ship | ship id = aSpaceShipID ]
+		         ifNone: [ Error signal: 'The ship doesnt exist' ].
+	^ aShip
+]
+
 { #category : 'whats left of race positions' }
 Game >> create: aNumberOfSpaceShips [
 
-	| aPosition aShield |
-	aPosition := Position at: 1 withLaps: 0.
+	| aShield |
 	aShield := 3.
-
 	spaceShips := OrderedCollection new.
-	spaceShipPositions := OrderedDictionary new.
 
 	1 to: aNumberOfSpaceShips do: [ :id |
-		spaceShips add:
-			(SpaceShip with: id andStartingWith: aShield).
-		spaceShipPositions at: id put: aPosition ]
+		spaceShips add: (SpaceShip
+				 with: id
+				 startingWith: board pickACard
+				 and: board pickACard
+				 with: aShield).
+		board manageCards addNew: id ]
 ]
 
 { #category : 'informationTest' }
@@ -87,10 +107,11 @@ Game >> getRanking [
 	self isOver ifFalse: [ ^ #(  ) ].
 
 	ranking := spaceShips sorted: [ :ship1 :ship2 |
-		           (spaceShipPositions at: ship1 id) lap
-		           -> (spaceShipPositions at: ship1 id) position
-		           > ((spaceShipPositions at: ship2 id) lap
-			            -> (spaceShipPositions at: ship2 id) position) ].
+		           (manage at: ship1 id) lap
+		           -> (manage at: ship1 id) position
+		           >
+		           ((manage at: ship2 id) lap
+		            -> (manage at: ship2 id) position) ].
 
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
@@ -99,22 +120,21 @@ Game >> getRanking [
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-	
-	spaceShipPositions := OrderedDictionary new.
+
 	self create: aNumberOfSpaceShips.
-	
+	manage := PositionManager of: spaceShips.
+
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
-	laps := aNumberOfLaps.
-	^ self
+	laps := aNumberOfLaps
 ]
 
 { #category : 'whats left of race positions' }
 Game >> isGameOver [
 
 	^ spaceShips anySatisfy: [ :aShip |
-		  (spaceShipPositions at: aShip id) isEqualTo:
+		  (manage at: aShip id) isEqualTo:
 			  (Position at: board boardSize withLaps: laps) ]
 ]
 
@@ -127,17 +147,20 @@ Game >> isOver [
 { #category : 'informationTest' }
 Game >> lapOf: aSpaceShipID [
 
-	^ (spaceShipPositions at: aSpaceShipID) lap
+	^ (manage at: aSpaceShipID) lap
 ]
 
 { #category : 'as yet unclassified' }
 Game >> lookForBattle: aSpaceShip [
 
 	| opponentShip |
-	((spaceShipPositions at: aSpaceShip id) isPositionEqualTo:
+	((manage at: aSpaceShip id) isPositionEqualTo:
 		 (Position at: 1 withLaps: 0)) ifTrue: [ ^ self ].
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
+
+	(board manageCards the: opponentShip isMercenaryOf: aSpaceShip)
+		ifTrue: [ ^ self ].
 
 	opponentShip == aSpaceShip ifFalse: [
 		self battleBetween: aSpaceShip and: opponentShip ]
@@ -146,12 +169,33 @@ Game >> lookForBattle: aSpaceShip [
 { #category : 'as yet unclassified' }
 Game >> lostBattle: aSpaceShip [
 
-	spaceShipPositions
-		at: aSpaceShip id
-		put: ((spaceShipPositions at: aSpaceShip id) sumTo: (Position
-					  at: (spaceShipPositions at: aSpaceShip id) position negated + 1
-					  withLaps: 0)).
-	aSpaceShip loseShield
+	| mercenaries |
+
+	manage sumAt: aSpaceShip id with:(Position
+					  at: (manage positions at: aSpaceShip id) position negated + 1
+					  withLaps: 0).
+	aSpaceShip loseShield.
+
+	mercenaries := board manageCards listOfMercenariesOf: aSpaceShip .
+
+	mercenaries do: [ :shipId |
+		manage sumAt: shipId with:(Position
+					  at: (manage positions at: shipId) position negated + 1
+					  withLaps: 0).
+		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> mercenaryHelpTo: aSpaceShip [
+
+	| numberOfTosses throwSpaceShip |
+	numberOfTosses := board manageCards numberOfMercenariesOf: aSpaceShip.
+
+	throwSpaceShip := 0.
+	1 to: numberOfTosses do: [ :mercenary |
+	throwSpaceShip := throwSpaceShip + diceSet toss ].
+
+	^ throwSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
@@ -159,28 +203,39 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
 
-	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
+	manage
+		sumAt: aSpaceShip id
+		with: (Position at: aDiceRoll withLaps: 0).
+	self adjustPosition.
 
-	self sumTo: aSpaceShip the: (board
-			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
-			 withTotalLaps: laps).
+	self playPendingCardsOn: aSpaceShip.
+
+	board manageCards
+		applyCardEffectsOver: aSpaceShip
+		or: spaceShips
+		dependingOn: manage.
+	self adjustPosition.
 
 	board
-		applyEffecOfPowerUpUponA: aSpaceShip
+		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips
-		andIts: spaceShipPositions.
+		andIts: manage positions.
+	self adjustPosition.
 
-	self
-		replacePositionOf: aSpaceShip
-		with:
-		(board checkForWormHole: (spaceShipPositions at: aSpaceShip id)).
-
-	spaceShips do: [ :ship |
-		self sumTo: ship the: (board
-				 limitAdjustment: (spaceShipPositions at: ship id)
-				 withTotalLaps: laps) ].
+	manage
+		at: aSpaceShip id
+		replacePositionWith:
+		(board checkForWormHole: (manage positions at: aSpaceShip id)).
 
 	self lookForBattle: aSpaceShip
+]
+
+{ #category : 'movingOut' }
+Game >> noPermanent: aCard [
+
+	(self isGameOver and: aCard isPermanent not) ifTrue: [
+		Error signal:
+			'Instantaneous cards cant be played after the game is over.' ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -193,25 +248,22 @@ Game >> obtainOponentShip: aSpaceShip [
 
 	^ otherShips
 		  detect: [ :ship |
-			  ((spaceShipPositions at: ship id) isPositionEqualTo:
-				   (spaceShipPositions at: aSpaceShip id)) and: ship canBattle ]
+			  ((manage positions at: ship id) isPositionEqualTo:
+				   (manage positions at: aSpaceShip id)) and: ship canBattle ]
 		  ifNone: [ aSpaceShip ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> playPendingCardsOn: aSpaceShip [
+
+	aSpaceShip pendingCard do: [ :card |
+		self use: card on: aSpaceShip id ]
 ]
 
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
-	^ (spaceShipPositions at: aSpaceShipID) position
-]
-
-{ #category : 'as yet unclassified' }
-Game >> replacePositionOf: aSpaceShip with: aPosition [
-
-	spaceShipPositions
-		at: aSpaceShip id
-		put:
-		((spaceShipPositions at: aSpaceShip id) replacePositionWith:
-			 aPosition)
+	^ (manage positions at: aSpaceShipID) position
 ]
 
 { #category : 'informationTest' }
@@ -242,17 +294,27 @@ Game >> start [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> sumTo: aSpaceShip the: aPosition [
-
-	spaceShipPositions
-		at: aSpaceShip id
-		put: ((spaceShipPositions at: aSpaceShip id) sumTo: aPosition)
-]
-
-{ #category : 'as yet unclassified' }
 Game >> updateNextShipToMove: spaceShipID [
 
 	nextSpaceShipToMove := spaceShipID + 1.
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
 		nextSpaceShipToMove := 1 ]
+]
+
+{ #category : 'movingOut' }
+Game >> use: aCard on: aSpaceShipID [
+
+	| aShip |
+	aShip := self checkFor: aSpaceShipID.
+		
+	self noPermanent: aCard.
+
+	board manageCards
+		play: aCard
+		on: aShip
+		thatIsIn: spaceShips
+		with: nextSpaceShipToMove
+		and: manage positions.
+
+	self adjustPosition
 ]

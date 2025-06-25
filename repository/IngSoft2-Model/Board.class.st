@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'boardSize',
 		'wormHole',
-		'gameBoard'
+		'gameBoard',
+		'cardManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,30 +19,29 @@ Board class >> assertIsPositiveOverZero: aBoardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration: aConfigDiceSet [
+Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andACellConfiguration: aConfigDiceSet [
 
 	self assertIsPositiveOverZero: aBoardSize.
 	^ self new
 		  initializeWithSize: aBoardSize
 		  composedOf: aWormHole
+		  playedWith: aDeckOfCards
 		  andConfiguration: aConfigDiceSet
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjust: spaceShips positionAnd: totalLaps [
-
-	spaceShips do: [ :ship |
-		ship storeageNewPosition:
-			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
-]
-
-{ #category : 'as yet unclassified' }
-Board >> applyEffecOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
 	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at: (spaceShipPositions at: aSpaceShip id ) position.
-		cell takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions ]
+	gameBoard ifEmpty: [ ^ self ].
+	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
+
+	cardManager lastCellPlayed: cell.
+
+	cell
+		takeActionOver: aSpaceShip
+		or: spaceShips
+		thatArePlaced: spaceShipPositions
 ]
 
 { #category : 'accessing' }
@@ -51,29 +51,31 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
-
-	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at: aSpaceShip getPosition.
-		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
-
-]
-
-{ #category : 'as yet unclassified' }
 Board >> checkForWormHole: aPosition [
 
 	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> does: mercenaryId appearsInOther: spaceShipCards [
+
+	spaceShipCards associationsDo: [ :shipCard |
+		((shipCard value collect: [ :card | card helper = mercenaryId ]) size > 1)
+			ifTrue: [ ^ true ] ].
+
+	^ false
+]
+
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: aConfigDiceSet [
+Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
+	cardManager := CardManager createWith: aDeckOfCards.
 
 	gameBoard := CellPlacement new
-		             createBoardWithCellConfiguration: aConfigDiceSet
-		             andSize: boardSize.
+		             createBoardWith: aConfigDiceSet
+		             withComplementary: cardManager
+		             And: boardSize.
 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
@@ -97,6 +99,18 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 	^ Position
 		  at: boardSize * (aPosition position // boardSize) negated
 		  withLaps: aPosition position // boardSize
+]
+
+{ #category : 'as yet unclassified' }
+Board >> manageCards [
+
+	^ cardManager
+]
+
+{ #category : 'as yet unclassified' }
+Board >> pickACard [
+	
+	^ cardManager grabTopCard
 ]
 
 { #category : 'as yet unclassified' }

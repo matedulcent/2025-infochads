@@ -1,6 +1,6 @@
 Class {
 	#name : 'RankingTests',
-	#superclass : 'TestCase',
+	#superclass : 'WinningConditionTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
@@ -13,6 +13,7 @@ RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -33,6 +34,7 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -54,6 +56,7 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -75,6 +78,7 @@ RankingTests >> testWhenGameIsOverAndSpaceShip2Wins [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -96,6 +100,7 @@ RankingTests >> testWhenGameIsOverAndWinnerIsShip1 [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -117,6 +122,7 @@ RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -141,6 +147,7 @@ RankingTests >> testWhenGameThereAre4ShipsTheRankingShowsAllTheShips [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (OrderedCollection with: WhiteCard new)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -151,5 +158,5 @@ RankingTests >> testWhenGameThereAre4ShipsTheRankingShowsAllTheShips [
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: aGame getRanking equals: { 1. 4. 3. 2}
+	self assert: aGame getRanking equals: { 1. 4. 3. 2 }
 ]

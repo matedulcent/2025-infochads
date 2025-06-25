@@ -4,7 +4,11 @@ Class {
 	#instVars : [
 		'shield',
 		'spaceShipID',
-		'loseTurn'
+		'loseTurn',
+		'cards',
+		'helperOf',
+		'pendingCards',
+		'helpingOthers'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,12 +29,18 @@ SpaceShip class >> itMustHaveThree: aShield [
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip class >> with: anId andStartingWith: aShield [
+SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield [
 
 	self itMustHaveThree: aShield.
 	self itMustHaveAnID: anId.
 
-	^ self new initializeWithShield: aShield and: anId
+	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
+]
+
+{ #category : 'adding' }
+SpaceShip >> addA: card [
+
+	cards add: card
 ]
 
 { #category : 'testing' }
@@ -39,10 +49,31 @@ SpaceShip >> canBattle [
 	^ shield > 0 and: loseTurn = 0
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> deMercenarize [
+
+	helperOf := spaceShipID.
+	helpingOthers := false
+]
+
 { #category : 'getters' }
 SpaceShip >> getShield [
 
 	^ shield
+]
+
+{ #category : 'testing' }
+SpaceShip >> has: aCard [
+
+	| pickedCardFromCards pickedCardFromPending |
+	pickedCardFromPending := self remove: aCard from: pendingCards.
+
+	pickedCardFromCards := self remove: aCard from: cards.
+
+	pickedCardFromCards == pickedCardFromPending ifTrue: [
+		Error signal: 'The card is not in the ships deck' ].
+	
+	^ aCard
 ]
 
 { #category : 'getters' }
@@ -52,12 +83,26 @@ SpaceShip >> id [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWithShield: aNumberOfShields and: aSpaceShipID [
+SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
-	spaceShipID := aSpaceShipID.
-	shield := aNumberOfShields.
+	spaceShipID := anId.
+	shield := aShield.
 	loseTurn := 0.
-	^ self
+	cards := OrderedCollection withAll: {
+			         aCard.
+			         anotherCard }.
+	pendingCards := OrderedCollection new.
+	helperOf := spaceShipID.
+	helpingOthers := false
+]
+
+{ #category : 'testing' }
+SpaceShip >> isHelpingOthers [
+
+	(helpingOthers = false) ifTrue: [
+		helpingOthers := true.
+		^ false ].
+	^ true
 ]
 
 { #category : 'shield' }
@@ -67,12 +112,50 @@ SpaceShip >> loseShield [
 	shield = 0 ifTrue: [ loseTurn := 2 ]
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> pending: aCard [
+	"encapsulation"
+
+	pendingCards add: aCard
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> pendingCard [
+
+	^ pendingCards
+]
+
 { #category : 'shield' }
 SpaceShip >> rechargableShield: aDiceRoll [
 
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'removing' }
+SpaceShip >> remove: aCard from: aDeck [
+
+	| pickedCard |
+	pickedCard := aDeck
+		              detect: [ :card | card class = aCard class] 
+		              ifNone: [ ^ aCard ].
+
+	aDeck remove: pickedCard.
+
+	^ pickedCard
+]
+
+{ #category : 'initialization' }
+SpaceShip >> setAsHelperOf: aSpaceShip [
+	"testear error "
+	helperOf = spaceShipID ifFalse: [
+		Error signal: 'A mercenary cant help multiple ships.' ].
+
+	"aSpaceShip == self ifTrue: [ ^ self ]."
+	
+	helperOf := aSpaceShip id.
+	aSpaceShip addMercenary: spaceShipID
 ]
 
 { #category : 'accessing' }
