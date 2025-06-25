@@ -11,8 +11,6 @@ Class {
 { #category : 'instance creation' }
 CardEffect class >> with: aSetOfCards [
 
-	aSetOfCards ifEmpty: [
-		Error signal: 'The dard cell must have at least one White card.' ].
 	^ self new initializeWith: aSetOfCards
 ]
 

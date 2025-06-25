@@ -61,7 +61,7 @@ Cell >> giveCardsTo: aSpaceShip [
 	| card |
 	card := effect grabCard.
 
-	card class = WhiteCard ifFalse: [ aSpaceShip addA: card ]
+	(card class = WhiteCard new class) ifFalse: [ aSpaceShip addA: card ]
 ]
 
 { #category : 'initialization' }
