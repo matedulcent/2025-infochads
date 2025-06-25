@@ -137,10 +137,6 @@ CardManager >> playCancelation: aCard on: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> playMercenaryOn: aSpaceShip [
-]
-
-{ #category : 'as yet unclassified' }
 CardManager >> playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips [
 
 	(activeCards at: aSpaceShip id) do: [ :card |
