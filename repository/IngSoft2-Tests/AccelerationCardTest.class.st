@@ -24,7 +24,7 @@ AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsT
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { AccelerationCard })
+		          playedWith: (CardDeck withCards: { AccelerationCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -46,7 +46,7 @@ AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenItsTossIncreme
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { AccelerationCard })
+		          playedWith: (CardDeck withCards: { AccelerationCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

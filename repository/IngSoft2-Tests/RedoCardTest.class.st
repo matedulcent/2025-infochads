@@ -15,11 +15,11 @@ RedoCardTest >> testWhenShip1PlaysMercenaryOn3AndRedoOn4AndShip2PlaysRedoOn5AndS
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           WhiteCard.
-					           RedoCard.
-					           WhiteCard.
-					           RedoCard.
-					           MercenaryCard })
+					           WhiteCard new.
+					           RedoCard new.
+					           WhiteCard new.
+					           RedoCard new.
+					           MercenaryCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -54,10 +54,10 @@ RedoCardTest >> testWhenShip1PlaysMercenaryOn3AndShip2PlaysRedoOn3ThenTheRedoIsI
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           WhiteCard.
-					           RedoCard.
-					           WhiteCard.
-					           MercenaryCard })
+					           WhiteCard new.
+					           RedoCard new.
+					           WhiteCard new.
+					           MercenaryCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -85,10 +85,10 @@ RedoCardTest >> testWhenShip1PlaysMercenaryOn3AndShip2PlaysRedoOn4AndShip1LosesT
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RedoCard.
-					           WhiteCard.
-					           WhiteCard.
-					           MercenaryCard })
+					           RedoCard new.
+					           WhiteCard new.
+					           WhiteCard new.
+					           MercenaryCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -120,10 +120,10 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThe
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           CancelationCard.
-					           RedoCard.
-					           SpeedCard.
-					           AccelerationCard })
+					           CancelationCard new.
+					           RedoCard new.
+					           SpeedCard new.
+					           AccelerationCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -153,12 +153,12 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndShip2PlaysSpeedThenShip3CancelsAndRedo
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           CancelationCard.
-					           RedoCard.
-					           WhiteCard.
-					           SpeedCard.
-					           WhiteCard.
-					           SpeedCard })
+					           CancelationCard new.
+					           RedoCard new.
+					           WhiteCard new.
+					           SpeedCard new.
+					           WhiteCard new.
+					           SpeedCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -189,10 +189,10 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndaShip2RedoThenTheShip2AlsoHasASpeed [
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RedoCard.
-					           WhiteCard.
-					           SpeedCard.
-					           WhiteCard })
+					           RedoCard new.
+					           WhiteCard new.
+					           SpeedCard new.
+					           WhiteCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -217,10 +217,10 @@ RedoCardTest >> testWhenShip1PlaysSpeedTwiceThenShip2CancelsAndRedoThenBothSpeed
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           CancelationCard.
-					           RedoCard.
-					           SpeedCard.
-					           SpeedCard })
+					           CancelationCard new.
+					           RedoCard new.
+					           SpeedCard new.
+					           SpeedCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -249,8 +249,8 @@ RedoCardTest >> testWhenShipPlaysAccelerationAndARedoThenAllShipsHave2Accelerati
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           AccelerationCard.
-					           RedoCard })
+					           AccelerationCard new.
+					           RedoCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -276,8 +276,8 @@ RedoCardTest >> testWhenShipPlaysMercenaryAndRedoOnAnotherShipThenTheyLooseAndLo
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RedoCard.
-					           MercenaryCard })
+					           RedoCard new.
+					           MercenaryCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -307,8 +307,8 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           SpeedCard.
-					           RedoCard })
+					           SpeedCard new.
+					           RedoCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -334,8 +334,8 @@ RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBoth
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RepeatCard.
-					           RedoCard })
+					           RepeatCard new.
+					           RedoCard new})
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -360,10 +360,10 @@ RedoCardTest >> testWhenSpaceShip2PlaysSpeedCardAndSpaceShip1PlaysRedoCardThenRe
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           SpeedCard.
-					           WhiteCard.
-					           RedoCard.
-					           WhiteCard })
+					           SpeedCard new.
+					           WhiteCard new.
+					           RedoCard new.
+					           WhiteCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -391,8 +391,8 @@ RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffec
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RepeatCard.
-					           RedoCard })
+					           RepeatCard new.
+					           RedoCard new})
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -416,8 +416,8 @@ RedoCardTest >> testWhenSpaceShipPlaysTwoRedoCardTogetherWithNoOtherCardToRedoTh
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RedoCard.
-					           RedoCard })
+					           RedoCard new.
+					           RedoCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -441,7 +441,7 @@ RedoCardTest >> testWhenTheOnlyCardPlayedIsRedoThenTheCardHasNoEffect [
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { RedoCard })
+		          playedWith: (CardDeck withCards: { RedoCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

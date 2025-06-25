@@ -138,7 +138,7 @@ SpaceShip >> remove: aCard from: aDeck [
 
 	| pickedCard |
 	pickedCard := aDeck
-		              detect: [ :card | card = aCard class ] 
+		              detect: [ :card | card class = aCard class] 
 		              ifNone: [ ^ aCard ].
 
 	aDeck remove: pickedCard.

@@ -16,7 +16,7 @@ RepeatCardTest >> testWhenNoOneHasPlayedYetThenTeRepeatCardHasNoEffect [
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { RepeatCard })
+		          playedWith: (CardDeck withCards: { RepeatCard new})
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -42,9 +42,9 @@ RepeatCardTest >> testWhenTheGameIsOverThenCancelCardsCantBePlayed [
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           CancelationCard.
-					           WhiteCard.
-					           SpeedCard })
+					           CancelationCard new.
+					           WhiteCard new.
+					           SpeedCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -75,10 +75,10 @@ RepeatCardTest >> testWhenTheGameIsOverThenRepeateCardsCantBePlayed [
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection withAll: {
-					           (RepeatCard withObjective: 2).
+		          playedWith: (CardDeck withCards: {
+					           RepeatCard new.
 					           WhiteCard new.
-					           (RepeatCard withObjective: 2) })
+					           RepeatCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -105,7 +105,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleAndTheRepeteCardWasPlayedOn
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { RepeatCard })
+		          playedWith: (CardDeck withCards: { RepeatCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -131,9 +131,9 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleTriggerdByAnotherPlayerThen
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RepeatCard.
-					           WhiteCard.
-					           RepeatCard })
+					           RepeatCard new.
+					           WhiteCard new.
+					           RepeatCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -160,9 +160,9 @@ RepeatCardTest >> testWhenTheLastPowerUpWasAnAtomicBombThenAllShieldsAreDeducted
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           RepeatCard.
-					           WhiteCard.
-					           RepeatCard })
+					           RepeatCard new.
+					           WhiteCard new.
+					           RepeatCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard

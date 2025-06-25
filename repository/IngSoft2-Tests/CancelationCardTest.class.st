@@ -12,7 +12,9 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMe
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard. CancelationCard })
+		          playedWith: (CardDeck withCards: {
+					           MercenaryCard new.
+					           CancelationCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -42,7 +44,7 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasign
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard. CancelationCard })
+		          playedWith: (CardDeck withCards: { MercenaryCard new. CancelationCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -73,11 +75,11 @@ CancelationCardTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsVa
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           WhiteCard.
-					           WhiteCard.
-					           WhiteCard.
-					           CancelationCard.
-					           SpeedCard })
+					           WhiteCard new.
+					           WhiteCard new.
+					           WhiteCard new.
+					           CancelationCard new.
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -101,10 +103,10 @@ CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancel
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           WhiteCard.
-					           WhiteCard.
-					           SpeedCard.
-					           CancelationCard })
+					           WhiteCard new.
+					           WhiteCard new.
+					           SpeedCard new.
+					           CancelationCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -128,11 +130,9 @@ CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCard
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection withAll: {
-					           (CancelationCard
-						            withObjective: (SpeedCard with: 1)
-						            toShip: 1).
-					           (SpeedCard with: 1) })
+		          playedWith: (CardDeck withCards: {
+					           CancelationCard new.
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -159,8 +159,8 @@ CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           CancelationCard.
-					           SpeedCard })
+					           CancelationCard new.
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -185,9 +185,9 @@ CancelationCardTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThe
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           CancelationCard.
-					           WhiteCard.
-					           SpeedCard })
+					           CancelationCard new.
+					           WhiteCard new.
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

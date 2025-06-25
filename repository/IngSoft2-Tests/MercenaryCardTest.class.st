@@ -25,8 +25,8 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndHasMercenaryWith3
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           MercenaryCard.
-					           MercenaryCard })
+					           MercenaryCard new.
+					           MercenaryCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -52,7 +52,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard })
+		          playedWith: (CardDeck withCards: { MercenaryCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -80,7 +80,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard })
+		          playedWith: (CardDeck withCards: { MercenaryCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -105,7 +105,7 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip3AndUsesMercenaryOn3T
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard })
+		          playedWith: (CardDeck withCards: { MercenaryCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -128,10 +128,10 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           MercenaryCard.
-					           WhiteCard.
-					           MercenaryCard.
-					           WhiteCard })
+					           MercenaryCard new.
+					           WhiteCard new.
+					           MercenaryCard new.
+					           WhiteCard new})
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -156,7 +156,7 @@ MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWin
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard })
+		          playedWith: (CardDeck withCards: { MercenaryCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -181,9 +181,9 @@ MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAc
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
-					           SpeedCard.
-					           WhiteCard.
-					           SpeedCard })
+					           SpeedCard new.
+					           WhiteCard new.
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -206,10 +206,10 @@ MercenaryCardTest >> testWhenSpaceShipThatDoesntExistTryesToUseACardThenProcedur
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection withAll: {
-					           (SpeedCard with: 1).
+		          playedWith: (CardDeck withCards: {
+					           SpeedCard new.
 					           WhiteCard new.
-					           (SpeedCard with: 1) })
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

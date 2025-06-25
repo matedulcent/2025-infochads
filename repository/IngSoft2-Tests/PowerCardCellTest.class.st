@@ -13,11 +13,11 @@ PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAqui
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
-			                       WhiteCard.
-			                       WhiteCard.
-			                       WhiteCard.
-			                       SpeedCard.
-			                       SpeedCard }.
+			                       WhiteCard new.
+			                       WhiteCard new.
+			                       WhiteCard new.
+			                       SpeedCard new.
+			                       SpeedCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -45,9 +45,9 @@ PowerCardCellTest >> testWhenTheCardCellGrabsTheFirstCardFromTheDeckThenTheSecon
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
-			                       SpeedCard.
-			                       SpeedCard.
-			                       SpeedCard }.
+			                       SpeedCard new.
+			                       SpeedCard new.
+			                       SpeedCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -75,12 +75,12 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatDistributesC
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
-			                       AccelerationCard.
-			                       CancelationCard.
-			                       MercenaryCard.
-			                       RedoCard.
-			                       RepeatCard.
-			                       SpeedCard }.
+			                       AccelerationCard new.
+			                       CancelationCard new.
+			                       MercenaryCard new.
+			                       RedoCard new.
+			                       RepeatCard new.
+			                       SpeedCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -106,8 +106,8 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 100. 2. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
-			                       SpeedCard.
-			                       RepeatCard }.
+			                       SpeedCard new. 
+			                       RepeatCard new}.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
