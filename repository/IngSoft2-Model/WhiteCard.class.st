@@ -38,7 +38,7 @@ WhiteCard >> effectAll [
 { #category : 'instance creation' }
 WhiteCard >> free: aSpaceShip [
 
-	^self
+	^ self
 ]
 
 { #category : 'accessing' }

@@ -39,6 +39,12 @@ RedoCard >> effectAll [
 	^ mimic effectAll 
 ]
 
+{ #category : 'instance creation' }
+RedoCard >> free: aSpaceShip [
+
+	^ mimic free: aSpaceShip 
+]
+
 { #category : 'accessing' }
 RedoCard >> helper [
 
