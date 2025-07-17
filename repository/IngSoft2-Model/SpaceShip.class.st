@@ -57,6 +57,12 @@ SpaceShip >> deMercenarize [
 	helpingOthers := false
 ]
 
+{ #category : 'initialize-release' }
+SpaceShip >> free [
+
+	state := Free new
+]
+
 { #category : 'getters' }
 SpaceShip >> getShield [
 
@@ -81,7 +87,7 @@ SpaceShip >> has: aCard [
 SpaceShip >> hasRolled: aDiceToss [
 
 	(state isFreeByTossing: aDiceToss) ifTrue: [
-		state := Free new.
+		self free.
 		^ true ].
 	^ false
 ]
@@ -114,6 +120,12 @@ SpaceShip >> isHelpingOthers [
 		helpingOthers := true.
 		^ false ].
 	^ true
+]
+
+{ #category : 'testing' }
+SpaceShip >> isLockedUp [
+
+	^ state isLockedUp
 ]
 
 { #category : 'as yet unclassified' }

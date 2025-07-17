@@ -24,7 +24,9 @@ CardDeck >> allPosibleCardsShuffled [
 		            MercenaryCard.
 		            RedoCard.
 		            RepeatCard.
-		            SpeedCard }.
+		            SpeedCard.
+		            FreedomCard }.
+
 	self shuffleTheCards
 ]
 

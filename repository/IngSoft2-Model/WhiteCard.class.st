@@ -35,6 +35,12 @@ WhiteCard >> effectAll [
 	^ Position at: 0 withLaps: 0
 ]
 
+{ #category : 'instance creation' }
+WhiteCard >> free: aSpaceShip [
+
+	^self
+]
+
 { #category : 'accessing' }
 WhiteCard >> helper [
 

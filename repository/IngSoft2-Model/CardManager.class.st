@@ -109,6 +109,8 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		on: aShip
 		and: spaceShips
 		dependingOn: spaceShipPositions.
+		
+	self playFreedom: aCard on: aShip.
 
 	self lastCardPlayed: (aShip has: aCard)
 ]
@@ -134,6 +136,12 @@ CardManager >> playCancelation: aCard on: aShip [
 				        'This card cant be played if the card to be canceled is not active.' ].
 	(activeCards at: (aCard objective: aShip id)) remove: card.
 	aShip deMercenarize
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playFreedom: aCard on: aSpaceShip [
+
+	aCard free: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }

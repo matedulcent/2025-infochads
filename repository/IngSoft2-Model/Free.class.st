@@ -10,3 +10,9 @@ Free >> isFreeByTossing: aDiceRoll [
 
 	^ true
 ]
+
+{ #category : 'testing' }
+Free >> isLockedUp [
+
+	^ false
+]

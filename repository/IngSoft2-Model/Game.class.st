@@ -138,6 +138,13 @@ Game >> isGameOver [
 			  (Position at: board boardSize withLaps: laps) ]
 ]
 
+{ #category : 'testing' }
+Game >> isLockedUp: aSpaceShipID [
+
+	self checkFor: aSpaceShipID.
+	^ (spaceShips at: aSpaceShipID) isLockedUp
+]
+
 { #category : 'informationTest' }
 Game >> isOver [
 

@@ -25,3 +25,9 @@ LockedUp >> isFreeByTossing: aDiceToss [
 
 	^ aDiceToss = escapeValue
 ]
+
+{ #category : 'testing' }
+LockedUp >> isLockedUp [
+
+	^ true
+]
