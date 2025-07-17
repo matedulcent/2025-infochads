@@ -25,6 +25,26 @@ DiceTests >> testDiceCanBeCreated [
 ]
 
 { #category : 'tests' }
+DiceTests >> testWhenADiceOf6DiceIsAskedToReturnTheMaxValueThenIs6 [
+
+	| dice1 result1 |
+	dice1 := Dice withSides: 6.
+	result1 := dice1 maxValue.
+
+	self assert: result1 equals: 6.
+]
+
+{ #category : 'tests' }
+DiceTests >> testWhenADiceOf8DiceIsAskedToReturnTheMaxValueThenIs8 [
+
+	| dice1 result1 |
+	dice1 := Dice withSides: 8.
+	result1 := dice1 maxValue.
+
+	self assert: result1 equals: 8.
+]
+
+{ #category : 'tests' }
 DiceTests >> testWhenMultipleDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
 
 	| dice1 dice2 dice3 result1 result2 result3 |

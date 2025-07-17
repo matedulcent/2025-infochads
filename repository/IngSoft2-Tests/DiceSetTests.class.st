@@ -46,6 +46,18 @@ DiceSetTests >> testWhenASackOfDicesWithOneD6IsTossedThenResultBetween1And6 [
 ]
 
 { #category : 'tests' }
+DiceSetTests >> testWhenASackOfDicesWithTwoD6IsAskedForTheMaxValueThenResultIs12 [
+
+	| diceSet result |
+	diceSet := DiceSet withDices: {
+			           (Dice withSides: 6).
+			           (Dice withSides: 6) }.
+	result := diceSet maxValue.
+
+	self assert: result equals: 12
+]
+
+{ #category : 'tests' }
 DiceSetTests >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
 
 	| diceSet |
@@ -54,6 +66,18 @@ DiceSetTests >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
 			           (Dice withSides: 6) }.
 
 	self assert: (diceSet toss between: 1 and: 12)
+]
+
+{ #category : 'tests' }
+DiceSetTests >> testWhenASackOfDicesWithTwoD8IsAskedForTheMaxValueThenResultIs16 [
+
+	| diceSet result |
+	diceSet := DiceSet withDices: {
+			           (Dice withSides: 8).
+			           (Dice withSides: 8) }.
+	result := diceSet maxValue.
+
+	self assert: result equals: 16
 ]
 
 { #category : 'tests' }

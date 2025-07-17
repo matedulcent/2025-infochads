@@ -25,7 +25,7 @@ DiceSet >> calcuateMaxValue [
 DiceSet >> initializeWith: aSackOfDices [
 	
 	sackOfDices := aSackOfDices.
-	maxValue := self calcuateMaxValue.
+	self calcuateMaxValue.
 ]
 
 { #category : 'accessing' }
