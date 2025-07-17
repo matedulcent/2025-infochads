@@ -202,7 +202,9 @@ Game >> mercenaryHelpTo: aSpaceShip [
 Game >> move: aSpaceShip after: aDiceRoll [
 
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-
+	
+	(aSpaceShip hasRolled: aDiceRoll) ifFalse: [ ^self ].
+	
 	manage
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).

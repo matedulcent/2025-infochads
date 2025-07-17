@@ -11,7 +11,7 @@ RepeatCardTest >> testWhenNoOneHasPlayedYetThenTeRepeatCardHasNoEffect [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 20 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -36,7 +36,7 @@ RepeatCardTest >> testWhenTheGameIsOverThenCancelCardsCantBePlayed [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 100. 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -70,7 +70,7 @@ RepeatCardTest >> testWhenTheGameIsOverThenRepeateCardsCantBePlayed [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
+		                     { 100. 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -100,7 +100,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleAndTheRepeteCardWasPlayedOn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -125,7 +125,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasABlackHoleTriggerdByAnotherPlayerThen
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 14. 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -154,7 +154,7 @@ RepeatCardTest >> testWhenTheLastPowerUpWasAnAtomicBombThenAllShieldsAreDeducted
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 14 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 100. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 0. 0. 0. 100. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50

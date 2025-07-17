@@ -30,6 +30,12 @@ Dice >> initializeWithSides: aNumberOfSides [
 
 ]
 
+{ #category : 'accessing' }
+Dice >> maxValue [
+
+	^ numberOfSides
+]
+
 { #category : 'as yet unclassified' }
 Dice >> roll [
 

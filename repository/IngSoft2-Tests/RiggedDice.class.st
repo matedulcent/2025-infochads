@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'setOfMovements',
-		'turn'
+		'turn',
+		'setMaxValue'
 	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
@@ -13,13 +14,26 @@ Class {
 RiggedDice >> initializeWith: aSetOfMovements [
 
 	setOfMovements := aSetOfMovements.
-	turn := 1
+	turn := 1.
+	setMaxValue := 1
 ]
 
 { #category : 'testing' }
 RiggedDice >> isEmpty [
 
 	^ false
+]
+
+{ #category : 'accessing' }
+RiggedDice >> maxValue [
+
+	^ setMaxValue
+]
+
+{ #category : 'initialization' }
+RiggedDice >> setMaximumValueAs: aValues [
+
+	setMaxValue := aValues
 ]
 
 { #category : 'as yet unclassified' }

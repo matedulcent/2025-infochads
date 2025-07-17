@@ -34,3 +34,9 @@ NoEffect >> grabCard [
 
 	^ WhiteCard new.
 ]
+
+{ #category : 'as yet unclassified' }
+NoEffect >> imprison: aSpaceShip [
+
+	^ self
+]

@@ -79,8 +79,11 @@ CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager An
 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
+	
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
+	
 	self generateUniverseWith: aConfigDice and: aCardManager.
+	
 	^ self extractSample
 ]
 
@@ -118,7 +121,10 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 	self atomicBombCellsWithProbabilities: (probabilities at: 5) and: 0.
 	self
 		moonWalkCellsWithProbabilites: (probabilities at: 6)
-		andDisplacements: aConfigDice
+		andDisplacements: aConfigDice.
+	self
+		jailCellsWithProbabilitites: (probabilities at: 8)
+		and: (aConfigDice maxValue).
 ]
 
 { #category : 'creation' }
@@ -148,6 +154,15 @@ CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacem
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has: (HyperSpaceJumpEffect
 				             with: aDesplacement) ].
+	rawCellDistribution := rawCellDistribution , newCells
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> jailCellsWithProbabilitites: aProbability and: anEscapeValue [
+
+	| newCells |
+	newCells := (1 to: aProbability) collect: [ :cell |
+		            Cell has: (JailEffect with: anEscapeValue) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -191,7 +206,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainProbabilities: aConfigureDice [
 
-	^ (1 to: 7) collect: [ :effect | aConfigureDice toss ]
+	^ (1 to: 8) collect: [ :effect | aConfigureDice toss ]
 ]
 
 { #category : 'as yet unclassified' }

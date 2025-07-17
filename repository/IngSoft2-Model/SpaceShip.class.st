@@ -8,7 +8,8 @@ Class {
 		'cards',
 		'helperOf',
 		'pendingCards',
-		'helpingOthers'
+		'helpingOthers',
+		'state'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -76,6 +77,15 @@ SpaceShip >> has: aCard [
 	^ aCard
 ]
 
+{ #category : 'testing' }
+SpaceShip >> hasRolled: aDiceToss [
+
+	(state isFreeByTossing: aDiceToss) ifTrue: [
+		state := Free new.
+		^ true ].
+	^ false
+]
+
 { #category : 'getters' }
 SpaceShip >> id [
 
@@ -93,7 +103,8 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 			         anotherCard }.
 	pendingCards := OrderedCollection new.
 	helperOf := spaceShipID.
-	helpingOthers := false
+	helpingOthers := false.
+	state := Free new.
 ]
 
 { #category : 'testing' }
@@ -105,6 +116,12 @@ SpaceShip >> isHelpingOthers [
 	^ true
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> lockedUpAndNeeds: aValueToEscape [
+
+	state := LockedUp withValue: aValueToEscape.
+]
+
 { #category : 'shield' }
 SpaceShip >> loseShield [
 
@@ -114,7 +131,6 @@ SpaceShip >> loseShield [
 
 { #category : 'as yet unclassified' }
 SpaceShip >> pending: aCard [
-	"encapsulation"
 
 	pendingCards add: aCard
 ]
@@ -148,12 +164,10 @@ SpaceShip >> remove: aCard from: aDeck [
 
 { #category : 'initialization' }
 SpaceShip >> setAsHelperOf: aSpaceShip [
-	"testear error "
+
 	helperOf = spaceShipID ifFalse: [
 		Error signal: 'A mercenary cant help multiple ships.' ].
 
-	"aSpaceShip == self ifTrue: [ ^ self ]."
-	
 	helperOf := aSpaceShip id.
 	aSpaceShip addMercenary: spaceShipID
 ]

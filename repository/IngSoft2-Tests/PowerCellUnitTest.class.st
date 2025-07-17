@@ -89,6 +89,24 @@ PowerCellUnitTest >> testWhenHyperSpaceJumpReceiveADesplacementOtherThan0ThenCre
 ]
 
 { #category : 'tests' }
+PowerCellUnitTest >> testWhenJailCellHasANegativeJailOutValueThenCreationFails [
+
+	self
+		should: [ JailEffect with: -1 ]
+		raise: Error
+		withMessageText: 'The Jail-Out dice toss must be positive.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenJailCellHasAZeroJailOutValueThenCreationFails [
+
+	self
+		should: [ JailEffect with: 0 ]
+		raise: Error
+		withMessageText: 'The Jail-Out dice toss must be positive.'
+]
+
+{ #category : 'tests' }
 PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementNegativeThenCreationFails [
 
 	self
