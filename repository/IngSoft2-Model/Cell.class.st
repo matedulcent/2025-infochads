@@ -66,8 +66,12 @@ Cell >> giveCardsTo: aSpaceShip [
 
 { #category : 'as yet unclassified' }
 Cell >> imprison: aSpaceShip [
+	"Jail"
 
-	effect imprison: aSpaceShip
+	effect imprison: aSpaceShip.
+
+	"HyperGravity"
+	effect lock: aSpaceShip
 ]
 
 { #category : 'initialization' }

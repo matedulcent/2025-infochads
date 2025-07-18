@@ -20,7 +20,7 @@ JailEffect class >> with: aJailOutValue [
 { #category : 'as yet unclassified' }
 JailEffect >> imprison: aSpaceShip [
 
-	aSpaceShip lockedUpAndNeeds: jailOutValue.
+	aSpaceShip lockedUpAndNeedsFreedomOr: jailOutValue.
 ]
 
 { #category : 'initialization' }

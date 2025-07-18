@@ -2,7 +2,8 @@ Class {
 	#name : 'LockedUp',
 	#superclass : 'Object',
 	#instVars : [
-		'escapeValue'
+		'escapeValue',
+		'freedomCondition'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -14,10 +15,23 @@ LockedUp class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
+{ #category : 'adding' }
+LockedUp >> addFreedomCardCondition [
+	
+	freedomCondition := true.
+]
+
+{ #category : 'testing' }
+LockedUp >> canBeFreed [
+
+	^ freedomCondition
+]
+
 { #category : 'initialization' }
 LockedUp >> initializeWith: anEscapeValue [
 
-	escapeValue := anEscapeValue
+	escapeValue := anEscapeValue.
+	freedomCondition := false.
 ]
 
 { #category : 'testing' }

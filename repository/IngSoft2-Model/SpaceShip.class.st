@@ -50,6 +50,12 @@ SpaceShip >> canBattle [
 	^ shield > 0 and: loseTurn = 0
 ]
 
+{ #category : 'testing' }
+SpaceShip >> canBeFreed [
+
+	^ state canBeFreed
+]
+
 { #category : 'as yet unclassified' }
 SpaceShip >> deMercenarize [
 
@@ -60,7 +66,8 @@ SpaceShip >> deMercenarize [
 { #category : 'initialize-release' }
 SpaceShip >> free [
 
-	state := Free new
+	state := Free new.
+	^ self
 ]
 
 { #category : 'getters' }
@@ -131,7 +138,14 @@ SpaceShip >> isLockedUp [
 { #category : 'as yet unclassified' }
 SpaceShip >> lockedUpAndNeeds: aValueToEscape [
 
-	state := LockedUp withValue: aValueToEscape.
+	state := LockedUp withValue: aValueToEscape
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> lockedUpAndNeedsFreedomOr: aValueToEscape [
+
+	self lockedUpAndNeeds: aValueToEscape.
+	state addFreedomCardCondition
 ]
 
 { #category : 'shield' }

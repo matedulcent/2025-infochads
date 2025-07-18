@@ -6,6 +6,12 @@ Class {
 }
 
 { #category : 'testing' }
+Free >> canBeFreed [
+
+	^ false
+]
+
+{ #category : 'testing' }
 Free >> isFreeByTossing: aDiceRoll [
 
 	^ true
