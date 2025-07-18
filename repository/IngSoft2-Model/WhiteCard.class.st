@@ -95,6 +95,12 @@ WhiteCard >> objective: aSpaceShipId [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> playTwice: stepOfNextSpaceShipToMove [
+
+	^ stepOfNextSpaceShipToMove
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> putHelperAs: aSpaceShipID [
 
 	^ true

@@ -310,14 +310,14 @@ Game >> start [
 
 		self move: spaceShip after: aDiceRoll.
 
-		self updateNextShipToMove: nextSpaceShipToMove.
+		self updateNextShipToMove.
 		aDiceRoll := diceSet toss ]
 ]
 
 { #category : 'as yet unclassified' }
-Game >> updateNextShipToMove: spaceShipID [
+Game >> updateNextShipToMove [
 
-	nextSpaceShipToMove := spaceShipID + stepOfNextSpaceShipToMove.
+	nextSpaceShipToMove := nextSpaceShipToMove + stepOfNextSpaceShipToMove.
 
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
 		nextSpaceShipToMove := 1 ].
@@ -342,9 +342,13 @@ Game >> use: aCard on: aSpaceShipID [
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
 
-	stepOfNextSpaceShipToMove := aCard invertOrder: stepOfNextSpaceShipToMove.
+	stepOfNextSpaceShipToMove := aCard invertOrder:
+		                             stepOfNextSpaceShipToMove.
 
-	aCard skip ifTrue: [ self updateNextShipToMove: nextSpaceShipToMove ].
+	aCard skip ifTrue: [ self updateNextShipToMove ].
+
+	stepOfNextSpaceShipToMove := aCard playTwice:
+		                             stepOfNextSpaceShipToMove.
 
 	self adjustPosition
 ]
