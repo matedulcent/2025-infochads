@@ -60,6 +60,12 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 	mimic := WhiteCard new.
 ]
 
+{ #category : 'as yet unclassified' }
+RedoCard >> invertOrder: step [
+
+	^ mimic invertOrder: step
+]
+
 { #category : 'class membership' }
 RedoCard >> isMercenary [
 

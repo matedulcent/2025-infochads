@@ -8,7 +8,8 @@ Class {
 		'numberOfSpaceShips',
 		'laps',
 		'board',
-		'manage'
+		'manage',
+		'stepOfNextSpaceShipToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -58,6 +59,13 @@ Game >> adjustPosition [
 		manage sumAt: ship id with: (board
 				 limitAdjustment: (manage positions at: ship id)
 				 withTotalLaps: laps) ]
+]
+
+{ #category : 'accessing' }
+Game >> alterInitialConditionsForNextSpaceShipToMove [
+
+	stepOfNextSpaceShipToMove ~= 1 ifTrue: [
+		nextSpaceShipToMove := numberOfSpaceShips ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -125,9 +133,11 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	manage := PositionManager of: spaceShips.
 
 	diceSet := aDiceSet.
+	stepOfNextSpaceShipToMove := 1.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
-	laps := aNumberOfLaps
+	laps := aNumberOfLaps.
+	
 ]
 
 { #category : 'whats left of race positions' }
@@ -292,6 +302,8 @@ Game >> start [
 
 	| aDiceRoll spaceShip |
 	aDiceRoll := diceSet toss.
+	self alterInitialConditionsForNextSpaceShipToMove.
+	
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
@@ -305,9 +317,13 @@ Game >> start [
 { #category : 'as yet unclassified' }
 Game >> updateNextShipToMove: spaceShipID [
 
-	nextSpaceShipToMove := spaceShipID + 1.
+	nextSpaceShipToMove := spaceShipID + stepOfNextSpaceShipToMove.
+
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
-		nextSpaceShipToMove := 1 ]
+		nextSpaceShipToMove := 1 ].
+
+	nextSpaceShipToMove <= 0 ifTrue: [
+		nextSpaceShipToMove := numberOfSpaceShips ]
 ]
 
 { #category : 'movingOut' }
@@ -315,7 +331,7 @@ Game >> use: aCard on: aSpaceShipID [
 
 	| aShip |
 	aShip := self checkFor: aSpaceShipID.
-		
+
 	self noPermanent: aCard.
 
 	board manageCards
@@ -323,7 +339,11 @@ Game >> use: aCard on: aSpaceShipID [
 		on: aShip
 		thatIsIn: spaceShips
 		with: nextSpaceShipToMove
+		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
 
+	stepOfNextSpaceShipToMove := board manageCards
+		                             playWithSpaceShipOrderUsing: aCard
+		                             and: stepOfNextSpaceShipToMove.
 	self adjustPosition
 ]

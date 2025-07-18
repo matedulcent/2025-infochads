@@ -52,6 +52,12 @@ WhiteCard >> initializes [
 
 ]
 
+{ #category : 'as yet unclassified' }
+WhiteCard >> invertOrder: step [
+
+	^ step
+]
+
 { #category : 'testing' }
 WhiteCard >> isMercenary [
 
