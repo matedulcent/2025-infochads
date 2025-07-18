@@ -8,20 +8,20 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-HyperGravityEffect class >> with: aValueToEscape [
+{ #category : 'as yet unclassified' }
+HyperGravityEffect class >> mustBePositive: aValueToEscape [
 
 	aValueToEscape > 0 ifFalse: [
 		Error signal:
-			'The Value to escape de Hyper Gravity cell must be positive ' ].
-
-	^ self new initializeWith: aValueToEscape
+			'The Value to escape de Hyper Gravity cell must be positive ' ]
 ]
 
-{ #category : 'as yet unclassified' }
-HyperGravityEffect >> imprison: aSpaceShip [
+{ #category : 'instance creation' }
+HyperGravityEffect class >> with: aValueToEscape [
 
-	aSpaceShip lockedUpAndNeeds: valueToEscape
+	self mustBePositive: aValueToEscape.
+
+	^ self new initializeWith: aValueToEscape
 ]
 
 { #category : 'initialization' }

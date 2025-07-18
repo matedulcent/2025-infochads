@@ -27,7 +27,7 @@ PowerJailCell >> testWhenShipMovesToJailCellAndDoesntRollTheMaximumValueThenItDo
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 11
+	self assert: (aGame positionOf: 1) equals: 11.
 ]
 
 { #category : 'tests' }
@@ -52,5 +52,5 @@ PowerJailCell >> testWhenShipMovesToJailCellAndRollsTheMaximumValueThenItMoves [
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 21
+	self assert: (aGame positionOf: 1) equals: 21.
 ]

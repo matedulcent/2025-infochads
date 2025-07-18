@@ -61,6 +61,7 @@ PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositions
 		                     { 24. 20. 20. 8. 2. 10. 10. 1. 5. 0. 100. 0. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7. 7. 7. 7. 7. 7. 10. 6. 4. 2. 5. 7.
 		                     7. 7. 7. 7. 0. 3}.
+	aConfigureDiceSet setMaximumValueAs: 10.
 
 	aBoard := Board
 		          withSize: 50
@@ -84,7 +85,7 @@ PowerCellInteractionTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItTh
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 37 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 100. 0. 0. 0. 0. 0. 0. 0.100. 0. 3. 30. 20. 10.
+		                     { 0. 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50

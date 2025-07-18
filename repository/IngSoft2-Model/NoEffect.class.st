@@ -40,3 +40,9 @@ NoEffect >> imprison: aSpaceShip [
 
 	^ self
 ]
+
+{ #category : 'as yet unclassified' }
+NoEffect >> lock: aSpaceShip [
+
+	^ self
+]

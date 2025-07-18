@@ -135,6 +135,7 @@ CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues
 
 	| newCells valuesToEscape allValuesToEscape repeat |
 	valuesToEscape := self obtainFollowingDiceRolls: aConfigDice.
+	self verify: valuesToEscape areUnder: aConfigDice maxValue.
 	repeat := boardSize.
 
 	allValuesToEscape := Array streamContents: [ :escapeValue |
@@ -143,7 +144,8 @@ CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues
 
 	newCells := (1 to: aProbability) collect: [ :escapeValue |
 		            Cell has:
-			            (HyperGravityEffect with: (allValuesToEscape at: escapeValue)) ].
+			            (HyperGravityEffect with:
+				             (allValuesToEscape at: escapeValue)) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -241,4 +243,15 @@ CellPlacement >> theProbabilitiesMustSum100: aProbability [
 
 	(aProbability sum: [ :proba | proba ]) = 100 ifFalse: [
 		Error signal: 'The probabilites dont sum 100.' ]
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> verify: valuesToEscape areUnder: limit [
+
+	| valuesOverLimit |
+	valuesOverLimit := valuesToEscape select: [ :value | value > limit ].
+
+	valuesOverLimit ifNotEmpty: [
+		Error signal:
+			'The values to escape de Hyper Gravity Cell must be under the maximum tossing value' ]
 ]
