@@ -188,12 +188,6 @@ CardManager >> playSpeedOn: aSpaceShip basedOn: positionManager [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> playWithSpaceShipOrderUsing: aCard and: step [
-
-	^ aCard invertOrder: step
-]
-
-{ #category : 'as yet unclassified' }
 CardManager >> the: opponentShip isMercenaryOf: aSpaceShip [
 
 	^ ((activeCards at: aSpaceShip id) anySatisfy: [ :card |

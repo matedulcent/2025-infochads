@@ -106,6 +106,12 @@ WhiteCard >> replicateCell [
 	^ Cell has: NoEffect new
 ]
 
+{ #category : 'asserting' }
+WhiteCard >> skip [
+
+	^ false
+]
+
 { #category : 'accessing' }
 WhiteCard >> target: aSpaceShipId [
 

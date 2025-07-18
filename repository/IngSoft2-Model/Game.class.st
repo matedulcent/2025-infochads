@@ -342,8 +342,9 @@ Game >> use: aCard on: aSpaceShipID [
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
 
-	stepOfNextSpaceShipToMove := board manageCards
-		                             playWithSpaceShipOrderUsing: aCard
-		                             and: stepOfNextSpaceShipToMove.
+	stepOfNextSpaceShipToMove := aCard invertOrder: stepOfNextSpaceShipToMove.
+
+	aCard skip ifTrue: [ self updateNextShipToMove: nextSpaceShipToMove ].
+
 	self adjustPosition
 ]

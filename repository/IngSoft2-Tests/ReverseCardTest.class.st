@@ -55,6 +55,29 @@ ReverseCardTest >> testWhenThereAre3SpaceShipsAndReverseCardIsPlayedThenTheyPlay
 ]
 
 { #category : 'tests' }
+ReverseCardTest >> testWhenThereAre3SpaceShipsAndReverseCardIsPlayedThenTheyPlayInTheInverseTurnOrderIndefinitely [
+
+	| aGame aBoard |
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: { ReverseCard new })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 3
+		         throwing: (RiggedDice new initializeWith: { 5. 6. 7. 8. 9. 10. })
+		         wonAfter: 1.
+
+	aGame use: ReverseCard new on: 1.
+	aGame start.
+
+	self assert: (aGame positionOf: 3) equals: 14.
+	self assert: (aGame positionOf: 2) equals: 16.
+	self assert: (aGame positionOf: 1) equals: 18.
+]
+
+{ #category : 'tests' }
 ReverseCardTest >> testWhenThereAre3SpaceShipsAndTwoReverseCardArePlayedThenTheyPlayInTheCorrectTurnOrder [
 
 	| aGame aBoard |

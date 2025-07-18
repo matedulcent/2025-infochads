@@ -119,6 +119,12 @@ RedoCard >> replicateCell [
 	^ mimic replicateCell
 ]
 
+{ #category : 'asserting' }
+RedoCard >> skip [
+
+	^ mimic skip
+]
+
 { #category : 'accessing' }
 RedoCard >> target: aSpaceShipId [
 
