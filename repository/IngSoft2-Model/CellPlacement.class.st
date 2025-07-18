@@ -125,6 +125,26 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 	self
 		jailCellsWithProbabilitites: (probabilities at: 8)
 		and: (aConfigDice maxValue).
+	self
+		hyperGravityCellsWithProbabilitites: (probabilities at: 9)
+		andExitValues: aConfigDice.
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues: aConfigDice [
+
+	| newCells valuesToEscape allValuesToEscape repeat |
+	valuesToEscape := self obtainFollowingDiceRolls: aConfigDice.
+	repeat := boardSize.
+
+	allValuesToEscape := Array streamContents: [ :escapeValue |
+		                     repeat timesRepeat: [
+			                     escapeValue nextPutAll: valuesToEscape ] ].
+
+	newCells := (1 to: aProbability) collect: [ :escapeValue |
+		            Cell has:
+			            (HyperGravityEffect with: (allValuesToEscape at: escapeValue)) ].
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
@@ -170,7 +190,7 @@ CellPlacement >> jailCellsWithProbabilitites: aProbability and: anEscapeValue [
 CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: aConfigDice [
 
 	| newCells stepBackwards allDisplacements repeat |
-	stepBackwards := self obtainNextDisplacement: aConfigDice.
+	stepBackwards := self obtainFollowingDiceRolls: aConfigDice.
 	repeat := boardSize.
 
 	allDisplacements := Array streamContents: [ :particular |
@@ -191,7 +211,7 @@ CellPlacement >> normalCellsWithProbabilitites: aProbability [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> obtainNextDisplacement: aConfigDice [
+CellPlacement >> obtainFollowingDiceRolls: aConfigDice [
 
 	| results throw |
 	results := OrderedCollection new.
@@ -206,7 +226,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainProbabilities: aConfigureDice [
 
-	^ (1 to: 8) collect: [ :effect | aConfigureDice toss ]
+	^ (1 to: 9) collect: [ :effect | aConfigureDice toss ]
 ]
 
 { #category : 'as yet unclassified' }

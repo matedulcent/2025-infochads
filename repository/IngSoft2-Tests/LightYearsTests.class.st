@@ -11,7 +11,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInLightYearsThenTheJumpsAreExpre
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 300. 3. 90. 60. 30.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 0. 300. 3. 90. 60. 30.
 		                     6. 4. 2. 5. 7 }. "15 10 5"
 	aBoard := Board
 		          withSize: 50
@@ -35,7 +35,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsecsAndLightYearsAndDontRel
 	| aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 100. 200. 3. 30. 20.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 200. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }. "15 10 5"
 
 	self
@@ -56,7 +56,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsercsThenTheJumpsExpresedIn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7 }. "15 10 5"
 	aBoard := Board
 		          withSize: 50
@@ -80,7 +80,7 @@ LightYearsTests >> testWhenTheDistanceNeitherInParsecsOrLightYearsThenIsInvalid 
 	| aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 0. 3. 30. 20. 10.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 0. 0. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7 }.
 
 	self
@@ -101,7 +101,7 @@ LightYearsTests >> testWhenTheDistanceOfTheGameIsExpresedInLightYearsAndParsecsT
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 300. 3. 30. 20. 10.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 100. 300. 3. 30. 20. 10.
 		                     6. 4. 2. 5. 7 }. "15 10 5"
 	aBoard := Board
 		          withSize: 50

@@ -53,6 +53,24 @@ PowerCellUnitTest >> testWhenBlackHoleReceiveADesplacementOtherThan4ThenCreation
 ]
 
 { #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperGravityCellHasANegativeJailOutValueThenCreationFails [
+
+	self
+		should: [ HyperGravityEffect with: -1 ]
+		raise: Error
+		withMessageText: 'The Value to escape de Hyper Gravity cell must be positive '
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperGravityCellHasAZeroJailOutValueThenCreationFails [
+
+	self
+		should: [ HyperGravityEffect with: 0 ]
+		raise: Error
+		withMessageText: 'The Value to escape de Hyper Gravity cell must be positive '
+]
+
+{ #category : 'tests' }
 PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveAtLeastOneJumpValueThenCreationFails [
 
 	self

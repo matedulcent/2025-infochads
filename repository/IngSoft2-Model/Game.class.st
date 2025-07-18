@@ -139,7 +139,7 @@ Game >> isGameOver [
 ]
 
 { #category : 'testing' }
-Game >> isLockedUp: aSpaceShipID [
+Game >> isLockedUpInCell: aSpaceShipID [
 
 	self checkFor: aSpaceShipID.
 	^ (spaceShips at: aSpaceShipID) isLockedUp
