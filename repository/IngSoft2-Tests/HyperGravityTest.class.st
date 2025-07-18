@@ -144,3 +144,33 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsTheRightNumberToE
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 14.
 ]
+
+{ #category : 'tests' }
+HyperGravityTest >> testWhenTheHyperGravityCellWasLastActivatedAndTheRepeatIsPlayedThenItTrapsTheShipInItsPlaceUntilItThrowsTheEscapeValue [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 49. 20 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 100. 0. 1. 30.
+		                     1. 0. 3. 3 }. "3"
+	aConfigureDiceSet setMaximumValueAs: 10.
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           RepeatCard new.
+					           WhiteCard new.
+					           RepeatCard new })
+		          andACellConfiguration: aConfigureDiceSet.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 2.
+
+	aGame start.
+	aGame use: (RepeatCard withObjective: 1) on: 2.
+
+	self assert: (aGame positionOf: 1) equals: 50.
+	self assert: (aGame isLockedUpInCell: 1)
+]

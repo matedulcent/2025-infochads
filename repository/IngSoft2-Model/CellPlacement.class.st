@@ -146,6 +146,7 @@ CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues
 		            Cell has:
 			            (HyperGravityEffect with:
 				             (allValuesToEscape at: escapeValue)) ].
+
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
