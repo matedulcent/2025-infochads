@@ -9,7 +9,8 @@ Class {
 		'laps',
 		'board',
 		'manage',
-		'stepOfNextSpaceShipToMove'
+		'stepOfNextSpaceShipToMove',
+		'listOfAlteredSteps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -63,9 +64,13 @@ Game >> adjustPosition [
 
 { #category : 'accessing' }
 Game >> alterInitialConditionsForNextSpaceShipToMove [
-
-	stepOfNextSpaceShipToMove ~= 1 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ]
+	"If the first player inverts the order then the last starts "
+	stepOfNextSpaceShipToMove = -1 ifTrue: [
+		nextSpaceShipToMove := numberOfSpaceShips ].
+	
+	"If the player to play plays double turn then it plays again, not twice more"
+	(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
+		ifTrue: [ listOfAlteredSteps removeFirst ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -133,8 +138,11 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	manage := PositionManager of: spaceShips.
 
 	diceSet := aDiceSet.
+	
 	stepOfNextSpaceShipToMove := 1.
+	listOfAlteredSteps := OrderedCollection new.
 	nextSpaceShipToMove := 1.
+	
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
 	
@@ -311,13 +319,19 @@ Game >> start [
 		self move: spaceShip after: aDiceRoll.
 
 		self updateNextShipToMove.
+		
 		aDiceRoll := diceSet toss ]
 ]
 
 { #category : 'as yet unclassified' }
 Game >> updateNextShipToMove [
 
-	nextSpaceShipToMove := nextSpaceShipToMove + stepOfNextSpaceShipToMove.
+	| summ |
+	 summ := listOfAlteredSteps isEmpty
+		       ifFalse: [listOfAlteredSteps removeFirst  ]
+		       ifTrue: [ stepOfNextSpaceShipToMove ].
+	
+	nextSpaceShipToMove := nextSpaceShipToMove + summ.
 
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
 		nextSpaceShipToMove := 1 ].
@@ -347,8 +361,8 @@ Game >> use: aCard on: aSpaceShipID [
 
 	aCard skip ifTrue: [ self updateNextShipToMove ].
 
-	stepOfNextSpaceShipToMove := aCard playTwice:
-		                             stepOfNextSpaceShipToMove.
+	listOfAlteredSteps := aCard playTwice:
+		                             listOfAlteredSteps.
 
 	self adjustPosition
 ]

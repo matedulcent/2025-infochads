@@ -1,12 +1,12 @@
 Class {
-	#name : 'SpaceShipCreationTests',
+	#name : 'SpaceShipCreationTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorMessage [
+SpaceShipCreationTest >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorMessage [
 
 	self
 		should: anErrorBlock
@@ -16,7 +16,7 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
+SpaceShipCreationTest >> testWhenAShipDoesntHaveANameThenCreationFails [
 
 	| aCard anotherCard |
 	aCard := anotherCard := WhiteCard create.
@@ -27,7 +27,7 @@ SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
+SpaceShipCreationTest >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -48,7 +48,7 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
+SpaceShipCreationTest >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
 
 	| aCard anotherCard |
 	aCard := anotherCard := WhiteCard create.
@@ -64,7 +64,7 @@ SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCrea
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
+SpaceShipCreationTest >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
 
 	| aCard anotherCard |
 	aCard := anotherCard := WhiteCard create.
@@ -80,7 +80,7 @@ SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnInteger
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
+SpaceShipCreationTest >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 
 	| aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -102,7 +102,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
+SpaceShipCreationTest >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 
 	| aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -123,7 +123,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
+SpaceShipCreationTest >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 
 	| aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -145,7 +145,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1 [
+SpaceShipCreationTest >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -164,7 +164,7 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
+SpaceShipCreationTest >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.

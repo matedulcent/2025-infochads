@@ -113,6 +113,12 @@ RedoCard >> objective: aSpaceShipId [
 	^ ''
 ]
 
+{ #category : 'accessing' }
+RedoCard >> playTwice: listOfAlteredSteps [
+
+	^ mimic playTwice: listOfAlteredSteps
+]
+
 { #category : 'as yet unclassified' }
 RedoCard >> replicateCell [
 

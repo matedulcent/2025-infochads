@@ -95,9 +95,9 @@ WhiteCard >> objective: aSpaceShipId [
 ]
 
 { #category : 'as yet unclassified' }
-WhiteCard >> playTwice: stepOfNextSpaceShipToMove [
+WhiteCard >> playTwice: listOfAlteredSteps [
 
-	^ stepOfNextSpaceShipToMove
+	^ listOfAlteredSteps
 ]
 
 { #category : 'as yet unclassified' }

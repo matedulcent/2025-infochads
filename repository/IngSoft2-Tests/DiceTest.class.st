@@ -1,12 +1,12 @@
 Class {
-	#name : 'DiceTests',
-	#superclass : 'DiceSetTests',
+	#name : 'DiceTest',
+	#superclass : 'DiceSetTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-DiceTests >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
     self
         should: anErrorBlock
@@ -17,7 +17,7 @@ DiceTests >> should: anErrorBlock raise: anErrorClass withMessageText: errorMess
 ]
 
 { #category : 'tests' }
-DiceTests >> testDiceCanBeCreated [
+DiceTest >> testDiceCanBeCreated [
 
 	| aDice |
 	aDice := Dice new.
@@ -25,7 +25,7 @@ DiceTests >> testDiceCanBeCreated [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenADiceOf6DiceIsAskedToReturnTheMaxValueThenIs6 [
+DiceTest >> testWhenADiceOf6DiceIsAskedToReturnTheMaxValueThenIs6 [
 
 	| dice1 result1 |
 	dice1 := Dice withSides: 6.
@@ -35,7 +35,7 @@ DiceTests >> testWhenADiceOf6DiceIsAskedToReturnTheMaxValueThenIs6 [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenADiceOf8DiceIsAskedToReturnTheMaxValueThenIs8 [
+DiceTest >> testWhenADiceOf8DiceIsAskedToReturnTheMaxValueThenIs8 [
 
 	| dice1 result1 |
 	dice1 := Dice withSides: 8.
@@ -45,7 +45,7 @@ DiceTests >> testWhenADiceOf8DiceIsAskedToReturnTheMaxValueThenIs8 [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenMultipleDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
+DiceTest >> testWhenMultipleDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
 
 	| dice1 dice2 dice3 result1 result2 result3 |
 	dice1 := Dice withSides: 6.
@@ -61,7 +61,7 @@ DiceTests >> testWhenMultipleDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenMultipleDicesOfDiferentNumberOfSidesAreRolledThenRetunsNumbersBetween1AndCorrespondingNumberOfSides [
+DiceTest >> testWhenMultipleDicesOfDiferentNumberOfSidesAreRolledThenRetunsNumbersBetween1AndCorrespondingNumberOfSides [
 
 	| diceD6 diceD20 resultD6 resultD20 diceD8 resultD8 |
 	diceD6 := Dice withSides: 6.
@@ -77,7 +77,7 @@ DiceTests >> testWhenMultipleDicesOfDiferentNumberOfSidesAreRolledThenRetunsNumb
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenOneDiceIsRolledTwiceThenReturnsTwoResultsBetween1AndNumberOfSides [
+DiceTest >> testWhenOneDiceIsRolledTwiceThenReturnsTwoResultsBetween1AndNumberOfSides [
 
 	| aDice result1 result2 numberOfSides |
 	numberOfSides := 6.
@@ -90,7 +90,7 @@ DiceTests >> testWhenOneDiceIsRolledTwiceThenReturnsTwoResultsBetween1AndNumberO
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenTheDiceOf20SidesIsRolledThenReturnsNumberBetween1And20 [
+DiceTest >> testWhenTheDiceOf20SidesIsRolledThenReturnsNumberBetween1And20 [
 
 	| numberOfSides aDice result |
 	numberOfSides := 20.
@@ -100,7 +100,7 @@ DiceTests >> testWhenTheDiceOf20SidesIsRolledThenReturnsNumberBetween1And20 [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenTheDiceOf3SidesIsRolledThenReturnsNumberBetween1And3 [
+DiceTest >> testWhenTheDiceOf3SidesIsRolledThenReturnsNumberBetween1And3 [
 
 	| numberOfSides aDice result |
 	numberOfSides := 3.
@@ -110,7 +110,7 @@ DiceTests >> testWhenTheDiceOf3SidesIsRolledThenReturnsNumberBetween1And3 [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenTheDiceOf4SidesIsRolledThenReturnsNumberBetween1And4 [
+DiceTest >> testWhenTheDiceOf4SidesIsRolledThenReturnsNumberBetween1And4 [
 
 	| numberOfSides aDice result |
 	numberOfSides := 4.
@@ -120,7 +120,7 @@ DiceTests >> testWhenTheDiceOf4SidesIsRolledThenReturnsNumberBetween1And4 [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
+DiceTest >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
 
 	| numberOfSides aDice result |
 	numberOfSides := 6.
@@ -130,7 +130,7 @@ DiceTests >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
 ]
 
 { #category : 'errors' }
-DiceTests >> testWhenTheDiceOfNegativeSidesIsRolledThenCreationFails [
+DiceTest >> testWhenTheDiceOfNegativeSidesIsRolledThenCreationFails [
 
 	self
 		should: [ Dice withSides: -1 ]
@@ -139,7 +139,7 @@ DiceTests >> testWhenTheDiceOfNegativeSidesIsRolledThenCreationFails [
 ]
 
 { #category : 'errors' }
-DiceTests >> testWhenTheDiceOfStringNumberSidesIsRolledThenCreationFails [
+DiceTest >> testWhenTheDiceOfStringNumberSidesIsRolledThenCreationFails [
 
 	self
 		should: [ Dice withSides: 'a' ]
@@ -148,7 +148,7 @@ DiceTests >> testWhenTheDiceOfStringNumberSidesIsRolledThenCreationFails [
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenTwoDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
+DiceTest >> testWhenTwoDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
 
 	| dice1 dice2 result1 result2 |
 	dice1 := Dice withSides: 6.

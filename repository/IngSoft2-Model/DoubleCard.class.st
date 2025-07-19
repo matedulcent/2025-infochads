@@ -6,7 +6,11 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DoubleCard >> playTwice: stepOfNextSpaceShipToMove [
+DoubleCard >> playTwice: listOfAlteredSteps [
 
-	^ 0
+	| result |
+	result := listOfAlteredSteps asOrderedCollection copy.
+	result add: 0.
+	result add: 0.
+	^ result
 ]
