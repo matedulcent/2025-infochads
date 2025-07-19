@@ -62,15 +62,17 @@ Game >> adjustPosition [
 				 withTotalLaps: laps) ]
 ]
 
-{ #category : 'accessing' }
-Game >> alterInitialConditionsForNextSpaceShipToMove [
-	"If the first player inverts the order then the last starts "
-	stepOfNextSpaceShipToMove = -1 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ].
-	
-	"If the player to play plays double turn then it plays again, not twice more"
-	(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
-		ifTrue: [ listOfAlteredSteps removeFirst ]
+{ #category : 'as yet unclassified' }
+Game >> affectTheShipOrder: aCard [
+	"Reverse Card"
+	stepOfNextSpaceShipToMove := aCard invertOrder:
+		                             stepOfNextSpaceShipToMove.
+	"Skip Card"
+	aCard skip ifTrue: [ self updateNextShipToMove ].
+
+	"Double Card"
+	listOfAlteredSteps := aCard playTwice:
+		                             listOfAlteredSteps.
 ]
 
 { #category : 'as yet unclassified' }
@@ -223,6 +225,18 @@ Game >> mercenaryHelpTo: aSpaceShip [
 	^ throwSpaceShip
 ]
 
+{ #category : 'accessing' }
+Game >> modifyOrderDueToPreviousCards [
+
+	"If the first player inverts the order then the last starts "
+	stepOfNextSpaceShipToMove = -1 ifTrue: [
+		nextSpaceShipToMove := numberOfSpaceShips ].
+	
+	"If the player to play plays double turn then it plays again, not twice more"
+	(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
+		ifTrue: [ listOfAlteredSteps removeFirst ]
+]
+
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 
@@ -310,7 +324,7 @@ Game >> start [
 
 	| aDiceRoll spaceShip |
 	aDiceRoll := diceSet toss.
-	self alterInitialConditionsForNextSpaceShipToMove.
+	self modifyOrderDueToPreviousCards.
 	
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
@@ -356,13 +370,7 @@ Game >> use: aCard on: aSpaceShipID [
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
 
-	stepOfNextSpaceShipToMove := aCard invertOrder:
-		                             stepOfNextSpaceShipToMove.
-
-	aCard skip ifTrue: [ self updateNextShipToMove ].
-
-	listOfAlteredSteps := aCard playTwice:
-		                             listOfAlteredSteps.
+	self affectTheShipOrder: aCard.
 
 	self adjustPosition
 ]

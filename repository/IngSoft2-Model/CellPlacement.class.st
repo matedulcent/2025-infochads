@@ -44,18 +44,13 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 
 	| result |
 	result := aParsecValue + aLightYearValue.
+	
+	self equal: aLightYearValue to: aParsecValue.
 
-	aParsecValue = aLightYearValue ifTrue: [
-		Error signal:
-			'The ratio 1 parsec = 3 light years is not being respected' ].
-		
 	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
 		^ result // boardSize ].
-
-
-	aLightYearValue // aParsecValue ~= 3 ifTrue: [
-		Error signal:
-			'The ratio 1 parsec = 3 light years is not being respected' ].
+	
+	self the: aLightYearValue doesntRespectProportionTo: aParsecValue.
 
 	^ aParsecValue // boardSize
 ]
@@ -85,6 +80,14 @@ CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager An
 	self generateUniverseWith: aConfigDice and: aCardManager.
 	
 	^ self extractSample
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> equal: aLightYearValue to: aParsecValue [
+
+	aParsecValue = aLightYearValue ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -237,6 +240,14 @@ CellPlacement >> randomCellPicking [
 
     ^ (1 to: boardSize) collect: [ :cell |
           rawCellDistribution at: ((1 to: 100) atRandom) ]
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> the: aLightYearValue doesntRespectProportionTo: aParsecValue [
+
+	aLightYearValue // aParsecValue ~= 3 ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ]
 ]
 
 { #category : 'as yet unclassified' }
