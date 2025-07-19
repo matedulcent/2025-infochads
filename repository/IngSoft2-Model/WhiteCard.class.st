@@ -52,6 +52,12 @@ WhiteCard >> initializes [
 
 ]
 
+{ #category : 'as yet unclassified' }
+WhiteCard >> invertOrder: step [
+
+	^ step
+]
+
 { #category : 'testing' }
 WhiteCard >> isMercenary [
 
@@ -89,6 +95,12 @@ WhiteCard >> objective: aSpaceShipId [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> playTwice: listOfAlteredSteps [
+
+	^ listOfAlteredSteps
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> putHelperAs: aSpaceShipID [
 
 	^ true
@@ -98,6 +110,12 @@ WhiteCard >> putHelperAs: aSpaceShipID [
 WhiteCard >> replicateCell [
 
 	^ Cell has: NoEffect new
+]
+
+{ #category : 'asserting' }
+WhiteCard >> skip [
+
+	^ false
 ]
 
 { #category : 'accessing' }

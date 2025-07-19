@@ -1,12 +1,12 @@
 Class {
-	#name : 'DiceSetTests',
+	#name : 'DiceSetTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'tests' }
-DiceSetTests >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs1 [
+DiceSetTest >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs1 [
 
 	| diceSet movement |
 
@@ -16,7 +16,7 @@ DiceSetTests >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMovements [
+DiceSetTest >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMovements [
 
 	| diceSet movement1  movement2 |
 	
@@ -28,7 +28,7 @@ DiceSetTests >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMove
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1And14 [
+DiceSetTest >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1And14 [
 
 	| diceSet |
 	diceSet := DiceSet withDices: {
@@ -38,7 +38,7 @@ DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1A
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenASackOfDicesWithOneD6IsTossedThenResultBetween1And6 [
+DiceSetTest >> testWhenASackOfDicesWithOneD6IsTossedThenResultBetween1And6 [
 
 	| diceSet |
 	diceSet := DiceSet withDices: { (Dice withSides: 6) }.
@@ -46,7 +46,7 @@ DiceSetTests >> testWhenASackOfDicesWithOneD6IsTossedThenResultBetween1And6 [
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenASackOfDicesWithTwoD6IsAskedForTheMaxValueThenResultIs12 [
+DiceSetTest >> testWhenASackOfDicesWithTwoD6IsAskedForTheMaxValueThenResultIs12 [
 
 	| diceSet result |
 	diceSet := DiceSet withDices: {
@@ -58,7 +58,7 @@ DiceSetTests >> testWhenASackOfDicesWithTwoD6IsAskedForTheMaxValueThenResultIs12
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
+DiceSetTest >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
 
 	| diceSet |
 	diceSet := DiceSet withDices: {
@@ -69,7 +69,7 @@ DiceSetTests >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenASackOfDicesWithTwoD8IsAskedForTheMaxValueThenResultIs16 [
+DiceSetTest >> testWhenASackOfDicesWithTwoD8IsAskedForTheMaxValueThenResultIs16 [
 
 	| diceSet result |
 	diceSet := DiceSet withDices: {
@@ -81,7 +81,7 @@ DiceSetTests >> testWhenASackOfDicesWithTwoD8IsAskedForTheMaxValueThenResultIs16
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenRiggedDiceWithNumberOfMovementsThenTheyWillBeMoved [
+DiceSetTest >> testWhenRiggedDiceWithNumberOfMovementsThenTheyWillBeMoved [
 
 	| diceSet aSetOfMovements movement1 movement2 movement3 |
 	aSetOfMovements := OrderedCollection withAll: #( 1 2 3 ).

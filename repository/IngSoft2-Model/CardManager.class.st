@@ -94,7 +94,7 @@ CardManager >> numberOfMercenariesOf: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove and: spaceShipPositions [
+CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
 
 	self playRedo: aCard on: aShip.
 	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
@@ -109,7 +109,7 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		on: aShip
 		and: spaceShips
 		dependingOn: spaceShipPositions.
-		
+
 	self playFreedom: aCard on: aShip.
 
 	self lastCardPlayed: (aShip has: aCard)

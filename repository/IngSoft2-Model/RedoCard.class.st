@@ -60,6 +60,12 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 	mimic := WhiteCard new.
 ]
 
+{ #category : 'as yet unclassified' }
+RedoCard >> invertOrder: step [
+
+	^ mimic invertOrder: step
+]
+
 { #category : 'class membership' }
 RedoCard >> isMercenary [
 
@@ -107,10 +113,22 @@ RedoCard >> objective: aSpaceShipId [
 	^ ''
 ]
 
+{ #category : 'accessing' }
+RedoCard >> playTwice: listOfAlteredSteps [
+
+	^ mimic playTwice: listOfAlteredSteps
+]
+
 { #category : 'as yet unclassified' }
 RedoCard >> replicateCell [
 
 	^ mimic replicateCell
+]
+
+{ #category : 'asserting' }
+RedoCard >> skip [
+
+	^ mimic skip
 ]
 
 { #category : 'accessing' }
