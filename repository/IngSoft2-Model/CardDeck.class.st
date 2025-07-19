@@ -25,7 +25,10 @@ CardDeck >> allPosibleCardsShuffled [
 		            RedoCard.
 		            RepeatCard.
 		            SpeedCard.
-		            FreedomCard }.
+		            FreedomCard.
+		            ReverseCard.
+		            DoubleCard.
+		            SkipCard }.
 
 	self shuffleTheCards
 ]
