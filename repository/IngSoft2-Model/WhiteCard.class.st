@@ -35,6 +35,12 @@ WhiteCard >> effectAll [
 	^ Position at: 0 withLaps: 0
 ]
 
+{ #category : 'instance creation' }
+WhiteCard >> free: aSpaceShip [
+
+	^ self
+]
+
 { #category : 'accessing' }
 WhiteCard >> helper [
 
@@ -44,6 +50,12 @@ WhiteCard >> helper [
 { #category : 'as yet unclassified' }
 WhiteCard >> initializes [
 
+]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> invertOrder: step [
+
+	^ step
 ]
 
 { #category : 'testing' }
@@ -83,6 +95,12 @@ WhiteCard >> objective: aSpaceShipId [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> playTwice: listOfAlteredSteps [
+
+	^ listOfAlteredSteps
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> putHelperAs: aSpaceShipID [
 
 	^ true
@@ -92,6 +110,12 @@ WhiteCard >> putHelperAs: aSpaceShipID [
 WhiteCard >> replicateCell [
 
 	^ Cell has: NoEffect new
+]
+
+{ #category : 'asserting' }
+WhiteCard >> skip [
+
+	^ false
 ]
 
 { #category : 'accessing' }

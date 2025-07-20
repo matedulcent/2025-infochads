@@ -44,18 +44,13 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 
 	| result |
 	result := aParsecValue + aLightYearValue.
+	
+	self equal: aLightYearValue to: aParsecValue.
 
-	aParsecValue = aLightYearValue ifTrue: [
-		Error signal:
-			'The ratio 1 parsec = 3 light years is not being respected' ].
-		
 	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
 		^ result // boardSize ].
-
-
-	aLightYearValue // aParsecValue ~= 3 ifTrue: [
-		Error signal:
-			'The ratio 1 parsec = 3 light years is not being respected' ].
+	
+	self the: aLightYearValue doesntRespectProportionTo: aParsecValue.
 
 	^ aParsecValue // boardSize
 ]
@@ -79,9 +74,20 @@ CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager An
 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
+	
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
+	
 	self generateUniverseWith: aConfigDice and: aCardManager.
+	
 	^ self extractSample
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> equal: aLightYearValue to: aParsecValue [
+
+	aParsecValue = aLightYearValue ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -118,7 +124,33 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 	self atomicBombCellsWithProbabilities: (probabilities at: 5) and: 0.
 	self
 		moonWalkCellsWithProbabilites: (probabilities at: 6)
-		andDisplacements: aConfigDice
+		andDisplacements: aConfigDice.
+	self
+		jailCellsWithProbabilitites: (probabilities at: 8)
+		and: (aConfigDice maxValue).
+	self
+		hyperGravityCellsWithProbabilitites: (probabilities at: 9)
+		andExitValues: aConfigDice.
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues: aConfigDice [
+
+	| newCells valuesToEscape allValuesToEscape repeat |
+	valuesToEscape := self obtainFollowingDiceRolls: aConfigDice.
+	self verify: valuesToEscape areUnder: aConfigDice maxValue.
+	repeat := boardSize.
+
+	allValuesToEscape := Array streamContents: [ :escapeValue |
+		                     repeat timesRepeat: [
+			                     escapeValue nextPutAll: valuesToEscape ] ].
+
+	newCells := (1 to: aProbability) collect: [ :escapeValue |
+		            Cell has:
+			            (HyperGravityEffect with:
+				             (allValuesToEscape at: escapeValue)) ].
+
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
@@ -151,11 +183,20 @@ CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacem
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
+{ #category : 'as yet unclassified' }
+CellPlacement >> jailCellsWithProbabilitites: aProbability and: anEscapeValue [
+
+	| newCells |
+	newCells := (1 to: aProbability) collect: [ :cell |
+		            Cell has: (JailEffect with: anEscapeValue) ].
+	rawCellDistribution := rawCellDistribution , newCells
+]
+
 { #category : 'creation' }
 CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: aConfigDice [
 
 	| newCells stepBackwards allDisplacements repeat |
-	stepBackwards := self obtainNextDisplacement: aConfigDice.
+	stepBackwards := self obtainFollowingDiceRolls: aConfigDice.
 	repeat := boardSize.
 
 	allDisplacements := Array streamContents: [ :particular |
@@ -176,7 +217,7 @@ CellPlacement >> normalCellsWithProbabilitites: aProbability [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> obtainNextDisplacement: aConfigDice [
+CellPlacement >> obtainFollowingDiceRolls: aConfigDice [
 
 	| results throw |
 	results := OrderedCollection new.
@@ -191,7 +232,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainProbabilities: aConfigureDice [
 
-	^ (1 to: 7) collect: [ :effect | aConfigureDice toss ]
+	^ (1 to: 9) collect: [ :effect | aConfigureDice toss ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -202,8 +243,27 @@ CellPlacement >> randomCellPicking [
 ]
 
 { #category : 'as yet unclassified' }
+CellPlacement >> the: aLightYearValue doesntRespectProportionTo: aParsecValue [
+
+	aLightYearValue // aParsecValue ~= 3 ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ]
+]
+
+{ #category : 'as yet unclassified' }
 CellPlacement >> theProbabilitiesMustSum100: aProbability [
 
 	(aProbability sum: [ :proba | proba ]) = 100 ifFalse: [
 		Error signal: 'The probabilites dont sum 100.' ]
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> verify: valuesToEscape areUnder: limit [
+
+	| valuesOverLimit |
+	valuesOverLimit := valuesToEscape select: [ :value | value > limit ].
+
+	valuesOverLimit ifNotEmpty: [
+		Error signal:
+			'The values to escape de Hyper Gravity Cell must be under the maximum tossing value' ]
 ]

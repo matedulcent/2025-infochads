@@ -1,12 +1,12 @@
 Class {
-	#name : 'SpaceShipMovementTests',
-	#superclass : 'SpaceShipCreationTests',
+	#name : 'SpaceShipMovementTest',
+	#superclass : 'SpaceShipCreationTest',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+SpaceShipMovementTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
 	self
 		should: anErrorBlock
@@ -17,7 +17,7 @@ SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
+SpaceShipMovementTest >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 6 }.
@@ -38,7 +38,7 @@ SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
+SpaceShipMovementTest >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5 }.
@@ -59,7 +59,7 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
+SpaceShipMovementTest >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
@@ -80,7 +80,7 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
+SpaceShipMovementTest >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.

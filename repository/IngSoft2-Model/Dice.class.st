@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Dice class >> AssertIsPositive: aNumberOfSides [
+Dice class >> assertIsPositive: aNumberOfSides [
 
 	(aNumberOfSides isInteger not or: [ aNumberOfSides negative ])
 		ifTrue: [
@@ -19,7 +19,7 @@ Dice class >> AssertIsPositive: aNumberOfSides [
 { #category : 'as yet unclassified' }
 Dice class >> withSides: aNumberOfSides [
 
-	self AssertIsPositive: aNumberOfSides.
+	self assertIsPositive: aNumberOfSides.
 	^ self new initializeWithSides: aNumberOfSides
 ]
 
@@ -28,6 +28,12 @@ Dice >> initializeWithSides: aNumberOfSides [
 
 	numberOfSides := aNumberOfSides.
 
+]
+
+{ #category : 'accessing' }
+Dice >> maxValue [
+
+	^ numberOfSides
 ]
 
 { #category : 'as yet unclassified' }

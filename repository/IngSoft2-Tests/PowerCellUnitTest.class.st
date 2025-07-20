@@ -53,6 +53,24 @@ PowerCellUnitTest >> testWhenBlackHoleReceiveADesplacementOtherThan4ThenCreation
 ]
 
 { #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperGravityCellHasANegativeJailOutValueThenCreationFails [
+
+	self
+		should: [ HyperGravityEffect with: -1 ]
+		raise: Error
+		withMessageText: 'The Value to escape de Hyper Gravity cell must be positive '
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperGravityCellHasAZeroJailOutValueThenCreationFails [
+
+	self
+		should: [ HyperGravityEffect with: 0 ]
+		raise: Error
+		withMessageText: 'The Value to escape de Hyper Gravity cell must be positive '
+]
+
+{ #category : 'tests' }
 PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveAtLeastOneJumpValueThenCreationFails [
 
 	self
@@ -86,6 +104,24 @@ PowerCellUnitTest >> testWhenHyperSpaceJumpReceiveADesplacementOtherThan0ThenCre
 		should: [ HyperSpaceJumpEffect with: 10 ]
 		raise: Error
 		withMessageText: 'The desplacement must be 4.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenJailCellHasANegativeJailOutValueThenCreationFails [
+
+	self
+		should: [ JailEffect with: -1 ]
+		raise: Error
+		withMessageText: 'The Jail-Out dice toss must be positive.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenJailCellHasAZeroJailOutValueThenCreationFails [
+
+	self
+		should: [ JailEffect with: 0 ]
+		raise: Error
+		withMessageText: 'The Jail-Out dice toss must be positive.'
 ]
 
 { #category : 'tests' }

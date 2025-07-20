@@ -8,7 +8,8 @@ Class {
 		'cards',
 		'helperOf',
 		'pendingCards',
-		'helpingOthers'
+		'helpingOthers',
+		'state'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -37,6 +38,13 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
+{ #category : 'testing' }
+SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
+
+	pickedCardFromCards == pickedCardFromPending ifTrue: [
+		Error signal: 'The card is not in the ships deck' ]
+]
+
 { #category : 'adding' }
 SpaceShip >> addA: card [
 
@@ -49,11 +57,24 @@ SpaceShip >> canBattle [
 	^ shield > 0 and: loseTurn = 0
 ]
 
+{ #category : 'testing' }
+SpaceShip >> canBeFreed [
+
+	^ state canBeFreed
+]
+
 { #category : 'as yet unclassified' }
 SpaceShip >> deMercenarize [
 
 	helperOf := spaceShipID.
 	helpingOthers := false
+]
+
+{ #category : 'initialize-release' }
+SpaceShip >> free [
+
+	state := Free new.
+	^ self
 ]
 
 { #category : 'getters' }
@@ -69,11 +90,19 @@ SpaceShip >> has: aCard [
 	pickedCardFromPending := self remove: aCard from: pendingCards.
 
 	pickedCardFromCards := self remove: aCard from: cards.
-
-	pickedCardFromCards == pickedCardFromPending ifTrue: [
-		Error signal: 'The card is not in the ships deck' ].
 	
+	self a: pickedCardFromCards isTheSameAs: pickedCardFromPending.
+
 	^ aCard
+]
+
+{ #category : 'testing' }
+SpaceShip >> hasRolled: aDiceToss [
+
+	(state isFreeByTossing: aDiceToss) ifTrue: [
+		self free.
+		^ true ].
+	^ false
 ]
 
 { #category : 'getters' }
@@ -93,7 +122,8 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 			         anotherCard }.
 	pendingCards := OrderedCollection new.
 	helperOf := spaceShipID.
-	helpingOthers := false
+	helpingOthers := false.
+	state := Free new.
 ]
 
 { #category : 'testing' }
@@ -105,6 +135,25 @@ SpaceShip >> isHelpingOthers [
 	^ true
 ]
 
+{ #category : 'testing' }
+SpaceShip >> isLockedUp [
+
+	^ state isLockedUp
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> lockedUpAndNeeds: aValueToEscape [
+
+	state := LockedUp withValue: aValueToEscape
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> lockedUpAndNeedsFreedomOr: aValueToEscape [
+
+	self lockedUpAndNeeds: aValueToEscape.
+	state addFreedomCardCondition
+]
+
 { #category : 'shield' }
 SpaceShip >> loseShield [
 
@@ -114,7 +163,6 @@ SpaceShip >> loseShield [
 
 { #category : 'as yet unclassified' }
 SpaceShip >> pending: aCard [
-	"encapsulation"
 
 	pendingCards add: aCard
 ]
@@ -148,12 +196,10 @@ SpaceShip >> remove: aCard from: aDeck [
 
 { #category : 'initialization' }
 SpaceShip >> setAsHelperOf: aSpaceShip [
-	"testear error "
+
 	helperOf = spaceShipID ifFalse: [
 		Error signal: 'A mercenary cant help multiple ships.' ].
 
-	"aSpaceShip == self ifTrue: [ ^ self ]."
-	
 	helperOf := aSpaceShip id.
 	aSpaceShip addMercenary: spaceShipID
 ]

@@ -64,6 +64,16 @@ Cell >> giveCardsTo: aSpaceShip [
 	(card class = WhiteCard new class) ifFalse: [ aSpaceShip addA: card ]
 ]
 
+{ #category : 'as yet unclassified' }
+Cell >> imprison: aSpaceShip [
+	
+	"Jail"
+	effect imprison: aSpaceShip.
+
+	"HyperGravity"
+	effect lock: aSpaceShip
+]
+
 { #category : 'initialization' }
 Cell >> initializeWithA: anEffect [
 
@@ -83,6 +93,8 @@ Cell >> takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositi
 	self affectTheShieldOf: aSpaceShip.
 
 	self affectTheShieldOfAll: spaceShips.
-	
-	self giveCardsTo: aSpaceShip 
+
+	self giveCardsTo: aSpaceShip.
+
+	self imprison: aSpaceShip
 ]

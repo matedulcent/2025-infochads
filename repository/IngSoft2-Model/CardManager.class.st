@@ -94,12 +94,14 @@ CardManager >> numberOfMercenariesOf: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove and: spaceShipPositions [
+CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
 
 	self playRedo: aCard on: aShip.
+	
 	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
 		^ self ].
+	
 	(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
 
 	self playCancelation: aCard on: aShip.
@@ -109,6 +111,8 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		on: aShip
 		and: spaceShips
 		dependingOn: spaceShipPositions.
+
+	self playFreedom: aCard on: aShip.
 
 	self lastCardPlayed: (aShip has: aCard)
 ]
@@ -134,6 +138,12 @@ CardManager >> playCancelation: aCard on: aShip [
 				        'This card cant be played if the card to be canceled is not active.' ].
 	(activeCards at: (aCard objective: aShip id)) remove: card.
 	aShip deMercenarize
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playFreedom: aCard on: aSpaceShip [
+
+	(aSpaceShip canBeFreed) ifTrue: [ aCard free: aSpaceShip ]
 ]
 
 { #category : 'as yet unclassified' }

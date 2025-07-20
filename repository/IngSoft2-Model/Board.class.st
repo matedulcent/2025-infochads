@@ -60,8 +60,8 @@ Board >> checkForWormHole: aPosition [
 Board >> does: mercenaryId appearsInOther: spaceShipCards [
 
 	spaceShipCards associationsDo: [ :shipCard |
-		((shipCard value collect: [ :card | card helper = mercenaryId ]) size > 1)
-			ifTrue: [ ^ true ] ].
+		(shipCard value collect: [ :card | card helper = mercenaryId ]) size
+		> 1 ifTrue: [ ^ true ] ].
 
 	^ false
 ]
