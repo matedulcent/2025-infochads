@@ -223,6 +223,14 @@ Game >> noPermanent: aCard [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> obtainStep [
+
+	^ listOfAlteredSteps isEmpty
+		  ifFalse: [ listOfAlteredSteps removeFirst ]
+		  ifTrue: [ stepOfNextSpaceShipToMove ]
+]
+
+{ #category : 'as yet unclassified' }
 Game >> playPendingCardsOn: aSpaceShip [
 
 	aSpaceShip pendingCard do: [ :card |
@@ -266,20 +274,30 @@ Game >> start [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> updateNextShipToMove [
-
-	| summ |
-	 summ := listOfAlteredSteps isEmpty
-		       ifFalse: [listOfAlteredSteps removeFirst  ]
-		       ifTrue: [ stepOfNextSpaceShipToMove ].
-	
-	nextSpaceShipToMove := nextSpaceShipToMove + summ.
+Game >> theNextSpaceShipToMoveIsOverTheLimit [
 
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
-		nextSpaceShipToMove := 1 ].
+		nextSpaceShipToMove := 1 ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> theNextSpaceShipToMoveIsUnderTheLimit [
 
 	nextSpaceShipToMove <= 0 ifTrue: [
 		nextSpaceShipToMove := numberOfSpaceShips ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> updateNextShipToMove [
+
+	| sum |
+	sum := self obtainStep.
+
+	nextSpaceShipToMove := nextSpaceShipToMove + sum.
+	
+	self theNextSpaceShipToMoveIsOverTheLimit.
+	
+	self theNextSpaceShipToMoveIsUnderTheLimit
 ]
 
 { #category : 'movingOut' }

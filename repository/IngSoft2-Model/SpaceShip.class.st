@@ -38,6 +38,13 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
+{ #category : 'testing' }
+SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
+
+	pickedCardFromCards == pickedCardFromPending ifTrue: [
+		Error signal: 'The card is not in the ships deck' ]
+]
+
 { #category : 'adding' }
 SpaceShip >> addA: card [
 
@@ -83,10 +90,8 @@ SpaceShip >> has: aCard [
 	pickedCardFromPending := self remove: aCard from: pendingCards.
 
 	pickedCardFromCards := self remove: aCard from: cards.
+	self a: pickedCardFromCards isTheSameAs: pickedCardFromPending.
 
-	pickedCardFromCards == pickedCardFromPending ifTrue: [
-		Error signal: 'The card is not in the ships deck' ].
-	
 	^ aCard
 ]
 
