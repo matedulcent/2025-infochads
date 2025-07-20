@@ -90,6 +90,7 @@ SpaceShip >> has: aCard [
 	pickedCardFromPending := self remove: aCard from: pendingCards.
 
 	pickedCardFromCards := self remove: aCard from: cards.
+	
 	self a: pickedCardFromCards isTheSameAs: pickedCardFromPending.
 
 	^ aCard
