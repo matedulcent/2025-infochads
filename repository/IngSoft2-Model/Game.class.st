@@ -75,20 +75,6 @@ Game >> affectTheShipOrder: aCard [
 		                             listOfAlteredSteps.
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
-
-	| throwSpaceShip1 throwSpaceShip2 |
-	[
-	throwSpaceShip2 := self mercenaryHelpTo: aSpaceShip2.
-	throwSpaceShip1 := self mercenaryHelpTo: aSpaceShip1.
-
-	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
-	throwSpaceShip1 < throwSpaceShip2
-		ifTrue: [ self lostBattle: aSpaceShip1 ]
-		ifFalse: [ self lostBattle: aSpaceShip2 ]
-]
-
 { #category : 'movingOut' }
 Game >> checkFor: aSpaceShipID [
 
@@ -177,54 +163,6 @@ Game >> lapOf: aSpaceShipID [
 	^ (manage at: aSpaceShipID) lap
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> lookForBattle: aSpaceShip [
-
-	| opponentShip |
-	((manage at: aSpaceShip id) isPositionEqualTo:
-		 (Position at: 1 withLaps: 0)) ifTrue: [ ^ self ].
-
-	opponentShip := self obtainOponentShip: aSpaceShip.
-
-	(board manageCards the: opponentShip isMercenaryOf: aSpaceShip)
-		ifTrue: [ ^ self ].
-
-	opponentShip == aSpaceShip ifFalse: [
-		self battleBetween: aSpaceShip and: opponentShip ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> lostBattle: aSpaceShip [
-
-	| mercenaries |
-
-	manage sumAt: aSpaceShip id with:(Position
-					  at: (manage positions at: aSpaceShip id) position negated + 1
-					  withLaps: 0).
-	aSpaceShip loseShield.
-
-	mercenaries := board manageCards listOfMercenariesOf: aSpaceShip .
-
-	mercenaries do: [ :shipId |
-		manage sumAt: shipId with:(Position
-					  at: (manage positions at: shipId) position negated + 1
-					  withLaps: 0).
-		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> mercenaryHelpTo: aSpaceShip [
-
-	| numberOfTosses throwSpaceShip |
-	numberOfTosses := board manageCards numberOfMercenariesOf: aSpaceShip.
-
-	throwSpaceShip := 0.
-	1 to: numberOfTosses do: [ :mercenary |
-	throwSpaceShip := throwSpaceShip + diceSet toss ].
-
-	^ throwSpaceShip
-]
-
 { #category : 'accessing' }
 Game >> modifyOrderDueToPreviousCards [
 
@@ -241,9 +179,9 @@ Game >> modifyOrderDueToPreviousCards [
 Game >> move: aSpaceShip after: aDiceRoll [
 
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-	
-	(aSpaceShip hasRolled: aDiceRoll) ifFalse: [ ^self ].
-	
+
+	(aSpaceShip hasRolled: aDiceRoll) ifFalse: [ ^ self ].
+
 	manage
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
@@ -268,7 +206,12 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		replacePositionWith:
 		(board checkForWormHole: (manage positions at: aSpaceShip id)).
 
-	self lookForBattle: aSpaceShip
+	Battle
+		between: aSpaceShip
+		andOneOf: spaceShips
+		with: manage
+		on: board
+		with: diceSet.
 ]
 
 { #category : 'movingOut' }
@@ -277,21 +220,6 @@ Game >> noPermanent: aCard [
 	(self isGameOver and: aCard isPermanent not) ifTrue: [
 		Error signal:
 			'Instantaneous cards cant be played after the game is over.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> obtainOponentShip: aSpaceShip [
-
-	| otherShips |
-	otherShips := spaceShips reject: [ :ship | ship = aSpaceShip ].
-
-	otherShips ifEmpty: [ ^ aSpaceShip ].
-
-	^ otherShips
-		  detect: [ :ship |
-			  ((manage positions at: ship id) isPositionEqualTo:
-				   (manage positions at: aSpaceShip id)) and: ship canBattle ]
-		  ifNone: [ aSpaceShip ]
 ]
 
 { #category : 'as yet unclassified' }
