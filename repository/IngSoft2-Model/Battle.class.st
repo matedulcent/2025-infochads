@@ -69,19 +69,13 @@ Battle >> lookForBattle: aSpaceShip [
 Battle >> lostBattle: aSpaceShip [
 
 	| mercenaries |
-	positionManager sumAt: aSpaceShip id with: (Position
-			 at:
-			 (positionManager positions at: aSpaceShip id) position negated + 1
-			 withLaps: 0).
+	self returnToBeguinning: aSpaceShip.
+
 	aSpaceShip loseShield.
 
 	mercenaries := board manageCards listOfMercenariesOf: aSpaceShip.
-
-	mercenaries do: [ :shipId |
-		positionManager sumAt: shipId with: (Position
-				 at: (positionManager positions at: shipId) position negated + 1
-				 withLaps: 0).
-		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
+	
+	self returnToBeguinningTheShips: mercenaries
 ]
 
 { #category : 'as yet unclassified' }
@@ -110,4 +104,23 @@ Battle >> obtainOponentShip: aSpaceShip [
 			  (( positionManager at: ship id) isPositionEqualTo:
 				   (positionManager positions at: aSpaceShip id)) and: ship canBattle ]
 		  ifNone: [ aSpaceShip ]
+]
+
+{ #category : 'as yet unclassified' }
+Battle >> returnToBeguinning: aSpaceShip [
+
+	positionManager sumAt: aSpaceShip id with: (Position
+			 at:
+			 (positionManager positions at: aSpaceShip id) position negated + 1
+			 withLaps: 0)
+]
+
+{ #category : 'as yet unclassified' }
+Battle >> returnToBeguinningTheShips: mercenaries [
+
+	mercenaries do: [ :shipId |
+		positionManager sumAt: shipId with: (Position
+				 at: (positionManager positions at: shipId) position negated + 1
+				 withLaps: 0).
+		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
 ]
