@@ -39,9 +39,8 @@ README >> readmeTestingCellPlacementAndDistribution [
 			The HyperGravity Values must be behind a 0 in the configDice. 
 			Has the same logic as MoonWalk Values
 		"
-		"Some of these rules were not tested because it could only be accessed by the developer.
 		
-		'The only way to keep your developer's job is to write legacy code' _nitche"
+		"Some of these rules were not tested because it could only be accessed by the developer."
 
 	
 ]
