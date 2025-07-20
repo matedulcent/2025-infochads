@@ -40,7 +40,6 @@ WormHole >> intializeStartingAt: aPosition endingAt: anotherPosition [
 	exit := anotherPosition.
 	self verifyExistanceOfWormHole ifTrue: [
 		self the: entry cannotBeEqualTo: exit ].
-	 "iF entry = exit = 0 Then is valid BUT the WH doesnt exist"
 	
 ]
 

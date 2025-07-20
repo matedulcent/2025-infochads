@@ -97,9 +97,11 @@ CardManager >> numberOfMercenariesOf: aShip [
 CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
 
 	self playRedo: aCard on: aShip.
+	
 	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
 		^ self ].
+	
 	(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
 
 	self playCancelation: aCard on: aShip.

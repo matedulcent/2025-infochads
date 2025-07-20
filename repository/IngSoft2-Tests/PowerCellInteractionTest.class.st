@@ -5,17 +5,6 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'as yet unclassified' }
-PowerCellInteractionTest >> readme [
-	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. %CardCell. %Jail -> (The sum of the values must be %100)
-
-	NumberOfCards. Parsecs. LightYears. Len Array HyperJump. jump1. jump2. ... jumpN. -> (Jumps are the values in the array)
-	
-	MoonWalk1. MoonWalk2. ... MoonWalkM.  } -> Config MoonWalk (Deduct values to ships)"
-
-	
-]
-
 { #category : 'asserting' }
 PowerCellInteractionTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
