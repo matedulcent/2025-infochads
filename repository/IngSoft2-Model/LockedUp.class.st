@@ -37,7 +37,7 @@ LockedUp >> initializeWith: anEscapeValue [
 { #category : 'testing' }
 LockedUp >> isFreeByTossing: aDiceToss [
 
-	^ aDiceToss = escapeValue
+	^ aDiceToss >= escapeValue
 ]
 
 { #category : 'testing' }
