@@ -193,10 +193,10 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 ]
 
 { #category : 'tests' }
-BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossTillTheyAreDifferent [
+BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheDefendantShipWinAndTheLoserGoesBack [
 
 	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 2. 3. 3. 3. 1 }.
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 1.}.
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)

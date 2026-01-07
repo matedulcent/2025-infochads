@@ -93,7 +93,7 @@ HyperGravityTest >> testWhenShipHasToRollADiceHigherThatTheMaximumProvidedByDice
 ]
 
 { #category : 'tests' }
-HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndDoesntRollTheRightNumberToEscapeThenItDoesntMove [
+HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsHigherThanTheNumberToEscapeThenItEscapes [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 10 }.
@@ -115,7 +115,7 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndDoesntRollTheRightNumb
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 11.
+	self assert: (aGame positionOf: 1) equals: 21.
 	self assert: (aGame isLockedUpInCell: 1)
 ]
 

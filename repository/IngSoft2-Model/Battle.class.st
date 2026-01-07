@@ -24,17 +24,17 @@ Battle class >> between: aSpaceShip andOneOf: spaceShips with: positionManager o
 ]
 
 { #category : 'as yet unclassified' }
-Battle >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
+Battle >> battleBetween: aSpaceShip and: opponentShip [
 
-	| throwSpaceShip1 throwSpaceShip2 |
-	[
-	throwSpaceShip2 := self mercenaryHelpTo: aSpaceShip2.
-	throwSpaceShip1 := self mercenaryHelpTo: aSpaceShip1.
+	| throwSpaceShip throwOpponentShip |
+	"[ In case of a draw, the defendant wins and the attacker gets loser penalties"
+	throwOpponentShip := self mercenaryHelpTo: opponentShip.
+	throwSpaceShip := self mercenaryHelpTo: aSpaceShip.
 
-	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
-	throwSpaceShip1 < throwSpaceShip2
-		ifTrue: [ self lostBattle: aSpaceShip1 ]
-		ifFalse: [ self lostBattle: aSpaceShip2 ]
+	"throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ]."
+	throwSpaceShip <= throwOpponentShip 
+		ifTrue: [ self lostBattle: aSpaceShip ]
+		ifFalse: [ self lostBattle: opponentShip ]
 ]
 
 { #category : 'initialization' }
