@@ -9,7 +9,8 @@ Class {
 		'helperOf',
 		'pendingCards',
 		'helpingOthers',
-		'state'
+		'state',
+		'skipState'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -38,20 +39,20 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
-{ #category : 'testing' }
+{ #category : 'cards' }
 SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
 
 	pickedCardFromCards == pickedCardFromPending ifTrue: [
 		Error signal: 'The card is not in the ships deck' ]
 ]
 
-{ #category : 'adding' }
+{ #category : 'cards' }
 SpaceShip >> addA: card [
 
 	cards add: card
 ]
 
-{ #category : 'testing' }
+{ #category : 'shield' }
 SpaceShip >> canBattle [
 
 	^ shield > 0 and: loseTurn = 0
@@ -81,20 +82,20 @@ SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
 	state := Retained withValue: aValueToEscape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mercenary' }
 SpaceShip >> deMercenarize [
 
 	helperOf := spaceShipID.
 	helpingOthers := false
 ]
 
-{ #category : 'getters' }
+{ #category : 'shield' }
 SpaceShip >> getShield [
 
 	^ shield
 ]
 
-{ #category : 'testing' }
+{ #category : 'cards' }
 SpaceShip >> has: aCard [
 
 	| pickedCardFromCards pickedCardFromPending |
@@ -105,15 +106,6 @@ SpaceShip >> has: aCard [
 	self a: pickedCardFromCards isTheSameAs: pickedCardFromPending.
 
 	^ aCard
-]
-
-{ #category : 'testing' }
-SpaceShip >> hasRolled: aDiceToss [
-	"eliminar"
-	(state isFreeByTossing: aDiceToss) ifTrue: [
-		self free.
-		^ true ].
-	^ false
 ]
 
 { #category : 'getters' }
@@ -135,9 +127,10 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	helperOf := spaceShipID.
 	helpingOthers := false.
 	state := Free new.
+	skipState := NoSkipping new.
 ]
 
-{ #category : 'testing' }
+{ #category : 'mercenary' }
 SpaceShip >> isHelpingOthers [
 
 	(helpingOthers = false) ifTrue: [
@@ -152,7 +145,7 @@ SpaceShip >> isImprisionedByTossing: aDiceRoll on: aGame [
 	state playTurnFor: self with: aDiceRoll in: aGame
 ]
 
-{ #category : 'testing' }
+{ #category : 'states' }
 SpaceShip >> isLockedUp [
 	"needed for testing"
 	^ state isLockedUp
@@ -165,13 +158,13 @@ SpaceShip >> loseShield [
 	shield = 0 ifTrue: [ loseTurn := 2 ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'cards' }
 SpaceShip >> pending: aCard [
 
 	pendingCards add: aCard
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'cards' }
 SpaceShip >> pendingCard [
 
 	^ pendingCards
@@ -185,7 +178,7 @@ SpaceShip >> rechargableShield: aDiceRoll [
 			'The Shield is already full, it cant be recharged.' ]
 ]
 
-{ #category : 'removing' }
+{ #category : 'cards' }
 SpaceShip >> remove: aCard from: aDeck [
 
 	| pickedCard |
@@ -198,7 +191,7 @@ SpaceShip >> remove: aCard from: aDeck [
 	^ pickedCard
 ]
 
-{ #category : 'initialization' }
+{ #category : 'mercenary' }
 SpaceShip >> setAsHelperOf: aSpaceShip [
 
 	helperOf = spaceShipID ifFalse: [
@@ -208,7 +201,7 @@ SpaceShip >> setAsHelperOf: aSpaceShip [
 	aSpaceShip addMercenary: spaceShipID
 ]
 
-{ #category : 'accessing' }
+{ #category : 'skiping' }
 SpaceShip >> skipATurn: aDiceRoll [
 
 	| doSkip |
@@ -222,7 +215,7 @@ SpaceShip >> skipATurn: aDiceRoll [
 	^ doSkip
 ]
 
-{ #category : 'accessing' }
+{ #category : 'skiping' }
 SpaceShip >> skipTurns [
 
 	loseTurn ~= 0
