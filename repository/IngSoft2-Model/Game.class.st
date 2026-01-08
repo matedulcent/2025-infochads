@@ -177,11 +177,7 @@ Game >> modifyOrderDueToPreviousCards [
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
-	"Roleo 0, eligio pasar o no tiene escudo
-	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-   Esta encarcelada
-	(aSpaceShip hasRolled: aDiceRoll) ifFalse: [ ^ self ].
-	aSpaceShip isImprisionedByTossing: aDiceRoll on: self."
+
 	manage
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
@@ -232,10 +228,9 @@ Game >> obtainStep [
 
 { #category : 'as yet unclassified' }
 Game >> play: aSpaceShip ifItsNotTrappedByTossing: aDiceRoll [
-	"cambiar el nombre"
-	"Roleo 0, eligio pasar o no tiene escudo"
+	"Check for losing turn by dodging or by shields"
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-	"Esta encarcelada"
+	"Retained or LockedUp"
 	aSpaceShip isImprisionedByTossing: aDiceRoll on: self.
 ]
 
