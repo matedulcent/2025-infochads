@@ -57,31 +57,25 @@ SpaceShip >> canBattle [
 	^ shield > 0 and: loseTurn = 0
 ]
 
-{ #category : 'testing' }
-SpaceShip >> canBeFreed [
-
-	^ state canBeFreed
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'states' }
 SpaceShip >> changeStateToFree [
 
 	state := Free new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'states' }
 SpaceShip >> changeStateToFreeByCard [
 
 	state := state setFreeByCard.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'states' }
 SpaceShip >> changeStateToLockedUpAndNeeds: aValueToEscape [
 
 	state := LockedUp withValue: aValueToEscape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'states' }
 SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
 
 	state := Retained withValue: aValueToEscape
@@ -152,7 +146,7 @@ SpaceShip >> isHelpingOthers [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : 'states' }
 SpaceShip >> isImprisionedByTossing: aDiceRoll on: aGame [
 
 	state playTurnFor: self with: aDiceRoll in: aGame

@@ -14,12 +14,6 @@ Retained class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
-{ #category : 'testing' }
-Retained >> canBeFreed [
-
-	^ true
-]
-
 { #category : 'initialization' }
 Retained >> initializeWith: anEscapeValue [
 

@@ -6,12 +6,6 @@ Class {
 }
 
 { #category : 'testing' }
-Free >> canBeFreed [
-
-	^ false
-]
-
-{ #category : 'testing' }
 Free >> isLockedUp [
 	"borrar"
 	^ false

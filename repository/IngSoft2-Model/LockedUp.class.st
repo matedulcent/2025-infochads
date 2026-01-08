@@ -2,8 +2,7 @@ Class {
 	#name : 'LockedUp',
 	#superclass : 'Free',
 	#instVars : [
-		'escapeValue',
-		'freedomCondition'
+		'escapeValue'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,17 +20,10 @@ LockedUp >> addFreedomCardCondition [
 	"freedomCondition := true."
 ]
 
-{ #category : 'testing' }
-LockedUp >> canBeFreed [
-
-	^ true
-]
-
 { #category : 'initialization' }
 LockedUp >> initializeWith: anEscapeValue [
 
-	escapeValue := anEscapeValue.
-	freedomCondition := false. "borrar"
+	escapeValue := anEscapeValue
 ]
 
 { #category : 'testing' }

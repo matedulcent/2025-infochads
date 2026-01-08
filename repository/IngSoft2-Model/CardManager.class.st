@@ -143,7 +143,6 @@ CardManager >> playCancelation: aCard on: aShip [
 { #category : 'as yet unclassified' }
 CardManager >> playFreedom: aCard on: aSpaceShip [
 
-	"aSpaceShip canBeFreed ifTrue: [ aCard free: aSpaceShip ]."
 	aCard free: aSpaceShip
 ]
 
