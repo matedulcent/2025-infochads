@@ -88,6 +88,37 @@ FreedomCardTest >> testWhenASpaceShipIsNotImprisionedAndPlayFreedomThenNothingHa
 	self deny: (aGame isLockedUpInCell: 1)
 ]
 
+{ #category : 'as yet unclassified' }
+FreedomCardTest >> testWhenASpaceShipIsRetainedInHyperGravityThenTheFreedomCardDoesntFreeTheShip [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 10. 2 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
+		                     1. 0. 5 }. "3"
+	aConfigureDiceSet setMaximumValueAs: 10.
+
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           FreedomCard new.
+					           WhiteCard new })
+		          andACellConfiguration: aConfigureDiceSet.
+
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	aGame start.
+	aGame use: FreedomCard new on: 1.
+	self assert: (aGame positionOf: 1) equals: 11.
+	self assert: (aGame isLockedUpInCell: 1)
+
+]
+
 { #category : 'tests' }
 FreedomCardTest >> testWhenShipPlaysFreedomAndAndAnotherShipPlaysFreedomWhenBeingInJailThenItIsSetFree [
 

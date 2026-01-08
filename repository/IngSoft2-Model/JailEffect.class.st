@@ -20,9 +20,8 @@ JailEffect class >> with: aJailOutValue [
 { #category : 'as yet unclassified' }
 JailEffect >> imprison: aSpaceShip [
 	"cambiar nombre a lock"
-	"aSpaceShip changeStateToLockedUpAndNeeds: jailOutValue."
-	
-	aSpaceShip lockedUpAndNeedsFreedomOr: jailOutValue.
+
+	aSpaceShip changeStateToLockedUpAndNeeds: jailOutValue
 ]
 
 { #category : 'initialization' }

@@ -66,7 +66,13 @@ SpaceShip >> canBeFreed [
 { #category : 'as yet unclassified' }
 SpaceShip >> changeStateToFree [
 
-	state := Free new.
+	state := Free new
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> changeStateToFreeByCard [
+
+	state := state setFreeByCard.
 ]
 
 { #category : 'as yet unclassified' }
@@ -156,18 +162,6 @@ SpaceShip >> isImprisionedByTossing: aDiceRoll on: aGame [
 SpaceShip >> isLockedUp [
 	"needed for testing"
 	^ state isLockedUp
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> lockedUpAndNeeds: aValueToEscape [
-   "borrar"
-	state := LockedUp withValue: aValueToEscape
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> lockedUpAndNeedsFreedomOr: aValueToEscape [
-	"borrar"
-	self lockedUpAndNeeds: aValueToEscape.
 ]
 
 { #category : 'shield' }

@@ -8,5 +8,5 @@ Class {
 { #category : 'instance creation' }
 FreedomCard >> free: aSpaceShip [
 
-	aSpaceShip changeStateToFree .
+	aSpaceShip changeStateToFreeByCard .
 ]

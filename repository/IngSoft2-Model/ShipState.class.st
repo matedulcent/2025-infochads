@@ -17,3 +17,9 @@ ShipState >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
 	aGame move: aSpaceShip after: aDiceRoll.
 	"^self"
 ]
+
+{ #category : 'initialization' }
+ShipState >> setFreeByCard [
+
+	^ self
+]

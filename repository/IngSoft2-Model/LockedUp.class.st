@@ -21,12 +21,6 @@ LockedUp >> addFreedomCardCondition [
 	freedomCondition := true.
 ]
 
-{ #category : 'testing' }
-LockedUp >> canBeFreed [
-	"borrar"
-	^ freedomCondition
-]
-
 { #category : 'initialization' }
 LockedUp >> initializeWith: anEscapeValue [
 
@@ -47,4 +41,10 @@ LockedUp >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
 	aSpaceShip changeStateToFree.
 	aGame move: aSpaceShip after: aDiceRoll.
 	"^self"
+]
+
+{ #category : 'initialization' }
+LockedUp >> setFreeByCard [
+
+	^ Free new
 ]
