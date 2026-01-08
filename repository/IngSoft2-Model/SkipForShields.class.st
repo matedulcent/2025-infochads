@@ -1,6 +1,6 @@
 Class {
 	#name : 'SkipForShields',
-	#superclass : 'SkipStates',
+	#superclass : 'SkipForSkipping',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -9,5 +9,5 @@ Class {
 SkipForShields >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
 
 	aSpaceShip rechargeShields.
-	aSpaceShip changeSkippingStateTo: (nextSkipState withNext: NoSkip)
+	super will: aSpaceShip skipAfter: aDiceRoll on: aGame
 ]
