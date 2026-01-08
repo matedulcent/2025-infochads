@@ -228,9 +228,12 @@ Game >> obtainStep [
 
 { #category : 'as yet unclassified' }
 Game >> play: aSpaceShip ifItsNotTrappedByTossing: aDiceRoll [
-	"Check for losing turn by dodging or by shields"
+
+"nuevo metodo a implementar"
+	"aSpaceShip willPlayByTossing: aDiceRoll on: self."
+	"borrar"
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-	"Retained or LockedUp"
+
 	aSpaceShip isImprisionedByTossing: aDiceRoll on: self.
 ]
 
@@ -255,7 +258,7 @@ Game >> shieldOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> skippingTurn: aSpaceShip after: aDiceRoll [
-
+	"borrar"
 	^ aSpaceShip skipTurns or: (aSpaceShip skipATurn: aDiceRoll)
 ]
 

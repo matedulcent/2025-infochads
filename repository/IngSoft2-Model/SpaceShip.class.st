@@ -224,3 +224,9 @@ SpaceShip >> skipTurns [
 			^ true ]
 		ifFalse: [ ^ false ]
 ]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
+
+	skipState will: self skipAfter: aDiceRoll on: aGame
+]
