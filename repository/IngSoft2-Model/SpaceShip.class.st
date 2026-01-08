@@ -55,7 +55,7 @@ SpaceShip >> addA: card [
 { #category : 'shield' }
 SpaceShip >> canBattle [
 	
-	^ shield > 0 and: loseTurn = 0
+	^ shield > 0
 ]
 
 { #category : 'as yet unclassified' }
@@ -166,7 +166,7 @@ SpaceShip >> isLockedUp [
 
 { #category : 'shield' }
 SpaceShip >> loseShield [
-
+	"crear entidad que regule"
 	shield := shield - 1.
 	shield = 0 ifTrue: [
 		self changeSkippingStateTo:
