@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'shield',
 		'spaceShipID',
-		'loseTurn',
 		'cards',
 		'helperOf',
 		'pendingCards',
@@ -97,7 +96,7 @@ SpaceShip >> deMercenarize [
 
 { #category : 'shield' }
 SpaceShip >> getShield [
-
+	"needed for testing"
 	^ shield
 ]
 
@@ -120,7 +119,7 @@ SpaceShip >> id [
 	^ spaceShipID
 ]
 
-{ #category : 'testing' }
+{ #category : 'shield' }
 SpaceShip >> if0WasTossed: aDiceRoll [
 
 	aDiceRoll = 0 ifTrue: [
@@ -132,7 +131,6 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 
 	spaceShipID := anId.
 	shield := aShield.
-	loseTurn := 0.
 	cards := OrderedCollection withAll: {
 			         aCard.
 			         anotherCard }.
@@ -166,7 +164,7 @@ SpaceShip >> isLockedUp [
 
 { #category : 'shield' }
 SpaceShip >> loseShield [
-	"crear entidad que regule"
+
 	shield := shield - 1.
 	shield = 0 ifTrue: [
 		self changeSkippingStateTo:
@@ -214,30 +212,6 @@ SpaceShip >> setAsHelperOf: aSpaceShip [
 
 	helperOf := aSpaceShip id.
 	aSpaceShip addMercenary: spaceShipID
-]
-
-{ #category : 'skiping' }
-SpaceShip >> skipATurn: aDiceRoll [
-	"borrar"
-	| doSkip |
-	self rechargableShield: aDiceRoll.
-
-	doSkip := false.
-	aDiceRoll = 0 ifTrue: [
-		shield := 3.
-		doSkip := true ].
-
-	^ doSkip
-]
-
-{ #category : 'skiping' }
-SpaceShip >> skipTurns [
-	"borrar"
-	loseTurn ~= 0
-		ifTrue: [
-			loseTurn := loseTurn - 1.
-			^ true ]
-		ifFalse: [ ^ false ]
 ]
 
 { #category : 'as yet unclassified' }
