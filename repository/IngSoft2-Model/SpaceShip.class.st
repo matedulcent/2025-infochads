@@ -58,6 +58,13 @@ SpaceShip >> canBattle [
 	^ shield > 0 and: loseTurn = 0
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> changeSkippingStateTo: nextSkipState [
+
+	state:= nextSkipState 
+	"^self"
+]
+
 { #category : 'states' }
 SpaceShip >> changeStateToFree [
 
@@ -127,7 +134,7 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	helperOf := spaceShipID.
 	helpingOthers := false.
 	state := Free new.
-	skipState := NoSkipping new.
+	skipState := NoSkip new.
 ]
 
 { #category : 'mercenary' }
@@ -172,10 +179,18 @@ SpaceShip >> pendingCard [
 
 { #category : 'shield' }
 SpaceShip >> rechargableShield: aDiceRoll [
-
+ 	"borrar"
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'shield' }
+SpaceShip >> rechargeShields [
+
+	shield = 3 ifTrue: [
+		Error signal: 'The Shield is already full, it cant be recharged.' ].
+	shield := 3
 ]
 
 { #category : 'cards' }
