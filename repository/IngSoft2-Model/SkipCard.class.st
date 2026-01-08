@@ -15,5 +15,5 @@ SkipCard >> skip [
 SkipCard >> skip: aSpaceShip [
 
 	aSpaceShip changeSkippingStateTo:
-		(SkipForSkipping withNext: NoSkip new)
+		(SkipForSkipping withNext: NoSkip)
 ]
