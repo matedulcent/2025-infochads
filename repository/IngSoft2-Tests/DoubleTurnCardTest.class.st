@@ -19,16 +19,16 @@ DoubleTurnCardTest >> testWhenThereAre3SpaceShipsAndOneDoubleTurnAndOneRedoCardA
 	aGame := Game
 		         playedIn: aBoard
 		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 1. 1. 1. 1. 10 })
+		         throwing: (RiggedDice new initializeWith: { 1. 2. 1. 1. 10 })
 		         wonAfter: 1.
 
 	aGame use: DoubleCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
-	self assert: (aGame positionOf: 3) equals: 1.
-	self assert: (aGame positionOf: 2) equals: 11.
-	self assert: (aGame positionOf: 1) equals: 5
+	self assert: (aGame positionOf: 3) equals: 11.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 6
 ]
 
 { #category : 'tests' }

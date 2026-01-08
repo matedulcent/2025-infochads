@@ -115,6 +115,7 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 	self playFreedom: aCard on: aShip.
 	
 	self playSkip: aCard on: aShip.
+	self playDouble: aCard on: aShip.
 	
 	self lastCardPlayed: (aShip has: aCard)
 ]
@@ -143,8 +144,14 @@ CardManager >> playCancelation: aCard on: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> playFreedom: aCard on: aSpaceShip [
+CardManager >> playDouble: aCard on: aShip [
 
+	aCard doubleTurnTo: aShip.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playFreedom: aCard on: aSpaceShip [
+	"listo para migrar"
 	aCard free: aSpaceShip
 ]
 
@@ -187,7 +194,7 @@ CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShi
 { #category : 'as yet unclassified' }
 CardManager >> playSkip: aCard on: aShip [
 
-
+	"listo para migrar"
 	aCard skip: aShip
 ]
 

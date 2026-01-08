@@ -67,12 +67,10 @@ Game >> affectTheShipOrder: aCard [
 	"Reverse Card"
 	stepOfNextSpaceShipToMove := aCard invertOrder:
 		                             stepOfNextSpaceShipToMove.
-	"Skip Card"
-	"aCard skip ifTrue: [ self updateNextShipToMove ]."
 
 	"Double Card"
-	listOfAlteredSteps := aCard playTwice:
-		                             listOfAlteredSteps.
+	"listOfAlteredSteps := aCard playTwice:
+		                             listOfAlteredSteps."
 ]
 
 { #category : 'movingOut' }

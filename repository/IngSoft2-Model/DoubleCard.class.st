@@ -6,11 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DoubleCard >> playTwice: listOfAlteredSteps [
+DoubleCard >> doubleTurnTo: aShip [
 
-	| result |
-	result := listOfAlteredSteps asOrderedCollection copy.
-	result add: 0.
-	result add: 0.
-	^ result
+	aShip changeSkippingStateTo: (PlayDouble withNext: NoSkip).
 ]

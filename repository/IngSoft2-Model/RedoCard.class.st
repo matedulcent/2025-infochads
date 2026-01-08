@@ -28,6 +28,12 @@ RedoCard >> cardObjective: aCard [
 ]
 
 { #category : 'as yet unclassified' }
+RedoCard >> doubleTurnTo: aShip [
+
+	aShip changeSkippingStateTo: (PlayDouble withNext: NoSkip).
+]
+
+{ #category : 'as yet unclassified' }
 RedoCard >> effect [
 
 	^ mimic effect
@@ -111,12 +117,6 @@ RedoCard >> objective: aSpaceShipId [
 
 	mimic class = CancelationCard ifTrue: [ ^ targetID ].
 	^ ''
-]
-
-{ #category : 'accessing' }
-RedoCard >> playTwice: listOfAlteredSteps [
-
-	^ mimic playTwice: listOfAlteredSteps
 ]
 
 { #category : 'as yet unclassified' }

@@ -24,6 +24,12 @@ WhiteCard >> cardObjective: aCard [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> doubleTurnTo: aShip [
+
+	^self
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> effect [
 
 	^ Position at: 0 withLaps: 0
@@ -92,12 +98,6 @@ WhiteCard >> mimic: aCard [
 WhiteCard >> objective: aSpaceShipId [
 
 	^ ''
-]
-
-{ #category : 'as yet unclassified' }
-WhiteCard >> playTwice: listOfAlteredSteps [
-
-	^ listOfAlteredSteps
 ]
 
 { #category : 'as yet unclassified' }
