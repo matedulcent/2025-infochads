@@ -1,6 +1,6 @@
 Class {
 	#name : 'LockedUp',
-	#superclass : 'ShipState',
+	#superclass : 'Free',
 	#instVars : [
 		'escapeValue',
 		'freedomCondition'
@@ -18,7 +18,13 @@ LockedUp class >> withValue: anEscapeValue [
 { #category : 'adding' }
 LockedUp >> addFreedomCardCondition [
 	"borrar"
-	freedomCondition := true.
+	"freedomCondition := true."
+]
+
+{ #category : 'testing' }
+LockedUp >> canBeFreed [
+
+	^ true
 ]
 
 { #category : 'initialization' }
@@ -32,6 +38,12 @@ LockedUp >> initializeWith: anEscapeValue [
 LockedUp >> isFreeByTossing: aDiceToss [
 
 	^ aDiceToss = escapeValue
+]
+
+{ #category : 'testing' }
+LockedUp >> isLockedUp [
+	"borrar"
+	^ true
 ]
 
 { #category : 'as yet unclassified' }

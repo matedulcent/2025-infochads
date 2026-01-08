@@ -1,9 +1,8 @@
 Class {
 	#name : 'Retained',
-	#superclass : 'ShipState',
+	#superclass : 'Free',
 	#instVars : [
-		'escapeValue',
-		'freedomCondition'
+		'escapeValue'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -15,11 +14,16 @@ Retained class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
+{ #category : 'testing' }
+Retained >> canBeFreed [
+
+	^ true
+]
+
 { #category : 'initialization' }
 Retained >> initializeWith: anEscapeValue [
 
 	escapeValue := anEscapeValue.
-	freedomCondition := false. "borrar"
 ]
 
 { #category : 'testing' }
@@ -28,11 +32,16 @@ Retained >> isFreeByTossing: aDiceToss [
 	^ aDiceToss >= escapeValue
 ]
 
+{ #category : 'testing' }
+Retained >> isLockedUp [
+	"borrar"
+	^ true
+]
+
 { #category : 'as yet unclassified' }
 Retained >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
 
 	(self isFreeByTossing: aDiceRoll) ifFalse: [ ^ self ].
 	aSpaceShip changeStateToFree.
 	aGame move: aSpaceShip after: aDiceRoll.
-	"^self"
 ]
