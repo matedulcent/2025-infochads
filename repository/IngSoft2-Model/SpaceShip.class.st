@@ -62,7 +62,6 @@ SpaceShip >> canBattle [
 SpaceShip >> changeSkippingStateTo: nextSkipState [
 
 	skipState := nextSkipState 
-	"^self"
 ]
 
 { #category : 'states' }
@@ -121,6 +120,13 @@ SpaceShip >> id [
 	^ spaceShipID
 ]
 
+{ #category : 'testing' }
+SpaceShip >> if0WasTossed: aDiceRoll [
+
+	aDiceRoll = 0 ifTrue: [
+		self changeSkippingStateTo: (SkipForShields withNext: NoSkip) ]
+]
+
 { #category : 'initialization' }
 SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
@@ -162,11 +168,9 @@ SpaceShip >> isLockedUp [
 SpaceShip >> loseShield [
 
 	shield := shield - 1.
-	shield = 0 ifTrue: [ 
+	shield = 0 ifTrue: [
 		self changeSkippingStateTo:
 			(SkipForShields withNext: SkipForSkipping) ]
-		
-	"shield = 0 ifTrue: [ loseTurn := 2 ]"
 ]
 
 { #category : 'cards' }
@@ -179,14 +183,6 @@ SpaceShip >> pending: aCard [
 SpaceShip >> pendingCard [
 
 	^ pendingCards
-]
-
-{ #category : 'shield' }
-SpaceShip >> rechargableShield: aDiceRoll [
- 	"borrar"
-	(shield = 3 and: aDiceRoll = 0) ifTrue: [
-		Error signal: 
-			'The Shield is already full, it cant be recharged.' ]
 ]
 
 { #category : 'shield' }
@@ -247,5 +243,6 @@ SpaceShip >> skipTurns [
 { #category : 'as yet unclassified' }
 SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
 
+	self if0WasTossed: aDiceRoll.
 	skipState will: self skipAfter: aDiceRoll on: aGame
 ]

@@ -8,7 +8,6 @@ Class {
 { #category : 'as yet unclassified' }
 SkipForShields >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
 
-	(self the: aSpaceShip hasTossed0On: aDiceRoll) ifTrue: [ ^ self ].
 	aSpaceShip rechargeShields.
 	aSpaceShip changeSkippingStateTo: (nextSkipState withNext: NoSkip)
 ]
