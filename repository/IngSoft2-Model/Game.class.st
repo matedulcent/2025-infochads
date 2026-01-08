@@ -227,17 +227,6 @@ Game >> obtainStep [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> play: aSpaceShip ifItsNotTrappedByTossing: aDiceRoll [
-
-"nuevo metodo a implementar"
-	"aSpaceShip willPlayByTossing: aDiceRoll on: self."
-	"borrar"
-	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-
-	aSpaceShip isImprisionedByTossing: aDiceRoll on: self.
-]
-
-{ #category : 'as yet unclassified' }
 Game >> playPendingCardsOn: aSpaceShip [
 
 	aSpaceShip pendingCard do: [ :card |
@@ -272,8 +261,7 @@ Game >> start [
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
-		self play: spaceShip ifItsNotTrappedByTossing: aDiceRoll.
-		"self move: spaceShip after: aDiceRoll."
+		spaceShip willPlayByTossing: aDiceRoll on: self.
 
 		self updateNextShipToMove.
 		

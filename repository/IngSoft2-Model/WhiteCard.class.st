@@ -114,8 +114,14 @@ WhiteCard >> replicateCell [
 
 { #category : 'asserting' }
 WhiteCard >> skip [
-
+	"borrar"
 	^ false
+]
+
+{ #category : 'accessing' }
+WhiteCard >> skip: aSpaceShip [
+
+	^self
 ]
 
 { #category : 'accessing' }

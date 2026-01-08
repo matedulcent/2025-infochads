@@ -54,14 +54,14 @@ SpaceShip >> addA: card [
 
 { #category : 'shield' }
 SpaceShip >> canBattle [
-
+	
 	^ shield > 0 and: loseTurn = 0
 ]
 
 { #category : 'as yet unclassified' }
 SpaceShip >> changeSkippingStateTo: nextSkipState [
 
-	state:= nextSkipState 
+	skipState := nextSkipState 
 	"^self"
 ]
 
@@ -134,7 +134,7 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	helperOf := spaceShipID.
 	helpingOthers := false.
 	state := Free new.
-	skipState := NoSkip new.
+	skipState := NoSkip withNext: NoSkip
 ]
 
 { #category : 'mercenary' }
@@ -162,7 +162,11 @@ SpaceShip >> isLockedUp [
 SpaceShip >> loseShield [
 
 	shield := shield - 1.
-	shield = 0 ifTrue: [ loseTurn := 2 ]
+	shield = 0 ifTrue: [ 
+		self changeSkippingStateTo:
+			(SkipForShields withNext: SkipForSkipping) ]
+		
+	"shield = 0 ifTrue: [ loseTurn := 2 ]"
 ]
 
 { #category : 'cards' }
@@ -218,7 +222,7 @@ SpaceShip >> setAsHelperOf: aSpaceShip [
 
 { #category : 'skiping' }
 SpaceShip >> skipATurn: aDiceRoll [
-
+	"borrar"
 	| doSkip |
 	self rechargableShield: aDiceRoll.
 
@@ -232,7 +236,7 @@ SpaceShip >> skipATurn: aDiceRoll [
 
 { #category : 'skiping' }
 SpaceShip >> skipTurns [
-
+	"borrar"
 	loseTurn ~= 0
 		ifTrue: [
 			loseTurn := loseTurn - 1.

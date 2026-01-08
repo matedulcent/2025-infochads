@@ -97,11 +97,11 @@ CardManager >> numberOfMercenariesOf: aShip [
 CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
 
 	self playRedo: aCard on: aShip.
-	
+
 	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
 		^ self ].
-	
+
 	(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
 
 	self playCancelation: aCard on: aShip.
@@ -113,7 +113,9 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		dependingOn: spaceShipPositions.
 
 	self playFreedom: aCard on: aShip.
-
+	
+	self playSkip: aCard on: aShip.
+	
 	self lastCardPlayed: (aShip has: aCard)
 ]
 
@@ -180,6 +182,13 @@ CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShi
 		takeActionOver: objectiveShip
 		or: spaceShips
 		thatArePlaced: spaceShipPositions.
+]
+
+{ #category : 'as yet unclassified' }
+CardManager >> playSkip: aCard on: aShip [
+
+
+	aCard skip: aShip
 ]
 
 { #category : 'as yet unclassified' }

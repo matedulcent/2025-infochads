@@ -27,11 +27,10 @@ Battle class >> between: aSpaceShip andOneOf: spaceShips with: positionManager o
 Battle >> battleBetween: aSpaceShip and: opponentShip [
 
 	| throwSpaceShip throwOpponentShip |
-	"[ In case of a draw, the defendant wins and the attacker gets loser penalties"
+	" In case of a draw, the defendant wins and the attacker gets loser penalties"
 	throwOpponentShip := self mercenaryHelpTo: opponentShip.
 	throwSpaceShip := self mercenaryHelpTo: aSpaceShip.
 
-	"throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ]."
 	throwSpaceShip <= throwOpponentShip 
 		ifTrue: [ self lostBattle: aSpaceShip ]
 		ifFalse: [ self lostBattle: opponentShip ]
