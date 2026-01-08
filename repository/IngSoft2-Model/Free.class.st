@@ -7,18 +7,25 @@ Class {
 
 { #category : 'testing' }
 Free >> canBeFreed [
-
+	"borrar"
 	^ false
 ]
 
 { #category : 'testing' }
 Free >> isFreeByTossing: aDiceRoll [
-
-	^ true
+	"borrar"
+	^ false"true"
 ]
 
 { #category : 'testing' }
 Free >> isLockedUp [
-
+	"borrar"
 	^ false
+]
+
+{ #category : 'as yet unclassified' }
+Free >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
+
+	aGame move: aSpaceShip after: aDiceRoll.
+	"^self"
 ]

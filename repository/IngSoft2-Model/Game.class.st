@@ -163,6 +163,15 @@ Game >> lapOf: aSpaceShipID [
 	^ (manage at: aSpaceShipID) lap
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> may: aSpaceShip skipAfterTossing: aDiceRoll [
+	"cambiar el nombre"
+	"Roleo 0, eligio pasar o no tiene escudo"
+	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
+	"Esta encarcelada"
+	aSpaceShip isImprisionedByTossing: aDiceRoll on: self.
+]
+
 { #category : 'accessing' }
 Game >> modifyOrderDueToPreviousCards [
 
@@ -177,11 +186,11 @@ Game >> modifyOrderDueToPreviousCards [
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
-
+	"Roleo 0, eligio pasar o no tiene escudo
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-
+   Esta encarcelada
 	(aSpaceShip hasRolled: aDiceRoll) ifFalse: [ ^ self ].
-
+	aSpaceShip isImprisionedByTossing: aDiceRoll on: self."
 	manage
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
@@ -265,8 +274,8 @@ Game >> start [
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
-
-		self move: spaceShip after: aDiceRoll.
+		self may: spaceShip skipAfterTossing: aDiceRoll.
+		"self move: spaceShip after: aDiceRoll."
 
 		self updateNextShipToMove.
 		

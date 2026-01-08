@@ -17,13 +17,13 @@ LockedUp class >> withValue: anEscapeValue [
 
 { #category : 'adding' }
 LockedUp >> addFreedomCardCondition [
-	
+	"borrar"
 	freedomCondition := true.
 ]
 
 { #category : 'testing' }
 LockedUp >> canBeFreed [
-
+	"borrar"
 	^ freedomCondition
 ]
 
@@ -42,6 +42,15 @@ LockedUp >> isFreeByTossing: aDiceToss [
 
 { #category : 'testing' }
 LockedUp >> isLockedUp [
-
+	"borrar"
 	^ true
+]
+
+{ #category : 'as yet unclassified' }
+LockedUp >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
+
+	(self isFreeByTossing: aDiceRoll) ifFalse: [ ^ self ].
+	aSpaceShip changeStateToFree.
+	aGame move: aSpaceShip after: aDiceRoll.
+	"^self"
 ]

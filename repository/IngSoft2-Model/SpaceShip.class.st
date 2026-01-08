@@ -64,6 +64,12 @@ SpaceShip >> canBeFreed [
 ]
 
 { #category : 'as yet unclassified' }
+SpaceShip >> changeStateToFree [
+
+	state := Free new.
+]
+
+{ #category : 'as yet unclassified' }
 SpaceShip >> deMercenarize [
 
 	helperOf := spaceShipID.
@@ -98,7 +104,7 @@ SpaceShip >> has: aCard [
 
 { #category : 'testing' }
 SpaceShip >> hasRolled: aDiceToss [
-
+	"eliminar"
 	(state isFreeByTossing: aDiceToss) ifTrue: [
 		self free.
 		^ true ].
@@ -136,20 +142,26 @@ SpaceShip >> isHelpingOthers [
 ]
 
 { #category : 'testing' }
-SpaceShip >> isLockedUp [
+SpaceShip >> isImprisionedByTossing: aDiceRoll on: aGame [
 
+	state playTurnFor: self with: aDiceRoll in: aGame
+]
+
+{ #category : 'testing' }
+SpaceShip >> isLockedUp [
+	"needed for testing"
 	^ state isLockedUp
 ]
 
 { #category : 'as yet unclassified' }
 SpaceShip >> lockedUpAndNeeds: aValueToEscape [
-
+   "borrar"
 	state := LockedUp withValue: aValueToEscape
 ]
 
 { #category : 'as yet unclassified' }
 SpaceShip >> lockedUpAndNeedsFreedomOr: aValueToEscape [
-
+	"borrar"
 	self lockedUpAndNeeds: aValueToEscape.
 	state addFreedomCardCondition
 ]
@@ -186,7 +198,7 @@ SpaceShip >> remove: aCard from: aDeck [
 
 	| pickedCard |
 	pickedCard := aDeck
-		              detect: [ :card | card class = aCard class] 
+		              detect: [ :card | card class = aCard class ]
 		              ifNone: [ ^ aCard ].
 
 	aDeck remove: pickedCard.
