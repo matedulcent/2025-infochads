@@ -1,6 +1,6 @@
 Class {
 	#name : 'LockedUp',
-	#superclass : 'Object',
+	#superclass : 'ShipState',
 	#instVars : [
 		'escapeValue',
 		'freedomCondition'
@@ -31,25 +31,19 @@ LockedUp >> canBeFreed [
 LockedUp >> initializeWith: anEscapeValue [
 
 	escapeValue := anEscapeValue.
-	freedomCondition := false.
+	freedomCondition := false. "borrar"
 ]
 
 { #category : 'testing' }
 LockedUp >> isFreeByTossing: aDiceToss [
 
-	^ aDiceToss >= escapeValue
-]
-
-{ #category : 'testing' }
-LockedUp >> isLockedUp [
-	"borrar"
-	^ true
+	^ aDiceToss = escapeValue
 ]
 
 { #category : 'as yet unclassified' }
 LockedUp >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
 
-	(self isFreeByTossing: aDiceRoll) ifFalse: [ ^ self ].
+	(self isFreeByTossing: aDiceRoll ) ifFalse: [ ^ self ].
 	aSpaceShip changeStateToFree.
 	aGame move: aSpaceShip after: aDiceRoll.
 	"^self"

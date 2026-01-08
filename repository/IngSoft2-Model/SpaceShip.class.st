@@ -70,17 +70,22 @@ SpaceShip >> changeStateToFree [
 ]
 
 { #category : 'as yet unclassified' }
+SpaceShip >> changeStateToLockedUpAndNeeds: aValueToEscape [
+
+	state := LockedUp withValue: aValueToEscape
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
+
+	state := Retained withValue: aValueToEscape
+]
+
+{ #category : 'as yet unclassified' }
 SpaceShip >> deMercenarize [
 
 	helperOf := spaceShipID.
 	helpingOthers := false
-]
-
-{ #category : 'initialize-release' }
-SpaceShip >> free [
-
-	state := Free new.
-	^ self
 ]
 
 { #category : 'getters' }
@@ -163,7 +168,6 @@ SpaceShip >> lockedUpAndNeeds: aValueToEscape [
 SpaceShip >> lockedUpAndNeedsFreedomOr: aValueToEscape [
 	"borrar"
 	self lockedUpAndNeeds: aValueToEscape.
-	state addFreedomCardCondition
 ]
 
 { #category : 'shield' }

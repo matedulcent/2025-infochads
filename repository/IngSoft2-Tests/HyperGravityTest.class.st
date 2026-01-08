@@ -67,7 +67,7 @@ HyperGravityTest >> testWhenASpaceShipIsLockedInHyperGravityAndUsesFreedomThenNo
 	aGame start.
 	aGame use: FreedomCard new on: 1.
 	self assert: (aGame positionOf: 1) equals: 11.
-	self assert: (aGame isLockedUpInCell: 1)
+	self deny: (aGame isLockedUpInCell: 1)
 ]
 
 { #category : 'tests' }

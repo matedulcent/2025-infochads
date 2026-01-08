@@ -33,5 +33,5 @@ HyperGravityEffect >> initializeWith: aValueToEscape [
 { #category : 'as yet unclassified' }
 HyperGravityEffect >> lock: aSpaceShip [
 
-	aSpaceShip lockedUpAndNeeds: valueToEscape
+	aSpaceShip changeStateToRetainedAndNeeds: valueToEscape
 ]
