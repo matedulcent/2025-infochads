@@ -17,6 +17,14 @@ TurnManager class >> withThe: spaceShips [
 ]
 
 { #category : 'as yet unclassified' }
+TurnManager >> advanceTurn [
+
+	currentShipPlaying := orderedShips removeFirst.
+	orderedShips addLast: currentShipPlaying.
+	^ currentShipPlaying
+]
+
+{ #category : 'as yet unclassified' }
 TurnManager >> doubleTurnOn: aShip [
 
 	grantExtraTurn:= true.
@@ -32,17 +40,8 @@ TurnManager >> grab [
 { #category : 'as yet unclassified' }
 TurnManager >> grabAndUpdate [
 
-	(grantExtraTurn and: currentShipPlaying isNil) ifTrue: [
-		grantExtraTurn := false.
-		currentShipPlaying := orderedShips first.
-		^ currentShipPlaying ].
-	grantExtraTurn ifTrue: [
-		grantExtraTurn := false.
-		^ currentShipPlaying ].
-
-	currentShipPlaying := orderedShips removeFirst.
-	orderedShips addLast: currentShipPlaying.
-	^ currentShipPlaying
+	grantExtraTurn ifTrue: [ ^ self keepCurrentShip ].
+	^ self advanceTurn
 ]
 
 { #category : 'initialization' }
@@ -51,6 +50,14 @@ TurnManager >> initializeWith: aListOfSpaceShips [
 	orderedShips := aListOfSpaceShips.
 	currentShipPlaying := nil.
 	grantExtraTurn := false.
+]
+
+{ #category : 'as yet unclassified' }
+TurnManager >> keepCurrentShip [
+
+	grantExtraTurn := false.
+	currentShipPlaying ifNil: [ currentShipPlaying := orderedShips first ].
+	^ currentShipPlaying
 ]
 
 { #category : 'as yet unclassified' }
