@@ -44,7 +44,7 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 
 	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith:
-		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1. 1. 1 }.
+		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1.  }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -58,7 +58,7 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 2.
-	self assert: (aGame positionOf: 2) equals: 11
+	self assert: (aGame positionOf: 2) equals: 10
 ]
 
 { #category : 'tests' }

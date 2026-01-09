@@ -15,7 +15,6 @@ Free >> isLockedUp [
 Free >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
 
 	aGame move: aSpaceShip after: aDiceRoll.
-	"^self"
 ]
 
 { #category : 'as yet unclassified' }

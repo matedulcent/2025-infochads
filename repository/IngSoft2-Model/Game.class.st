@@ -10,7 +10,8 @@ Class {
 		'board',
 		'manage',
 		'stepOfNextSpaceShipToMove',
-		'listOfAlteredSteps'
+		'listOfAlteredSteps',
+		'diceRoll'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -206,6 +207,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		with: manage
 		on: board
 		with: diceSet.
+	diceRoll := diceSet toss.
 ]
 
 { #category : 'movingOut' }
@@ -237,6 +239,12 @@ Game >> positionOf: aSpaceShipID [
 	^ (manage positions at: aSpaceShipID) position
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> rollTheDice [
+
+	diceRoll := diceSet toss.
+]
+
 { #category : 'informationTest' }
 Game >> shieldOf: aSpaceShipID [
 
@@ -252,18 +260,15 @@ Game >> skippingTurn: aSpaceShip after: aDiceRoll [
 { #category : 'accessing' }
 Game >> start [
 
-	| aDiceRoll spaceShip |
-	aDiceRoll := diceSet toss.
+	| "aDiceRoll" spaceShip |
+	diceRoll := diceSet toss.
 	self modifyOrderDueToPreviousCards.
-	
-	"-1 allows to stop the rigged dice"
-	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
-		spaceShip := spaceShips at: nextSpaceShipToMove.
-		spaceShip willPlayByTossing: aDiceRoll on: self.
 
-		self updateNextShipToMove.
-		
-		aDiceRoll := diceSet toss ]
+	"-1 allows to stop the rigged dice"
+	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
+		spaceShip := spaceShips at: nextSpaceShipToMove.
+		spaceShip willPlayByTossing: diceRoll on: self.
+		self updateNextShipToMove ]
 ]
 
 { #category : 'as yet unclassified' }

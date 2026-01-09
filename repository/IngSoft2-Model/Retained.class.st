@@ -34,8 +34,11 @@ Retained >> isLockedUp [
 
 { #category : 'as yet unclassified' }
 Retained >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
+	"akward roll"
 
-	(self isFreeByTossing: aDiceRoll) ifFalse: [ ^ self ].
+	(self isFreeByTossing: aDiceRoll) ifFalse: [
+		aGame rollTheDice.
+		^ self ].
 	aSpaceShip changeStateToFree.
-	aGame move: aSpaceShip after: aDiceRoll.
+	aGame move: aSpaceShip after: aDiceRoll
 ]

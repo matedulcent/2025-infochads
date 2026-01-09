@@ -14,12 +14,6 @@ LockedUp class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
-{ #category : 'adding' }
-LockedUp >> addFreedomCardCondition [
-	"borrar"
-	"freedomCondition := true."
-]
-
 { #category : 'initialization' }
 LockedUp >> initializeWith: anEscapeValue [
 
@@ -40,11 +34,10 @@ LockedUp >> isLockedUp [
 
 { #category : 'as yet unclassified' }
 LockedUp >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
-
-	(self isFreeByTossing: aDiceRoll ) ifFalse: [ ^ self ].
+	"akward roll"
+	(self isFreeByTossing: aDiceRoll ) ifFalse: [ aGame rollTheDice.^ self ]. 
 	aSpaceShip changeStateToFree.
 	aGame move: aSpaceShip after: aDiceRoll.
-	"^self"
 ]
 
 { #category : 'initialization' }

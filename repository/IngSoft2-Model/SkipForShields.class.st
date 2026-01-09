@@ -9,5 +9,6 @@ Class {
 SkipForShields >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
 
 	aSpaceShip rechargeShields.
-	super will: aSpaceShip skipAfter: aDiceRoll on: aGame
+	super will: aSpaceShip skipAfter: aDiceRoll on: aGame.
+	aGame rollTheDice
 ]
