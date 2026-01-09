@@ -22,7 +22,7 @@ CardManager >> activatePermanent: aCard on: aShip [
 	"borrar"
 	aCard isPermanent ifTrue: [
 		lastCardPlayed := aShip has: aCard.
-		(activeCards at: aShip id) add: lastCardPlayed.
+		(activeCards at: aShip id) add: lastCardPlayed. "esto ahora se hace en game"
 		^ true ].
 	^ false
 ]
@@ -35,7 +35,7 @@ CardManager >> activeCards [
 
 { #category : 'adding' }
 CardManager >> addNew: spaceShipID [
-
+	
 	activeCards at: spaceShipID put: OrderedCollection new.
 ]
 
@@ -97,12 +97,12 @@ CardManager >> numberOfMercenariesOf: aShip [
 CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
 
 	self playRedo: aCard on: aShip.
-
+	
+	"manejar el tema de la carta pendiente"
 	(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
 		^ self ].
-
-	(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ].
+	"(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ]."
 
 	self playCancelation: aCard on: aShip.
 
@@ -112,8 +112,6 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		and: spaceShips
 		dependingOn: spaceShipPositions.
 
-	self playDouble: aCard on: aShip.
-	
 	self lastCardPlayed: (aShip has: aCard)
 ]
 
@@ -138,12 +136,6 @@ CardManager >> playCancelation: aCard on: aShip [
 				        'This card cant be played if the card to be canceled is not active.' ].
 	(activeCards at: (aCard objective: aShip id)) remove: card.
 	aShip deMercenarize
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playDouble: aCard on: aShip [
-
-	aCard doubleTurnTo: aShip.
 ]
 
 { #category : 'as yet unclassified' }
