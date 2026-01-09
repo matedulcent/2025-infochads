@@ -11,7 +11,8 @@ Class {
 		'manage',
 		'stepOfNextSpaceShipToMove',
 		'listOfAlteredSteps',
-		'diceRoll'
+		'diceRoll',
+		'nextSpaceShip'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -126,13 +127,15 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 
 	diceSet := aDiceSet.
 	
-	stepOfNextSpaceShipToMove := 1.
-	listOfAlteredSteps := OrderedCollection new.
-	nextSpaceShipToMove := 1.
+	stepOfNextSpaceShipToMove := 1."borrar"
+	listOfAlteredSteps := OrderedCollection new. "borrar"
+	nextSpaceShipToMove := 1. "borrar"
 	
-	numberOfSpaceShips := aNumberOfSpaceShips.
+	
+	numberOfSpaceShips := aNumberOfSpaceShips. 
 	laps := aNumberOfLaps.
 	
+	nextSpaceShip := TurnManager withThe: (spaceShips).
 ]
 
 { #category : 'whats left of race positions' }
@@ -251,43 +254,22 @@ Game >> shieldOf: aSpaceShipID [
 	^ (spaceShips at: aSpaceShipID) getShield
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> skippingTurn: aSpaceShip after: aDiceRoll [
-	"borrar"
-	^ aSpaceShip skipTurns or: (aSpaceShip skipATurn: aDiceRoll)
-]
-
 { #category : 'accessing' }
 Game >> start [
 
-	| "aDiceRoll" spaceShip |
+	| spaceShip |
 	diceRoll := diceSet toss.
 	self modifyOrderDueToPreviousCards.
 
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
-		spaceShip := spaceShips at: nextSpaceShipToMove.
-		spaceShip willPlayByTossing: diceRoll on: self.
-		self updateNextShipToMove ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> theNextSpaceShipToMoveIsOverTheLimit [
-
-	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
-		nextSpaceShipToMove := 1 ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> theNextSpaceShipToMoveIsUnderTheLimit [
-
-	nextSpaceShipToMove <= 0 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ]
+		spaceShip := nextSpaceShip grab.
+		spaceShip willPlayByTossing: diceRoll on: self ]
 ]
 
 { #category : 'as yet unclassified' }
 Game >> updateNextShipToMove [
-
+	"borrar"
 	| sum |
 	sum := self obtainStep.
 
@@ -310,7 +292,7 @@ Game >> use: aCard on: aSpaceShipID [
 		play: aCard
 		on: aShip
 		thatIsIn: spaceShips
-		with: nextSpaceShipToMove
+		with: nextSpaceShip futureShip
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
 
