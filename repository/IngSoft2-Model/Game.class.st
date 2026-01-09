@@ -119,6 +119,12 @@ Game >> getRanking [
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> incrementAllBoosters [
+
+
+]
+
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
@@ -264,6 +270,7 @@ Game >> start [
 Game >> use: aCard on: aSpaceShipID [
 
 	| aShip |
+	"checkeo de si el id de la nave existe"
 	aShip := self checkFor: aSpaceShipID.
 
 	self noPermanent: aCard.

@@ -23,23 +23,10 @@ SpeedCard class >> with: aTossIncrement [
 	^ self new initializeWith: aTossIncrement
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCard >> effect [
-
-	^ Position at: increment withLaps: 0
-]
-
 { #category : 'initialization' }
 SpeedCard >> initializeWith: aTossIncrement [
 
 	super initializes.
-	increment := aTossIncrement.
-]
-
-{ #category : 'testing' }
-SpeedCard >> isPermanent [
-
-	^ true
 ]
 
 { #category : 'as yet unclassified' }

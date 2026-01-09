@@ -2,7 +2,8 @@ Class {
 	#name : 'AccelerationCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'increment'
+		'increment',
+		'holder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -35,8 +36,12 @@ AccelerationCard >> initializeWith: aTossIncrement [
 	increment := aTossIncrement.
 ]
 
-{ #category : 'testing' }
-AccelerationCard >> isPermanent [
+{ #category : 'as yet unclassified' }
+AccelerationCard >> playOn: aShip in: aGame [
 
-	^ true
+	holder := aShip.
+	"check si es el turno de la nave"
+	aGame incremetAllBoosters.
+	aShip incrementBooster.
+	aGame addActive: self to: aShip
 ]

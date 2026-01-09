@@ -17,16 +17,6 @@ CardManager class >> createWith: aDeckOfCards [
 	^self new initializeWith: aDeckOfCards 
 ]
 
-{ #category : 'as yet unclassified' }
-CardManager >> activatePermanent: aCard on: aShip [
-	"borrar"
-	aCard isPermanent ifTrue: [
-		lastCardPlayed := aShip has: aCard.
-		(activeCards at: aShip id) add: lastCardPlayed. "esto ahora se hace en game"
-		^ true ].
-	^ false
-]
-
 { #category : 'accessing' }
 CardManager >> activeCards [
 
