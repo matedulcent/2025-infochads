@@ -2,7 +2,8 @@ Class {
 	#name : 'SpeedCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'increment'
+		'increment',
+		'holder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -39,4 +40,19 @@ SpeedCard >> initializeWith: aTossIncrement [
 SpeedCard >> isPermanent [
 
 	^ true
+]
+
+{ #category : 'as yet unclassified' }
+SpeedCard >> playOn: aShip in: aGame [
+
+	holder := aShip.
+	"check si es el turno de la nave"
+	aShip incrementBooster.
+	aGame addCardTo: aShip
+]
+
+{ #category : 'as yet unclassified' }
+SpeedCard >> unPlay [
+
+	"para el canecel"
 ]

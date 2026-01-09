@@ -9,7 +9,8 @@ Class {
 		'pendingCards',
 		'helpingOthers',
 		'state',
-		'skipState'
+		'skipState',
+		'boost'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -126,6 +127,12 @@ SpaceShip >> if0WasTossed: aDiceRoll [
 		self changeSkippingStateTo: (SkipForShields withNext: NoSkip) ]
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> incrementBooster [
+
+	boost := boost + 1
+]
+
 { #category : 'initialization' }
 SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
@@ -138,7 +145,8 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	helperOf := spaceShipID.
 	helpingOthers := false.
 	state := Free new.
-	skipState := NoSkip withNext: NoSkip
+	skipState := NoSkip withNext: NoSkip.
+	boost := 0
 ]
 
 { #category : 'mercenary' }
@@ -217,6 +225,10 @@ SpaceShip >> setAsHelperOf: aSpaceShip [
 { #category : 'as yet unclassified' }
 SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
 
+	| diceRoll |
+	
 	self if0WasTossed: aDiceRoll.
-	skipState will: self skipAfter: aDiceRoll on: aGame
+
+	diceRoll := aDiceRoll + boost.
+	skipState will: self skipAfter: diceRoll on: aGame
 ]

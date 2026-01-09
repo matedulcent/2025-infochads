@@ -55,6 +55,12 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 		  wonAfter: aNumberOfLaps
 ]
 
+{ #category : 'adding' }
+Game >> addCardTo: aShip [
+
+	
+]
+
 { #category : 'as yet unclassified' }
 Game >> adjustPosition [
 
@@ -132,10 +138,6 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	manage := PositionManager of: spaceShips.
 
 	diceSet := aDiceSet.
-	
-	stepOfNextSpaceShipToMove := 1."borrar"
-	listOfAlteredSteps := OrderedCollection new. "borrar"
-	nextSpaceShipToMove := 1. "borrar"
 	
 	
 	numberOfSpaceShips := aNumberOfSpaceShips. 
@@ -277,19 +279,6 @@ Game >> start [
 	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
 		spaceShip := nextSpaceShip grabAndUpdate.
 		spaceShip willPlayByTossing: diceRoll on: self ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> updateNextShipToMove [
-	"borrar"
-	| sum |
-	sum := self obtainStep.
-
-	nextSpaceShipToMove := nextSpaceShipToMove + sum.
-	
-	self theNextSpaceShipToMoveIsOverTheLimit.
-	
-	self theNextSpaceShipToMoveIsUnderTheLimit
 ]
 
 { #category : 'movingOut' }
