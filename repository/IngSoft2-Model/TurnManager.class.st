@@ -2,7 +2,8 @@ Class {
 	#name : 'TurnManager',
 	#superclass : 'Object',
 	#instVars : [
-		'orderedShips'
+		'orderedShips',
+		'firstToPlay'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,7 +18,8 @@ TurnManager class >> withThe: spaceShips [
 { #category : 'as yet unclassified' }
 TurnManager >> doubleTurn [
 
-	orderedShips addFirst: (orderedShips removeLast) 
+	(firstToPlay == orderedShips first) ifTrue: [ self grabAndUpdate ].
+	orderedShips addFirst: orderedShips removeLast
 ]
 
 { #category : 'as yet unclassified' }
@@ -39,6 +41,7 @@ TurnManager >> grabAndUpdate [
 TurnManager >> initializeWith: aListOfSpaceShips [
 
 	orderedShips := aListOfSpaceShips.
+	firstToPlay := aListOfSpaceShips first
 ]
 
 { #category : 'as yet unclassified' }

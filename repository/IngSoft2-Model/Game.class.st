@@ -179,8 +179,8 @@ Game >> modifyOrderDueToPreviousCards [
 		nextSpaceShipToMove := numberOfSpaceShips ]."
 	
 	"If the player to play plays double turn then it plays again, not twice more"
-	(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
-		ifTrue: [ listOfAlteredSteps removeFirst ]
+	"(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
+		ifTrue: [ listOfAlteredSteps removeFirst ]"
 ]
 
 { #category : 'as yet unclassified' }
