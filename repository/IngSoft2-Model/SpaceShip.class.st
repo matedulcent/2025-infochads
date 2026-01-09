@@ -48,8 +48,14 @@ SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
 
 { #category : 'cards' }
 SpaceShip >> addA: card [
-
+	"borrar"
 	cards add: card
+]
+
+{ #category : 'cards' }
+SpaceShip >> addCardTo: aShip [
+
+	"dfasd"
 ]
 
 { #category : 'shield' }
@@ -146,7 +152,7 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	helpingOthers := false.
 	state := Free new.
 	skipState := NoSkip withNext: NoSkip.
-	boost := 0
+	boost := 0.
 ]
 
 { #category : 'mercenary' }

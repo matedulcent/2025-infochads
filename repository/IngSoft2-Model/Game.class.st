@@ -12,7 +12,8 @@ Class {
 		'stepOfNextSpaceShipToMove',
 		'listOfAlteredSteps',
 		'diceRoll',
-		'nextSpaceShip'
+		'nextSpaceShip',
+		'activeCardHolder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -56,9 +57,9 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'adding' }
-Game >> addCardTo: aShip [
+Game >> addActive: aCard to: aShip [
 
-	
+	activeCardHolder addActive: aCard to: aShip
 ]
 
 { #category : 'as yet unclassified' }
@@ -144,6 +145,8 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	laps := aNumberOfLaps.
 	
 	nextSpaceShip := TurnManager withThe: (spaceShips).
+	
+	activeCardHolder := CardHolderGlobal withPlayers: spaceShips.
 ]
 
 { #category : 'whats left of race positions' }
@@ -297,6 +300,7 @@ Game >> use: aCard on: aSpaceShipID [
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
 	
+	"+ verificar que la nave tenga la carta"
 	aCard playOn: aShip in: self.
 
 	self affectTheShipOrder: aCard.

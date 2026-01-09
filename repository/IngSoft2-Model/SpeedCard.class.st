@@ -48,7 +48,7 @@ SpeedCard >> playOn: aShip in: aGame [
 	holder := aShip.
 	"check si es el turno de la nave"
 	aShip incrementBooster.
-	aGame addCardTo: aShip
+	aGame addActive: self to: aShip
 ]
 
 { #category : 'as yet unclassified' }
