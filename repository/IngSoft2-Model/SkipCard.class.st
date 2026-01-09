@@ -5,10 +5,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-SkipCard >> skip [
-	"borrar"
-	^ true
+{ #category : 'as yet unclassified' }
+SkipCard >> playOn: aShip in: aGame [
+
+	aShip changeSkippingStateTo:
+		(SkipForSkipping withNext: NoSkip)
 ]
 
 { #category : 'accessing' }

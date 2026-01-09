@@ -98,7 +98,7 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 
 	self playRedo: aCard on: aShip.
 
-	(aShip id ~= nextSpaceShipToMove and: aCard isPermanent) ifTrue: [
+	(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
 		^ self ].
 
@@ -112,9 +112,6 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		and: spaceShips
 		dependingOn: spaceShipPositions.
 
-	self playFreedom: aCard on: aShip.
-	
-	self playSkip: aCard on: aShip.
 	self playDouble: aCard on: aShip.
 	
 	self lastCardPlayed: (aShip has: aCard)
@@ -147,12 +144,6 @@ CardManager >> playCancelation: aCard on: aShip [
 CardManager >> playDouble: aCard on: aShip [
 
 	aCard doubleTurnTo: aShip.
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playFreedom: aCard on: aSpaceShip [
-	"listo para migrar"
-	aCard free: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
@@ -189,13 +180,6 @@ CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShi
 		takeActionOver: objectiveShip
 		or: spaceShips
 		thatArePlaced: spaceShipPositions.
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playSkip: aCard on: aShip [
-
-	"listo para migrar"
-	aCard skip: aShip
 ]
 
 { #category : 'as yet unclassified' }

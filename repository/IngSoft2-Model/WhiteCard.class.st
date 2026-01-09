@@ -101,6 +101,12 @@ WhiteCard >> objective: aSpaceShipId [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> playOn: aShip in: aGame [
+
+	^ self
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> putHelperAs: aSpaceShipID [
 
 	^ true

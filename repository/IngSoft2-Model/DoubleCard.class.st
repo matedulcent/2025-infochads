@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DoubleCard >> doubleTurnTo: aShip [
+DoubleCard >> playOn: aShip in: aGame [
 
-	aShip changeSkippingStateTo: (PlayDouble withNext: NoSkip).
+	aGame doubleTurn
 ]

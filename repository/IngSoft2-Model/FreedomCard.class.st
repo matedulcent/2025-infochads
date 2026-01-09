@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-FreedomCard >> free: aSpaceShip [
+FreedomCard >> playOn: aShip in: aGame [
 
-	aSpaceShip changeStateToFreeByCard .
+	aShip changeStateToFreeByCard .
 ]

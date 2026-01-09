@@ -2,9 +2,8 @@ Class {
 	#name : 'TurnManager',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShips',
-		'nextSpaceShip',
-		'orderedShips'
+		'orderedShips',
+		'nextSpaceShipToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,24 +16,39 @@ TurnManager class >> withThe: spaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-TurnManager >> futureShip [
+TurnManager >> doubleTurn [
 
-	^ orderedShips first.
+	orderedShips addFirst: (orderedShips removeLast) 
 ]
 
 { #category : 'as yet unclassified' }
 TurnManager >> grab [
 
-	| nextShip |
-	nextShip := orderedShips removeFirst.
-	orderedShips addLast: nextShip.
+	^ nextSpaceShipToMove 
+]
 
-	^ nextShip
+{ #category : 'as yet unclassified' }
+TurnManager >> grabAndUpdate [
+
+	| nextSpaceShip |
+	nextSpaceShip := nextSpaceShipToMove.
+	self update.
+	^ nextSpaceShip
 ]
 
 { #category : 'initialization' }
 TurnManager >> initializeWith: aListOfSpaceShips [
 
-	spaceShips := aListOfSpaceShips. 
 	orderedShips := aListOfSpaceShips.
+	nextSpaceShipToMove := aListOfSpaceShips first.
+]
+
+{ #category : 'as yet unclassified' }
+TurnManager >> update [
+
+	| nextShip |
+	nextShip := orderedShips removeFirst.
+	orderedShips addLast: nextShip.
+	nextSpaceShipToMove := orderedShips first 
+	
 ]

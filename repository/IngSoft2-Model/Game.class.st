@@ -101,6 +101,12 @@ Game >> create: aNumberOfSpaceShips [
 		board manageCards addNew: id ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> doubleTurn [
+
+	nextSpaceShip doubleTurn
+]
+
 { #category : 'informationTest' }
 Game >> getRanking [
 
@@ -263,7 +269,7 @@ Game >> start [
 
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
-		spaceShip := nextSpaceShip grab.
+		spaceShip := nextSpaceShip grabAndUpdate.
 		spaceShip willPlayByTossing: diceRoll on: self ]
 ]
 
@@ -292,9 +298,12 @@ Game >> use: aCard on: aSpaceShipID [
 		play: aCard
 		on: aShip
 		thatIsIn: spaceShips
-		with: nextSpaceShip futureShip
+		with: nextSpaceShip grab
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
+	
+	aCard playOn: aShip in: self.
+
 
 	self affectTheShipOrder: aCard.
 

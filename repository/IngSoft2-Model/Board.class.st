@@ -114,6 +114,17 @@ Board >> pickACard [
 ]
 
 { #category : 'as yet unclassified' }
+Board >> play: aCard on: aSpaceShip in: aGame [
+	"aCard playOnTarget: aSpaceShip in: aGame"
+
+	"aCard free: aSpaceShip"
+
+	"aCard skip: aShip"
+
+	
+]
+
+{ #category : 'as yet unclassified' }
 Board >> the: aPosition hasReached: totalLaps [
 
 	^ aPosition position + (aPosition lap * boardSize)
