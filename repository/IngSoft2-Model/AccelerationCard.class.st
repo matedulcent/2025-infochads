@@ -41,7 +41,6 @@ AccelerationCard >> playOn: aShip in: aGame [
 
 	holder := aShip.
 	"check si es el turno de la nave"
-	aGame incremetAllBoosters.
-	aShip incrementBooster.
+	aGame incrementAllBoosters.
 	aGame addActive: self to: aShip
 ]

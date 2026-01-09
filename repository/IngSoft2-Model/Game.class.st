@@ -94,7 +94,7 @@ Game >> create: aNumberOfSpaceShips [
 				 startingWith: board pickACard
 				 and: board pickACard
 				 with: aShield).
-		board manageCards addNew: id ]
+		 ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -122,7 +122,7 @@ Game >> getRanking [
 { #category : 'as yet unclassified' }
 Game >> incrementAllBoosters [
 
-
+	spaceShips do: [ :ship | ship incrementBooster ]
 ]
 
 { #category : 'initialization' }

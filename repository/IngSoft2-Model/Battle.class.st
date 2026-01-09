@@ -57,8 +57,8 @@ Battle >> lookForBattle: aSpaceShip [
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	(board manageCards the: opponentShip isMercenaryOf: aSpaceShip)
-		ifTrue: [ ^ self ].
+	"(board manageCards the: opponentShip isMercenaryOf: aSpaceShip)
+		ifTrue: [ ^ self ]."
 
 	opponentShip == aSpaceShip ifFalse: [
 		self battleBetween: aSpaceShip and: opponentShip ]

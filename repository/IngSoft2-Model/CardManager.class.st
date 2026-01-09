@@ -17,27 +17,14 @@ CardManager class >> createWith: aDeckOfCards [
 	^self new initializeWith: aDeckOfCards 
 ]
 
-{ #category : 'accessing' }
-CardManager >> activeCards [
-
-	^ activeCards deepCopy
-]
-
 { #category : 'adding' }
 CardManager >> addNew: spaceShipID [
-	
+	"borrar"
 	activeCards at: spaceShipID put: OrderedCollection new.
 ]
 
 { #category : 'as yet unclassified' }
 CardManager >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: positionManager [
-
-	"self playSpeedOn: aSpaceShip basedOn: positionManager."
-
-	self
-		playAccelerationOn: aSpaceShip
-		thatMayBeIn: spaceShips
-		basedOn: positionManager.
 
 	self playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips
 ]
@@ -53,7 +40,7 @@ CardManager >> grabTopCard [
 CardManager >> initializeWith: aDeckOfCards [ 
 
 	deckOfCards := aDeckOfCards.
-	activeCards := OrderedDictionary new.
+	"activeCards := OrderedDictionary new."
 	lastCardPlayed := WhiteCard new.
 	lastCellPlayed := Cell has: NoEffect new
 ]
@@ -92,7 +79,6 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 	(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
 		^ self ].
-	"(self activatePermanent: aCard on: aShip) ifTrue: [ ^ self ]."
 
 	self playCancelation: aCard on: aShip.
 
@@ -103,14 +89,6 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		dependingOn: spaceShipPositions.
 
 	self lastCardPlayed: (aShip has: aCard)
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playAccelerationOn: aSpaceShip thatMayBeIn: spaceShips basedOn: positionManager [
-
-	 activeCards associationsDo: [ :shipCards |
-		shipCards value do: [ :card |
-			positionManager sumAt: aSpaceShip id with: card effectAll ] ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -131,9 +109,9 @@ CardManager >> playCancelation: aCard on: aShip [
 { #category : 'as yet unclassified' }
 CardManager >> playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips [
 
-	(activeCards at: aSpaceShip id) do: [ :card |
+	"(activeCards at: aSpaceShip id) do: [ :card |
 		card activateMercenaryOn ifTrue: [
-			self the: card mercenaryIsHelpingOther: spaceShips ] ]
+			self the: card mercenaryIsHelpingOther: spaceShips ] ]"
 ]
 
 { #category : 'as yet unclassified' }
@@ -174,10 +152,10 @@ CardManager >> playSpeedOn: aSpaceShip basedOn: positionManager [
 { #category : 'as yet unclassified' }
 CardManager >> the: opponentShip isMercenaryOf: aSpaceShip [
 
-	^ ((activeCards at: aSpaceShip id) anySatisfy: [ :card |
+	"^ ((activeCards at: aSpaceShip id) anySatisfy: [ :card |
 		   aSpaceShip id = card helper ]) or:
 		  ((activeCards at: opponentShip id) anySatisfy: [ :card |
-			   aSpaceShip id = card helper ])
+			   aSpaceShip id = card helper ])"
 ]
 
 { #category : 'as yet unclassified' }
