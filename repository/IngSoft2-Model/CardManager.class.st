@@ -66,8 +66,8 @@ CardManager >> listOfMercenariesOf: aShip [
 { #category : 'as yet unclassified' }
 CardManager >> numberOfMercenariesOf: aShip [
 
-	^ ((activeCards at: aShip id) select: [ :card | card isMercenary ])
-		  size + 1
+	"^ ((activeCards at: aShip id) select: [ :card | card isMercenary ])
+		  size + 1"
 ]
 
 { #category : 'as yet unclassified' }

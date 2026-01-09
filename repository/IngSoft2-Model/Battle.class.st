@@ -60,8 +60,8 @@ Battle >> lookForBattle: aSpaceShip [
 	"(board manageCards the: opponentShip isMercenaryOf: aSpaceShip)
 		ifTrue: [ ^ self ]."
 
-	opponentShip == aSpaceShip ifFalse: [
-		self battleBetween: aSpaceShip and: opponentShip ]
+	"opponentShip == aSpaceShip ifFalse: [
+		self battleBetween: aSpaceShip and: opponentShip ]"
 ]
 
 { #category : 'as yet unclassified' }
@@ -80,14 +80,14 @@ Battle >> lostBattle: aSpaceShip [
 { #category : 'as yet unclassified' }
 Battle >> mercenaryHelpTo: aSpaceShip [
 
-	| numberOfTosses throwSpaceShip |
+	"| numberOfTosses throwSpaceShip |
 	numberOfTosses := board manageCards numberOfMercenariesOf: aSpaceShip.
 
 	throwSpaceShip := 0.
 	1 to: numberOfTosses do: [ :mercenary |
 	throwSpaceShip := throwSpaceShip + diceSet toss ].
 
-	^ throwSpaceShip
+	^ throwSpaceShip"
 ]
 
 { #category : 'as yet unclassified' }
