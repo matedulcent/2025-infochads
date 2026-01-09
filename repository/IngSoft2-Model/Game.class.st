@@ -71,17 +71,6 @@ Game >> adjustPosition [
 				 withTotalLaps: laps) ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> affectTheShipOrder: aCard [
-	"Reverse Card"
-	stepOfNextSpaceShipToMove := aCard invertOrder:
-		                             stepOfNextSpaceShipToMove.
-
-	"Double Card"
-	"listOfAlteredSteps := aCard playTwice:
-		                             listOfAlteredSteps."
-]
-
 { #category : 'movingOut' }
 Game >> checkFor: aSpaceShipID [
 	"refactor para que use Turn Manager Quiza"
@@ -176,18 +165,6 @@ Game >> lapOf: aSpaceShipID [
 	^ (manage at: aSpaceShipID) lap
 ]
 
-{ #category : 'accessing' }
-Game >> modifyOrderDueToPreviousCards [
-
-	"If the first player inverts the order then the last starts "
-	"stepOfNextSpaceShipToMove = -1 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ]."
-	
-	"If the player to play plays double turn then it plays again, not twice more"
-	"(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
-		ifTrue: [ listOfAlteredSteps removeFirst ]"
-]
-
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 
@@ -276,7 +253,6 @@ Game >> start [
 
 	| spaceShip |
 	diceRoll := diceSet toss.
-	self modifyOrderDueToPreviousCards.
 
 	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
@@ -303,7 +279,7 @@ Game >> use: aCard on: aSpaceShipID [
 	"+ verificar que la nave tenga la carta"
 	aCard playOn: aShip in: self.
 
-	self affectTheShipOrder: aCard.
+	"self affectTheShipOrder: aCard."
 
 	self adjustPosition
 ]

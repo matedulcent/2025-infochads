@@ -19,7 +19,7 @@ CardManager class >> createWith: aDeckOfCards [
 
 { #category : 'as yet unclassified' }
 CardManager >> activatePermanent: aCard on: aShip [
-
+	"borrar"
 	aCard isPermanent ifTrue: [
 		lastCardPlayed := aShip has: aCard.
 		(activeCards at: aShip id) add: lastCardPlayed.
@@ -42,7 +42,7 @@ CardManager >> addNew: spaceShipID [
 { #category : 'as yet unclassified' }
 CardManager >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: positionManager [
 
-	self playSpeedOn: aSpaceShip basedOn: positionManager.
+	"self playSpeedOn: aSpaceShip basedOn: positionManager."
 
 	self
 		playAccelerationOn: aSpaceShip
