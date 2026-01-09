@@ -75,7 +75,7 @@ DoubleTurnCardTest >> testWhenThereAre3SpaceShipsAndOneDoubleTurnCardIsPlayedThe
 
 	aGame use: DoubleCard new on: 1.
 	aGame start.
-
+	
 	self assert: (aGame positionOf: 3) equals: 12.
 	self assert: (aGame positionOf: 2) equals: 11.
 	self assert: (aGame positionOf: 1) equals: 4

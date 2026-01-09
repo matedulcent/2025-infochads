@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'orderedShips',
-		'firstToPlay'
+		'currentShipPlaying',
+		'grantExtraTurn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -16,10 +17,10 @@ TurnManager class >> withThe: spaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-TurnManager >> doubleTurn [
+TurnManager >> doubleTurnOn: aShip [
 
-	(firstToPlay == orderedShips first) ifTrue: [ self grabAndUpdate ].
-	orderedShips addFirst: orderedShips removeLast
+	grantExtraTurn:= true.
+	"orderedShips addFirst: orderedShips removeLast"
 ]
 
 { #category : 'as yet unclassified' }
@@ -31,17 +32,25 @@ TurnManager >> grab [
 { #category : 'as yet unclassified' }
 TurnManager >> grabAndUpdate [
 
-	| nextShip |
-	nextShip := orderedShips removeFirst.
-	orderedShips addLast: nextShip.
-	^ nextShip
+	(grantExtraTurn and: currentShipPlaying isNil) ifTrue: [
+		grantExtraTurn := false.
+		currentShipPlaying := orderedShips first.
+		^ currentShipPlaying ].
+	grantExtraTurn ifTrue: [
+		grantExtraTurn := false.
+		^ currentShipPlaying ].
+
+	currentShipPlaying := orderedShips removeFirst.
+	orderedShips addLast: currentShipPlaying.
+	^ currentShipPlaying
 ]
 
 { #category : 'initialization' }
 TurnManager >> initializeWith: aListOfSpaceShips [
 
 	orderedShips := aListOfSpaceShips.
-	firstToPlay := aListOfSpaceShips first
+	currentShipPlaying := nil.
+	grantExtraTurn := false.
 ]
 
 { #category : 'as yet unclassified' }

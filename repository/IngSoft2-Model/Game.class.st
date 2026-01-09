@@ -77,7 +77,7 @@ Game >> affectTheShipOrder: aCard [
 
 { #category : 'movingOut' }
 Game >> checkFor: aSpaceShipID [
-
+	"refactor para que use Turn Manager Quiza"
 	| aShip |
 	aShip := spaceShips
 		         detect: [ :ship | ship id = aSpaceShipID ]
@@ -102,9 +102,9 @@ Game >> create: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> doubleTurn [
+Game >> doubleTurnOn: aShip [
 
-	nextSpaceShip doubleTurn
+	nextSpaceShip doubleTurnOn: aShip
 ]
 
 { #category : 'informationTest' }
@@ -309,7 +309,6 @@ Game >> use: aCard on: aSpaceShipID [
 		and: manage positions.
 	
 	aCard playOn: aShip in: self.
-
 
 	self affectTheShipOrder: aCard.
 

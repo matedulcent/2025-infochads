@@ -8,5 +8,5 @@ Class {
 { #category : 'as yet unclassified' }
 DoubleCard >> playOn: aShip in: aGame [
 
-	aGame doubleTurn
+	aGame doubleTurnOn: aShip
 ]
