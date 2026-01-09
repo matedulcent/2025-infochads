@@ -175,8 +175,8 @@ Game >> lapOf: aSpaceShipID [
 Game >> modifyOrderDueToPreviousCards [
 
 	"If the first player inverts the order then the last starts "
-	stepOfNextSpaceShipToMove = -1 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ].
+	"stepOfNextSpaceShipToMove = -1 ifTrue: [
+		nextSpaceShipToMove := numberOfSpaceShips ]."
 	
 	"If the player to play plays double turn then it plays again, not twice more"
 	(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
@@ -246,6 +246,12 @@ Game >> playPendingCardsOn: aSpaceShip [
 Game >> positionOf: aSpaceShipID [
 
 	^ (manage positions at: aSpaceShipID) position
+]
+
+{ #category : 'as yet unclassified' }
+Game >> reverseTurns [
+
+	nextSpaceShip reverseTheTurns
 ]
 
 { #category : 'as yet unclassified' }

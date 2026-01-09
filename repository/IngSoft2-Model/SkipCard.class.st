@@ -11,10 +11,3 @@ SkipCard >> playOn: aShip in: aGame [
 	aShip changeSkippingStateTo:
 		(SkipForSkipping withNext: NoSkip)
 ]
-
-{ #category : 'accessing' }
-SkipCard >> skip: aSpaceShip [
-
-	aSpaceShip changeSkippingStateTo:
-		(SkipForSkipping withNext: NoSkip)
-]

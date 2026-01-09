@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ReverseCard >> invertOrder: step [
+ReverseCard >> playOn: aShip in: aGame [
 
-	^ -1 * step
+	aGame reverseTurns
 ]
