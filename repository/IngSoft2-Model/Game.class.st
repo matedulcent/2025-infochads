@@ -207,7 +207,8 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		andOneOf: spaceShips
 		with: manage
 		on: board
-		with: diceSet.
+		with: diceSet
+		andIts: relationshipsWithMercenaries.
 	diceRoll := diceSet toss.
 ]
 
