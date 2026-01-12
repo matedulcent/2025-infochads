@@ -13,7 +13,8 @@ Class {
 		'listOfAlteredSteps',
 		'diceRoll',
 		'nextSpaceShip',
-		'activeCardHolder'
+		'activeCardHolder',
+		'relationshipsWithMercenaries'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -57,9 +58,9 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'adding' }
-Game >> addActive: aCard to: aShip [
-
-	activeCardHolder addActive: aCard to: aShip
+Game >> addActive: arg1 to: arg2 [
+	"??? borar?"
+	activeCardHolder addActive: arg1 to: arg2
 ]
 
 { #category : 'as yet unclassified' }
@@ -82,19 +83,18 @@ Game >> checkFor: aSpaceShipID [
 ]
 
 { #category : 'whats left of race positions' }
-Game >> create: aNumberOfSpaceShips [
+Game >> create: arg1 [
 
-	| aShield |
-	aShield := 3.
+	| tmp1 |
+	tmp1 := 3.
 	spaceShips := OrderedCollection new.
-
-	1 to: aNumberOfSpaceShips do: [ :id |
+	1 to: arg1 do: [ :tmp2 |
 		spaceShips add: (SpaceShip
-				 with: id
+				 with: tmp2
 				 startingWith: board pickACard
 				 and: board pickACard
-				 with: aShield).
-		 ]
+				 with: tmp1) ].
+	1
 ]
 
 { #category : 'as yet unclassified' }
@@ -134,14 +134,18 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	manage := PositionManager of: spaceShips.
 
 	diceSet := aDiceSet.
-	
-	
-	numberOfSpaceShips := aNumberOfSpaceShips. 
+
+
+	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
-	
-	nextSpaceShip := TurnManager withThe: (spaceShips).
-	
+
+	nextSpaceShip := TurnManager withThe: spaceShips.
+
 	activeCardHolder := CardHolderGlobal withPlayers: spaceShips.
+
+	relationshipsWithMercenaries := OrderedDictionary new.
+	spaceShips do: [ :ship |
+		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
 ]
 
 { #category : 'whats left of race positions' }
@@ -161,13 +165,13 @@ Game >> isLockedUpInCell: aSpaceShipID [
 
 { #category : 'informationTest' }
 Game >> isOver [
-
+	"testing"
 	^ self isGameOver
 ]
 
 { #category : 'informationTest' }
 Game >> lapOf: aSpaceShipID [
-
+	"testing"
 	^ (manage at: aSpaceShipID) lap
 ]
 
@@ -209,18 +213,10 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 { #category : 'movingOut' }
 Game >> noPermanent: aCard [
-
+	"refactorizar y borrar"
 	(self isGameOver and: aCard isPermanent not) ifTrue: [
 		Error signal:
 			'Instantaneous cards cant be played after the game is over.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> obtainStep [
-
-	^ listOfAlteredSteps isEmpty
-		  ifFalse: [ listOfAlteredSteps removeFirst ]
-		  ifTrue: [ stepOfNextSpaceShipToMove ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -250,43 +246,39 @@ Game >> rollTheDice [
 
 { #category : 'informationTest' }
 Game >> shieldOf: aSpaceShipID [
-
+	"for testing"
 	^ (spaceShips at: aSpaceShipID) getShield
+]
+
+{ #category : 'as yet unclassified' }
+Game >> stablish: helper on: aShip [
+
+	(relationshipsWithMercenaries at: aShip id) add: helper
 ]
 
 { #category : 'accessing' }
 Game >> start [
 
-	| spaceShip |
+	| tmp1 |
 	diceRoll := diceSet toss.
-
-	"-1 allows to stop the rigged dice"
-	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
-		spaceShip := nextSpaceShip grabAndUpdate.
-		spaceShip willPlayByTossing: diceRoll on: self ]
+	[ self isGameOver or: diceRoll =  -1 ] whileFalse: [
+		tmp1 := nextSpaceShip grabAndUpdate.
+		tmp1 willPlayByTossing: diceRoll on: self ]
 ]
 
 { #category : 'movingOut' }
-Game >> use: aCard on: aSpaceShipID [
+Game >> use: arg1 on: arg2 [
 
-	| aShip |
-	"checkeo de si el id de la nave existe"
-	aShip := self checkFor: aSpaceShipID.
-
-	self noPermanent: aCard.
-
+	| tmp1 |
+	tmp1 := self checkFor: arg2.
+	self noPermanent: arg1.
 	board manageCards
-		play: aCard
-		on: aShip
+		play: arg1
+		on: tmp1
 		thatIsIn: spaceShips
 		with: nextSpaceShip grab
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
-	
-	"+ verificar que la nave tenga la carta"
-	aCard playOn: aShip in: self.
-
-	"self affectTheShipOrder: aCard."
-
+	arg1 playOn: tmp1 in: self.
 	self adjustPosition
 ]

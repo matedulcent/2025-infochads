@@ -3,7 +3,8 @@ Class {
 	#superclass : 'WhiteCard',
 	#instVars : [
 		'helper',
-		'fixHelper'
+		'fixHelper',
+		'helper2'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -35,8 +36,9 @@ MercenaryCard >> helper [
 MercenaryCard >> initializeWithHelpOf: aHelper [
 
 	super initializes.
-	helper := aHelper.
-	fixHelper := false.
+	helper := aHelper. "borrar"
+	helper2 := aHelper. "tomar el nombre de la var de arriba"
+	fixHelper := false. "borrar"
 ]
 
 { #category : 'testing' }
@@ -49,6 +51,14 @@ MercenaryCard >> isMercenary [
 MercenaryCard >> isPermanent [
 
 	^ true
+]
+
+{ #category : 'as yet unclassified' }
+MercenaryCard >> playOn: aShip in: aGame [
+
+	aGame addActive: self to: aShip.
+	"aGame noOneIsBeingHelpedBy: helper2"
+	aGame stablish: helper on: aShip
 ]
 
 { #category : 'as yet unclassified' }
