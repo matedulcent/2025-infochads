@@ -46,9 +46,8 @@ Battle >> checkForCamaraderieBetween: aSpaceShip and: anOpponentShip [
 	mercenariesFromTheOpponentShip := relationWithMercenaries at:
 		                                  anOpponentShip id.
 
-	^ [
-	  (mercenariesFromAShip includes: anOpponentShip id) or: [
-		  mercenariesFromTheOpponentShip includes: aSpaceShip id ] ]
+	^ (mercenariesFromAShip includes: anOpponentShip id) or: [
+		  mercenariesFromTheOpponentShip includes: aSpaceShip id ]
 ]
 
 { #category : 'initialization' }
