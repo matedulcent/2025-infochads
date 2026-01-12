@@ -59,7 +59,7 @@ CardManager >> lastCellPlayed: aCell [
 
 { #category : 'as yet unclassified' }
 CardManager >> listOfMercenariesOf: aShip [
-
+	"borrar"
 	^(activeCards at: aShip id) collect: [ :card | card helper ]
 ]
 
