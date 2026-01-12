@@ -259,26 +259,26 @@ Game >> stablish: helper on: aShip [
 { #category : 'accessing' }
 Game >> start [
 
-	| tmp1 |
+	| aSpaceShip |
 	diceRoll := diceSet toss.
 	[ self isGameOver or: diceRoll =  -1 ] whileFalse: [
-		tmp1 := nextSpaceShip grabAndUpdate.
-		tmp1 willPlayByTossing: diceRoll on: self ]
+		aSpaceShip := nextSpaceShip grabAndUpdate.
+		aSpaceShip willPlayByTossing: diceRoll on: self ]
 ]
 
 { #category : 'movingOut' }
-Game >> use: arg1 on: arg2 [
+Game >> use: aCard on: aShipId [
 
-	| tmp1 |
-	tmp1 := self checkFor: arg2.
-	self noPermanent: arg1.
+	| ship |
+	ship := self checkFor: aShipId.
+	self noPermanent: aCard.
 	board manageCards
-		play: arg1
-		on: tmp1
+		play: aCard
+		on: ship
 		thatIsIn: spaceShips
 		with: nextSpaceShip grab
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions.
-	arg1 playOn: tmp1 in: self.
+	aCard playOn: ship in: self.
 	self adjustPosition
 ]
