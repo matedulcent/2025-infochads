@@ -70,7 +70,8 @@ Battle >> lookForBattle: aSpaceShip [
 	((positionManager at: aSpaceShip id) isPositionEqualTo:
 		 (Position at: 1 withLaps: 0)) ifTrue: [ ^ self ].
 	anOpponentShip := self obtainOpponentShip: aSpaceShip.
-
+	"correct"
+	aSpaceShip = anOpponentShip ifTrue: [ ^ self ].
 	"the oponent ship musnt be mercenary"
 	(self checkForCamaraderieBetween: aSpaceShip and: anOpponentShip)
 		ifTrue: [ ^ self ].
