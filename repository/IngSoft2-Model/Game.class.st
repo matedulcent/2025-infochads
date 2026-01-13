@@ -248,7 +248,11 @@ Game >> rollTheDice [
 { #category : 'informationTest' }
 Game >> shieldOf: aSpaceShipID [
 	"for testing"
-	^ (spaceShips at: aSpaceShipID) getShield
+
+	^ spaceShips
+		  detect: [ :ship | ship id = aSpaceShipID ]
+		  ifFound: [ :ship | ship getShield ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'as yet unclassified' }

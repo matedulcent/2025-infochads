@@ -33,9 +33,11 @@ Battle >> battleBetween: aSpaceShip and: anOpponentShip [
 	throwOpponentShip := self mercenaryHelpTo: anOpponentShip.
 	throwSpaceShip := self mercenaryHelpTo: aSpaceShip.
 
-	throwSpaceShip <= throwOpponentShip 
+	throwSpaceShip <= throwOpponentShip
 		ifTrue: [ self lostBattle: aSpaceShip ]
-		ifFalse: [ self lostBattle: anOpponentShip ]
+		ifFalse: [ self lostBattle: anOpponentShip ].
+
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
@@ -60,7 +62,8 @@ Battle >> initializeBattleBetween: aSpaceShip andOneOf: theSpaceShips withPositi
 	diceSet := aDiceSet.
 	relationWithMercenaries := relationshipsWothMercenaries.
 	
-	self lookForBattle: aSpaceShip
+	self lookForBattle: aSpaceShip.
+	^self
 ]
 
 { #category : 'as yet unclassified' }
