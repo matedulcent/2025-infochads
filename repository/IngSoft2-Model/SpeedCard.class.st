@@ -33,7 +33,7 @@ SpeedCard >> initializeWith: aTossIncrement [
 SpeedCard >> playOn: aShip in: aGame [
 
 	holder := aShip.
-	"check si es el turno de la nave"
+	"check si es el turno de la nave" "-> Rehacer"
 	aShip incrementBooster.
 	aGame addActive: self to: aShip
 ]

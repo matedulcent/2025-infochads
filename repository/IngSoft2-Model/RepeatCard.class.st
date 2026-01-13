@@ -19,24 +19,30 @@ RepeatCard class >> withObjective: anObjective [
 RepeatCard >> initializeWith: anObjective [
 
 	super initializes.
-	objective := anObjective.
-	cell := NoEffect new.
+	objective := anObjective. "borrar"
+	cell := NoEffect new. "borrar"
 ]
 
 { #category : 'accessing' }
 RepeatCard >> lastPowerUpPlayed: aCell [
-
+	"borrar"
 	cell := aCell
 ]
 
 { #category : 'as yet unclassified' }
-RepeatCard >> replicateCell [
+RepeatCard >> playOn: aShip in: aGame [
 
+	"aGame playLastCellOn: aShip."
+]
+
+{ #category : 'as yet unclassified' }
+RepeatCard >> replicateCell [
+	"borrar"
 	^ cell
 ]
 
 { #category : 'as yet unclassified' }
 RepeatCard >> target: aSpaceShipId [
-
+	"borrar"
 	^ objective 
 ]

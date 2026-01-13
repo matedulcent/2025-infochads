@@ -36,7 +36,7 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 	gameBoard ifEmpty: [ ^ self ].
 	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
 
-	cardManager lastCellPlayed: cell.
+	cardManager lastCellPlayed: cell. "raro"
 
 	cell
 		takeActionOver: aSpaceShip
@@ -54,16 +54,6 @@ Board >> boardSize [
 Board >> checkForWormHole: aPosition [
 
 	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
-]
-
-{ #category : 'as yet unclassified' }
-Board >> does: mercenaryId appearsInOther: spaceShipCards [
-
-	spaceShipCards associationsDo: [ :shipCard |
-		(shipCard value collect: [ :card | card helper = mercenaryId ]) size
-		> 1 ifTrue: [ ^ true ] ].
-
-	^ false
 ]
 
 { #category : 'initialization' }

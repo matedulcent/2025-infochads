@@ -15,28 +15,9 @@ RedoCard class >> withFillOut: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-RedoCard >> activateMercenaryOn [
-
-	mimic putHelperAs: targetID.
-	^ mimic activateMercenaryOn
-]
-
-{ #category : 'as yet unclassified' }
 RedoCard >> cardObjective: aCard [
 
 	^ mimic cardObjective: aCard
-]
-
-{ #category : 'as yet unclassified' }
-RedoCard >> doubleTurnTo: aShip [
-
-	aShip changeSkippingStateTo: (PlayDouble withNext: NoSkip).
-]
-
-{ #category : 'as yet unclassified' }
-RedoCard >> effect [
-
-	^ mimic effect
 ]
 
 { #category : 'as yet unclassified' }
@@ -120,6 +101,12 @@ RedoCard >> objective: aSpaceShipId [
 ]
 
 { #category : 'as yet unclassified' }
+RedoCard >> playOn: aShip in: aGame [
+
+	aGame redoLastCardEfectOn: aShip.
+]
+
+{ #category : 'as yet unclassified' }
 RedoCard >> replicateCell [
 
 	^ mimic replicateCell
@@ -129,11 +116,4 @@ RedoCard >> replicateCell [
 RedoCard >> skip [
 
 	^ mimic skip
-]
-
-{ #category : 'accessing' }
-RedoCard >> target: aSpaceShipId [
-
-	mimic class = RepeatCard ifTrue: [ ^ targetID ].
-	^ ''
 ]

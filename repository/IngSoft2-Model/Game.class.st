@@ -72,6 +72,14 @@ Game >> adjustPosition [
 				 withTotalLaps: laps) ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
+
+	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
+		 mercenaries includes: aMercenaryId ]) ifTrue: [
+		Error signal: 'A mercenary cant help multiple ships.' ]
+]
+
 { #category : 'movingOut' }
 Game >> checkFor: aSpaceShipID [
 	"refactor para que use Turn Manager Quiza"
@@ -210,14 +218,6 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		with: diceSet
 		andIts: relationshipsWithMercenaries.
 	diceRoll := diceSet toss.
-]
-
-{ #category : 'as yet unclassified' }
-Game >> noOneIsBeingHelpedBy: aMercenaryId [
-
-	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
-		 mercenaries includes: aMercenaryId ]) ifTrue: [
-		Error signal: 'A mercenary cant help multiple ships.' ]
 ]
 
 { #category : 'movingOut' }

@@ -82,7 +82,7 @@ Cell >> initializeWithA: anEffect [
 
 { #category : 'as yet unclassified' }
 Cell >> takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions [
-
+	"ver si puedo refactorizar"
 	self affectOnly: aSpaceShip thatIsPlacedIn: spaceShipPositions.
 
 	self
