@@ -24,12 +24,6 @@ CardManager >> addNew: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> applyCardEffectsOver: aSpaceShip or: spaceShips dependingOn: positionManager [
-
-	self playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips
-]
-
-{ #category : 'as yet unclassified' }
 CardManager >> grabTopCard [
 
 	deckOfCards isEmpty ifFalse: [ ^ deckOfCards removeLast ].
@@ -55,19 +49,6 @@ CardManager >> lastCardPlayed: aCard [
 CardManager >> lastCellPlayed: aCell [
 
 	lastCellPlayed := aCell 
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> listOfMercenariesOf: aShip [
-	"borrar"
-	^(activeCards at: aShip id) collect: [ :card | card helper ]
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> numberOfMercenariesOf: aShip [
-
-	"^ ((activeCards at: aShip id) select: [ :card | card isMercenary ])
-		  size + 1"
 ]
 
 { #category : 'as yet unclassified' }
@@ -107,14 +88,6 @@ CardManager >> playCancelation: aCard on: aShip [
 ]
 
 { #category : 'as yet unclassified' }
-CardManager >> playMercenaryOn: aSpaceShip andCheckForHelping: spaceShips [
-
-	"(activeCards at: aSpaceShip id) do: [ :card |
-		card activateMercenaryOn ifTrue: [
-			self the: card mercenaryIsHelpingOther: spaceShips ] ]"
-]
-
-{ #category : 'as yet unclassified' }
 CardManager >> playRedo: aCard on: aShip [
 
 	lastCardPlayed isRedo ifFalse: [
@@ -140,30 +113,4 @@ CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShi
 		takeActionOver: objectiveShip
 		or: spaceShips
 		thatArePlaced: spaceShipPositions.
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playSpeedOn: aSpaceShip basedOn: positionManager [
-
-	(activeCards at: aSpaceShip id) do: [ :card |
-		positionManager sumAt: aSpaceShip id with: card effect ]
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> the: opponentShip isMercenaryOf: aSpaceShip [
-
-	"^ ((activeCards at: aSpaceShip id) anySatisfy: [ :card |
-		   aSpaceShip id = card helper ]) or:
-		  ((activeCards at: opponentShip id) anySatisfy: [ :card |
-			   aSpaceShip id = card helper ])"
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> the: card mercenaryIsHelpingOther: spaceShips [
-
-	| mercenary |
-	mercenary := spaceShips detect: [ :ship | ship id = card helper ].
-
-	mercenary isHelpingOthers ifTrue: [
-		Error signal: 'A mercenary cant help multiple ships.' ]
 ]

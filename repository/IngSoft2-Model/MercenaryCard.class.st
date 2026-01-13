@@ -18,7 +18,7 @@ MercenaryCard class >> withHelpOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 MercenaryCard >> activateMercenaryOn [
-
+	"borrar"
 	fixHelper ifFalse: [
 		fixHelper := true.
 		^ true ].
@@ -49,7 +49,7 @@ MercenaryCard >> isMercenary [
 
 { #category : 'testing' }
 MercenaryCard >> isPermanent [
-
+"borrar"
 	^ true
 ]
 
@@ -57,13 +57,13 @@ MercenaryCard >> isPermanent [
 MercenaryCard >> playOn: aShip in: aGame [
 
 	aGame addActive: self to: aShip.
-	"aGame noOneIsBeingHelpedBy: helper2"
+	aGame noOneIsBeingHelpedBy: helper2.
 	aGame stablish: helper on: aShip
 ]
 
 { #category : 'as yet unclassified' }
 MercenaryCard >> putHelperAs: targetID [
-
+	"borrar"
 	helper := targetID.
 	fixHelper := false
 ]

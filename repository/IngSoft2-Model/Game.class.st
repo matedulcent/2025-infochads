@@ -185,11 +185,11 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 	self playPendingCardsOn: aSpaceShip.
 
-	board manageCards
+	"board manageCards
 		applyCardEffectsOver: aSpaceShip
 		or: spaceShips
 		dependingOn: manage.
-	self adjustPosition.
+	self adjustPosition."
 
 	board
 		applyPowerUpEffectUponA: aSpaceShip
@@ -210,6 +210,14 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		with: diceSet
 		andIts: relationshipsWithMercenaries.
 	diceRoll := diceSet toss.
+]
+
+{ #category : 'as yet unclassified' }
+Game >> noOneIsBeingHelpedBy: aMercenaryId [
+
+	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
+		 mercenaries includes: aMercenaryId ]) ifTrue: [
+		Error signal: 'A mercenary cant help multiple ships.' ]
 ]
 
 { #category : 'movingOut' }
@@ -257,7 +265,7 @@ Game >> shieldOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> stablish: helper on: aShip [
-
+	
 	(relationshipsWithMercenaries at: aShip id) add: helper
 ]
 
