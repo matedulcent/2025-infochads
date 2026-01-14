@@ -5,9 +5,7 @@ Class {
 		'shield',
 		'spaceShipID',
 		'cards',
-		'helperOf',
 		'pendingCards',
-		'helpingOthers',
 		'state',
 		'skipState',
 		'boost'
@@ -47,15 +45,9 @@ SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
 ]
 
 { #category : 'cards' }
-SpaceShip >> addA: card [
-	"borrar"
-	cards add: card
-]
+SpaceShip >> addA: arg1 [
 
-{ #category : 'cards' }
-SpaceShip >> addCardTo: aShip [
-
-	"dfasd"
+	cards add: arg1
 ]
 
 { #category : 'shield' }
@@ -92,13 +84,6 @@ SpaceShip >> changeStateToLockedUpAndNeeds: aValueToEscape [
 SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
 
 	state := Retained withValue: aValueToEscape
-]
-
-{ #category : 'mercenary' }
-SpaceShip >> deMercenarize [
-
-	helperOf := spaceShipID.
-	helpingOthers := false
 ]
 
 { #category : 'shield' }
@@ -142,26 +127,24 @@ SpaceShip >> incrementBooster [
 { #category : 'initialization' }
 SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
+	"| tmp1 |"
 	spaceShipID := anId.
-	shield := aShield.
+	shield := 3.
 	cards := OrderedCollection withAll: {
-			         aCard.
-			         anotherCard }.
+			         WhiteCard new.
+			         WhiteCard new }.
 	pendingCards := OrderedCollection new.
-	helperOf := spaceShipID.
-	helpingOthers := false.
+	"tmp1 := spaceShipID.
+	'<an unprintable nonliteral value>'
+		runtimeUndeclaredWrite: tmp1
+		inContext: thisContext.
+	tmp1 := false.
+	'<an unprintable nonliteral value>'
+		runtimeUndeclaredWrite: tmp1
+		inContext: thisContext."
 	state := Free new.
 	skipState := NoSkip withNext: NoSkip.
-	boost := 0.
-]
-
-{ #category : 'mercenary' }
-SpaceShip >> isHelpingOthers [
-
-	(helpingOthers = false) ifTrue: [
-		helpingOthers := true.
-		^ false ].
-	^ true
+	boost := 0
 ]
 
 { #category : 'states' }
@@ -218,23 +201,11 @@ SpaceShip >> remove: aCard from: aDeck [
 	^ pickedCard
 ]
 
-{ #category : 'mercenary' }
-SpaceShip >> setAsHelperOf: aSpaceShip [
-
-	helperOf = spaceShipID ifFalse: [
-		Error signal: 'A mercenary cant help multiple ships.' ].
-
-	helperOf := aSpaceShip id.
-	aSpaceShip addMercenary: spaceShipID
-]
-
 { #category : 'as yet unclassified' }
-SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
+SpaceShip >> willPlayByTossing: arg1 on: arg2 [
 
-	| diceRoll |
-	
-	self if0WasTossed: aDiceRoll.
-
-	diceRoll := aDiceRoll + boost.
-	skipState will: self skipAfter: diceRoll on: aGame
+	| tmp1 |
+	self if0WasTossed: arg1.
+	tmp1 := arg1 + boost.
+	skipState will: self skipAfter: tmp1 on: arg2
 ]
