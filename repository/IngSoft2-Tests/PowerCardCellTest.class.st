@@ -17,7 +17,7 @@ PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAqui
 			                       WhiteCard new.
 			                       WhiteCard new.
 			                       SpeedCard new.
-			                       SpeedCard new }.
+			                       SkipCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -30,8 +30,7 @@ PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAqui
 		         wonAfter: 4.
 
 	aGame start.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 2.
+	aGame use: SkipCard new on: 2.
 
 	self assert: (aGame positionOf: 1) equals: 3.
 	self assert: (aGame positionOf: 2) equals: 11
@@ -59,10 +58,10 @@ PowerCardCellTest >> testWhenTheCardCellGrabsTheFirstCardFromTheDeckThenTheSecon
 		         throwing: aDiceSet
 		         wonAfter: 4.
 
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame start.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 
 	self assert: (aGame positionOf: 1) equals: 5
 ]
@@ -93,7 +92,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatDistributesC
 		         wonAfter: 4.
 
 	aGame start.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 
 	self assert: (aGame positionOf: 1) equals: 3
 ]
@@ -106,8 +105,8 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 2. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
-			                       SpeedCard new. 
-			                       RepeatCard new}.
+			                       SpeedCard new.
+			                       RepeatCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -122,7 +121,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 	aGame use: WhiteCard new on: 1.
 	aGame start.
 	aGame use: (RepeatCard withObjective: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	self assert: (aGame positionOf: 1) equals: 3
 ]
 
