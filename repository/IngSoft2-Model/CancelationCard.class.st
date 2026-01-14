@@ -24,13 +24,13 @@ CancelationCard >> cardObjective: aCard [
 { #category : 'initialization' }
 CancelationCard >> initializeWith: aCard and: anObjective [
 
-	"super initializes."
 	card := aCard.
 	objective := anObjective.
 ]
 
 { #category : 'as yet unclassified' }
-CancelationCard >> objective: aSpaceShipId [
+CancelationCard >> playOn: aShip in: aGame [
 
-	^ objective 
+	aGame applyAction:
+		(CancelationAction to: card on: objective in: aGame)
 ]

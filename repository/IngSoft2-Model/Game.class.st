@@ -103,6 +103,15 @@ Game >> assertTheGameIsNotOver [
 			  (Position at: board boardSize withLaps: laps) ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> cancel: targetCard on: targetShip [
+
+	| aCard aShip |
+	aCard := activeCardHolder removeActive: targetCard from: targetShip.
+	aShip := self checkFor: targetShip.
+	aCard unplayOn: aShip in: self
+]
+
 { #category : 'movingOut' }
 Game >> checkFor: aSpaceShipID [
 	"refactor para que use Turn Manager Quiza"

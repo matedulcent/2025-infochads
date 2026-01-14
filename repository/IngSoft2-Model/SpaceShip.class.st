@@ -93,6 +93,12 @@ SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
 	state := Retained withValue: aValueToEscape
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> decrementBooster [
+
+	boost := boost - 1
+]
+
 { #category : 'shield' }
 SpaceShip >> getShield [
 	"needed for testing"

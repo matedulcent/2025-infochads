@@ -87,9 +87,9 @@ CancelationCardTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsVa
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 1.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6
@@ -114,9 +114,9 @@ CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancel
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 1.
 	aGame start.
 
@@ -143,8 +143,7 @@ CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCard
 	self
 		should: [
 			aGame
-				use:
-				(CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+				use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 				on: 1 ]
 		raise: Error
 		withMessageText:
@@ -168,9 +167,9 @@ CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 1.
 	aGame start.
 
@@ -195,13 +194,12 @@ CancelationCardTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThe
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 
 	self
 		should: [
 			aGame
-				use:
-				(CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+				use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 				on: 1 ]
 		raise: Error
 		withMessageText: 'The card is not in the ships deck'

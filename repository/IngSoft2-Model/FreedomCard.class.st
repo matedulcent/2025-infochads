@@ -8,5 +8,6 @@ Class {
 { #category : 'instance creation' }
 FreedomCard >> playOn: aShip in: aGame [
 
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
 	aGame applyAction: (FreedomAction on: aShip)
 ]

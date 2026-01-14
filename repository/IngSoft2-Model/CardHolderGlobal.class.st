@@ -34,3 +34,18 @@ CardHolderGlobal >> initializeWithPlayers: spaceShips [
 	
 	self createCardPositionsOf: spaceShips
 ]
+
+{ #category : 'removing' }
+CardHolderGlobal >> removeActive: aCard from: aShipId [
+
+	| cards removedCard |
+	cards := activeCards at: aShipId ifAbsent: [ ^ self ].
+
+	removedCard := cards
+		               detect: [ :each | each isKindOf: aCard class ]
+		               ifNone: [ ^ nil ].
+	"'This ship doesnt have this card'"
+
+	cards remove: removedCard.
+	^ removedCard
+]

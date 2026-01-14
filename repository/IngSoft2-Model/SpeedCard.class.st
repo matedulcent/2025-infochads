@@ -19,7 +19,7 @@ SpeedCard >> playOn: aShip in: aGame [
 ]
 
 { #category : 'as yet unclassified' }
-SpeedCard >> unPlay [
+SpeedCard >> unplayOn: aShip in: aGame [
 
-	"para el canecel"
+	aShip decrementBooster
 ]
