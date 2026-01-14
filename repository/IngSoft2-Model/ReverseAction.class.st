@@ -30,5 +30,5 @@ ReverseAction >> initializeIn: aGame [
 { #category : 'accessing' }
 ReverseAction >> prototype [
 
-	^ [ :aGame | ReverseAction in: aGame ]
+	^ [ :newShip :aGame :additional | ReverseAction in: aGame ]
 ]

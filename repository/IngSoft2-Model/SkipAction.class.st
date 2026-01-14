@@ -31,5 +31,5 @@ SkipAction >> initializeOn: aShip [
 { #category : 'accessing' }
 SkipAction >> prototype [
 
-	^ [ :newShip :game | SkipAction on: newShip ]
+	^ [ :newShip :aGame :additional | SkipAction on: newShip ]
 ]

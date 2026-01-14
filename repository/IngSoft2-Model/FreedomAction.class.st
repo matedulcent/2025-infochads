@@ -30,5 +30,5 @@ FreedomAction >> initializeOn: aShip [
 { #category : 'accessing' }
 FreedomAction >> prototype [
 
-	^ [ :newShip :game | FreedomAction on: newShip ]
+	^ [ :newShip :game :additional | FreedomAction on: newShip ]
 ]

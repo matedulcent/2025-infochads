@@ -32,5 +32,6 @@ DoubleTurnAction >> initializeOn: aShip in: aGame [
 { #category : 'accessing' }
 DoubleTurnAction >> prototype [
 
-	^ [ :newShip :aGame | DoubleTurnAction on: newShip in: aGame ]
+	^ [ :newShip :aGame :additional |
+	  DoubleTurnAction on: newShip in: aGame ]
 ]

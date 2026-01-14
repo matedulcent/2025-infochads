@@ -258,6 +258,14 @@ Game >> redoLastActionOn: aShip [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> redoLastActionOn: aShip withAdditional: aHelperId [
+
+	lastActionPrototype ifNil: [ ^ self ].
+	self applyAction:
+		(lastActionPrototype value: aShip value: self value: aHelperId)
+]
+
+{ #category : 'as yet unclassified' }
 Game >> reverseTurns [
 
 	nextSpaceShip reverseTheTurns

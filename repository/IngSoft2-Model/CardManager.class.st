@@ -69,7 +69,7 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 		and: spaceShips
 		dependingOn: spaceShipPositions.
 
-	self lastCardPlayed: (aShip has: aCard)
+	"self lastCardPlayed: (aShip has: aCard)"
 ]
 
 { #category : 'as yet unclassified' }

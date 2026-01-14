@@ -35,6 +35,6 @@ MercenaryAction >> initializeHelper: aHelperId on: aShip in: aGame [
 { #category : 'accessing' }
 MercenaryAction >> prototype [
 
-	^ [ :newShip :aGame |
-	  MercenaryAction helper: helperId on: newShip in: aGame ]
+	^ [ :newShip :aGame :helper |
+	  MercenaryAction helper: helper on: newShip in: aGame ]
 ]

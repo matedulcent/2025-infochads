@@ -32,5 +32,6 @@ AccelerationAction >> initializeOn: aShip in: aGame [
 { #category : 'accessing' }
 AccelerationAction >> prototype [
 
-	^ [ :newShip :aGame | AccelerationAction on: newShip in: aGame ]
+	^ [ :newShip :aGame :additional |
+	  AccelerationAction on: newShip in: aGame ]
 ]

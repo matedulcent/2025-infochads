@@ -32,5 +32,5 @@ SpeedAction >> initializeOn: aShip in: aGame [
 { #category : 'accessing' }
 SpeedAction >> prototype [
 
-	^ [ :newShip :aGame | SpeedAction on: newShip in: aGame ]
+	^ [ :newShip :aGame :additional | SpeedAction on: newShip in: aGame ]
 ]
