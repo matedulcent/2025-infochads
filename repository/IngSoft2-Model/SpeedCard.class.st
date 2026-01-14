@@ -12,12 +12,10 @@ Class {
 { #category : 'as yet unclassified' }
 SpeedCard >> playOn: aShip in: aGame [
 
-	"check si es el turno de la nave" "-> Rehacer"
+	aGame assertItsTurnToPlayOf: aShip.
 	aGame addActive: self to: aShip.
-	
-	aGame applyAction:
-        (SpeedAction on: aShip in: aGame)
-	
+
+	aGame applyAction: (SpeedAction on: aShip in: aGame)
 ]
 
 { #category : 'as yet unclassified' }

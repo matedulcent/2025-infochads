@@ -349,35 +349,6 @@ RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBoth
 ]
 
 { #category : 'tests' }
-RedoCardTest >> testWhenSpaceShip2PlaysSpeedCardAndSpaceShip1PlaysRedoCardThenRedoIsUselessDueToSpeedCardCantBePlayedInOthersTurn [
-
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 19. 30 }.
-
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           SpeedCard new.
-					           WhiteCard new.
-					           RedoCard new.
-					           WhiteCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
-
-	aGame use: (SpeedCard new) on: 2.
-	aGame use: (RedoCard withFillOut: 2) on: 1.
-	aGame start.
-
-	self assert: (aGame positionOf: 1) equals: 20.
-	self assert: (aGame positionOf: 2) equals: 32
-]
-
-{ #category : 'tests' }
 RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffectTwice [
 
 	| aGame aDiceSet aBoard aConfigureDiceSet |

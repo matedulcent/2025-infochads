@@ -24,11 +24,16 @@ TurnManager >> advanceTurn [
 	^ currentShipPlaying
 ]
 
+{ #category : 'accessing' }
+TurnManager >> currentShipPlaying [
+
+	^ currentShipPlaying
+]
+
 { #category : 'as yet unclassified' }
 TurnManager >> doubleTurnOn: aShip [
 
-	grantExtraTurn:= true.
-	"orderedShips addFirst: orderedShips removeLast"
+	grantExtraTurn := true
 ]
 
 { #category : 'as yet unclassified' }

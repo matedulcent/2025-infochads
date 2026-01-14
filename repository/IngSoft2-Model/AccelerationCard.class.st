@@ -12,6 +12,7 @@ Class {
 { #category : 'as yet unclassified' }
 AccelerationCard >> playOn: aShip in: aGame [
 
+	aGame assertItsTurnToPlayOf: aShip.
 	aGame addActive: self to: aShip.
 	aGame applyAction: (AccelerationAction on: aShip in: aGame)
 ]

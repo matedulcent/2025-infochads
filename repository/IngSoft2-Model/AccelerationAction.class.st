@@ -17,7 +17,7 @@ AccelerationAction class >> on: aShip in: aGame [
 
 { #category : 'private' }
 AccelerationAction >> apply [
-
+	
 	game incrementAllBoosters 
 ]
 

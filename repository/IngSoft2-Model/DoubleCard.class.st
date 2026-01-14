@@ -7,7 +7,6 @@ Class {
 
 { #category : 'as yet unclassified' }
 DoubleCard >> playOn: aShip in: aGame [
-	"aGame doubleTurnOn: aShip"
 
 	aGame applyAction: (DoubleTurnAction on: aShip in: aGame)
 ]

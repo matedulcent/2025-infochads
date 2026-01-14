@@ -24,6 +24,7 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 { #category : 'as yet unclassified' }
 MercenaryCard >> playOn: aShip in: aGame [
 
+	aGame assertItsTurnToPlayOf: aShip.
 	aGame addActive: self to: aShip.
 	aGame applyAction:
 		(MercenaryAction helper: helper on: aShip in: aGame)

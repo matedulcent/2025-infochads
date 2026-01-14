@@ -11,12 +11,6 @@ WhiteCard class >> create [
 	^self new initializes
 ]
 
-{ #category : 'asserting' }
-WhiteCard >> assertItsPlayersTurnWhenPlayingIn: aGame [
-
-	
-]
-
 { #category : 'as yet unclassified' }
 WhiteCard >> playOn: aShip in: aGame [
 

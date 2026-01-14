@@ -80,6 +80,13 @@ Game >> applyAction: anAction [
 	anAction apply
 ]
 
+{ #category : 'asserting' }
+Game >> assertItsTurnToPlayOf: aShip [
+
+	aShip = nextSpaceShip keepCurrentShip ifFalse: [
+		Error signal: 'Its not the ships turn to play' ]
+]
+
 { #category : 'as yet unclassified' }
 Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
 
@@ -107,18 +114,17 @@ Game >> checkFor: aSpaceShipID [
 ]
 
 { #category : 'whats left of race positions' }
-Game >> create: arg1 [
+Game >> create: aNumberOfSpaceShips [
 
-	| tmp1 |
-	tmp1 := 3.
+	| shield |
+	shield := 3.
 	spaceShips := OrderedCollection new.
-	1 to: arg1 do: [ :tmp2 |
+	1 to: aNumberOfSpaceShips do: [ :id |
 		spaceShips add: (SpaceShip
-				 with: tmp2
+				 with: id
 				 startingWith: board pickACard
 				 and: board pickACard
-				 with: tmp1) ].
-	1
+				 with: shield) ]
 ]
 
 { #category : 'as yet unclassified' }

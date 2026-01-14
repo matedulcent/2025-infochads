@@ -140,8 +140,7 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 		         wonAfter: 1.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
-
-
+	aGame start.
 	self
 		should: [ aGame use: (MercenaryCard withHelpOf: 3) on: 2 ]
 		raise: Error
@@ -174,7 +173,7 @@ MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWin
 ]
 
 { #category : 'tests' }
-MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAccumulatedAndPlayedOnTheRightTurn [
+MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenCreationFails [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -192,11 +191,11 @@ MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAc
 		         wonAfter: 1.
 
 	aGame use: SpeedCard new on: 1.
-	aGame use: SpeedCard new on: 2.
-	aGame start.
 
-	self assert: (aGame positionOf: 1) equals: 7.
-	self assert: (aGame positionOf: 2) equals: 8
+	self
+		should: [ aGame use: SpeedCard new on: 2 ]
+		raise: Error
+		withMessageText: 'Its not the ships turn to play'
 ]
 
 { #category : 'tests' }
