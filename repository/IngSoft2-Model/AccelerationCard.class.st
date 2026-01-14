@@ -9,20 +9,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-AccelerationCard class >> mustBeOne: aTossIncrement [
-
-	(aTossIncrement isInteger not or: [ aTossIncrement ~= 1 ]) ifTrue: [
-		Error signal: 'The increment in the dice toss must be one.' ]
-]
-
-{ #category : 'instance creation' }
-AccelerationCard class >> with: aTossIncrement [
-
-	self mustBeOne: aTossIncrement.
-	^ self new initializeWith: aTossIncrement
-]
-
 { #category : 'initialization' }
 AccelerationCard >> initializeWith: aTossIncrement [
 
@@ -33,11 +19,6 @@ AccelerationCard >> initializeWith: aTossIncrement [
 { #category : 'as yet unclassified' }
 AccelerationCard >> playOn: aShip in: aGame [
 
-	"holder := aShip.
-	check si es el turno de la nave
-	aGame incrementAllBoosters."
 	aGame addActive: self to: aShip.
-	
-	aGame applyAction:
-        (AccelerationAction on: aShip in: aGame)
+	aGame applyAction: (AccelerationAction on: aShip in: aGame)
 ]

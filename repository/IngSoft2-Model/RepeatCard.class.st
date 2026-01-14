@@ -18,7 +18,7 @@ RepeatCard class >> withObjective: anObjective [
 { #category : 'initialization' }
 RepeatCard >> initializeWith: anObjective [
 
-	super initializes.
+	"super initializes."
 	objective := anObjective. "borrar"
 	cell := NoEffect new. "borrar"
 ]

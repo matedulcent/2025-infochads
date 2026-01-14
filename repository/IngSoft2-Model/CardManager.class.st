@@ -57,17 +57,17 @@ CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToM
 	"self playRedo: aCard on: aShip."
 	
 	"manejar el tema de la carta pendiente"
-	(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [
+	"(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [
 		aShip pending: aCard.
-		^ self ].
+		^ self ]."
 
-	self playCancelation: aCard on: aShip.
+	"self playCancelation: aCard on: aShip."
 
-	self
+	"self
 		playRepeat: aCard
 		on: aShip
 		and: spaceShips
-		dependingOn: spaceShipPositions.
+		dependingOn: spaceShipPositions."
 
 	"self lastCardPlayed: (aShip has: aCard)"
 ]
@@ -85,17 +85,6 @@ CardManager >> playCancelation: aCard on: aShip [
 				        'This card cant be played if the card to be canceled is not active.' ].
 	(activeCards at: (aCard objective: aShip id)) remove: card.
 	aShip deMercenarize
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playRedo: aCard on: aShip [
-
-	lastCardPlayed isRedo ifFalse: [
-		aCard mimic: lastCardPlayed deepCopy.
-		^ self ].
-
-	aCard isRedo ifTrue: [
-		aCard mimic: lastCardPlayed mimic deepCopy ]
 ]
 
 { #category : 'as yet unclassified' }

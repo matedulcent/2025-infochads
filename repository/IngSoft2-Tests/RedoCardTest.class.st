@@ -121,17 +121,17 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThe
 					           CancelationCard new.
 					           RedoCard new.
 					           SpeedCard new.
-					           AccelerationCard new})
+					           AccelerationCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (AccelerationCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame use: AccelerationCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: (SpeedCard new) toShip: 1)
 		on: 2.
 
 	self
@@ -156,7 +156,7 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndShip2PlaysSpeedThenShip3CancelsAndRedo
 					           WhiteCard new.
 					           SpeedCard new.
 					           WhiteCard new.
-					           SpeedCard new})
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -164,10 +164,10 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndShip2PlaysSpeedThenShip3CancelsAndRedo
 		         throwing: aDiceSet
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 2.
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 2.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 3.
 	aGame start.
 	aGame use: (RedoCard withFillOut: 2) on: 3.
@@ -218,17 +218,17 @@ RedoCardTest >> testWhenShip1PlaysSpeedTwiceThenShip2CancelsAndRedoThenBothSpeed
 					           CancelationCard new.
 					           RedoCard new.
 					           SpeedCard new.
-					           SpeedCard new})
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 2.
 	aGame use: (RedoCard withFillOut: 1) on: 2.
 	aGame start.
@@ -369,7 +369,7 @@ RedoCardTest >> testWhenSpaceShip2PlaysSpeedCardAndSpaceShip1PlaysRedoCardThenRe
 		         throwing: aDiceSet
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 2.
+	aGame use: (SpeedCard new) on: 2.
 	aGame use: (RedoCard withFillOut: 2) on: 1.
 	aGame start.
 

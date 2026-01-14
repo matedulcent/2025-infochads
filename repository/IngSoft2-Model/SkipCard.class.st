@@ -7,6 +7,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 SkipCard >> playOn: aShip in: aGame [
+	"no instantaneous when the game is over"
 
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
 	aGame applyAction: (SkipAction on: aShip)
 ]

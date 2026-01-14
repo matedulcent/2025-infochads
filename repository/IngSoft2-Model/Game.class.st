@@ -88,6 +88,14 @@ Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
 		Error signal: 'A mercenary cant help multiple ships.' ]
 ]
 
+{ #category : 'whats left of race positions' }
+Game >> assertTheGameIsNotOver [
+
+	^ spaceShips anySatisfy: [ :aShip |
+		  (manage at: aShip id) isEqualTo:
+			  (Position at: board boardSize withLaps: laps) ]
+]
+
 { #category : 'movingOut' }
 Game >> checkFor: aSpaceShipID [
 	"refactor para que use Turn Manager Quiza"
@@ -164,14 +172,6 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
 ]
 
-{ #category : 'whats left of race positions' }
-Game >> isGameOver [
-
-	^ spaceShips anySatisfy: [ :aShip |
-		  (manage at: aShip id) isEqualTo:
-			  (Position at: board boardSize withLaps: laps) ]
-]
-
 { #category : 'testing' }
 Game >> isLockedUpInCell: aSpaceShipID [
 
@@ -182,7 +182,7 @@ Game >> isLockedUpInCell: aSpaceShipID [
 { #category : 'informationTest' }
 Game >> isOver [
 	"testing"
-	^ self isGameOver
+	^ self assertTheGameIsNotOver
 ]
 
 { #category : 'informationTest' }
@@ -231,7 +231,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 { #category : 'movingOut' }
 Game >> noPermanent: aCard [
 	"refactorizar y borrar"
-	(self isGameOver and: aCard isPermanent not) ifTrue: [
+	(self assertTheGameIsNotOver and: aCard isPermanent not) ifTrue: [
 		Error signal:
 			'Instantaneous cards cant be played after the game is over.' ]
 ]
@@ -247,14 +247,6 @@ Game >> playPendingCardsOn: aSpaceShip [
 Game >> positionOf: aSpaceShipID [
 
 	^ (manage positions at: aSpaceShipID) position
-]
-
-{ #category : 'as yet unclassified' }
-Game >> redoLastActionOn: aShip [
-
-	lastActionPrototype ifNil: [ ^ self ].
-
-	self applyAction: (lastActionPrototype value: aShip value: self)
 ]
 
 { #category : 'as yet unclassified' }
@@ -298,7 +290,7 @@ Game >> start [
 
 	| aSpaceShip |
 	diceRoll := diceSet toss.
-	[ self isGameOver or: diceRoll =  -1 ] whileFalse: [
+	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
 		aSpaceShip := nextSpaceShip grabAndUpdate.
 		aSpaceShip willPlayByTossing: diceRoll on: self ]
 ]

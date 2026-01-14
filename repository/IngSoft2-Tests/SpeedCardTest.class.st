@@ -81,7 +81,7 @@ SpeedCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 2.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: (SpeedCard new) on: 1.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 14
 ]
@@ -105,7 +105,7 @@ SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecD
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 2.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: (SpeedCard new) on: 1.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 22
 ]
@@ -126,7 +126,7 @@ SpeedCardTest >> testWhenASpaceShipUsesASpeedCardThenItsTossIncrementsInOne [
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
+	aGame use: (SpeedCard new) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7
@@ -152,36 +152,9 @@ SpeedCardTest >> testWhenASpaceShipUsesASpeedCardTwiceThenItsTossIncrementsInTwo
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
+	aGame use: (SpeedCard new) on: spaceShipID.
+	aGame use: (SpeedCard new) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 8
-]
-
-{ #category : 'tests' }
-SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNegativeThenCreationFails [
-
-	self
-		should: [ SpeedCard with: -1 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNot1ThenCreationFails [
-
-	self
-		should: [ SpeedCard with: 10 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNotAnIntThenCreationFails [
-
-	self
-		should: [ SpeedCard with: 'a' ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
 ]

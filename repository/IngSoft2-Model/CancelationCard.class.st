@@ -24,7 +24,7 @@ CancelationCard >> cardObjective: aCard [
 { #category : 'initialization' }
 CancelationCard >> initializeWith: aCard and: anObjective [
 
-	super initializes.
+	"super initializes."
 	card := aCard.
 	objective := anObjective.
 ]
