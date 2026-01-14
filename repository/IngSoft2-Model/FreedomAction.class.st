@@ -1,6 +1,6 @@
 Class {
 	#name : 'FreedomAction',
-	#superclass : 'ActionGroupCard',
+	#superclass : 'CardAction',
 	#instVars : [
 		'ship'
 	],
@@ -30,5 +30,5 @@ FreedomAction >> initializeOn: aShip [
 { #category : 'accessing' }
 FreedomAction >> prototype [
 
-	^ [ :newShip :game :additional | FreedomAction on: newShip ]
+	^ [ :newShip :game :additional | self class on: newShip ]
 ]

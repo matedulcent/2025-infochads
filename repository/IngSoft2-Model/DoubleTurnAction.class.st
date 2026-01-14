@@ -1,6 +1,6 @@
 Class {
 	#name : 'DoubleTurnAction',
-	#superclass : 'ActionGroupCard',
+	#superclass : 'CardAction',
 	#instVars : [
 		'game',
 		'ship'
@@ -33,5 +33,5 @@ DoubleTurnAction >> initializeOn: aShip in: aGame [
 DoubleTurnAction >> prototype [
 
 	^ [ :newShip :aGame :additional |
-	  DoubleTurnAction on: newShip in: aGame ]
+	  self class on: newShip in: aGame ]
 ]

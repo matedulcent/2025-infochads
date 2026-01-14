@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReverseAction',
-	#superclass : 'ActionGroupCard',
+	#superclass : 'CardAction',
 	#instVars : [
 		'game'
 	],
@@ -30,5 +30,5 @@ ReverseAction >> initializeIn: aGame [
 { #category : 'accessing' }
 ReverseAction >> prototype [
 
-	^ [ :newShip :aGame :additional | ReverseAction in: aGame ]
+	^ [ :newShip :aGame :additional | self class in: aGame ]
 ]

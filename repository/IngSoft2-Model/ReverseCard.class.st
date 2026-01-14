@@ -9,5 +9,4 @@ Class {
 ReverseCard >> playOn: aShip in: aGame [
 
 	aGame applyAction: (ReverseAction in: aGame)
-	"aGame reverseTurns"
 ]

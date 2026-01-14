@@ -1,6 +1,6 @@
 Class {
 	#name : 'AccelerationAction',
-	#superclass : 'ActionGroupCard',
+	#superclass : 'CardAction',
 	#instVars : [
 		'ship',
 		'game'
@@ -33,5 +33,5 @@ AccelerationAction >> initializeOn: aShip in: aGame [
 AccelerationAction >> prototype [
 
 	^ [ :newShip :aGame :additional |
-	  AccelerationAction on: newShip in: aGame ]
+	  self class on: newShip in: aGame ]
 ]

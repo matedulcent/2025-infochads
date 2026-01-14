@@ -1,6 +1,6 @@
 Class {
 	#name : 'SkipAction',
-	#superclass : 'ActionGroupCard',
+	#superclass : 'CardAction',
 	#instVars : [
 		'ship',
 		'previousState'
@@ -31,5 +31,5 @@ SkipAction >> initializeOn: aShip [
 { #category : 'accessing' }
 SkipAction >> prototype [
 
-	^ [ :newShip :aGame :additional | SkipAction on: newShip ]
+	^ [ :newShip :aGame :additional | self class on: newShip ]
 ]

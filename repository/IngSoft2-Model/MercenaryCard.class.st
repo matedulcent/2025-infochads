@@ -24,8 +24,7 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 { #category : 'as yet unclassified' }
 MercenaryCard >> playOn: aShip in: aGame [
 
-	| action |
-	action := MercenaryAction helper: helper on: aShip in: aGame.
 	aGame addActive: self to: aShip.
-	aGame applyAction: action
+	aGame applyAction:
+		(MercenaryAction helper: helper on: aShip in: aGame)
 ]

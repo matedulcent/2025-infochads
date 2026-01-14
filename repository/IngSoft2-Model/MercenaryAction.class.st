@@ -1,6 +1,6 @@
 Class {
 	#name : 'MercenaryAction',
-	#superclass : 'ActionGroupCard',
+	#superclass : 'CardAction',
 	#instVars : [
 		'helperId',
 		'ship',
@@ -36,5 +36,5 @@ MercenaryAction >> initializeHelper: aHelperId on: aShip in: aGame [
 MercenaryAction >> prototype [
 
 	^ [ :newShip :aGame :helper |
-	  MercenaryAction helper: helper on: newShip in: aGame ]
+	  self class helper: helper on: newShip in: aGame ]
 ]
