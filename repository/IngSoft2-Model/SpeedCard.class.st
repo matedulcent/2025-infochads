@@ -9,12 +9,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialization' }
-SpeedCard >> initializeWith: aTossIncrement [
-
-	super initializes.
-]
-
 { #category : 'as yet unclassified' }
 SpeedCard >> playOn: aShip in: aGame [
 

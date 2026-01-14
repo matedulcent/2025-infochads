@@ -301,13 +301,13 @@ Game >> use: aCard on: aShipId [
 	| ship |
 	ship := self checkFor: aShipId.
 	"self noPermanent: aCard."
-	board manageCards
+	"board manageCards
 		play: aCard
 		on: ship
 		thatIsIn: spaceShips
 		with: nextSpaceShip grab
 		modifiedBy: stepOfNextSpaceShipToMove
-		and: manage positions.
+		and: manage positions."
 	aCard playOn: ship in: self.
 	self adjustPosition
 ]

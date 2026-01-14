@@ -191,8 +191,8 @@ MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAc
 		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 2.
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 2.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7.
@@ -218,7 +218,7 @@ MercenaryCardTest >> testWhenSpaceShipThatDoesntExistTryesToUseACardThenProcedur
 		         wonAfter: 1.
 
 	self
-		should: [ aGame use: (SpeedCard with: 1) on: 10 ]
+		should: [ aGame use: (SpeedCard new) on: 10 ]
 		raise: Error
 		withMessageText: 'The ship doesnt exist'
 ]

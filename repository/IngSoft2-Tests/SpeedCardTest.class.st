@@ -39,7 +39,7 @@ SpeedCardTest >> testWhenACardIsNotInDeckThenUsageFails [
 		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
 	self
-		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
+		should: [ aGame use: SpeedCard new on: 1 ]
 		raise: Error
 		withMessageText: 'The card is not in the ships deck'
 ]
@@ -60,7 +60,7 @@ SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
 		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
 	self
-		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
+		should: [ aGame use: SpeedCard new on: 1 ]
 		raise: Error
 		withMessageText: 'The card is not in the ships deck'
 ]

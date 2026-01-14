@@ -9,13 +9,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialization' }
-AccelerationCard >> initializeWith: aTossIncrement [
-
-	super initializes.
-	increment := aTossIncrement.
-]
-
 { #category : 'as yet unclassified' }
 AccelerationCard >> playOn: aShip in: aGame [
 

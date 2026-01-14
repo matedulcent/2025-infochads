@@ -190,14 +190,14 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndaShip2RedoThenTheShip2AlsoHasASpeed [
 					           RedoCard new.
 					           WhiteCard new.
 					           SpeedCard new.
-					           WhiteCard new})
+					           WhiteCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 2.
 	aGame start.
 
@@ -255,7 +255,7 @@ RedoCardTest >> testWhenShipPlaysAccelerationAndARedoThenAllShipsHave2Accelerati
 		         by: 3
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (AccelerationCard with: 1) on: 1.
+	aGame use: AccelerationCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
@@ -306,14 +306,14 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
 					           SpeedCard new.
-					           RedoCard new})
+					           RedoCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
