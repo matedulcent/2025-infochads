@@ -7,10 +7,12 @@ Class {
 
 { #category : 'private' }
 CardAction >> apply [
-    self subclassResponsibility
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
 CardAction >> prototype [
-    self subclassResponsibility
+
+	self subclassResponsibility
 ]

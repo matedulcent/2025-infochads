@@ -8,5 +8,6 @@ Class {
 { #category : 'instance creation' }
 FreedomCard >> playOn: aShip in: aGame [
 
-	aShip changeStateToFreeByCard .
+	"aShip changeStateToFreeByCard ."
+	aGame applyAction: (FreedomAction on: aShip)
 ]
