@@ -32,10 +32,13 @@ SpeedCard >> initializeWith: aTossIncrement [
 { #category : 'as yet unclassified' }
 SpeedCard >> playOn: aShip in: aGame [
 
-	holder := aShip.
+	"holder := aShip."
 	"check si es el turno de la nave" "-> Rehacer"
-	aShip incrementBooster.
+	"aShip incrementBooster."
 	aGame addActive: self to: aShip.
+	
+	aGame applyAction:
+        (SpeedAction on: aShip in: aGame)
 	
 ]
 

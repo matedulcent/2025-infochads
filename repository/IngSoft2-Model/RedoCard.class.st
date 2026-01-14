@@ -103,7 +103,7 @@ RedoCard >> objective: aSpaceShipId [
 { #category : 'as yet unclassified' }
 RedoCard >> playOn: aShip in: aGame [
 
-	aGame redoLastAction
+	aGame redoLastActionOn: aShip
 ]
 
 { #category : 'as yet unclassified' }

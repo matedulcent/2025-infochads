@@ -23,12 +23,6 @@ AccelerationCard class >> with: aTossIncrement [
 	^ self new initializeWith: aTossIncrement
 ]
 
-{ #category : 'as yet unclassified' }
-AccelerationCard >> effectAll [
-
-	^ Position at: increment withLaps: 0
-]
-
 { #category : 'initialization' }
 AccelerationCard >> initializeWith: aTossIncrement [
 
@@ -39,8 +33,11 @@ AccelerationCard >> initializeWith: aTossIncrement [
 { #category : 'as yet unclassified' }
 AccelerationCard >> playOn: aShip in: aGame [
 
-	holder := aShip.
-	"check si es el turno de la nave"
-	aGame incrementAllBoosters.
-	aGame addActive: self to: aShip
+	"holder := aShip.
+	check si es el turno de la nave
+	aGame incrementAllBoosters."
+	aGame addActive: self to: aShip.
+	
+	aGame applyAction:
+        (AccelerationAction on: aShip in: aGame)
 ]

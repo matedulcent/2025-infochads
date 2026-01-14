@@ -15,7 +15,7 @@ Class {
 		'nextSpaceShip',
 		'activeCardHolder',
 		'relationshipsWithMercenaries',
-		'lastAction'
+		'lastActionPrototype'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -76,9 +76,8 @@ Game >> adjustPosition [
 { #category : 'as yet unclassified' }
 Game >> applyAction: anAction [
 
-	lastAction := anAction.
-    anAction apply.
-
+	lastActionPrototype := anAction prototype.
+	anAction apply
 ]
 
 { #category : 'as yet unclassified' }
@@ -251,10 +250,11 @@ Game >> positionOf: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> redoLastAction [
+Game >> redoLastActionOn: aShip [
 
-	lastAction ifNil: [ ^ self ].
-	lastAction apply
+	lastActionPrototype ifNil: [ ^ self ].
+
+	self applyAction: (lastActionPrototype value: aShip value: self)
 ]
 
 { #category : 'as yet unclassified' }

@@ -7,10 +7,12 @@ Class {
 
 { #category : 'as yet unclassified' }
 SkipCard >> playOn: aShip in: aGame [
-
 	"aShip changeSkippingStateTo:
 		          (SkipForSkipping withNext: NoSkip)"
-   | anAction |
+
+	"| anAction |
     anAction := SkipAction on: aShip.
-    aGame applyAction: anAction.
+    aGame applyAction: anAction."
+
+	aGame applyAction: (SkipAction on: aShip)
 ]

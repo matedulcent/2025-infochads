@@ -1,6 +1,6 @@
 Class {
 	#name : 'SkipAction',
-	#superclass : 'Object',
+	#superclass : 'ActionGroupCard',
 	#instVars : [
 		'ship',
 		'previousState'
@@ -17,13 +17,19 @@ SkipAction class >> on: aShip [
 
 { #category : 'private' }
 SkipAction >> apply [
-    ship changeSkippingStateTo:
-        (SkipForSkipping withNext: NoSkip)
+
+	ship changeSkippingStateTo: (SkipForSkipping withNext: NoSkip)
 ]
 
 { #category : 'initialization' }
 SkipAction >> initializeOn: aShip [
 
 	ship := aShip.
-	
+	^ self.
+]
+
+{ #category : 'accessing' }
+SkipAction >> prototype [
+
+	^ [ :newShip :game | SkipAction on: newShip ]
 ]

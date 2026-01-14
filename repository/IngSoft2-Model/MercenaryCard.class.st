@@ -9,22 +9,29 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MercenaryCard class >> withHelpOf: aSpaceShipID [
+MercenaryCard class >> withHelpOf: aHelperId [
 
-	^ self new initializeWithHelpOf: aSpaceShipID
+	^ self new initializeWithHelpOf: aHelperId
 ]
 
 { #category : 'initialization' }
 MercenaryCard >> initializeWithHelpOf: aHelper [
 
-	super initializes.
 	helper := aHelper.
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
 MercenaryCard >> playOn: aShip in: aGame [
-
-	aGame addActive: self to: aShip.
+	"aGame addActive: self to: aShip.
 	aGame assertMercenaryIsNotHelpingAnotherShip: helper.
-	aGame stablish: helper on: aShip
+	aGame stablish: helper on: aShip"
+
+	" aGame applyAction:
+        (MercenaryAction helper: helper on: aShip in: aGame)"
+
+	| action |
+	action := MercenaryAction helper: helper on: aShip in: aGame.
+	aGame addActive: self to: aShip.
+	aGame applyAction: action
 ]
