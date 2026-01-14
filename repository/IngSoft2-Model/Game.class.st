@@ -14,7 +14,8 @@ Class {
 		'diceRoll',
 		'nextSpaceShip',
 		'activeCardHolder',
-		'relationshipsWithMercenaries'
+		'relationshipsWithMercenaries',
+		'lastAction'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -70,6 +71,14 @@ Game >> adjustPosition [
 		manage sumAt: ship id with: (board
 				 limitAdjustment: (manage positions at: ship id)
 				 withTotalLaps: laps) ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> applyAction: anAction [
+
+	lastAction := anAction.
+    anAction apply.
+
 ]
 
 { #category : 'as yet unclassified' }
@@ -239,6 +248,13 @@ Game >> playPendingCardsOn: aSpaceShip [
 Game >> positionOf: aSpaceShipID [
 
 	^ (manage positions at: aSpaceShipID) position
+]
+
+{ #category : 'as yet unclassified' }
+Game >> redoLastAction [
+
+	lastAction ifNil: [ ^ self ].
+	lastAction apply
 ]
 
 { #category : 'as yet unclassified' }
