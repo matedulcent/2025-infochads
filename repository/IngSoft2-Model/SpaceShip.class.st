@@ -50,6 +50,13 @@ SpaceShip >> addA: arg1 [
 	cards add: arg1
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> assertItHas: aCard [
+
+	(cards anySatisfy: [ :card | card isKindOf: aCard class ]) ifFalse: [
+		Error signal: 'The card is not in the ships deck' ]
+]
+
 { #category : 'shield' }
 SpaceShip >> canBattle [
 	
@@ -127,21 +134,13 @@ SpaceShip >> incrementBooster [
 { #category : 'initialization' }
 SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
-	"| tmp1 |"
 	spaceShipID := anId.
 	shield := 3.
 	cards := OrderedCollection withAll: {
-			         WhiteCard new.
-			         WhiteCard new }.
+			         aCard.
+			         anotherCard }.
 	pendingCards := OrderedCollection new.
-	"tmp1 := spaceShipID.
-	'<an unprintable nonliteral value>'
-		runtimeUndeclaredWrite: tmp1
-		inContext: thisContext.
-	tmp1 := false.
-	'<an unprintable nonliteral value>'
-		runtimeUndeclaredWrite: tmp1
-		inContext: thisContext."
+
 	state := Free new.
 	skipState := NoSkip withNext: NoSkip.
 	boost := 0

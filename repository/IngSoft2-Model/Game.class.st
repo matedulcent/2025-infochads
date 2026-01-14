@@ -300,17 +300,9 @@ Game >> use: aCard on: aShipId [
 
 	| ship |
 	ship := self checkFor: aShipId.
-	
-	ship assetItHas: aCard.
-	"self noPermanent: aCard."
-	"board manageCards
-		play: aCard
-		on: ship
-		thatIsIn: spaceShips
-		with: nextSpaceShip grab
-		modifiedBy: stepOfNextSpaceShipToMove
-		and: manage positions."
-		
+
+	ship assertItHas: aCard.
+
 	aCard playOn: ship in: self.
 	self adjustPosition
 ]
