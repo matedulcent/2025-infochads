@@ -16,3 +16,9 @@ AccelerationCard >> playOn: aShip in: aGame [
 	aGame addActive: self to: aShip.
 	aGame applyAction: (AccelerationAction on: aShip in: aGame)
 ]
+
+{ #category : 'as yet unclassified' }
+AccelerationCard >> unplayOn: aShip in: aGame [
+
+	aGame decrementAllBoosters
+]

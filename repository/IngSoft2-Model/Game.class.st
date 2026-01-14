@@ -137,6 +137,12 @@ Game >> create: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> decrementAllBoosters [
+
+	spaceShips do: [ :ship | ship decrementBooster ]
+]
+
+{ #category : 'as yet unclassified' }
 Game >> doubleTurnOn: aShip [
 
 	nextSpaceShip doubleTurnOn: aShip
@@ -308,6 +314,13 @@ Game >> start [
 	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
 		aSpaceShip := nextSpaceShip grabAndUpdate.
 		aSpaceShip willPlayByTossing: diceRoll on: self ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> unStablish: helper on: aShip [
+
+	relationshipsWithMercenaries valuesDo: [ :helpers |
+		helpers remove: helper ifAbsent: [  ] ]
 ]
 
 { #category : 'movingOut' }

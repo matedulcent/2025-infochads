@@ -14,6 +14,12 @@ MercenaryCard class >> withHelpOf: aHelperId [
 	^ self new initializeWithHelpOf: aHelperId
 ]
 
+{ #category : 'as yet unclassified' }
+MercenaryCard >> helper [
+
+	^ helper
+]
+
 { #category : 'initialization' }
 MercenaryCard >> initializeWithHelpOf: aHelper [
 
@@ -28,4 +34,10 @@ MercenaryCard >> playOn: aShip in: aGame [
 	aGame addActive: self to: aShip.
 	aGame applyAction:
 		(MercenaryAction helper: helper on: aShip in: aGame)
+]
+
+{ #category : 'as yet unclassified' }
+MercenaryCard >> unplayOn: aShip in: aGame [
+
+	aGame unStablish: helper on: aShip
 ]

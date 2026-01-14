@@ -12,6 +12,12 @@ WhiteCard class >> create [
 ]
 
 { #category : 'as yet unclassified' }
+WhiteCard >> helper [
+
+	^ 1
+]
+
+{ #category : 'as yet unclassified' }
 WhiteCard >> playOn: aShip in: aGame [
 
 	"^ self"

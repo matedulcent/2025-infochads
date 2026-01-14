@@ -42,7 +42,9 @@ CardHolderGlobal >> removeActive: aCard from: aShipId [
 	cards := activeCards at: aShipId ifAbsent: [ ^ self ].
 
 	removedCard := cards
-		               detect: [ :each | each isKindOf: aCard class ]
+		               detect: [ :each |
+			               (each isKindOf: aCard class) and:
+				               each helper = aCard helper ]
 		               ifNone: [
 			               Error signal:
 				               'This card cant be played if the card to be canceled is not active.' ].

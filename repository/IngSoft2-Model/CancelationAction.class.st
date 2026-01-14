@@ -18,8 +18,8 @@ CancelationAction class >> to: aCard on: aShip in: aGame [
 
 { #category : 'private' }
 CancelationAction >> apply [
-	"game verify this player has this card"
-	game cancel: targetCard on: targetShip. 
+
+	game cancel: targetCard on: targetShip
 ]
 
 { #category : 'initialization' }

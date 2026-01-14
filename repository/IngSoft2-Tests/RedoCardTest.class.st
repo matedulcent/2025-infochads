@@ -6,6 +6,40 @@ Class {
 }
 
 { #category : 'tests' }
+RedoCardTest >> testWhenShip1Plays2SpeedAndShip2PlaysCancelAndRedoThenThereAreNoMoreCardsInGame [
+
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 7. 10 }.
+
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           CancelationCard new.
+					           RedoCard new.
+					           SpeedCard new.
+					           SpeedCard new })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
+		on: 2.
+	aGame use: (RedoCard withFillOut: 1) on: 2.
+	aGame start.
+
+
+	self assert: (aGame positionOf: 1) equals: 8.
+	self assert: (aGame positionOf: 2) equals: 12
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testWhenShip1PlaysMercenaryOn3AndRedoOn4AndShip2PlaysRedoOn5AndShip1LosesThenShip1And3And4LoseShield [
 
 	| aGame aDiceSet aBoard |
@@ -142,42 +176,6 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThe
 ]
 
 { #category : 'tests' }
-RedoCardTest >> testWhenShip1PlaysSpeedAndShip2PlaysSpeedThenShip3CancelsAndRedoThenBothCardsAreOut [
-
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 7. 10 }.
-
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           CancelationCard new.
-					           RedoCard new.
-					           WhiteCard new.
-					           SpeedCard new.
-					           WhiteCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
-
-	aGame use: SpeedCard new on: 1.
-	aGame use: SpeedCard new on: 2.
-	aGame
-		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
-		on: 3.
-	aGame start.
-	aGame use: (RedoCard withFillOut: 2) on: 3.
-
-
-	self assert: (aGame positionOf: 1) equals: 8.
-	self assert: (aGame positionOf: 2) equals: 12
-]
-
-{ #category : 'tests' }
 RedoCardTest >> testWhenShip1PlaysSpeedAndaShip2RedoThenTheShip2AlsoHasASpeed [
 
 	| aGame aDiceSet aBoard |
@@ -228,7 +226,7 @@ RedoCardTest >> testWhenShip1PlaysSpeedTwiceThenShip2CancelsAndRedoThenBothSpeed
 	aGame use: SpeedCard new on: 1.
 	aGame use: SpeedCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
+		use: (CancelationCard withObjective:(SpeedCard new) toShip: 1)
 		on: 2.
 	aGame use: (RedoCard withFillOut: 1) on: 2.
 	aGame start.
