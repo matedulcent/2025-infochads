@@ -54,7 +54,7 @@ CardManager >> lastCellPlayed: aCell [
 { #category : 'as yet unclassified' }
 CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
 
-	self playRedo: aCard on: aShip.
+	"self playRedo: aCard on: aShip."
 	
 	"manejar el tema de la carta pendiente"
 	(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [

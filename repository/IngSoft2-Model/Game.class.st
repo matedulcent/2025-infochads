@@ -300,7 +300,7 @@ Game >> use: aCard on: aShipId [
 
 	| ship |
 	ship := self checkFor: aShipId.
-	self noPermanent: aCard.
+	"self noPermanent: aCard."
 	board manageCards
 		play: aCard
 		on: ship

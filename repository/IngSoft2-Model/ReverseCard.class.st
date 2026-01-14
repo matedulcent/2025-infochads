@@ -8,5 +8,6 @@ Class {
 { #category : 'as yet unclassified' }
 ReverseCard >> playOn: aShip in: aGame [
 
-	aGame reverseTurns
+	aGame applyAction: (ReverseAction in: aGame)
+	"aGame reverseTurns"
 ]
