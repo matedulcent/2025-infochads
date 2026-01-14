@@ -308,6 +308,7 @@ Game >> use: aCard on: aShipId [
 		with: nextSpaceShip grab
 		modifiedBy: stepOfNextSpaceShipToMove
 		and: manage positions."
+		
 	aCard playOn: ship in: self.
 	self adjustPosition
 ]
