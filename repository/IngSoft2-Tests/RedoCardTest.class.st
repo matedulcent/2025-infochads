@@ -36,7 +36,7 @@ RedoCardTest >> testWhenShip1Plays2SpeedAndShip2PlaysCancelAndRedoThenThereAreNo
 
 
 	self assert: (aGame positionOf: 1) equals: 8.
-	self assert: (aGame positionOf: 2) equals: 12
+	self assert: (aGame positionOf: 2) equals: 11
 ]
 
 { #category : 'tests' }

@@ -23,16 +23,20 @@ CancelationAction >> apply [
 ]
 
 { #category : 'initialization' }
-CancelationAction >> initializeTo: aCard on: aShip in: aGame [
+CancelationAction >> initializeTo: aCard on: aShipId in: aGame [
 
 	targetCard := aCard.
-	targetShip := aShip.
+	targetShip := aShipId.
 	game := aGame.
 ]
 
 { #category : 'accessing' }
 CancelationAction >> prototype [
 
-	^ [ :newShip :aGame :aCard |
-	  self class to: aCard on: newShip in: aGame ]
+	| card ship |
+	card := targetCard.
+	ship := targetShip.
+
+    ^ [ :ignoredShip :aGame :aHelper |
+        self class to: card on: ship in: aGame ]
 ]
