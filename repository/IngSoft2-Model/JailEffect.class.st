@@ -1,6 +1,6 @@
 Class {
 	#name : 'JailEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'jailOutValue'
 	],

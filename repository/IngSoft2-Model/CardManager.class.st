@@ -17,12 +17,6 @@ CardManager class >> createWith: aDeckOfCards [
 	^self new initializeWith: aDeckOfCards 
 ]
 
-{ #category : 'adding' }
-CardManager >> addNew: spaceShipID [
-	"borrar"
-	activeCards at: spaceShipID put: OrderedCollection new.
-]
-
 { #category : 'as yet unclassified' }
 CardManager >> grabTopCard [
 
@@ -34,72 +28,11 @@ CardManager >> grabTopCard [
 CardManager >> initializeWith: aDeckOfCards [ 
 
 	deckOfCards := aDeckOfCards.
-	"activeCards := OrderedDictionary new."
-	lastCardPlayed := WhiteCard new.
-	lastCellPlayed := Cell has: NoEffect new
-]
-
-{ #category : 'accessing' }
-CardManager >> lastCardPlayed: aCard [
-
-	lastCardPlayed := aCard
+	lastCellPlayed := Cell has: Effect new
 ]
 
 { #category : 'accessing' }
 CardManager >> lastCellPlayed: aCell [
 
 	lastCellPlayed := aCell 
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> play: aCard on: aShip thatIsIn: spaceShips with: nextSpaceShipToMove modifiedBy: stepOfNextSpaceShipToMove and: spaceShipPositions [
-
-	"self playRedo: aCard on: aShip."
-	
-	"manejar el tema de la carta pendiente"
-	"(aShip id ~= (nextSpaceShipToMove id) and: aCard isPermanent) ifTrue: [
-		aShip pending: aCard.
-		^ self ]."
-
-	"self playCancelation: aCard on: aShip."
-
-	"self
-		playRepeat: aCard
-		on: aShip
-		and: spaceShips
-		dependingOn: spaceShipPositions."
-
-	"self lastCardPlayed: (aShip has: aCard)"
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playCancelation: aCard on: aShip [
-
-	| card |
-	(aCard objective: aShip id) = '' ifTrue: [ ^ self ].
-	card := (activeCards at: (aCard objective: aShip id))
-		        detect: [ :cardOfShip |
-		        cardOfShip class = (aCard cardObjective: aCard) class ]
-		        ifNone: [
-			        Error signal:
-				        'This card cant be played if the card to be canceled is not active.' ].
-	(activeCards at: (aCard objective: aShip id)) remove: card.
-	aShip deMercenarize
-]
-
-{ #category : 'as yet unclassified' }
-CardManager >> playRepeat: aCard on: aShip and: spaceShips dependingOn: spaceShipPositions [
-
-	| cell objectiveShip |
-	
-	aCard lastPowerUpPlayed: lastCellPlayed .
-	((aCard target: aShip id) = '') ifTrue: [ ^self ].
-	cell := aCard replicateCell.
-	objectiveShip := spaceShips detect: [ :ship |
-		                 ship id = (aCard target: aShip id) ].
-	
-	cell
-		takeActionOver: objectiveShip
-		or: spaceShips
-		thatArePlaced: spaceShipPositions.
 ]

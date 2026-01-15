@@ -1,6 +1,6 @@
 Class {
 	#name : 'MoonWalkEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'desplacement'
 	],

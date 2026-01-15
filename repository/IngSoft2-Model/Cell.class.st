@@ -2,16 +2,17 @@ Class {
 	#name : 'Cell',
 	#superclass : 'Object',
 	#instVars : [
-		'effect'
+		'effect',
+		'effectPrototype'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'testing' }
-Cell class >> has: effect [
+Cell class >> has: anEffectPrototype [
 
-	^ self new initializeWithA: effect 
+	^ self new initializeWith: anEffectPrototype
 ]
 
 { #category : 'as yet unclassified' }
@@ -35,6 +36,14 @@ Cell >> affectTheShieldOfAll: spaceShips [
 
 	effect damageAllShields ifTrue: [
 		spaceShips do: [ :ship | ship loseShield ] ]
+]
+
+{ #category : 'as yet unclassified' }
+Cell >> applyTo: aShip in: aGame [
+
+	| effect |
+	effect := effectPrototype value: aShip value: aGame.
+	aGame applyEffect: effect
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,6 +81,12 @@ Cell >> imprison: aSpaceShip [
 
 	"HyperGravity"
 	effect lock: aSpaceShip
+]
+
+{ #category : 'initialization' }
+Cell >> initializeWith: anEffectPrototype [
+
+	effectPrototype := anEffectPrototype
 ]
 
 { #category : 'initialization' }

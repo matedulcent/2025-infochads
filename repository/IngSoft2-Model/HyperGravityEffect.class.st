@@ -1,6 +1,6 @@
 Class {
 	#name : 'HyperGravityEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'valueToEscape'
 	],

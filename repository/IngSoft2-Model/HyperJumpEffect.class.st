@@ -1,6 +1,6 @@
 Class {
 	#name : 'HyperJumpEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'listOfJumps',
 		'turn',

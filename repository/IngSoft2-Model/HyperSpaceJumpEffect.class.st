@@ -1,6 +1,6 @@
 Class {
 	#name : 'HyperSpaceJumpEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'desplacement'
 	],

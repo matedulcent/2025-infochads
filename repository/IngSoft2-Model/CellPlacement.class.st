@@ -13,7 +13,7 @@ Class {
 CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 
 	| safeCell |
-	safeCell := Cell has: NoEffect new.
+	safeCell := Cell has: Effect new.
 	netCellDistibution at: 1 put: safeCell.
 	netCellDistibution at: boardSize put: safeCell.
 	^ netCellDistibution
@@ -213,7 +213,7 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 CellPlacement >> normalCellsWithProbabilitites: aProbability [
 
 	1 to: aProbability do: [ :cell |
-	rawCellDistribution add: (Cell has: NoEffect new) ]
+	rawCellDistribution add: (Cell has: Effect new) ]
 ]
 
 { #category : 'as yet unclassified' }

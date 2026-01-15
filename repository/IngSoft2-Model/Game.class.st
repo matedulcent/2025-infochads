@@ -220,14 +220,6 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		with: (Position at: aDiceRoll withLaps: 0).
 	self adjustPosition.
 
-	self playPendingCardsOn: aSpaceShip.
-
-	"board manageCards
-		applyCardEffectsOver: aSpaceShip
-		or: spaceShips
-		dependingOn: manage.
-	self adjustPosition."
-
 	board
 		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips
@@ -255,13 +247,6 @@ Game >> noPermanent: aCard [
 	(self assertTheGameIsNotOver and: aCard isPermanent not) ifTrue: [
 		Error signal:
 			'Instantaneous cards cant be played after the game is over.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> playPendingCardsOn: aSpaceShip [
-
-	aSpaceShip pendingCard do: [ :card |
-		self use: card on: aSpaceShip id ]
 ]
 
 { #category : 'informationTest' }

@@ -38,16 +38,9 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 ]
 
 { #category : 'cards' }
-SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
+SpaceShip >> addA: aCard [
 
-	pickedCardFromCards == pickedCardFromPending ifTrue: [
-		Error signal: 'The card is not in the ships deck' ]
-]
-
-{ #category : 'cards' }
-SpaceShip >> addA: arg1 [
-
-	cards add: arg1
+	cards add: aCard
 ]
 
 { #category : 'as yet unclassified' }
@@ -105,19 +98,6 @@ SpaceShip >> getShield [
 	^ shield
 ]
 
-{ #category : 'cards' }
-SpaceShip >> has: aCard [
-
-	| pickedCardFromCards pickedCardFromPending |
-	pickedCardFromPending := self remove: aCard from: pendingCards.
-
-	pickedCardFromCards := self remove: aCard from: cards.
-	
-	self a: pickedCardFromCards isTheSameAs: pickedCardFromPending.
-
-	^ aCard
-]
-
 { #category : 'getters' }
 SpaceShip >> id [
 
@@ -173,18 +153,6 @@ SpaceShip >> loseShield [
 			(SkipForShields withNext: SkipForSkipping) ]
 ]
 
-{ #category : 'cards' }
-SpaceShip >> pending: aCard [
-
-	pendingCards add: aCard
-]
-
-{ #category : 'cards' }
-SpaceShip >> pendingCard [
-
-	^ pendingCards
-]
-
 { #category : 'shield' }
 SpaceShip >> rechargeShields [
 
@@ -193,24 +161,11 @@ SpaceShip >> rechargeShields [
 	shield := 3
 ]
 
-{ #category : 'cards' }
-SpaceShip >> remove: aCard from: aDeck [
-
-	| pickedCard |
-	pickedCard := aDeck
-		              detect: [ :card | card class = aCard class ]
-		              ifNone: [ ^ aCard ].
-
-	aDeck remove: pickedCard.
-
-	^ pickedCard
-]
-
 { #category : 'as yet unclassified' }
-SpaceShip >> willPlayByTossing: arg1 on: arg2 [
+SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
 
-	| tmp1 |
-	self if0WasTossed: arg1.
-	tmp1 := arg1 + boost.
-	skipState will: self skipAfter: tmp1 on: arg2
+	| totalDiceRoll |
+	self if0WasTossed: aDiceRoll.
+	totalDiceRoll := aDiceRoll + boost.
+	skipState will: self skipAfter: totalDiceRoll on: aGame
 ]

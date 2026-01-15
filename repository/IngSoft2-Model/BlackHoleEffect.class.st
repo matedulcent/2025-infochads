@@ -1,8 +1,9 @@
 Class {
 	#name : 'BlackHoleEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
-		'desplacement'
+		'desplacement',
+		'backTrack'
 	],
 	#classInstVars : [
 		'displacement'
@@ -26,13 +27,27 @@ BlackHoleEffect class >> withBackTrack: aDesplacement [
 ]
 
 { #category : 'as yet unclassified' }
+BlackHoleEffect >> applyOn: aShip in: aGame [
+
+	aGame move: aShip backBy: backTrack
+]
+
+{ #category : 'as yet unclassified' }
 BlackHoleEffect >> applyToSpaceShip: aPosition [
 
 	^ Position at: aPosition - desplacement withLaps: 0.
 ]
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> initializeWith: aDesplacement [
+BlackHoleEffect >> initializeWithBackTrack: n [
 
-	desplacement := aDesplacement
+	backTrack := n
+]
+
+{ #category : 'as yet unclassified' }
+BlackHoleEffect >> prototype [
+
+	| n |
+	n := backTrack.
+	^ [ :ship :game | self class withBackTrack: n ]
 ]
