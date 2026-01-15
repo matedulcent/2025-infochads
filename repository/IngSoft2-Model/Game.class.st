@@ -269,6 +269,15 @@ Game >> move: aShip backBy: backTrack [
 				 (Position at: (actualPosition position) - backTrack withLaps: 0))
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> moveEveryShipBut: aShip backBy: backTrack [
+
+	| otherShips |
+	otherShips := spaceShips reject: [ :each | each id = aShip id ].
+
+	otherShips do: [ :ship | self move: ship backBy: backTrack ]
+]
+
 { #category : 'movingOut' }
 Game >> noPermanent: aCard [
 	"refactorizar y borrar"

@@ -32,12 +32,6 @@ MoonWalkEffect >> applyOn: aShip in: aGame [
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> applyToAllSpaceShips: aPosition [
-
-	^ Position at: aPosition - backTrack withLaps: 0
-]
-
-{ #category : 'as yet unclassified' }
 MoonWalkEffect >> initializeWithBackTrack: aDesplacement [
 
 	backTrack := aDesplacement

@@ -204,8 +204,9 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 			                    particular nextPutAll: stepBackwards ] ].
 
 	newCells := (1 to: aProbability) collect: [ :particular |
-		            Cell has:
-			            (MoonWalkEffect with: (allDisplacements at: particular)) ].
+		            Cell has: [ :ship :game |
+			            MoonWalkEffect withBackTrack:
+				            (allDisplacements at: particular) ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
