@@ -214,7 +214,7 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 CellPlacement >> normalCellsWithProbabilitites: aProbability [
 
 	1 to: aProbability do: [ :cell |
-	rawCellDistribution add: (Cell has: Effect new) ]
+		rawCellDistribution add: (Cell has: [ :ship :game | Normal new ]) ]
 ]
 
 { #category : 'as yet unclassified' }

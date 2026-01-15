@@ -3,7 +3,6 @@ Class {
 	#superclass : 'Effect',
 	#instVars : [
 		'listOfJumps',
-		'turn',
 		'parsecsPerCell'
 	],
 	#classInstVars : [
@@ -46,19 +45,32 @@ HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> applyToSpaceShip: aPosition [
+HyperJumpEffect >> applyOn: aShip in: aGame [
 
 	| aDisplacement |
+	
+	"^ Position at: aPosition + (aDisplacement/parsecsPerCell) withLaps: 0"
+	
 	aDisplacement := listOfJumps removeFirst.
 	listOfJumps add: aDisplacement.
 	
-	^ Position at: aPosition + (aDisplacement/parsecsPerCell) withLaps: 0
+	aGame move: aShip by: aDisplacement/parsecsPerCell.
+	
+
 ]
 
 { #category : 'as yet unclassified' }
 HyperJumpEffect >> initializeWith: aParsecValue andParsec: jumps [
 
 	parsecsPerCell := aParsecValue.
-	listOfJumps := jumps.
-	turn := 1.
+	listOfJumps := jumps
+]
+
+{ #category : 'accessing' }
+HyperJumpEffect >> prototype [
+
+	| parsec jumps |
+	parsec := parsecsPerCell.
+	jumps := listOfJumps.
+	^ [ :ship :game | self class with: parsec andParsec: jumps ]
 ]

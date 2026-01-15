@@ -29,3 +29,11 @@ HyperSpaceJumpEffect >> initializeWithFrowardTrack: n [
 
 	forwardTrack := n
 ]
+
+{ #category : 'accessing' }
+HyperSpaceJumpEffect >> prototype [
+
+	| n |
+	n := forwardTrack .
+	^ [ :ship :game | self class withForwardTrack: n ]
+]
