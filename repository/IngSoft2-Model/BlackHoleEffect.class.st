@@ -13,20 +13,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect class >> mustBeFour: aDesplacement [
-
-	(aDesplacement isInteger not or: [ aDesplacement ~= 4 ]) ifTrue: [
-		Error signal: 'The desplacement must be 4.' ]
-]
-
-{ #category : 'as yet unclassified' }
-BlackHoleEffect class >> withBackTrack: aDesplacement [
-
-	self mustBeFour: aDesplacement.
-	^ self new initializeWith: aDesplacement
-]
-
-{ #category : 'as yet unclassified' }
 BlackHoleEffect >> applyOn: aShip in: aGame [
 
 	aGame move: aShip backBy: backTrack
@@ -34,7 +20,7 @@ BlackHoleEffect >> applyOn: aShip in: aGame [
 
 { #category : 'as yet unclassified' }
 BlackHoleEffect >> applyToSpaceShip: aPosition [
-
+	"borrar"
 	^ Position at: aPosition - desplacement withLaps: 0.
 ]
 

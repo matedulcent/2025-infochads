@@ -35,7 +35,7 @@ CellPlacement >> blackHoleCellsWithProbabilities: aProbability andDesplacemets: 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has:
-			            (BlackHoleEffect withBackTrack: aDesplacement) ].
+			            (BlackHoleEffect new initializeWithBackTrack: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 

@@ -17,7 +17,7 @@ Cell class >> has: anEffectPrototype [
 
 { #category : 'as yet unclassified' }
 Cell >> affectOnly: aSpaceShip thatIsPlacedIn: spaceShipPositions [
-
+	"borrar"
 	spaceShipPositions
 		at: aSpaceShip id
 		put: ((spaceShipPositions at: aSpaceShip id) replacePositionWith:
@@ -27,28 +27,28 @@ Cell >> affectOnly: aSpaceShip thatIsPlacedIn: spaceShipPositions [
 
 { #category : 'as yet unclassified' }
 Cell >> affectTheShieldOf: aSpaceShip [
-
+	"borrar"
 	effect damageShield ifTrue: [ aSpaceShip loseShield ]
 ]
 
 { #category : 'as yet unclassified' }
 Cell >> affectTheShieldOfAll: spaceShips [
-
+	"borrar"
 	effect damageAllShields ifTrue: [
 		spaceShips do: [ :ship | ship loseShield ] ]
 ]
 
 { #category : 'as yet unclassified' }
 Cell >> applyTo: aShip in: aGame [
-
-	| effect |
+	
+	| anEffect |
 	effect := effectPrototype value: aShip value: aGame.
-	aGame applyEffect: effect
+	aGame applyEffect: anEffect
 ]
 
 { #category : 'as yet unclassified' }
 Cell >> dontAffect: aSpaceShip butInstedAffectAll: spaceShips thatArePlacedIn: spaceShipPositions [
-
+	"borrar"
 	spaceShips do: [ :ship |
 		ship == aSpaceShip ifFalse: [
 			spaceShipPositions
@@ -60,13 +60,13 @@ Cell >> dontAffect: aSpaceShip butInstedAffectAll: spaceShips thatArePlacedIn: s
 
 { #category : 'accessing' }
 Cell >> effect [
-
+	"borrar"
 	^ effect 
 ]
 
 { #category : 'as yet unclassified' }
 Cell >> giveCardsTo: aSpaceShip [
-
+	"borrar"
 	| card |
 	card := effect grabCard.
 
@@ -75,7 +75,7 @@ Cell >> giveCardsTo: aSpaceShip [
 
 { #category : 'as yet unclassified' }
 Cell >> imprison: aSpaceShip [
-	
+	"borrar"
 	"Jail"
 	effect imprison: aSpaceShip.
 
@@ -85,19 +85,19 @@ Cell >> imprison: aSpaceShip [
 
 { #category : 'initialization' }
 Cell >> initializeWith: anEffectPrototype [
-
+	
 	effectPrototype := anEffectPrototype
 ]
 
 { #category : 'initialization' }
 Cell >> initializeWithA: anEffect [
-
+	"borrar"
 	effect := anEffect
 ]
 
 { #category : 'as yet unclassified' }
 Cell >> takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions [
-	"ver si puedo refactorizar"
+	"refactorizar y borrar"
 	self affectOnly: aSpaceShip thatIsPlacedIn: spaceShipPositions.
 
 	self

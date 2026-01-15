@@ -219,12 +219,13 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
 	self adjustPosition.
-
-	board
+	"borrar"
+	"board
 		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips
 		andIts: manage positions.
-	self adjustPosition.
+	self adjustPosition."
+	
 
 	manage
 		at: aSpaceShip id
