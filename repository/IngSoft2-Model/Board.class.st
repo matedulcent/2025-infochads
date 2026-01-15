@@ -61,7 +61,7 @@ Board >> cellInThe: position [
 
 	| cell |
 	gameBoard ifEmpty: [ ^ nil ].
-	cell := gameBoard at: position.
+	cell := gameBoard at: (position position).
 	^ cell
 ]
 

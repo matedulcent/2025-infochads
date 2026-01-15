@@ -59,9 +59,9 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'adding' }
-Game >> addActive: arg1 to: arg2 [
+Game >> addActive: aShipId to: arg2 [
 	"??? borar?"
-	activeCardHolder addActive: arg1 to: arg2
+	activeCardHolder addActive: aShipId to: arg2
 ]
 
 { #category : 'as yet unclassified' }
@@ -78,13 +78,6 @@ Game >> applyAction: anAction [
 
 	lastActionPrototype := anAction prototype.
 	anAction apply
-]
-
-{ #category : 'as yet unclassified' }
-Game >> applyEffect: anEffect [
-	"completar"
-
-	
 ]
 
 { #category : 'as yet unclassified' }
@@ -262,6 +255,18 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		with: diceSet
 		andIts: relationshipsWithMercenaries.
 	diceRoll := diceSet toss.
+]
+
+{ #category : 'as yet unclassified' }
+Game >> move: aShip backBy: backTrack [
+	
+	| actualPosition |
+	actualPosition := manage positions at: aShip id.
+	
+	manage positions
+		at: aShip id
+		put: ((manage positions at: aShip id) replacePositionWith:
+				 (Position at: actualPosition - backTrack withLaps: 0))
 ]
 
 { #category : 'movingOut' }

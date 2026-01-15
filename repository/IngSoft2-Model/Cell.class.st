@@ -40,10 +40,11 @@ Cell >> affectTheShieldOfAll: spaceShips [
 
 { #category : 'as yet unclassified' }
 Cell >> applyTo: aShip in: aGame [
-	
+
 	| anEffect |
 	anEffect := effectPrototype value: aShip value: aGame.
-	aGame applyEffect: anEffect
+	
+	anEffect applyOn: aShip in: aGame
 ]
 
 { #category : 'as yet unclassified' }
