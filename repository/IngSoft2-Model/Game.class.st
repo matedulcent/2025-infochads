@@ -80,6 +80,18 @@ Game >> applyAction: anAction [
 	anAction apply
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> applyPowerUpTo: aSpaceShip [
+
+	| cell position |
+	position := manage at: aSpaceShip id.
+	cell := board cellInThe: position.
+	cell ifNil: [ ^self ].
+	
+	
+
+]
+
 { #category : 'asserting' }
 Game >> assertItsTurnToPlayOf: aShip [
 
@@ -219,7 +231,9 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
 	self adjustPosition.
-	"borrar"
+	
+	
+	self applyPowerUpTo: aSpaceShip.
 	"board
 		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips

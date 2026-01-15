@@ -36,7 +36,7 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 	gameBoard ifEmpty: [ ^ self ].
 	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
 
-	cardManager lastCellPlayed: cell. "raro"
+	"cardManager lastCellPlayed: cell. ""raro"
 
 	cell
 		takeActionOver: aSpaceShip
@@ -44,10 +44,25 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 		thatArePlaced: spaceShipPositions
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> applyPowerUpTo: aSpaceShip in: aGame
+
+	applyTo: aShip in: aGame [
+]
+
 { #category : 'accessing' }
 Board >> boardSize [
 
 	^ boardSize
+]
+
+{ #category : 'as yet unclassified' }
+Board >> cellInThe: position [
+
+	| cell |
+	gameBoard ifEmpty: [ ^ nil ].
+	cell := gameBoard at: position.
+	^ cell
 ]
 
 { #category : 'as yet unclassified' }

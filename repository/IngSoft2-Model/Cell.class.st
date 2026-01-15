@@ -89,12 +89,6 @@ Cell >> initializeWith: anEffectPrototype [
 	effectPrototype := anEffectPrototype
 ]
 
-{ #category : 'initialization' }
-Cell >> initializeWithA: anEffect [
-	"borrar"
-	effect := anEffect
-]
-
 { #category : 'as yet unclassified' }
 Cell >> takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions [
 	"refactorizar y borrar"
