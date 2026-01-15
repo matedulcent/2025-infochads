@@ -2,7 +2,7 @@ Class {
 	#name : 'HyperSpaceJumpEffect',
 	#superclass : 'Effect',
 	#instVars : [
-		'desplacement'
+		'forwardTrack'
 	],
 	#classInstVars : [
 		'displacement'
@@ -12,33 +12,20 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect class >> mustBeFour: aDesplacement [
+HyperSpaceJumpEffect class >> withForwardTrack: aDesplacement [
 
-	(aDesplacement isInteger not or: [ aDesplacement ~= 4 ]) ifTrue: [
-		Error signal: 'The desplacement must be 4.' ]
+	^ self new initializeWithFrowardTrack: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect class >> with: aDesplacement [
+HyperSpaceJumpEffect >> applyOn: aShip in: aGame [
 
-	self mustBeFour: aDesplacement.
-	^ self new initializeWith: aDesplacement
+	aGame move: aShip by: forwardTrack.
+	aShip loseShield
 ]
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect >> applyToSpaceShip: aPosition [
+HyperSpaceJumpEffect >> initializeWithFrowardTrack: n [
 
-	^ Position at: aPosition + desplacement withLaps: 0
-]
-
-{ #category : 'as yet unclassified' }
-HyperSpaceJumpEffect >> damageShield [
-
-	^ true
-]
-
-{ #category : 'as yet unclassified' }
-HyperSpaceJumpEffect >> initializeWith: aDesplacement [
-
-	desplacement := aDesplacement.
+	forwardTrack := n
 ]

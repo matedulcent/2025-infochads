@@ -264,7 +264,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> move: aShip backBy: backTrack [
+Game >> move: aShip by: backTrack [
 	
 	| actualPosition |
 	actualPosition := manage positions at: aShip id.
@@ -272,7 +272,7 @@ Game >> move: aShip backBy: backTrack [
 	manage positions
 		at: aShip id
 		put: ((manage positions at: aShip id) replacePositionWith:
-				 (Position at: (actualPosition position) - backTrack withLaps: 0))
+				 (Position at: (actualPosition position) + backTrack withLaps: 0))
 ]
 
 { #category : 'as yet unclassified' }
@@ -281,7 +281,7 @@ Game >> moveEveryShipBut: aShip backBy: backTrack [
 	| otherShips |
 	otherShips := spaceShips reject: [ :each | each id = aShip id ].
 
-	otherShips do: [ :ship | self move: ship backBy: backTrack ]
+	otherShips do: [ :ship | self move: ship by: backTrack ]
 ]
 
 { #category : 'informationTest' }
@@ -302,9 +302,9 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 Game >> returnEveryShipToTheBeguining [
 
 	spaceShips do: [ :ship |
-		manage sumAt: ship with: (Position
-				 at: (manage positions at: ship) position negated + 1
-				 withLaps: 0) ]
+		self
+			move: ship
+			by: (manage positions at: ship id) position negated + 1 ]
 ]
 
 { #category : 'as yet unclassified' }

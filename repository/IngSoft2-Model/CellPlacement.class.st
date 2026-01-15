@@ -112,7 +112,7 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 	self normalCellsWithProbabilitites: (probabilities at: 1).
 	self
 		blackHoleCellsWithProbabilities: (probabilities at: 2)
-		andDesplacemets: 4.
+		andDesplacemets: -4.
 	self
 		hyperSpaceJumpCellsWithProbabilities: (probabilities at: 3)
 		andDesplacements: 4.
@@ -174,12 +174,12 @@ CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aP
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacements: aDesplacement [ 
+CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacements: aDesplacement [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: (HyperSpaceJumpEffect
-				             with: aDesplacement) ].
+		            Cell has: [ :ship :game |
+			            HyperSpaceJumpEffect withForwardTrack: aDesplacement ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -206,7 +206,7 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 	newCells := (1 to: aProbability) collect: [ :particular |
 		            Cell has: [ :ship :game |
 			            MoonWalkEffect withBackTrack:
-				            (allDisplacements at: particular) ] ].
+				            (allDisplacements at: particular) negated ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
