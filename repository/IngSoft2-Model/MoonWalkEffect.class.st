@@ -2,7 +2,7 @@ Class {
 	#name : 'MoonWalkEffect',
 	#superclass : 'Effect',
 	#instVars : [
-		'desplacement'
+		'backTrack'
 	],
 	#classInstVars : [
 		'desplacement'
@@ -19,20 +19,34 @@ MoonWalkEffect class >> mustBePositive: aDesplacement [
 ]
 
 { #category : 'instance creation' }
-MoonWalkEffect class >> with: aDesplacement [
+MoonWalkEffect class >> withBackTrack: aDesplacement [
 
 	self mustBePositive: aDesplacement.
-	^ self new initializeWith: aDesplacement
+	^ self new initializeWithBackTrack: aDesplacement
+]
+
+{ #category : 'as yet unclassified' }
+MoonWalkEffect >> applyOn: aShip in: aGame [
+	
+	aGame moveEveryShipBut: aShip backBy: backTrack
 ]
 
 { #category : 'as yet unclassified' }
 MoonWalkEffect >> applyToAllSpaceShips: aPosition [
 
-	^ Position at: aPosition - desplacement withLaps: 0
+	^ Position at: aPosition - backTrack withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> initializeWith: aDisplacement [
+MoonWalkEffect >> initializeWithBackTrack: aDesplacement [
 
-	desplacement := aDisplacement
+	backTrack := aDesplacement
+]
+
+{ #category : 'accessing' }
+MoonWalkEffect >> prototype [
+
+	| n |
+	n := backTrack.
+	^ [ :ship :game | self class withBackTrack: n ]
 ]

@@ -266,7 +266,7 @@ Game >> move: aShip backBy: backTrack [
 	manage positions
 		at: aShip id
 		put: ((manage positions at: aShip id) replacePositionWith:
-				 (Position at: actualPosition - backTrack withLaps: 0))
+				 (Position at: (actualPosition position) - backTrack withLaps: 0))
 ]
 
 { #category : 'movingOut' }

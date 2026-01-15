@@ -40,7 +40,7 @@ Cell >> affectTheShieldOfAll: spaceShips [
 
 { #category : 'as yet unclassified' }
 Cell >> applyTo: aShip in: aGame [
-
+	
 	| anEffect |
 	anEffect := effectPrototype value: aShip value: aGame.
 	
@@ -86,7 +86,7 @@ Cell >> imprison: aSpaceShip [
 
 { #category : 'initialization' }
 Cell >> initializeWith: anEffectPrototype [
-	
+
 	effectPrototype := anEffectPrototype
 ]
 

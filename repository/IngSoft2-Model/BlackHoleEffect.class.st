@@ -13,15 +13,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> applyOn: aShip in: aGame [
+BlackHoleEffect class >> withBackTrack: aDesplacement [
 
-	aGame move: aShip backBy: backTrack
+	^ self new initializeWithBackTrack: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> applyToSpaceShip: aPosition [
-	"borrar"
-	^ Position at: aPosition - desplacement withLaps: 0.
+BlackHoleEffect >> applyOn: aShip in: aGame [
+	
+	aGame move: aShip backBy: backTrack
 ]
 
 { #category : 'as yet unclassified' }
