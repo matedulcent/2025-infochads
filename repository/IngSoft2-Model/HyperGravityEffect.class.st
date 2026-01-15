@@ -27,11 +27,6 @@ HyperGravityEffect class >> with: aValueToEscape [
 { #category : 'as yet unclassified' }
 HyperGravityEffect >> applyOn: aShip in: aGame [
 
-	"| aDisplacement |
-	aDisplacement := listOfJumps removeFirst.
-	listOfJumps add: aDisplacement.
-
-	aGame move: aShip by: aDisplacement / parsecsPerCell"
 	aShip changeStateToRetainedAndNeeds: valueToEscape
 ]
 

@@ -146,7 +146,7 @@ CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues
 			                     escapeValue nextPutAll: valuesToEscape ] ].
 
 	newCells := (1 to: aProbability) collect: [ :escapeValue |
-		            Cell has: [ :ship :game | HyperGravityEffect with: escapeValue ] ].
+		            Cell has: [ :ship :game | HyperGravityEffect with: (allValuesToEscape at: escapeValue) ] ].
 
 	rawCellDistribution := rawCellDistribution , newCells
 ]
