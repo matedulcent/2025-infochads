@@ -81,6 +81,13 @@ Game >> applyAction: anAction [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> applyEffect: anEffect [
+	"completar"
+
+	
+]
+
+{ #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
 
 	| cell position |
@@ -88,6 +95,7 @@ Game >> applyPowerUpTo: aSpaceShip [
 	cell := board cellInThe: position.
 	cell ifNil: [ ^self ].
 	
+	cell applyTo: aSpaceShip in: self
 	
 
 ]

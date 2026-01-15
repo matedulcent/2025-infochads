@@ -42,7 +42,7 @@ Cell >> affectTheShieldOfAll: spaceShips [
 Cell >> applyTo: aShip in: aGame [
 	
 	| anEffect |
-	effect := effectPrototype value: aShip value: aGame.
+	anEffect := effectPrototype value: aShip value: aGame.
 	aGame applyEffect: anEffect
 ]
 
