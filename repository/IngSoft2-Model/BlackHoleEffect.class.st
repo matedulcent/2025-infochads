@@ -14,7 +14,7 @@ Class {
 { #category : 'asserting' }
 BlackHoleEffect class >> assertIsANumberAnd4: aDesplacement [
 
-	(aDesplacement isInteger and: [ aDesplacement = 4 ]) ifFalse: [
+	(aDesplacement isInteger and: [ aDesplacement = -4 ]) ifFalse: [
 		Error signal: 'The desplacement must be 4.' ]
 ]
 
