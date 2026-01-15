@@ -2,7 +2,6 @@ Class {
 	#name : 'BlackHoleEffect',
 	#superclass : 'Effect',
 	#instVars : [
-		'desplacement',
 		'backTrack'
 	],
 	#classInstVars : [

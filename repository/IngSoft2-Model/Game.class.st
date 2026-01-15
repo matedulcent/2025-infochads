@@ -232,21 +232,21 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
 	self adjustPosition.
-	
-	
+
+
 	self applyPowerUpTo: aSpaceShip.
 	"board
 		applyPowerUpEffectUponA: aSpaceShip
 		andAll: spaceShips
 		andIts: manage positions.
 	self adjustPosition."
-	
+
 
 	manage
 		at: aSpaceShip id
 		replacePositionWith:
 		(board checkForWormHole: (manage positions at: aSpaceShip id)).
-
+	self adjustPosition.
 	Battle
 		between: aSpaceShip
 		andOneOf: spaceShips
@@ -254,7 +254,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		on: board
 		with: diceSet
 		andIts: relationshipsWithMercenaries.
-	diceRoll := diceSet toss.
+	diceRoll := diceSet toss
 ]
 
 { #category : 'as yet unclassified' }
