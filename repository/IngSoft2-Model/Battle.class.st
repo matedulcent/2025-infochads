@@ -84,13 +84,10 @@ Battle >> lookForBattle: aSpaceShip [
 
 { #category : 'as yet unclassified' }
 Battle >> lostBattle: aSpaceShip [
-	"| mercenaries |"
 
 	self returnToBeguinning: aSpaceShip.
 
 	aSpaceShip loseShield.
-
-	"mercenaries := board manageCards listOfMercenariesOf: aSpaceShip."
 
 	self returnToBeguinningTheShips:
 		(relationWithMercenaries at: aSpaceShip id)

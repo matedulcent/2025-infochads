@@ -156,6 +156,12 @@ Game >> decrementAllBoosters [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> deductAShieldFromEveryShip [
+
+	spaceShips do: [ :ship | ship loseShield ]
+]
+
+{ #category : 'as yet unclassified' }
 Game >> doubleTurnOn: aShip [
 
 	nextSpaceShip doubleTurnOn: aShip
@@ -278,14 +284,6 @@ Game >> moveEveryShipBut: aShip backBy: backTrack [
 	otherShips do: [ :ship | self move: ship backBy: backTrack ]
 ]
 
-{ #category : 'movingOut' }
-Game >> noPermanent: aCard [
-	"refactorizar y borrar"
-	(self assertTheGameIsNotOver and: aCard isPermanent not) ifTrue: [
-		Error signal:
-			'Instantaneous cards cant be played after the game is over.' ]
-]
-
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
@@ -303,7 +301,10 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 { #category : 'as yet unclassified' }
 Game >> returnEveryShipToTheBeguining [
 
-	"dsas"
+	spaceShips do: [ :ship |
+		manage sumAt: ship with: (Position
+				 at: (manage positions at: ship) position negated + 1
+				 withLaps: 0) ]
 ]
 
 { #category : 'as yet unclassified' }

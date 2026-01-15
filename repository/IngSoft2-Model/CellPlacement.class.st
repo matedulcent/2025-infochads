@@ -13,14 +13,14 @@ Class {
 CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 
 	| safeCell |
-	safeCell := Cell has: Effect new.
+	safeCell := Cell has: [ :ship :game | Normal new ].
 	netCellDistibution at: 1 put: safeCell.
 	netCellDistibution at: boardSize put: safeCell.
 	^ netCellDistibution
 ]
 
 { #category : 'creation' }
-CellPlacement >> atomicBombCellsWithProbabilities: aProbability and: aDesplacement [
+CellPlacement >> atomicBombCellsWithProbabilities: aProbability [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
@@ -107,7 +107,8 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 	self theProbabilitiesMustSum100: probabilities.
 	self
 		cardCellsWithProbabilities: (probabilities at: 7)
-		picking: aConfigDice from: aCardManager.
+		picking: aConfigDice
+		from: aCardManager.
 	self normalCellsWithProbabilitites: (probabilities at: 1).
 	self
 		blackHoleCellsWithProbabilities: (probabilities at: 2)
@@ -120,16 +121,16 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 		andParsecValue: aConfigDice toss
 		andLightYearValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self atomicBombCellsWithProbabilities: (probabilities at: 5) and: 0.
+	self atomicBombCellsWithProbabilities: (probabilities at: 5).
 	self
 		moonWalkCellsWithProbabilites: (probabilities at: 6)
 		andDisplacements: aConfigDice.
 	self
 		jailCellsWithProbabilitites: (probabilities at: 8)
-		and: (aConfigDice maxValue).
+		and: aConfigDice maxValue.
 	self
 		hyperGravityCellsWithProbabilitites: (probabilities at: 9)
-		andExitValues: aConfigDice.
+		andExitValues: aConfigDice
 ]
 
 { #category : 'as yet unclassified' }

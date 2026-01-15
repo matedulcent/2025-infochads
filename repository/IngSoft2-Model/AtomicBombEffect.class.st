@@ -1,9 +1,6 @@
 Class {
 	#name : 'AtomicBombEffect',
 	#superclass : 'Effect',
-	#instVars : [
-		'desplacement'
-	],
 	#classInstVars : [
 		'shieldScrificed'
 	],
@@ -16,24 +13,6 @@ AtomicBombEffect >> applyOn: aShip in: aGame [
 	
 	aGame returnEveryShipToTheBeguining.
 	aGame deductAShieldFromEveryShip.
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> applyToAllSpaceShips: aPosition [
-
-	^ Position at: 0 withLaps: 0
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> applyToSpaceShip: aPosition [
-
-	^ Position at: 0 withLaps: 0
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> damageAllShields [
-
-	^ true
 ]
 
 { #category : 'accessing' }
