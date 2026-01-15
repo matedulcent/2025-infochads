@@ -24,6 +24,17 @@ HyperGravityEffect class >> with: aValueToEscape [
 	^ self new initializeWith: aValueToEscape
 ]
 
+{ #category : 'as yet unclassified' }
+HyperGravityEffect >> applyOn: aShip in: aGame [
+
+	"| aDisplacement |
+	aDisplacement := listOfJumps removeFirst.
+	listOfJumps add: aDisplacement.
+
+	aGame move: aShip by: aDisplacement / parsecsPerCell"
+	aShip changeStateToRetainedAndNeeds: valueToEscape
+]
+
 { #category : 'initialization' }
 HyperGravityEffect >> initializeWith: aValueToEscape [
 
@@ -34,4 +45,12 @@ HyperGravityEffect >> initializeWith: aValueToEscape [
 HyperGravityEffect >> lock: aSpaceShip [
 
 	aSpaceShip changeStateToRetainedAndNeeds: valueToEscape
+]
+
+{ #category : 'as yet unclassified' }
+HyperGravityEffect >> prototype [
+
+	| value |
+	value := valueToEscape.
+	^ [ :ship :game | self class with: value ]
 ]

@@ -32,15 +32,10 @@ HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 HyperJumpEffect >> applyOn: aShip in: aGame [
 
 	| aDisplacement |
-	
-	"^ Position at: aPosition + (aDisplacement/parsecsPerCell) withLaps: 0"
-	
 	aDisplacement := listOfJumps removeFirst.
 	listOfJumps add: aDisplacement.
-	
-	aGame move: aShip by: aDisplacement/parsecsPerCell.
-	
 
+	aGame move: aShip by: aDisplacement / parsecsPerCell
 ]
 
 { #category : 'as yet unclassified' }
