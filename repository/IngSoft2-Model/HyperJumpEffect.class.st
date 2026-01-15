@@ -40,7 +40,6 @@ HyperJumpEffect class >> mustHaveAtleastOne: jumps [
 HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 
 	self mustHaveAtleastOne: jumps.
-	self mustBeInOrder: jumps.
 	^self new initializeWith: aParsecValue andParsec: jumps
 ]
 

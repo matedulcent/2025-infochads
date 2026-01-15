@@ -159,18 +159,19 @@ CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aP
 	| jumps amountOfJumps newCells relation |
 	amountOfJumps := aConfigDice toss.
 	jumps := OrderedCollection new: amountOfJumps.
-	
-	relation := self calculateRelationBetween: aParsecValue and: aLightYearValue.
+
+	relation := self
+		            calculateRelationBetween: aParsecValue
+		            and: aLightYearValue.
 
 	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
 
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has:
-			            (HyperJumpEffect
-				             with: relation
-				             andParsec: jumps) ].
+		            Cell has: [ :ship :game |
+			            HyperJumpEffect with: relation andParsec: jumps ] ].
 	rawCellDistribution := rawCellDistribution , newCells
+	"[ :ship :game | HyperJumpEffect with: relation andParsec: jumps ]"
 ]
 
 { #category : 'creation' }
