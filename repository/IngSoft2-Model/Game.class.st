@@ -301,6 +301,12 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> returnEveryShipToTheBeguining [
+
+	"dsas"
+]
+
+{ #category : 'as yet unclassified' }
 Game >> reverseTurns [
 
 	nextSpaceShip reverseTheTurns

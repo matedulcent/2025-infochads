@@ -12,17 +12,10 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect class >> mustBeCero: aDesplacement [
-
-	(aDesplacement isInteger not or: [ aDesplacement ~= 0 ]) ifTrue: [
-		Error signal: 'The desplacement must be 0.' ]
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect class >> with: aDesplacement [
-
-	self mustBeCero: aDesplacement.
-	^ self new initializedWith: aDesplacement
+AtomicBombEffect >> applyOn: aShip in: aGame [
+	
+	aGame returnEveryShipToTheBeguining.
+	aGame deductAShieldFromEveryShip.
 ]
 
 { #category : 'as yet unclassified' }
@@ -43,8 +36,8 @@ AtomicBombEffect >> damageAllShields [
 	^ true
 ]
 
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> initializedWith: aDesplacement [
+{ #category : 'accessing' }
+AtomicBombEffect >> prototype [
 
-	desplacement := aDesplacement
+	^ [ :ship :game | self class new ]
 ]

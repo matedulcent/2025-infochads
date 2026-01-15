@@ -24,8 +24,7 @@ CellPlacement >> atomicBombCellsWithProbabilities: aProbability and: aDesplaceme
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has:
-			            (AtomicBombEffect with: aDesplacement) ].
+		            Cell has: [ :ship :game | AtomicBombEffect new ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
