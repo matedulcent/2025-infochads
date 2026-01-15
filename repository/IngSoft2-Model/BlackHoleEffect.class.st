@@ -11,9 +11,17 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'asserting' }
+BlackHoleEffect class >> assertIsANumberAnd4: aDesplacement [
+
+	(aDesplacement isInteger and: [ aDesplacement = 4 ]) ifFalse: [
+		Error signal: 'The desplacement must be 4.' ]
+]
+
 { #category : 'as yet unclassified' }
 BlackHoleEffect class >> withBackTrack: aDesplacement [
 
+	self assertIsANumberAnd4: aDesplacement.
 	^ self new initializeWithBackTrack: aDesplacement
 ]
 

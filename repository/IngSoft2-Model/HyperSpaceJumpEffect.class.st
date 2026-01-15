@@ -12,8 +12,16 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+HyperSpaceJumpEffect class >> assertIsANumberAnd4: aDesplacement [
+
+	(aDesplacement isInteger and: [ aDesplacement = 4 ]) ifFalse: [
+		Error signal: 'The desplacement must be 4.' ]
+]
+
+{ #category : 'as yet unclassified' }
 HyperSpaceJumpEffect class >> withForwardTrack: aDesplacement [
 
+	self assertIsANumberAnd4: aDesplacement.
 	^ self new initializeWithFrowardTrack: aDesplacement
 ]
 

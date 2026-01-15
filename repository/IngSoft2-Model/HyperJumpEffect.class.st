@@ -15,21 +15,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect class >> mustBeInOrder: jumps [
-
-	| previousJump |
-	previousJump := jumps first + 1.
-
-	(jumps allSatisfy: [ :jump |
-		 previousJump > jump
-			 ifTrue: [
-				 previousJump := jump.
-				 true ]
-			 ifFalse: [ false ] ]) ifFalse: [
-		Error signal: 'The Jump list must be in order.' ]
-]
-
-{ #category : 'as yet unclassified' }
 HyperJumpEffect class >> mustHaveAtleastOne: jumps [
 
 	jumps ifEmpty: [

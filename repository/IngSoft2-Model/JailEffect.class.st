@@ -18,14 +18,21 @@ JailEffect class >> with: aJailOutValue [
 ]
 
 { #category : 'as yet unclassified' }
-JailEffect >> imprison: aSpaceShip [
-	"cambiar nombre a lock"
+JailEffect >> applyOn: aShip in: aGame [
 
-	aSpaceShip changeStateToLockedUpAndNeeds: jailOutValue
+	aShip changeStateToLockedUpAndNeeds: jailOutValue
 ]
 
 { #category : 'initialization' }
 JailEffect >> initializeWith: aJailOutValue [
 
 	jailOutValue := aJailOutValue
+]
+
+{ #category : 'accessing' }
+JailEffect >> prototype [
+
+	| value |
+	value := jailOutValue.
+	^ [ :ship :game | self class with: value ]
 ]

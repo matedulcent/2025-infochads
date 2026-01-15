@@ -171,7 +171,6 @@ CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aP
 		            Cell has: [ :ship :game |
 			            HyperJumpEffect with: relation andParsec: jumps ] ].
 	rawCellDistribution := rawCellDistribution , newCells
-	"[ :ship :game | HyperJumpEffect with: relation andParsec: jumps ]"
 ]
 
 { #category : 'creation' }
@@ -189,7 +188,8 @@ CellPlacement >> jailCellsWithProbabilitites: aProbability and: anEscapeValue [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: (JailEffect with: anEscapeValue) ].
+		            Cell has: [ :ship :game |
+			            JailEffect with: anEscapeValue ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
