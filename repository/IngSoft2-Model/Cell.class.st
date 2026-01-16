@@ -15,15 +15,6 @@ Cell class >> has: anEffectPrototype [
 	^ self new initializeWith: anEffectPrototype
 ]
 
-{ #category : 'as yet unclassified' }
-Cell >> applyTo: aShip in: aGame [
-	
-	| anEffect |
-	anEffect := effectPrototype value: aShip value: aGame.
-	
-	anEffect applyOn: aShip in: aGame
-]
-
 { #category : 'accessing' }
 Cell >> effect [
 	"borrar"
@@ -34,4 +25,10 @@ Cell >> effect [
 Cell >> initializeWith: anEffectPrototype [
 
 	effectPrototype := anEffectPrototype
+]
+
+{ #category : 'as yet unclassified' }
+Cell >> percieveAction [
+
+	^ effectPrototype
 ]

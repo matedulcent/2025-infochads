@@ -15,7 +15,8 @@ Class {
 		'nextSpaceShip',
 		'activeCardHolder',
 		'relationshipsWithMercenaries',
-		'lastActionPrototype'
+		'lastActionPrototype',
+		'lastEffectPrototype'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -83,14 +84,16 @@ Game >> applyAction: anAction [
 { #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
 
-	| cell position |
+	| cell position anEffect |
+	"Getting the cell from the board"
 	position := manage at: aSpaceShip id.
 	cell := board cellInThe: position.
-	cell ifNil: [ ^self ].
-	
-	cell applyTo: aSpaceShip in: self
-	
+	cell ifNil: [ ^ self ]. "Some test don't require Cells."
 
+	"Getting the Effect from the cell and registering the EffectPrototype"
+	anEffect := cell percieveAction.
+	lastEffectPrototype := anEffect value: aSpaceShip value: self.
+	lastEffectPrototype applyOn: aSpaceShip in: self
 ]
 
 { #category : 'asserting' }

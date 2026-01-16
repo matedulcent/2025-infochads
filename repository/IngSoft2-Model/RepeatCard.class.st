@@ -32,7 +32,7 @@ RepeatCard >> lastPowerUpPlayed: aCell [
 { #category : 'as yet unclassified' }
 RepeatCard >> playOn: aShip in: aGame [
 
-	"aGame playLastCellOn: aShip."
+	"aGame repeatLastCellEffectOn: aShip"
 ]
 
 { #category : 'as yet unclassified' }

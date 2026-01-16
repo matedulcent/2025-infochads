@@ -5,20 +5,16 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'operations' }
-WhiteCard class >> create [
-
-	^self new initializes
-]
-
 { #category : 'as yet unclassified' }
 WhiteCard >> helper [
+	"This exists to fullfill the space of the helper on the mercenary before the card is deleted => Hardcoded"
 
 	^ 1
 ]
 
 { #category : 'as yet unclassified' }
 WhiteCard >> playOn: aShip in: aGame [
-
-	"^ self"
+	"   _   -   "
+	"\_(0 - 0)_/"
+	
 ]
