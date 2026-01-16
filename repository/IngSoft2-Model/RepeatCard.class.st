@@ -24,5 +24,5 @@ RepeatCard >> initializeWithObjective: anObjective [
 RepeatCard >> playOn: aShip in: aGame [
 
 	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aGame applyAction: (RepeatAction on: aShip in: aGame)
+	aGame applyAction: (RepeatAction on: target in: aGame)
 ]
