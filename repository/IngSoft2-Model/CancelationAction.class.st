@@ -33,10 +33,9 @@ CancelationAction >> initializeTo: aCard on: aShipId in: aGame [
 { #category : 'accessing' }
 CancelationAction >> prototype [
 
-	| card ship |
+	| card |
 	card := targetCard.
-	ship := targetShip.
 
-    ^ [ :ignoredShip :aGame :aHelper |
-        self class to: card on: ship in: aGame ]
+	^ [ :redoShip :aGame :helperShip |
+	  self class to: card on: helperShip in: game ]
 ]
