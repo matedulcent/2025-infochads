@@ -11,8 +11,8 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInLightYearsThenTheJumpsAreExpre
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 0. 300. 3. 90. 60. 30.
-		                     6. 4. 2. 5. 7 }. "15 10 5"
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 300. 3. 90. 60.
+		                     30. 6. 4. 2. 5. 7 }. "15 10 5"
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -25,8 +25,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInLightYearsThenTheJumpsAreExpre
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 17.
-
+	self assert: (aGame positionOf: 1) equals: 17
 ]
 
 { #category : 'tests' }
@@ -56,8 +55,8 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsercsThenTheJumpsExpresedIn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
-		                     6. 4. 2. 5. 7 }. "15 10 5"
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     10. 6. 4. 2. 5. 7 }. "15 10 5"
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -70,8 +69,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsercsThenTheJumpsExpresedIn
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 17.
-
+	self assert: (aGame positionOf: 1) equals: 17
 ]
 
 { #category : 'tests' }
@@ -101,8 +99,8 @@ LightYearsTests >> testWhenTheDistanceOfTheGameIsExpresedInLightYearsAndParsecsT
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 100. 300. 3. 30. 20. 10.
-		                     6. 4. 2. 5. 7 }. "15 10 5"
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 300. 3. 30.
+		                     20. 10. 6. 4. 2. 5. 7 }. "15 10 5"
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -115,6 +113,5 @@ LightYearsTests >> testWhenTheDistanceOfTheGameIsExpresedInLightYearsAndParsecsT
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 17.
-
+	self assert: (aGame positionOf: 1) equals: 17
 ]

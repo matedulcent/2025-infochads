@@ -291,8 +291,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryS
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 11. 46 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 100. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10.
-		                     4. 4. 4. 4. 4. 0 }.
+		                     { 0. 0. 0. 0. 0. 100. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     10. 4. 4. 4. 4. 4. 0 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)

@@ -56,18 +56,8 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 
 { #category : 'as yet unclassified' }
 CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aCardManager [
-	"| newCells numberOfCards cards |
-	numberOfCards := aConfigDice toss.
-
-	cards := OrderedCollection new.
-	1 to: numberOfCards do: [ :card | cards add: (aCardManager grabTopCard) ] .
-
-	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: (CardEffect with: cards deepCopy) ].
-	rawCellDistribution := rawCellDistribution , newCells"
 
 	| newCells |
-	"numberOfCards := aConfigDice toss."
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has: [ :ship :game | CardEffect new ] ].
 	rawCellDistribution := rawCellDistribution , newCells

@@ -324,14 +324,14 @@ RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBoth
 	| aGame aDiceSet aBoard aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 19. 34 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
 					           RepeatCard new.
-					           RedoCard new})
+					           RedoCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -352,14 +352,14 @@ RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffec
 	| aGame aDiceSet aBoard aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
 					           RepeatCard new.
-					           RedoCard new})
+					           RedoCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard

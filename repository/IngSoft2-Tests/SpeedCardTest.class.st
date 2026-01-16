@@ -92,7 +92,7 @@ SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecD
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 50. 0. 1. 10. 6 }.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 50. 0. 1. 10. 6 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -105,7 +105,7 @@ SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecD
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 2.
-	aGame use: (SpeedCard new) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 22
 ]
