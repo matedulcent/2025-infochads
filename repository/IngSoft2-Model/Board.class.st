@@ -44,12 +44,6 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 		thatArePlaced: spaceShipPositions
 ]
 
-{ #category : 'as yet unclassified' }
-Board >> applyPowerUpTo: aSpaceShip in: aGame
-
-	applyTo: aShip in: aGame [
-]
-
 { #category : 'accessing' }
 Board >> boardSize [
 

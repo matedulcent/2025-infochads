@@ -1,27 +1,18 @@
 Class {
 	#name : 'CardEffect',
 	#superclass : 'Effect',
-	#instVars : [
-		'setOfCards'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-CardEffect class >> with: aSetOfCards [
-
-	^ self new initializeWith: aSetOfCards
-]
-
 { #category : 'as yet unclassified' }
-CardEffect >> grabCard [
+CardEffect >> applyOn: aShip in: aGame [
 
-	^ setOfCards removeLast
+	aGame giveACardTo: aShip
 ]
 
-{ #category : 'initialization' }
-CardEffect >> initializeWith: aSetOfCards [
+{ #category : 'accessing' }
+CardEffect >> prototype [
 
-	setOfCards := aSetOfCards
+	^ [ :ship :game | self class new ]
 ]

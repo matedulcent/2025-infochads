@@ -14,10 +14,10 @@ PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAqui
 		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
 			                       WhiteCard new.
-			                       WhiteCard new.
-			                       WhiteCard new.
 			                       SpeedCard new.
-			                       SkipCard new }.
+			                       SkipCard new.
+			                       WhiteCard new.
+			                       WhiteCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)

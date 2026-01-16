@@ -184,6 +184,14 @@ Game >> getRanking [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> giveACardTo: aShip [
+
+	| aCard |
+	aCard := board pickACard.
+	aShip addA: aCard
+]
+
+{ #category : 'as yet unclassified' }
 Game >> incrementAllBoosters [
 
 	spaceShips do: [ :ship | ship incrementBooster ]
