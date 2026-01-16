@@ -22,8 +22,8 @@ HyperGravityTest >> testWhenABoardIsCreatedThenItCanCreateAnUnlimitedNumberOfHyp
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 3. 4. 6. 10. 3. 2. 4 }. " 3. 4. 6. 10. 3. 2. 4."
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 3. 4. 6. 10. 3. 2. 4 }. " 3. 4. 6. 10. 3. 2. 4."
 	aConfigureDiceSet setMaximumValueAs: 10.
 
 	aBoard := Board
@@ -48,7 +48,8 @@ HyperGravityTest >> testWhenASpaceShipIsLockedInHyperGravityAndUsesFreedomThenNo
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 10. 1. 0. 2 }.
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 10. 0. 1. 10. 1.
+		                     0. 2 }.
 	aConfigureDiceSet setMaximumValueAs: 10.
 	aBoard := Board
 		          withSize: 100
@@ -76,8 +77,8 @@ HyperGravityTest >> testWhenShipHasToRollADiceHigherThatTheMaximumProvidedByDice
 	| aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 10. 3 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 11 }. "3"
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 11 }. "3"
 	aConfigureDiceSet setMaximumValueAs: 10.
 
 	self
@@ -98,8 +99,8 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsHigherThanTheNumb
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 10 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 3 }. "3"
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 3 }. "3"
 	aConfigureDiceSet setMaximumValueAs: 10.
 
 	aBoard := Board
@@ -125,8 +126,8 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsTheRightNumberToE
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 3 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 3 }. "3"
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 3 }. "3"
 	aConfigureDiceSet setMaximumValueAs: 10.
 
 	aBoard := Board
@@ -142,7 +143,7 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsTheRightNumberToE
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 14.
+	self assert: (aGame positionOf: 1) equals: 14
 ]
 
 { #category : 'tests' }
@@ -151,8 +152,8 @@ HyperGravityTest >> testWhenTheHyperGravityCellWasLastActivatedAndTheRepeatIsPla
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 49. 20 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 100. 0. 1. 30.
-		                     1. 0. 3. 3 }. "3"
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 3. 3 }. "3"
 	aConfigureDiceSet setMaximumValueAs: 10.
 	aBoard := Board
 		          withSize: 50

@@ -11,7 +11,7 @@ PowerCardCellTest >> testWhenTheCardCellGrabsTheFirstCardFromTheDeckThenTheSecon
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
 			                       SpeedCard new.
 			                       SpeedCard new.
@@ -41,7 +41,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatDistributesC
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
 			                       AccelerationCard new.
 			                       CancelationCard new.
@@ -72,7 +72,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 2. 10. 0. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
 			                       SpeedCard new.
 			                       RepeatCard new }.
@@ -100,7 +100,7 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatOnlyHasAWhit
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: { WhiteCard }.
 	aBoard := Board
 		          withSize: 100

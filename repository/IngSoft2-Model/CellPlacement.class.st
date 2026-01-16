@@ -66,8 +66,8 @@ CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice f
 		            Cell has: (CardEffect with: cards deepCopy) ].
 	rawCellDistribution := rawCellDistribution , newCells"
 
-	| newCells numberOfCards |
-	numberOfCards := aConfigDice toss.
+	| newCells |
+	"numberOfCards := aConfigDice toss."
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has: [ :ship :game | CardEffect new ] ].
 	rawCellDistribution := rawCellDistribution , newCells
