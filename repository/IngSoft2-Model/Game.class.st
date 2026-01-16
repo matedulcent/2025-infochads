@@ -310,6 +310,16 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> repeatLastCellEffectOn: aShip [
+
+	| anEffect |
+	lastEffectPrototype ifNil: [ ^ self ].
+
+	anEffect := lastEffectPrototype value: aShip value: self.
+	anEffect applyOn: aShip in: self
+]
+
+{ #category : 'as yet unclassified' }
 Game >> returnEveryShipToTheBeguining [
 
 	spaceShips do: [ :ship |

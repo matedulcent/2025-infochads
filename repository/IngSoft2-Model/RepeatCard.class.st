@@ -2,47 +2,47 @@ Class {
 	#name : 'RepeatCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'cell',
-		'objective'
+		'target'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-RepeatCard class >> withObjective: anObjective [
-	
-	^self new initializeWith: anObjective
+RepeatCard class >> withObjective: aTarget [
+
+	^ self new initializeWithObjective: aTarget
 ]
 
 { #category : 'initialization' }
-RepeatCard >> initializeWith: anObjective [
+RepeatCard >> initializeWithObjective: anObjective [
 
 	"super initializes."
-	objective := anObjective. "borrar"
-	cell := Effect new. "borrar"
+	target := anObjective. "borrar"
+	"cell := Effect new. "
 ]
 
 { #category : 'accessing' }
 RepeatCard >> lastPowerUpPlayed: aCell [
 	"borrar"
-	cell := aCell
+	"cell := aCell"
 ]
 
 { #category : 'as yet unclassified' }
 RepeatCard >> playOn: aShip in: aGame [
 
-	"aGame repeatLastCellEffectOn: aShip"
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aGame applyAction: (RepeatAction on: target in: aGame)
 ]
 
 { #category : 'as yet unclassified' }
 RepeatCard >> replicateCell [
 	"borrar"
-	^ cell
+	"^ cell"
 ]
 
 { #category : 'as yet unclassified' }
 RepeatCard >> target: aSpaceShipId [
 	"borrar"
-	^ objective 
+	"^ objective "
 ]
