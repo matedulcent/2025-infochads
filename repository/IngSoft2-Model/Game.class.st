@@ -252,11 +252,6 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 
 	self applyPowerUpTo: aSpaceShip.
-	"board
-		applyPowerUpEffectUponA: aSpaceShip
-		andAll: spaceShips
-		andIts: manage positions.
-	self adjustPosition."
 
 
 	manage

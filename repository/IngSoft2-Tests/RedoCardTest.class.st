@@ -6,6 +6,39 @@ Class {
 }
 
 { #category : 'tests' }
+RedoCardTest >> testWhenShip1LandsOnABlackHoleAndUsesRepeatOn2Then2PlaysRedoTwiceOnItSelfThen2GoesBack12Spaces [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 19. 39 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     10. 6. 4. 2. 5. 7 }.
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           RedoCard new.
+					           RedoCard new.
+					           RepeatCard new.
+					           WhiteCard new })
+		          andACellConfiguration: aConfigureDiceSet.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 2.
+
+	aGame start.
+	aGame use: (RepeatCard withObjective: 2) on: 1.
+	aGame use: (RedoCard withFillOut: 2) on: 2.
+	aGame use: (RedoCard withFillOut: 2) on: 2.
+
+
+	self assert: (aGame positionOf: 1) equals: 16.
+	self assert: (aGame positionOf: 2) equals: 24
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testWhenShip1Plays2SpeedAndShip2PlaysCancelAndRedoThenThereAreNoMoreCardsInGame [
 
 	| aGame aDiceSet aBoard |
