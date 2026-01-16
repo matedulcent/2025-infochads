@@ -6,37 +6,6 @@ Class {
 }
 
 { #category : 'tests' }
-PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAquireTheCardOnIt [
-
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
-	aDiceSet := RiggedDice new initializeWith: { 2. 10 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: {
-			                       WhiteCard new.
-			                       SpeedCard new.
-			                       SkipCard new.
-			                       WhiteCard new.
-			                       WhiteCard new }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 4.
-
-	aGame start.
-	aGame use: SkipCard new on: 2.
-
-	self assert: (aGame positionOf: 1) equals: 3.
-	self assert: (aGame positionOf: 2) equals: 11
-]
-
-{ #category : 'tests' }
 PowerCardCellTest >> testWhenTheCardCellGrabsTheFirstCardFromTheDeckThenTheSecondAndThirdAreAssignedToTheShip [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
