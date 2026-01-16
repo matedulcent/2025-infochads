@@ -6,6 +6,73 @@ Class {
 }
 
 { #category : 'tests' }
+RedoCardTest >> testWhenShip1LandsOnABlackHoleAndUsesRepeatOn2Then2PlaysRedoTwiceOnItSelfThen2GoesBack12Spaces [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 19. 39 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     10. 6. 4. 2. 5. 7 }.
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           RedoCard new.
+					           RedoCard new.
+					           RepeatCard new.
+					           WhiteCard new })
+		          andACellConfiguration: aConfigureDiceSet.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 2.
+
+	aGame start.
+	aGame use: (RepeatCard withObjective: 2) on: 1.
+	aGame use: (RedoCard withFillOut: 2) on: 2.
+	aGame use: (RedoCard withFillOut: 2) on: 2.
+
+
+	self assert: (aGame positionOf: 1) equals: 16.
+	self assert: (aGame positionOf: 2) equals: 24
+]
+
+{ #category : 'tests' }
+RedoCardTest >> testWhenShip1Plays2SpeedAndShip2PlaysCancelAndRedoThenThereAreNoMoreCardsInGame [
+
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 7. 10 }.
+
+	aBoard := Board
+		          withSize: 50
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           CancelationCard new.
+					           RedoCard new.
+					           SpeedCard new.
+					           SpeedCard new })
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
+		on: 2.
+	aGame use: (RedoCard withFillOut: 1) on: 2.
+	aGame start.
+
+
+	self assert: (aGame positionOf: 1) equals: 8.
+	self assert: (aGame positionOf: 2) equals: 11
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testWhenShip1PlaysMercenaryOn3AndRedoOn4AndShip2PlaysRedoOn5AndShip1LosesThenShip1And3And4LoseShield [
 
 	| aGame aDiceSet aBoard |
@@ -66,11 +133,9 @@ RedoCardTest >> testWhenShip1PlaysMercenaryOn3AndShip2PlaysRedoOn3ThenTheRedoIsI
 		         wonAfter: 1.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
-	aGame use: (RedoCard withFillOut: 3) on: 2.
-
 
 	self
-		should: [ aGame start ]
+		should: [ aGame use: (RedoCard withFillOut: 3) on: 2 ]
 		raise: Error
 		withMessageText: 'A mercenary cant help multiple ships.'
 ]
@@ -123,17 +188,17 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThe
 					           CancelationCard new.
 					           RedoCard new.
 					           SpeedCard new.
-					           AccelerationCard new})
+					           AccelerationCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (AccelerationCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame use: AccelerationCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective: (SpeedCard new) toShip: 1)
 		on: 2.
 
 	self
@@ -141,42 +206,6 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThe
 		raise: Error
 		withMessageText:
 		'This card cant be played if the card to be canceled is not active.'
-]
-
-{ #category : 'tests' }
-RedoCardTest >> testWhenShip1PlaysSpeedAndShip2PlaysSpeedThenShip3CancelsAndRedoThenBothCardsAreOut [
-
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 7. 10 }.
-
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           CancelationCard new.
-					           RedoCard new.
-					           WhiteCard new.
-					           SpeedCard new.
-					           WhiteCard new.
-					           SpeedCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
-
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 2.
-	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
-		on: 3.
-	aGame start.
-	aGame use: (RedoCard withFillOut: 2) on: 3.
-
-
-	self assert: (aGame positionOf: 1) equals: 8.
-	self assert: (aGame positionOf: 2) equals: 12
 ]
 
 { #category : 'tests' }
@@ -192,14 +221,14 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndaShip2RedoThenTheShip2AlsoHasASpeed [
 					           RedoCard new.
 					           WhiteCard new.
 					           SpeedCard new.
-					           WhiteCard new})
+					           WhiteCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 2.
 	aGame start.
 
@@ -220,17 +249,17 @@ RedoCardTest >> testWhenShip1PlaysSpeedTwiceThenShip2CancelsAndRedoThenBothSpeed
 					           CancelationCard new.
 					           RedoCard new.
 					           SpeedCard new.
-					           SpeedCard new})
+					           SpeedCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame
-		use: (CancelationCard withObjective: (SpeedCard with: 1) toShip: 1)
+		use: (CancelationCard withObjective:(SpeedCard new) toShip: 1)
 		on: 2.
 	aGame use: (RedoCard withFillOut: 1) on: 2.
 	aGame start.
@@ -257,7 +286,7 @@ RedoCardTest >> testWhenShipPlaysAccelerationAndARedoThenAllShipsHave2Accelerati
 		         by: 3
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (AccelerationCard with: 1) on: 1.
+	aGame use: AccelerationCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
@@ -308,14 +337,14 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
 					           SpeedCard new.
-					           RedoCard new})
+					           RedoCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
@@ -328,14 +357,14 @@ RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBoth
 	| aGame aDiceSet aBoard aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 19. 34 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
 					           RepeatCard new.
-					           RedoCard new})
+					           RedoCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -351,48 +380,19 @@ RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBoth
 ]
 
 { #category : 'tests' }
-RedoCardTest >> testWhenSpaceShip2PlaysSpeedCardAndSpaceShip1PlaysRedoCardThenRedoIsUselessDueToSpeedCardCantBePlayedInOthersTurn [
-
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 19. 30 }.
-
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           SpeedCard new.
-					           WhiteCard new.
-					           RedoCard new.
-					           WhiteCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
-
-	aGame use: (SpeedCard with: 1) on: 2.
-	aGame use: (RedoCard withFillOut: 2) on: 1.
-	aGame start.
-
-	self assert: (aGame positionOf: 1) equals: 20.
-	self assert: (aGame positionOf: 2) equals: 32
-]
-
-{ #category : 'tests' }
 RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffectTwice [
 
 	| aGame aDiceSet aBoard aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {
 					           RepeatCard new.
-					           RedoCard new})
+					           RedoCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard

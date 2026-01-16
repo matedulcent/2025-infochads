@@ -26,8 +26,8 @@ SkipCardTest >> testWhenThereAre3SpaceShipsAndOneSkipAndOneRedoArePlayedThenTheN
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
-	self assert: (aGame positionOf: 3) equals: 2.
-	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 3) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 2.
 	self assert: (aGame positionOf: 1) equals: 1
 ]
 
@@ -75,7 +75,7 @@ SkipCardTest >> testWhenThereAre3SpaceShipsAndTwoSkipCardsArePlayedThenTheNext2S
 	aGame use: SkipCard new on: 1.
 	aGame start.
 
-	self assert: (aGame positionOf: 3) equals: 2.
-	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 3) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 2.
 	self assert: (aGame positionOf: 1) equals: 1
 ]

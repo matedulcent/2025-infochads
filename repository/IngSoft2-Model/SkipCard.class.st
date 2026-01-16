@@ -5,8 +5,9 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-SkipCard >> skip [
+{ #category : 'as yet unclassified' }
+SkipCard >> playOn: aShip in: aGame [
 
-	^ true
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aGame applyAction: (SkipAction on: aShip)
 ]

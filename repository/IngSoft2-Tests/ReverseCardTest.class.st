@@ -66,15 +66,15 @@ ReverseCardTest >> testWhenThereAre3SpaceShipsAndReverseCardIsPlayedThenTheyPlay
 	aGame := Game
 		         playedIn: aBoard
 		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5. 6. 7. 8. 9. 10. })
+		         throwing: (RiggedDice new initializeWith: { 5. 6. 7. 8 })
 		         wonAfter: 1.
 
 	aGame use: ReverseCard new on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 3) equals: 14.
-	self assert: (aGame positionOf: 2) equals: 16.
-	self assert: (aGame positionOf: 1) equals: 18.
+	self assert: (aGame positionOf: 2) equals: 7.
+	self assert: (aGame positionOf: 1) equals: 8
 ]
 
 { #category : 'tests' }

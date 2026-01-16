@@ -6,11 +6,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DoubleCard >> playTwice: listOfAlteredSteps [
+DoubleCard >> playOn: aShip in: aGame [
 
-	| result |
-	result := listOfAlteredSteps asOrderedCollection copy.
-	result add: 0.
-	result add: 0.
-	^ result
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aGame applyAction: (DoubleTurnAction on: aShip in: aGame)
 ]

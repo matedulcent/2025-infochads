@@ -2,41 +2,27 @@ Class {
 	#name : 'RepeatCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'cell',
-		'objective'
+		'target'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-RepeatCard class >> withObjective: anObjective [
-	
-	^self new initializeWith: anObjective
+RepeatCard class >> withObjective: aTarget [
+
+	^ self new initializeWithObjective: aTarget
 ]
 
 { #category : 'initialization' }
-RepeatCard >> initializeWith: anObjective [
+RepeatCard >> initializeWithObjective: anObjective [
 
-	super initializes.
-	objective := anObjective.
-	cell := NoEffect new.
-]
-
-{ #category : 'accessing' }
-RepeatCard >> lastPowerUpPlayed: aCell [
-
-	cell := aCell
+	target := anObjective
 ]
 
 { #category : 'as yet unclassified' }
-RepeatCard >> replicateCell [
+RepeatCard >> playOn: aShip in: aGame [
 
-	^ cell
-]
-
-{ #category : 'as yet unclassified' }
-RepeatCard >> target: aSpaceShipId [
-
-	^ objective 
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aGame applyAction: (RepeatAction on: target in: aGame)
 ]

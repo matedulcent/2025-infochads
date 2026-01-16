@@ -1,6 +1,6 @@
 Class {
 	#name : 'JailEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'jailOutValue'
 	],
@@ -18,13 +18,21 @@ JailEffect class >> with: aJailOutValue [
 ]
 
 { #category : 'as yet unclassified' }
-JailEffect >> imprison: aSpaceShip [
+JailEffect >> applyOn: aShip in: aGame [
 
-	aSpaceShip lockedUpAndNeedsFreedomOr: jailOutValue.
+	aShip changeStateToLockedUpAndNeeds: jailOutValue
 ]
 
 { #category : 'initialization' }
 JailEffect >> initializeWith: aJailOutValue [
 
 	jailOutValue := aJailOutValue
+]
+
+{ #category : 'accessing' }
+JailEffect >> prototype [
+
+	| value |
+	value := jailOutValue.
+	^ [ :ship :game | self class with: value ]
 ]

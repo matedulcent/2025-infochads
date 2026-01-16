@@ -6,14 +6,15 @@ Class {
 		'spaceShips',
 		'positionManager',
 		'board',
-		'diceSet'
+		'diceSet',
+		'relationWithMercenaries'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'comparing' }
-Battle class >> between: aSpaceShip andOneOf: spaceShips with: positionManager on: board with: aDiceSet [
+Battle class >> between: aSpaceShip andOneOf: spaceShips with: positionManager on: board with: aDiceSet andIts: relationshipsWithMercenaries [
 
 	^ self new
 		  initializeBattleBetween: aSpaceShip
@@ -21,78 +22,92 @@ Battle class >> between: aSpaceShip andOneOf: spaceShips with: positionManager o
 		  withPosition: positionManager
 		  on: board
 		  with: aDiceSet
+		  andIts: relationshipsWithMercenaries
 ]
 
 { #category : 'as yet unclassified' }
-Battle >> battleBetween: aSpaceShip and: opponentShip [
+Battle >> battleBetween: aSpaceShip and: anOpponentShip [
 
 	| throwSpaceShip throwOpponentShip |
-	"[ In case of a draw, the defendant wins and the attacker gets loser penalties"
-	throwOpponentShip := self mercenaryHelpTo: opponentShip.
+	" In case of a draw, the defendant wins and the attacker gets loser penalties"
+	throwOpponentShip := self mercenaryHelpTo: anOpponentShip.
 	throwSpaceShip := self mercenaryHelpTo: aSpaceShip.
 
-	"throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ]."
-	throwSpaceShip <= throwOpponentShip 
+	throwSpaceShip <= throwOpponentShip
 		ifTrue: [ self lostBattle: aSpaceShip ]
-		ifFalse: [ self lostBattle: opponentShip ]
+		ifFalse: [ self lostBattle: anOpponentShip ].
+
+	^ self
+]
+
+{ #category : 'as yet unclassified' }
+Battle >> checkForCamaraderieBetween: aSpaceShip and: anOpponentShip [
+
+	| mercenariesFromAShip mercenariesFromTheOpponentShip |
+	mercenariesFromAShip := relationWithMercenaries at: aSpaceShip id.
+	mercenariesFromTheOpponentShip := relationWithMercenaries at:
+		                                  anOpponentShip id.
+
+	^ (mercenariesFromAShip includes: anOpponentShip id) or: [
+		  mercenariesFromTheOpponentShip includes: aSpaceShip id ]
 ]
 
 { #category : 'initialization' }
-Battle >> initializeBattleBetween: aSpaceShip andOneOf: theSpaceShips withPosition: aPositionManager on: aBoard with: aDiceSet [
+Battle >> initializeBattleBetween: aSpaceShip andOneOf: theSpaceShips withPosition: aPositionManager on: aBoard with: aDiceSet andIts: relationshipsWothMercenaries [
 
 	spaceShip := aSpaceShip.
 	spaceShips := theSpaceShips.
 	positionManager := aPositionManager.
 	board := aBoard.
 	diceSet := aDiceSet.
+	relationWithMercenaries := relationshipsWothMercenaries.
 	
-	self lookForBattle: aSpaceShip
+	self lookForBattle: aSpaceShip.
+	^self
 ]
 
 { #category : 'as yet unclassified' }
 Battle >> lookForBattle: aSpaceShip [
 
-	| opponentShip |
+	| anOpponentShip |
 	((positionManager at: aSpaceShip id) isPositionEqualTo:
 		 (Position at: 1 withLaps: 0)) ifTrue: [ ^ self ].
-
-	opponentShip := self obtainOponentShip: aSpaceShip.
-
-	(board manageCards the: opponentShip isMercenaryOf: aSpaceShip)
+	anOpponentShip := self obtainOpponentShip: aSpaceShip.
+	"correct"
+	aSpaceShip = anOpponentShip ifTrue: [ ^ self ].
+	"the oponent ship musnt be mercenary"
+	(self checkForCamaraderieBetween: aSpaceShip and: anOpponentShip)
 		ifTrue: [ ^ self ].
-
-	opponentShip == aSpaceShip ifFalse: [
-		self battleBetween: aSpaceShip and: opponentShip ]
+	""
+	self battleBetween: aSpaceShip and: anOpponentShip
 ]
 
 { #category : 'as yet unclassified' }
 Battle >> lostBattle: aSpaceShip [
 
-	| mercenaries |
 	self returnToBeguinning: aSpaceShip.
 
 	aSpaceShip loseShield.
 
-	mercenaries := board manageCards listOfMercenariesOf: aSpaceShip.
-	
-	self returnToBeguinningTheShips: mercenaries
+	self returnToBeguinningTheShips:
+		(relationWithMercenaries at: aSpaceShip id)
 ]
 
 { #category : 'as yet unclassified' }
-Battle >> mercenaryHelpTo: aSpaceShip [
+Battle >> mercenaryHelpTo: aShip [
 
-	| numberOfTosses throwSpaceShip |
-	numberOfTosses := board manageCards numberOfMercenariesOf: aSpaceShip.
+	| howManyExtraTosses totalToss |
+	totalToss := 0.
+	howManyExtraTosses := (relationWithMercenaries at: aShip id) size.
 
-	throwSpaceShip := 0.
-	1 to: numberOfTosses do: [ :mercenary |
-	throwSpaceShip := throwSpaceShip + diceSet toss ].
+	1 to: howManyExtraTosses + 1 do: [ :i |
+	totalToss := totalToss + diceSet toss ].
 
-	^ throwSpaceShip
+	^ totalToss
 ]
 
 { #category : 'as yet unclassified' }
-Battle >> obtainOponentShip: aSpaceShip [
+Battle >> obtainOpponentShip: aSpaceShip [
 
 	| otherShips |
 	otherShips := spaceShips reject: [ :ship | ship = aSpaceShip ].

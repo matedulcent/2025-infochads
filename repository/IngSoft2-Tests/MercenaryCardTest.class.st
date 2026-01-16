@@ -131,7 +131,7 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 					           MercenaryCard new.
 					           WhiteCard new.
 					           MercenaryCard new.
-					           WhiteCard new})
+					           WhiteCard new })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -140,10 +140,9 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 		         wonAfter: 1.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
-	aGame use: (MercenaryCard withHelpOf: 3) on: 2.
-
+	aGame start.
 	self
-		should: [ aGame start ]
+		should: [ aGame use: (MercenaryCard withHelpOf: 3) on: 2 ]
 		raise: Error
 		withMessageText: 'A mercenary cant help multiple ships.'
 ]
@@ -174,7 +173,7 @@ MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWin
 ]
 
 { #category : 'tests' }
-MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAccumulatedAndPlayedOnTheRightTurn [
+MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenCreationFails [
 
 	| aGame aBoard |
 	aBoard := Board
@@ -191,12 +190,12 @@ MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenTheCardIsAc
 		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 2.
-	aGame start.
+	aGame use: SpeedCard new on: 1.
 
-	self assert: (aGame positionOf: 1) equals: 7.
-	self assert: (aGame positionOf: 2) equals: 8
+	self
+		should: [ aGame use: SpeedCard new on: 2 ]
+		raise: Error
+		withMessageText: 'Its not the ships turn to play'
 ]
 
 { #category : 'tests' }
@@ -218,7 +217,7 @@ MercenaryCardTest >> testWhenSpaceShipThatDoesntExistTryesToUseACardThenProcedur
 		         wonAfter: 1.
 
 	self
-		should: [ aGame use: (SpeedCard with: 1) on: 10 ]
+		should: [ aGame use: (SpeedCard new) on: 10 ]
 		raise: Error
 		withMessageText: 'The ship doesnt exist'
 ]

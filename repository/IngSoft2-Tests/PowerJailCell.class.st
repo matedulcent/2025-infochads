@@ -34,7 +34,7 @@ PowerJailCell >> testWhenShipMovesToJailCellAndDoesntRollTheMaximumValueThenItDo
 PowerJailCell >> testWhenShipMovesToJailCellAndRollsTheMaximumValueThenItMoves [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10. 10 }.
+	aDiceSet := RiggedDice new initializeWith: { 10. 10. }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.

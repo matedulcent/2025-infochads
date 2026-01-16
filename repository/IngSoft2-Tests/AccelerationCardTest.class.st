@@ -32,7 +32,7 @@ AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsT
 		         throwing: (RiggedDice new initializeWith: { 5 })
 		         wonAfter: 1.
 
-	aGame use: (AccelerationCard with: 1) on: spaceShipID.
+	aGame use: (AccelerationCard new) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7
@@ -54,36 +54,9 @@ AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenItsTossIncreme
 		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
 
-	aGame use: (AccelerationCard with: 1) on: spaceShipID.
+	aGame use: (AccelerationCard new) on: spaceShipID.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7.
 	self assert: (aGame positionOf: 2) equals: 8
-]
-
-{ #category : 'tests' }
-AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNegativeThenCreationFails [
-
-	self
-		should: [ AccelerationCard with: -1 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNot1ThenCreationFails [
-
-	self
-		should: [ AccelerationCard with: 10 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNotAnIntThenCreationFails [
-
-	self
-		should: [ AccelerationCard with: 'a' ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
 ]

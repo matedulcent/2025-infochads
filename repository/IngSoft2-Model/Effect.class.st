@@ -1,48 +1,60 @@
 Class {
-	#name : 'NoEffect',
+	#name : 'Effect',
 	#superclass : 'Object',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-NoEffect >> applyToAllSpaceShips: aPosition [
+Effect >> applyOn: aShip in: aGame [
+
+	self subclassResponsibility
+]
+
+{ #category : 'as yet unclassified' }
+Effect >> applyToAllSpaceShips: aPosition [
 
 	^ Position at: aPosition withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> applyToSpaceShip: aPosition [
+Effect >> applyToSpaceShip: aPosition [
 
 	^ Position at: aPosition withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> damageAllShields [
+Effect >> damageAllShields [
 
 	^ false
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> damageShield [
+Effect >> damageShield [
 
 	^ false
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> grabCard [
+Effect >> grabCard [
 
 	^ WhiteCard new.
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> imprison: aSpaceShip [
+Effect >> imprison: aSpaceShip [
 
 	^ self
 ]
 
 { #category : 'as yet unclassified' }
-NoEffect >> lock: aSpaceShip [
+Effect >> lock: aSpaceShip [
 
 	^ self
+]
+
+{ #category : 'accessing' }
+Effect >> prototype [
+
+	self subclassResponsibility
 ]

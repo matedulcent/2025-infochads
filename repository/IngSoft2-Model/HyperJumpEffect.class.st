@@ -1,9 +1,8 @@
 Class {
 	#name : 'HyperJumpEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'listOfJumps',
-		'turn',
 		'parsecsPerCell'
 	],
 	#classInstVars : [
@@ -16,21 +15,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect class >> mustBeInOrder: jumps [
-
-	| previousJump |
-	previousJump := jumps first + 1.
-
-	(jumps allSatisfy: [ :jump |
-		 previousJump > jump
-			 ifTrue: [
-				 previousJump := jump.
-				 true ]
-			 ifFalse: [ false ] ]) ifFalse: [
-		Error signal: 'The Jump list must be in order.' ]
-]
-
-{ #category : 'as yet unclassified' }
 HyperJumpEffect class >> mustHaveAtleastOne: jumps [
 
 	jumps ifEmpty: [
@@ -41,24 +25,31 @@ HyperJumpEffect class >> mustHaveAtleastOne: jumps [
 HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 
 	self mustHaveAtleastOne: jumps.
-	self mustBeInOrder: jumps.
 	^self new initializeWith: aParsecValue andParsec: jumps
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> applyToSpaceShip: aPosition [
+HyperJumpEffect >> applyOn: aShip in: aGame [
 
 	| aDisplacement |
 	aDisplacement := listOfJumps removeFirst.
 	listOfJumps add: aDisplacement.
-	
-	^ Position at: aPosition + (aDisplacement/parsecsPerCell) withLaps: 0
+
+	aGame move: aShip by: aDisplacement / parsecsPerCell
 ]
 
 { #category : 'as yet unclassified' }
 HyperJumpEffect >> initializeWith: aParsecValue andParsec: jumps [
 
 	parsecsPerCell := aParsecValue.
-	listOfJumps := jumps.
-	turn := 1.
+	listOfJumps := jumps
+]
+
+{ #category : 'accessing' }
+HyperJumpEffect >> prototype [
+
+	| parsec jumps |
+	parsec := parsecsPerCell.
+	jumps := listOfJumps.
+	^ [ :ship :game | self class with: parsec andParsec: jumps ]
 ]

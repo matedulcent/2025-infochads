@@ -11,7 +11,7 @@ FreedomCardTest >> testWhenASpaceShipIsImprisionedAndDoesntPlayFreedomThenItStay
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 1. 10. 0. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 10. 0. 1. 1 }.
 	aConfigureDiceSet setMaximumValueAs: 10.
 	aBoard := Board
 		          withSize: 100
@@ -38,7 +38,7 @@ FreedomCardTest >> testWhenASpaceShipIsImprisionedThenTheFreedomCardFreesIt [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 1. 10. 0. 1. 1 }.
+		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 10. 0. 1. 1 }.
 	aConfigureDiceSet setMaximumValueAs: 10.
 	aBoard := Board
 		          withSize: 100
@@ -55,7 +55,7 @@ FreedomCardTest >> testWhenASpaceShipIsImprisionedThenTheFreedomCardFreesIt [
 		         wonAfter: 1.
 
 	aGame start.
-	aGame use: (FreedomCard new) on: 1.
+	aGame use: FreedomCard new on: 1.
 	self assert: (aGame positionOf: 1) equals: 11.
 	self deny: (aGame isLockedUpInCell: 1)
 ]
@@ -66,7 +66,7 @@ FreedomCardTest >> testWhenASpaceShipIsNotImprisionedAndPlayFreedomThenNothingHa
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 100. 0. 0. 0. 0. 0. 0. 0. 0. 1. 10. 0. 1. 1 }.
+		                     { 100. 0. 0. 0. 0. 0. 0. 0. 0. 10. 0. 1. 1 }.
 	aConfigureDiceSet setMaximumValueAs: 10.
 	aBoard := Board
 		          withSize: 100
@@ -83,18 +83,48 @@ FreedomCardTest >> testWhenASpaceShipIsNotImprisionedAndPlayFreedomThenNothingHa
 		         wonAfter: 1.
 
 	aGame start.
-	aGame use: (FreedomCard new) on: 1.
+	aGame use: FreedomCard new on: 1.
 	self assert: (aGame positionOf: 1) equals: 12.
 	self deny: (aGame isLockedUpInCell: 1)
+]
+
+{ #category : 'as yet unclassified' }
+FreedomCardTest >> testWhenASpaceShipIsRetainedInHyperGravityThenTheFreedomCardDoesntFreeTheShip [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 10. 2 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 5 }. "3"
+	aConfigureDiceSet setMaximumValueAs: 10.
+
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {
+					           FreedomCard new.
+					           WhiteCard new })
+		          andACellConfiguration: aConfigureDiceSet.
+
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	aGame start.
+	aGame use: FreedomCard new on: 1.
+	self assert: (aGame positionOf: 1) equals: 11.
+	self assert: (aGame isLockedUpInCell: 1)
 ]
 
 { #category : 'tests' }
 FreedomCardTest >> testWhenShipPlaysFreedomAndAndAnotherShipPlaysFreedomWhenBeingInJailThenItIsSetFree [
 
 	| aGame aDiceSet aBoard aConfigureDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 10. 11. 1. 1. }.
+	aDiceSet := RiggedDice new initializeWith: { 10. 11. 1. 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 0. 100. 0. 3. 30. 20.
+		                     { 0. 0. 0. 0. 0. 0. 0. 100. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
 	aConfigureDiceSet setMaximumValueAs: 10.
 	aBoard := Board
@@ -111,12 +141,12 @@ FreedomCardTest >> testWhenShipPlaysFreedomAndAndAnotherShipPlaysFreedomWhenBein
 		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
-	
+
 	aGame start.
-	aGame use: (FreedomCard new) on: 1.
+	aGame use: FreedomCard new on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 2.
 
 	self assert: (aGame positionOf: 1) equals: 11.
 	self assert: (aGame positionOf: 2) equals: 12.
-	self deny: (aGame isLockedUpInCell: 2).
+	self deny: (aGame isLockedUpInCell: 2)
 ]

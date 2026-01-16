@@ -1,9 +1,6 @@
 Class {
 	#name : 'AtomicBombEffect',
-	#superclass : 'NoEffect',
-	#instVars : [
-		'desplacement'
-	],
+	#superclass : 'Effect',
 	#classInstVars : [
 		'shieldScrificed'
 	],
@@ -12,39 +9,14 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect class >> mustBeCero: aDesplacement [
-
-	(aDesplacement isInteger not or: [ aDesplacement ~= 0 ]) ifTrue: [
-		Error signal: 'The desplacement must be 0.' ]
+AtomicBombEffect >> applyOn: aShip in: aGame [
+	
+	aGame returnEveryShipToTheBeguining.
+	aGame deductAShieldFromEveryShip.
 ]
 
-{ #category : 'as yet unclassified' }
-AtomicBombEffect class >> with: aDesplacement [
+{ #category : 'accessing' }
+AtomicBombEffect >> prototype [
 
-	self mustBeCero: aDesplacement.
-	^ self new initializedWith: aDesplacement
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> applyToAllSpaceShips: aPosition [
-
-	^ Position at: 0 withLaps: 0
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> applyToSpaceShip: aPosition [
-
-	^ Position at: 0 withLaps: 0
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> damageAllShields [
-
-	^ true
-]
-
-{ #category : 'as yet unclassified' }
-AtomicBombEffect >> initializedWith: aDesplacement [
-
-	desplacement := aDesplacement
+	^ [ :ship :game | self class new ]
 ]

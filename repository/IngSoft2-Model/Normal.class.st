@@ -1,18 +1,18 @@
 Class {
-	#name : 'CardEffect',
+	#name : 'Normal',
 	#superclass : 'Effect',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-CardEffect >> applyOn: aShip in: aGame [
-
-	aGame giveACardTo: aShip
+Normal >> applyOn: aShip in: aGame [
+	
+	"nada"
 ]
 
 { #category : 'accessing' }
-CardEffect >> prototype [
+Normal >> prototype [
 
 	^ [ :ship :game | self class new ]
 ]

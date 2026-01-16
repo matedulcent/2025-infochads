@@ -1,6 +1,6 @@
 Class {
 	#name : 'HyperGravityEffect',
-	#superclass : 'NoEffect',
+	#superclass : 'Effect',
 	#instVars : [
 		'valueToEscape'
 	],
@@ -24,6 +24,12 @@ HyperGravityEffect class >> with: aValueToEscape [
 	^ self new initializeWith: aValueToEscape
 ]
 
+{ #category : 'as yet unclassified' }
+HyperGravityEffect >> applyOn: aShip in: aGame [
+
+	aShip changeStateToRetainedAndNeeds: valueToEscape
+]
+
 { #category : 'initialization' }
 HyperGravityEffect >> initializeWith: aValueToEscape [
 
@@ -33,5 +39,13 @@ HyperGravityEffect >> initializeWith: aValueToEscape [
 { #category : 'as yet unclassified' }
 HyperGravityEffect >> lock: aSpaceShip [
 
-	aSpaceShip lockedUpAndNeeds: valueToEscape
+	aSpaceShip changeStateToRetainedAndNeeds: valueToEscape
+]
+
+{ #category : 'as yet unclassified' }
+HyperGravityEffect >> prototype [
+
+	| value |
+	value := valueToEscape.
+	^ [ :ship :game | self class with: value ]
 ]

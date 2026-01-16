@@ -19,7 +19,7 @@ SpaceShipCreationTest >> should: anErrorBlock raise: anErrorClass withMessageTex
 SpaceShipCreationTest >> testWhenAShipDoesntHaveANameThenCreationFails [
 
 	| aCard anotherCard |
-	aCard := anotherCard := WhiteCard create.
+	aCard := anotherCard := WhiteCard new.
 	self
 		should: [ SpaceShip with: '' startingWith: aCard and: anotherCard with: 3 ]
 		raise: Error
@@ -51,7 +51,7 @@ SpaceShipCreationTest >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosit
 SpaceShipCreationTest >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
 
 	| aCard anotherCard |
-	aCard := anotherCard := WhiteCard create.
+	aCard := anotherCard := WhiteCard new.
 	self
 		should: [
 			SpaceShip
@@ -67,7 +67,7 @@ SpaceShipCreationTest >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreat
 SpaceShipCreationTest >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
 
 	| aCard anotherCard |
-	aCard := anotherCard := WhiteCard create.
+	aCard := anotherCard := WhiteCard new.
 	self
 		should: [
 			SpaceShip

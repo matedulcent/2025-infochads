@@ -6,19 +6,19 @@ Class {
 }
 
 { #category : 'testing' }
-Free >> canBeFreed [
-
-	^ false
-]
-
-{ #category : 'testing' }
-Free >> isFreeByTossing: aDiceRoll [
-
-	^ true
-]
-
-{ #category : 'testing' }
 Free >> isLockedUp [
-
+	"borrar"
 	^ false
+]
+
+{ #category : 'as yet unclassified' }
+Free >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
+
+	aGame move: aSpaceShip after: aDiceRoll.
+]
+
+{ #category : 'as yet unclassified' }
+Free >> setFreeByCard [
+
+	^ self
 ]

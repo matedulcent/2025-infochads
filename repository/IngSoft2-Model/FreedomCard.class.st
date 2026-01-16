@@ -6,7 +6,8 @@ Class {
 }
 
 { #category : 'instance creation' }
-FreedomCard >> free: aSpaceShip [
+FreedomCard >> playOn: aShip in: aGame [
 
-	aSpaceShip free.
+	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aGame applyAction: (FreedomAction on: aShip)
 ]
