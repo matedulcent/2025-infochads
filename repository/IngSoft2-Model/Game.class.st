@@ -84,16 +84,16 @@ Game >> applyAction: anAction [
 { #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
 
-	| cell position anEffect |
-	"Getting the cell from the board"
+	| cell position effectPrototype anEffect |
 	position := manage at: aSpaceShip id.
 	cell := board cellInThe: position.
-	cell ifNil: [ ^ self ]. "Some test don't require Cells."
+	cell ifNil: [ ^ self ].
 
-	"Getting the Effect from the cell and registering the EffectPrototype"
-	anEffect := cell percieveAction.
-	lastEffectPrototype := anEffect value: aSpaceShip value: self.
-	lastEffectPrototype applyOn: aSpaceShip in: self
+	effectPrototype := cell percieveAction.
+	lastEffectPrototype := effectPrototype.
+
+	anEffect := effectPrototype value: aSpaceShip value: self.
+	anEffect applyOn: aSpaceShip in: self
 ]
 
 { #category : 'asserting' }
@@ -310,13 +310,15 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> repeatLastCellEffectOn: aShip [
+Game >> repeatLastCellEffectOn: aShipId [
+    | ship anEffect |
 
-	| anEffect |
-	lastEffectPrototype ifNil: [ ^ self ].
+    lastEffectPrototype ifNil: [ ^ self ].
 
-	anEffect := lastEffectPrototype value: aShip value: self.
-	anEffect applyOn: aShip in: self
+    ship := self checkFor: aShipId.
+
+    anEffect := lastEffectPrototype value: ship value: self.
+    anEffect applyOn: ship in: self
 ]
 
 { #category : 'as yet unclassified' }
