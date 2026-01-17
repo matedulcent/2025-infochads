@@ -3,9 +3,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'deckOfCards',
-		'activeCards',
-		'lastCardPlayed',
-		'lastCellPlayed'
+		'activeCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,11 +26,4 @@ CardManager >> grabTopCard [
 CardManager >> initializeWith: aDeckOfCards [ 
 
 	deckOfCards := aDeckOfCards.
-	lastCellPlayed := Cell has: Effect new
-]
-
-{ #category : 'accessing' }
-CardManager >> lastCellPlayed: aCell [
-
-	lastCellPlayed := aCell 
 ]

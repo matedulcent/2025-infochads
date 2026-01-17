@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'spaceShips',
 		'diceSet',
-		'nextSpaceShipToMove',
 		'numberOfSpaceShips',
 		'laps',
 		'board',
@@ -138,13 +137,21 @@ Game >> checkFor: aSpaceShipID [
 	^ aShip
 ]
 
+{ #category : 'initialization' }
+Game >> createRelationsWithMercenaries [
+
+	relationshipsWithMercenaries := OrderedDictionary new.
+	spaceShips do: [ :ship |
+		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
+]
+
 { #category : 'whats left of race positions' }
-Game >> create: aNumberOfSpaceShips [
+Game >> createSpaceShips [
 
 	| shield |
 	shield := 3.
 	spaceShips := OrderedCollection new.
-	1 to: aNumberOfSpaceShips do: [ :id |
+	1 to: numberOfSpaceShips do: [ :id |
 		spaceShips add: (SpaceShip
 				 with: id
 				 startingWith: board pickACard
@@ -204,23 +211,14 @@ Game >> incrementAllBoosters [
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-
-	self create: aNumberOfSpaceShips.
-	manage := PositionManager of: spaceShips.
-
-	diceSet := aDiceSet.
-
-
 	numberOfSpaceShips := aNumberOfSpaceShips.
+	self createSpaceShips.
+	manage := PositionManager of: spaceShips.
+	diceSet := aDiceSet.
 	laps := aNumberOfLaps.
-
 	nextSpaceShip := TurnManager withThe: spaceShips.
-
 	activeCardHolder := CardHolderGlobal withPlayers: spaceShips.
-
-	relationshipsWithMercenaries := OrderedDictionary new.
-	spaceShips do: [ :ship |
-		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
+	self createRelationsWithMercenaries
 ]
 
 { #category : 'testing' }
