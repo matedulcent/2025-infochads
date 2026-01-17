@@ -66,6 +66,16 @@ TurnManager >> keepCurrentShip [
 ]
 
 { #category : 'as yet unclassified' }
+TurnManager >> obtainShipById: aSpaceShipID [
+
+	| aShip |
+	aShip := orderedShips
+		         detect: [ :ship | ship id = aSpaceShipID ]
+		         ifNone: [ Error signal: 'The ship doesnt exist' ].
+	^ aShip
+]
+
+{ #category : 'as yet unclassified' }
 TurnManager >> reverseTheTurns [
 
 	orderedShips := orderedShips reversed

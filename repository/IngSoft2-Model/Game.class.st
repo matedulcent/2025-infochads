@@ -11,11 +11,11 @@ Class {
 		'stepOfNextSpaceShipToMove',
 		'listOfAlteredSteps',
 		'diceRoll',
-		'nextSpaceShip',
 		'activeCardHolder',
 		'relationshipsWithMercenaries',
 		'lastActionPrototype',
-		'lastEffectPrototype'
+		'lastEffectPrototype',
+		'turnManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -59,9 +59,9 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'adding' }
-Game >> addActive: aShipId to: arg2 [
-	"??? borar?"
-	activeCardHolder addActive: aShipId to: arg2
+Game >> addActive: aCard to: aShipId [
+
+	activeCardHolder addActive: aCard to: aShipId
 ]
 
 { #category : 'as yet unclassified' }
@@ -98,7 +98,7 @@ Game >> applyPowerUpTo: aSpaceShip [
 { #category : 'asserting' }
 Game >> assertItsTurnToPlayOf: aShip [
 
-	aShip = nextSpaceShip keepCurrentShip ifFalse: [
+	aShip = turnManager keepCurrentShip ifFalse: [
 		Error signal: 'Its not the ships turn to play' ]
 ]
 
@@ -123,18 +123,8 @@ Game >> cancel: targetCard on: targetShip [
 
 	| aCard aShip |
 	aCard := activeCardHolder removeActive: targetCard from: targetShip.
-	aShip := self checkFor: targetShip.
+	aShip := turnManager obtainShipById: targetShip.
 	aCard unplayOn: aShip in: self
-]
-
-{ #category : 'movingOut' }
-Game >> checkFor: aSpaceShipID [
-	"refactor para que use Turn Manager Quiza"
-	| aShip |
-	aShip := spaceShips
-		         detect: [ :ship | ship id = aSpaceShipID ]
-		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-	^ aShip
 ]
 
 { #category : 'initialization' }
@@ -174,7 +164,7 @@ Game >> deductAShieldFromEveryShip [
 { #category : 'as yet unclassified' }
 Game >> doubleTurnOn: aShip [
 
-	nextSpaceShip doubleTurnOn: aShip
+	turnManager doubleTurnOn: aShip
 ]
 
 { #category : 'informationTest' }
@@ -216,7 +206,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	manage := PositionManager of: spaceShips.
 	diceSet := aDiceSet.
 	laps := aNumberOfLaps.
-	nextSpaceShip := TurnManager withThe: spaceShips.
+	turnManager := TurnManager withThe: spaceShips.
 	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries
 ]
@@ -224,7 +214,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 { #category : 'testing' }
 Game >> isLockedUpInCell: aSpaceShipID [
 
-	self checkFor: aSpaceShipID.
+	turnManager obtainShipById: aSpaceShipID.
 	^ (spaceShips at: aSpaceShipID) isLockedUp
 ]
 
@@ -308,7 +298,7 @@ Game >> repeatLastCellEffectOn: aShipId [
 
     lastEffectPrototype ifNil: [ ^ self ].
 
-    ship := self checkFor: aShipId.
+    ship := turnManager obtainShipById: aShipId."self checkFor: aShipId."
 
     anEffect := lastEffectPrototype value: ship value: self.
     anEffect applyOn: ship in: self
@@ -326,7 +316,7 @@ Game >> returnEveryShipToTheBeguining [
 { #category : 'as yet unclassified' }
 Game >> reverseTurns [
 
-	nextSpaceShip reverseTheTurns
+	turnManager reverseTheTurns
 ]
 
 { #category : 'as yet unclassified' }
@@ -357,7 +347,7 @@ Game >> start [
 	| aSpaceShip |
 	diceRoll := diceSet toss.
 	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
-		aSpaceShip := nextSpaceShip grabAndUpdate.
+		aSpaceShip := turnManager grabAndUpdate.
 		aSpaceShip willPlayByTossing: diceRoll on: self ]
 ]
 
@@ -372,7 +362,7 @@ Game >> unStablish: helper on: aShip [
 Game >> use: aCard on: aShipId [
 
 	| ship |
-	ship := self checkFor: aShipId.
+	ship := turnManager obtainShipById: aShipId.
 
 	ship assertItHas: aCard.
 

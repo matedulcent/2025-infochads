@@ -18,7 +18,7 @@ CancelationCard class >> withObjective: aCard toShip: objective [
 { #category : 'as yet unclassified' }
 CancelationCard >> cardObjective: aCard [
 
-	^ card
+	"^ card"
 ]
 
 { #category : 'initialization' }
