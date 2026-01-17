@@ -69,12 +69,11 @@ Board >> checkForWormHole: aPosition [
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	cardManager := CardManager createWith: aDeckOfCards.
+	cardManager := CardManager createWith: aDeckOfCards. "trasladar"
 
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
-		             withComplementary: cardManager
-		             And: boardSize.
+		             withComplementary: boardSize.
 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.

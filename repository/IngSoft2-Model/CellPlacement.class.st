@@ -55,7 +55,7 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aCardManager [
+CellPlacement >> cardCellsWithProbabilities: aProbability [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
@@ -64,14 +64,14 @@ CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice f
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager And: aBoardSize [
+CellPlacement >> createBoardWith: aConfigDice withComplementary: aBoardSize [
 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
 	
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
 	
-	self generateUniverseWith: aConfigDice and: aCardManager.
+	self generateUniverseWith: aConfigDice.
 	
 	^ self extractSample
 ]
@@ -95,15 +95,12 @@ CellPlacement >> extractSample [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
+CellPlacement >> generateUniverseWith: aConfigDice [
 
 	| probabilities |
 	probabilities := self obtainProbabilities: aConfigDice.
 	self theProbabilitiesMustSum100: probabilities.
-	self
-		cardCellsWithProbabilities: (probabilities at: 7)
-		picking: aConfigDice
-		from: aCardManager.
+	self cardCellsWithProbabilities: (probabilities at: 7).
 	self normalCellsWithProbabilitites: (probabilities at: 1).
 	self
 		blackHoleCellsWithProbabilities: (probabilities at: 2)
