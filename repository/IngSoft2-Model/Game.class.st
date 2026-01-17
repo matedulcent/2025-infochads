@@ -217,7 +217,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	diceSet := aDiceSet.
 	laps := aNumberOfLaps.
 	nextSpaceShip := TurnManager withThe: spaceShips.
-	activeCardHolder := CardHolderGlobal withPlayers: spaceShips.
+	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries
 ]
 

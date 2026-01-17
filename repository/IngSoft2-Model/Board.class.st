@@ -5,7 +5,6 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'cardManager',
 		'deckOfCards'
 	],
 	#category : 'IngSoft2-Model',
@@ -69,7 +68,6 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckO
 
 	boardSize := aBoardSize.
 	deckOfCards := aDeckOfCards.
-	"cardManager := CardManager createWith: aDeckOfCards. "
 
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
@@ -96,12 +94,6 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 	^ Position
 		  at: boardSize * (aPosition position // boardSize) negated
 		  withLaps: aPosition position // boardSize
-]
-
-{ #category : 'as yet unclassified' }
-Board >> manageCards [
-
-	^ cardManager
 ]
 
 { #category : 'as yet unclassified' }
