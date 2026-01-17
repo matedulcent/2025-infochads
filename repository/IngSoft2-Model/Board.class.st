@@ -100,8 +100,6 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 Board >> pickACard [
 
 	^ deckOfCards grabCard
-
-	"^ cardManager grabTopCard"
 ]
 
 { #category : 'as yet unclassified' }
