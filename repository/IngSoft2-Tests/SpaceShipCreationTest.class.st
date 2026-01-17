@@ -34,7 +34,7 @@ SpaceShipCreationTest >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosit
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -87,7 +87,7 @@ SpaceShipCreationTest >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -109,7 +109,7 @@ SpaceShipCreationTest >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -130,7 +130,7 @@ SpaceShipCreationTest >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -152,7 +152,7 @@ SpaceShipCreationTest >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1 
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -171,7 +171,7 @@ SpaceShipCreationTest >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsA
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

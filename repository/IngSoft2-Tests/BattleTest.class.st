@@ -25,7 +25,7 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -48,7 +48,7 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -69,7 +69,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -91,7 +91,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -112,7 +112,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -134,7 +134,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -156,7 +156,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -178,7 +178,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -200,7 +200,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheDefend
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -222,7 +222,7 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -245,7 +245,7 @@ BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

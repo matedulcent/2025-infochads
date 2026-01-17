@@ -13,7 +13,7 @@ RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -34,7 +34,7 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -56,7 +56,7 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -78,7 +78,7 @@ RankingTests >> testWhenGameIsOverAndSpaceShip2Wins [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -100,7 +100,7 @@ RankingTests >> testWhenGameIsOverAndWinnerIsShip1 [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -122,7 +122,7 @@ RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -147,7 +147,7 @@ RankingTests >> testWhenGameThereAre4ShipsTheRankingShowsAllTheShips [
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

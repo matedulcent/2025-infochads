@@ -23,7 +23,7 @@ LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOve
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -46,7 +46,7 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -68,7 +68,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingM
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -91,7 +91,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingS
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -114,7 +114,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowTh
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -136,7 +136,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrows
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -159,7 +159,7 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -181,7 +181,7 @@ LoopedBoardTest >> testWhenTheInputtedLapIsNegativeThenIsInvalid [
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	self
 		should: [

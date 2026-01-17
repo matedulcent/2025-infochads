@@ -17,7 +17,7 @@ PowerJailCell >> testWhenShipMovesToJailCellAndDoesntRollTheMaximumValueThenItDo
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 
 	aGame := Game
@@ -27,7 +27,7 @@ PowerJailCell >> testWhenShipMovesToJailCellAndDoesntRollTheMaximumValueThenItDo
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 11.
+	self assert: (aGame positionOf: 1) equals: 11
 ]
 
 { #category : 'tests' }
@@ -42,7 +42,7 @@ PowerJailCell >> testWhenShipMovesToJailCellAndRollsTheMaximumValueThenItMoves [
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 
 	aGame := Game
