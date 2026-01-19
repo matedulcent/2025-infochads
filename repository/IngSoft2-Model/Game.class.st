@@ -15,7 +15,9 @@ Class {
 		'relationshipsWithMercenaries',
 		'lastActionPrototype',
 		'lastEffectPrototype',
-		'turnManager'
+		'turnManager',
+		'cardSystem',
+		'cellSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -66,7 +68,7 @@ Game >> addActive: aCard to: aShipId [
 
 { #category : 'as yet unclassified' }
 Game >> adjustPosition [
-
+	"stay ?"
 	spaceShips do: [ :ship |
 		manage sumAt: ship id with: (board
 				 limitAdjustment: (manage positions at: ship id)
@@ -82,7 +84,7 @@ Game >> applyAction: anAction [
 
 { #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
-
+	"cellSystem applyEffectTo: aSpaceShip"
 	| cell position effectPrototype anEffect |
 	position := manage at: aSpaceShip id.
 	cell := board cellInThe: position.
@@ -90,8 +92,9 @@ Game >> applyPowerUpTo: aSpaceShip [
 
 	effectPrototype := cell percieveAction.
 	lastEffectPrototype := effectPrototype.
-
+	
 	anEffect := effectPrototype value: aSpaceShip value: self.
+	"anEffect applyOn: aSpaceShip in: cellSystem"
 	anEffect applyOn: aSpaceShip in: self
 ]
 
@@ -120,7 +123,7 @@ Game >> assertTheGameIsNotOver [
 
 { #category : 'as yet unclassified' }
 Game >> cancel: targetCard on: targetShip [
-
+	"cardSystem cancel: targetCard on: targetShip"
 	| aCard aShip |
 	aCard := activeCardHolder removeActive: targetCard from: targetShip.
 	aShip := turnManager obtainShipById: targetShip.
@@ -169,7 +172,7 @@ Game >> doubleTurnOn: aShip [
 
 { #category : 'informationTest' }
 Game >> getRanking [
-
+	"stay"
 	| ranking |
 	self isOver ifFalse: [ ^ #(  ) ].
 
@@ -208,7 +211,15 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	laps := aNumberOfLaps.
 	turnManager := TurnManager withThe: spaceShips.
 	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
-	self createRelationsWithMercenaries
+	self createRelationsWithMercenaries.
+
+	cardSystem := CardSystem
+		              withTurnManager: turnManager
+		              positionManager: manage
+		              activeCardHolder: activeCardHolder
+		              andRelationships: relationshipsWithMercenaries.
+
+	cellSystem := CellSystem withBoard: board positionManager: manage
 ]
 
 { #category : 'testing' }
@@ -220,7 +231,7 @@ Game >> isLockedUpInCell: aSpaceShipID [
 
 { #category : 'informationTest' }
 Game >> isOver [
-	"testing"
+	"testing" "stay"
 	^ self assertTheGameIsNotOver
 ]
 
@@ -232,6 +243,7 @@ Game >> lapOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
+	"stay"
 
 	manage
 		sumAt: aSpaceShip id
@@ -286,7 +298,7 @@ Game >> positionOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> redoLastActionOn: aShip withAdditional: aHelperId [
-
+	"cardSystem redoLastActionOn: aShip withAdditional: aHelperId"
 	lastActionPrototype ifNil: [ ^ self ].
 	self applyAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId)
@@ -294,14 +306,15 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 
 { #category : 'as yet unclassified' }
 Game >> repeatLastCellEffectOn: aShipId [
-    | ship anEffect |
+	"cellSystem repeatLastEffectOn: aShipId"
 
-    lastEffectPrototype ifNil: [ ^ self ].
+	| ship anEffect |
+	lastEffectPrototype ifNil: [ ^ self ].
 
-    ship := turnManager obtainShipById: aShipId."self checkFor: aShipId."
+	ship := turnManager obtainShipById: aShipId. "self checkFor: aShipId."
 
-    anEffect := lastEffectPrototype value: ship value: self.
-    anEffect applyOn: ship in: self
+	anEffect := lastEffectPrototype value: ship value: self.
+	anEffect applyOn: ship in: self
 ]
 
 { #category : 'as yet unclassified' }
@@ -315,13 +328,13 @@ Game >> returnEveryShipToTheBeguining [
 
 { #category : 'as yet unclassified' }
 Game >> reverseTurns [
-
+	"stay"
 	turnManager reverseTheTurns
 ]
 
 { #category : 'as yet unclassified' }
 Game >> rollTheDice [
-
+	"stay"
 	diceRoll := diceSet toss.
 ]
 
@@ -343,7 +356,7 @@ Game >> stablish: helper on: aShip [
 
 { #category : 'accessing' }
 Game >> start [
-
+	"stay"
 	| aSpaceShip |
 	diceRoll := diceSet toss.
 	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
@@ -360,12 +373,12 @@ Game >> unStablish: helper on: aShip [
 
 { #category : 'movingOut' }
 Game >> use: aCard on: aShipId [
+	"cardSystem use: aCard on: aShipId"
 
 	| ship |
 	ship := turnManager obtainShipById: aShipId.
 
 	ship assertItHas: aCard.
-
 	aCard playOn: ship in: self.
 	self adjustPosition
 ]
