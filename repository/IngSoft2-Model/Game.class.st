@@ -107,7 +107,7 @@ Game >> assertItsTurnToPlayOf: aShip [
 
 { #category : 'as yet unclassified' }
 Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
-
+"cardSystem assertMercenaryIsNotHelpingAnotherShip: aMercenaryId"
 	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
 		 mercenaries includes: aMercenaryId ]) ifTrue: [
 		Error signal: 'A mercenary cant help multiple ships.' ]
@@ -350,7 +350,7 @@ Game >> shieldOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> stablish: helper on: aShip [
-	
+	"cardSystem stablish: helper on: aShip"
 	(relationshipsWithMercenaries at: aShip id) add: helper
 ]
 
@@ -366,7 +366,7 @@ Game >> start [
 
 { #category : 'as yet unclassified' }
 Game >> unStablish: helper on: aShip [
-
+	"cardSystem unStablish: helper on: aShip"
 	relationshipsWithMercenaries valuesDo: [ :helpers |
 		helpers remove: helper ifAbsent: [  ] ]
 ]
