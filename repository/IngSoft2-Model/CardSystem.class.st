@@ -6,20 +6,22 @@ Class {
 		'positionManager',
 		'activeCardHolder',
 		'relationships',
-		'lastActionPrototype'
+		'lastActionPrototype',
+		'gameRules'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries [
+CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: gameRules [
 
 	^ self new
 		  initializeWithTurnManager: aTurnManager
 		  positionManager: aPositionManager
 		  activeCardHolder: anActiveCardHolder
 		  andRelationships: theRelationshipsWithMercenaries
+		  withIn: gameRules
 ]
 
 { #category : 'adding' }
@@ -43,9 +45,24 @@ CardSystem >> assertItsTurnToPlayOf: aShip [
 ]
 
 { #category : 'as yet unclassified' }
+CardSystem >> cancel: targetCard on: targetShip [
+	
+	| aCard aShip |
+	aCard := activeCardHolder removeActive: targetCard from: targetShip.
+	aShip := turnManager obtainShipById: targetShip.
+	aCard unplayOn: aShip in: self
+]
+
+{ #category : 'as yet unclassified' }
 CardSystem >> decrementAllBoosters [
 
 	(turnManager allShips) do: [ :ship | ship decrementBooster ]
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> doubleTurnOn: aShip [
+
+	turnManager doubleTurnOn: aShip
 ]
 
 { #category : 'as yet unclassified' }
@@ -55,12 +72,13 @@ CardSystem >> incrementAllBoosters [
 ]
 
 { #category : 'initialization' }
-CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries [
+CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: someGameRules [
 
 	turnManager := aTurnManager.
 	positionManager := aPositionManager.
 	activeCardHolder := anActiveCardHolder.
-	relationships := theRelationshipsWithMercenaries
+	relationships := theRelationshipsWithMercenaries.
+	gameRules := someGameRules.
 ]
 
 { #category : 'movingOut' }

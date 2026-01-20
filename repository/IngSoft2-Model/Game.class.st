@@ -17,7 +17,8 @@ Class {
 		'lastEffectPrototype',
 		'turnManager',
 		'cardSystem',
-		'cellSystem'
+		'cellSystem',
+		'gameRules'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -115,7 +116,7 @@ Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
 
 { #category : 'whats left of race positions' }
 Game >> assertTheGameIsNotOver [
-
+	"pasado a gameRules"
 	^ spaceShips anySatisfy: [ :aShip |
 		  (manage at: aShip id) isEqualTo:
 			  (Position at: board boardSize withLaps: laps) ]
@@ -123,7 +124,7 @@ Game >> assertTheGameIsNotOver [
 
 { #category : 'as yet unclassified' }
 Game >> cancel: targetCard on: targetShip [
-	"cardSystem cancel: targetCard on: targetShip"
+	"pasado a CardSystem"
 	| aCard aShip |
 	aCard := activeCardHolder removeActive: targetCard from: targetShip.
 	aShip := turnManager obtainShipById: targetShip.
@@ -166,7 +167,7 @@ Game >> deductAShieldFromEveryShip [
 
 { #category : 'as yet unclassified' }
 Game >> doubleTurnOn: aShip [
-
+	"pasado a CardSystem"
 	turnManager doubleTurnOn: aShip
 ]
 
@@ -213,11 +214,17 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries.
 
+	gameRules := GameRules
+		             withBoard: board
+		             positionManager: manage
+		             ships: turnManager
+		             laps: aNumberOfLaps.
 	cardSystem := CardSystem
 		              withTurnManager: turnManager
 		              positionManager: manage
 		              activeCardHolder: activeCardHolder
-		              andRelationships: relationshipsWithMercenaries.
+		              andRelationships: relationshipsWithMercenaries
+		              withIn: gameRules.
 
 	cellSystem := CellSystem withBoard: board positionManager: manage
 ]

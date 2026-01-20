@@ -9,5 +9,6 @@ Class {
 DoubleCard >> playOn: aShip in: aGame [
 
 	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
+	"gameRules assertTheGameIsNotOver ifTrue: [ ^ self ]."
 	aGame applyAction: (DoubleTurnAction on: aShip in: aGame)
 ]
