@@ -62,7 +62,7 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 
 { #category : 'adding' }
 Game >> addActive: aCard to: aShipId [
-
+	"pasado a CardSystem"
 	activeCardHolder addActive: aCard to: aShipId
 ]
 
@@ -77,7 +77,7 @@ Game >> adjustPosition [
 
 { #category : 'as yet unclassified' }
 Game >> applyAction: anAction [
-
+	"pasado a CardSystem"
 	lastActionPrototype := anAction prototype.
 	anAction apply
 ]
@@ -100,7 +100,7 @@ Game >> applyPowerUpTo: aSpaceShip [
 
 { #category : 'asserting' }
 Game >> assertItsTurnToPlayOf: aShip [
-
+	"pasado a CardSystem"
 	aShip = turnManager keepCurrentShip ifFalse: [
 		Error signal: 'Its not the ships turn to play' ]
 ]
@@ -154,7 +154,7 @@ Game >> createSpaceShips [
 
 { #category : 'as yet unclassified' }
 Game >> decrementAllBoosters [
-
+	"pasado a cardSystem"
 	spaceShips do: [ :ship | ship decrementBooster ]
 ]
 
@@ -196,7 +196,7 @@ Game >> giveACardTo: aShip [
 
 { #category : 'as yet unclassified' }
 Game >> incrementAllBoosters [
-
+	"pasado a CardSystem"
 	spaceShips do: [ :ship | ship incrementBooster ]
 ]
 
@@ -373,7 +373,8 @@ Game >> unStablish: helper on: aShip [
 
 { #category : 'movingOut' }
 Game >> use: aCard on: aShipId [
-	"cardSystem use: aCard on: aShipId"
+	"cardSystem use: aCard on: aShipId
+	self adjustPosition"
 
 	| ship |
 	ship := turnManager obtainShipById: aShipId.

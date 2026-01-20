@@ -24,6 +24,12 @@ TurnManager >> advanceTurn [
 	^ currentShipPlaying
 ]
 
+{ #category : 'as yet unclassified' }
+TurnManager >> allShips [
+
+	^ orderedShips "borrar ? "
+]
+
 { #category : 'accessing' }
 TurnManager >> currentShipPlaying [
 
@@ -39,7 +45,7 @@ TurnManager >> doubleTurnOn: aShip [
 { #category : 'as yet unclassified' }
 TurnManager >> grab [
 
-	^ orderedShips first 
+	^ orderedShips first "borrar ?"
 ]
 
 { #category : 'as yet unclassified' }
