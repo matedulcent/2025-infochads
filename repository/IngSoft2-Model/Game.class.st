@@ -108,7 +108,7 @@ Game >> assertItsTurnToPlayOf: aShip [
 
 { #category : 'as yet unclassified' }
 Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
-"cardSystem assertMercenaryIsNotHelpingAnotherShip: aMercenaryId"
+"pasado a CardSystem"
 	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
 		 mercenaries includes: aMercenaryId ]) ifTrue: [
 		Error signal: 'A mercenary cant help multiple ships.' ]
@@ -305,7 +305,7 @@ Game >> positionOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> redoLastActionOn: aShip withAdditional: aHelperId [
-	"cardSystem redoLastActionOn: aShip withAdditional: aHelperId"
+	"pasado a CardSystem"
 	lastActionPrototype ifNil: [ ^ self ].
 	self applyAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId)
@@ -335,7 +335,7 @@ Game >> returnEveryShipToTheBeguining [
 
 { #category : 'as yet unclassified' }
 Game >> reverseTurns [
-	"stay"
+	"pasado a CardSystem"
 	turnManager reverseTheTurns
 ]
 
@@ -357,7 +357,8 @@ Game >> shieldOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> stablish: helper on: aShip [
-	"cardSystem stablish: helper on: aShip"
+	"pasado a CardSystem"
+
 	(relationshipsWithMercenaries at: aShip id) add: helper
 ]
 
@@ -373,7 +374,7 @@ Game >> start [
 
 { #category : 'as yet unclassified' }
 Game >> unStablish: helper on: aShip [
-	"cardSystem unStablish: helper on: aShip"
+	"pasado a CardSystem"
 	relationshipsWithMercenaries valuesDo: [ :helpers |
 		helpers remove: helper ifAbsent: [  ] ]
 ]

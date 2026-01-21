@@ -39,9 +39,23 @@ CardSystem >> applyAction: anAction [
 
 { #category : 'asserting' }
 CardSystem >> assertItsTurnToPlayOf: aShip [
-
+	
 	aShip = turnManager keepCurrentShip ifFalse: [
 		Error signal: 'Its not the ships turn to play' ]
+]
+
+{ #category : 'asserting' }
+CardSystem >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
+
+	(relationships values anySatisfy: [ :mercenaries |
+		 mercenaries includes: aMercenaryId ]) ifTrue: [
+		Error signal: 'A mercenary cant help multiple ships.' ]
+]
+
+{ #category : 'asserting' }
+CardSystem >> assertTheGameIsNotOver [
+
+	^ gameRules assertTheGameIsNotOver
 ]
 
 { #category : 'as yet unclassified' }
@@ -79,6 +93,33 @@ CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPosition
 	activeCardHolder := anActiveCardHolder.
 	relationships := theRelationshipsWithMercenaries.
 	gameRules := someGameRules.
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
+	
+	lastActionPrototype ifNil: [ ^ self ].
+	self applyAction:
+		(lastActionPrototype value: aShip value: self value: aHelperId)
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> reverseTurns [
+
+	turnManager reverseTheTurns
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> stablish: helper on: aShip [
+
+	(relationships at: aShip id) add: helper
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> unStablish: helper on: aShip [
+
+	relationships valuesDo: [ :helpers |
+		helpers remove: helper ifAbsent: [  ] ]
 ]
 
 { #category : 'movingOut' }
