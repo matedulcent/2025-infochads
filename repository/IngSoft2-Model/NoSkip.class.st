@@ -26,5 +26,5 @@ NoSkip >> playTurnFor: aShip with: aDiceRoll in: aGame [
 { #category : 'as yet unclassified' }
 NoSkip >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
 
-	aSpaceShip isImprisionedByTossing: aDiceRoll on: aGame
+	"aSpaceShip isImprisionedByTossing: aDiceRoll on: aGame"
 ]

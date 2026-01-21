@@ -63,7 +63,7 @@ SpaceShip >> canBattle [
 { #category : 'as yet unclassified' }
 SpaceShip >> changeSkippingStateTo: nextSkipState [
 
-	skipState := nextSkipState 
+	"skipState := nextSkipState "
 ]
 
 { #category : 'states' }
@@ -111,8 +111,8 @@ SpaceShip >> id [
 { #category : 'shield' }
 SpaceShip >> if0WasTossed: aDiceRoll [
 
-	aDiceRoll = 0 ifTrue: [
-		self changeSkippingStateTo: (SkipForShields withNext: NoSkip) ]
+	"aDiceRoll = 0 ifTrue: [
+		self changeSkippingStateTo: (SkipForShields withNext: NoSkip) ]"
 ]
 
 { #category : 'as yet unclassified' }
@@ -149,11 +149,15 @@ SpaceShip >> isLockedUp [
 
 { #category : 'shield' }
 SpaceShip >> loseShield [
+	"shield := shield - 1.
+	shield = 0 ifTrue: [
+		self changeSkippingStateTo:
+			(SkipForShields new initializeWithNext: NoSkip new) ]"
 
 	shield := shield - 1.
 	shield = 0 ifTrue: [
-		self changeSkippingStateTo:
-			(SkipForShields new initializeWithNext: NoSkip new) ]
+		self skipState: (SkipForSkipping new initializeWithNext:
+				 (SkipForShields new initializeWithNext: NoSkip new)) ]
 ]
 
 { #category : 'shield' }

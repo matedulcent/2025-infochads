@@ -20,5 +20,5 @@ SkipForSkipping >> playTurnFor: aShip with: aDiceRoll in: aGame [
 { #category : 'as yet unclassified' }
 SkipForSkipping >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
 
-	aSpaceShip changeSkippingStateTo: (nextSkipState withNext: NoSkip)
+	"aSpaceShip changeSkippingStateTo: (nextSkipState withNext: NoSkip)"
 ]

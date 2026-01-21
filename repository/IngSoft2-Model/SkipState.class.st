@@ -10,12 +10,14 @@ Class {
 
 { #category : 'initialization' }
 SkipState >> initializeWithNext: aSkipState [
-    nextSkipState := aSkipState
+
+	nextSkipState := aSkipState
 ]
 
 { #category : 'accessing' }
 SkipState >> next [
-    ^ nextSkipState
+
+	"^ nextSkipState"
 ]
 
 { #category : 'as yet unclassified' }
