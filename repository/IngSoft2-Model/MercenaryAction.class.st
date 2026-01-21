@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'helperId',
 		'ship',
-		'game'
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,16 +19,16 @@ MercenaryAction class >> helper: aHelperId on: aShip in: aGame [
 { #category : 'private' }
 MercenaryAction >> apply [
 
-	game assertMercenaryIsNotHelpingAnotherShip: helperId.
-	game stablish: helperId on: ship
+	cardSystem assertMercenaryIsNotHelpingAnotherShip: helperId.
+	cardSystem stablish: helperId on: ship
 ]
 
 { #category : 'initialization' }
-MercenaryAction >> initializeHelper: aHelperId on: aShip in: aGame [
+MercenaryAction >> initializeHelper: aHelperId on: aShip in: aCardSystem [
 
 	helperId := aHelperId.
 	ship := aShip.
-	game := aGame.
+	cardSystem := aCardSystem.
 	^ self
 ]
 

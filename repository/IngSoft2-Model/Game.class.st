@@ -260,24 +260,16 @@ Game >> positionOf: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> redoLastActionOn: aShip withAdditional: aHelperId [
-	"pasado a CardSystem"
-	lastActionPrototype ifNil: [ ^ self ].
-	self applyAction:
-		(lastActionPrototype value: aShip value: self value: aHelperId)
-]
-
-{ #category : 'as yet unclassified' }
 Game >> repeatLastCellEffectOn: aShipId [
 	"mandado a CardSystem"
 
-	| ship anEffect |
+	"| ship anEffect |
 	lastEffectPrototype ifNil: [ ^ self ].
 
 	ship := turnManager obtainShipById: aShipId. "self checkFor: aShipId."
 
 	anEffect := lastEffectPrototype value: ship value: self.
-	anEffect applyOn: ship in: self
+	anEffect applyOn: ship in: self"
 ]
 
 { #category : 'as yet unclassified' }

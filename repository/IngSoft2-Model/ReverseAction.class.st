@@ -2,7 +2,7 @@ Class {
 	#name : 'ReverseAction',
 	#superclass : 'CardAction',
 	#instVars : [
-		'game'
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,18 +17,18 @@ ReverseAction class >> in: aGame [
 { #category : 'private' }
 ReverseAction >> apply [
 
-	game reverseTurns
+	cardSystem reverseTurns
 ]
 
 { #category : 'initialization' }
-ReverseAction >> initializeIn: aGame [
+ReverseAction >> initializeIn: aCardSystem [
 
-	game := aGame.
+	cardSystem := aCardSystem.
 	^ self
 ]
 
 { #category : 'accessing' }
 ReverseAction >> prototype [
 
-	^ [ :newShip :aGame :additional | self class in: aGame ]
+	^ [ :newShip :aCardSystem :additional | self class in: aCardSystem ]
 ]

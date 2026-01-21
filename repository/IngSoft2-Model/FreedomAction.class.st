@@ -30,5 +30,5 @@ FreedomAction >> initializeOn: aShip [
 { #category : 'accessing' }
 FreedomAction >> prototype [
 
-	^ [ :newShip :game :additional | self class on: newShip ]
+	^ [ :newShip :cardSystem :additional | self class on: newShip ]
 ]

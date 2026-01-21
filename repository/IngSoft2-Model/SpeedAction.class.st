@@ -3,7 +3,7 @@ Class {
 	#superclass : 'CardAction',
 	#instVars : [
 		'ship',
-		'game'
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -22,15 +22,16 @@ SpeedAction >> apply [
 ]
 
 { #category : 'initialization' }
-SpeedAction >> initializeOn: aShip in: aGame [
+SpeedAction >> initializeOn: aShip in: aCardSystem [
 
 	ship := aShip.
-	game := aGame.
+	cardSystem := aCardSystem.
 	^ self
 ]
 
 { #category : 'accessing' }
 SpeedAction >> prototype [
 
-	^ [ :newShip :aGame :additional | self class on: newShip in: aGame ]
+	^ [ :newShip :aCardSystem :additional |
+	  self class on: newShip in: aCardSystem ]
 ]
