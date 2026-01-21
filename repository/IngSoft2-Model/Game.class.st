@@ -61,12 +61,6 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 		  wonAfter: aNumberOfLaps
 ]
 
-{ #category : 'adding' }
-Game >> addActive: aCard to: aShipId [
-	"pasado a CardSystem"
-	activeCardHolder addActive: aCard to: aShipId
-]
-
 { #category : 'as yet unclassified' }
 Game >> adjustPosition [
 	"stay ?"
@@ -99,38 +93,6 @@ Game >> applyPowerUpTo: aSpaceShip [
 	anEffect applyOn: aSpaceShip in: self
 ]
 
-{ #category : 'asserting' }
-Game >> assertItsTurnToPlayOf: aShip [
-	"pasado a CardSystem"
-	aShip = turnManager keepCurrentShip ifFalse: [
-		Error signal: 'Its not the ships turn to play' ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
-"pasado a CardSystem"
-	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
-		 mercenaries includes: aMercenaryId ]) ifTrue: [
-		Error signal: 'A mercenary cant help multiple ships.' ]
-]
-
-{ #category : 'whats left of race positions' }
-Game >> assertTheGameIsNotOver [
-	"pasado a gameRules"
-	^ spaceShips anySatisfy: [ :aShip |
-		  (manage at: aShip id) isEqualTo:
-			  (Position at: board boardSize withLaps: laps) ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> cancel: targetCard on: targetShip [
-	"pasado a CardSystem"
-	| aCard aShip |
-	aCard := activeCardHolder removeActive: targetCard from: targetShip.
-	aShip := turnManager obtainShipById: targetShip.
-	aCard unplayOn: aShip in: self
-]
-
 { #category : 'initialization' }
 Game >> createRelationsWithMercenaries [
 
@@ -154,21 +116,9 @@ Game >> createSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> decrementAllBoosters [
-	"pasado a cardSystem"
-	spaceShips do: [ :ship | ship decrementBooster ]
-]
-
-{ #category : 'as yet unclassified' }
 Game >> deductAShieldFromEveryShip [
 
 	spaceShips do: [ :ship | ship loseShield ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> doubleTurnOn: aShip [
-	"pasado a CardSystem"
-	turnManager doubleTurnOn: aShip
 ]
 
 { #category : 'informationTest' }
@@ -193,12 +143,6 @@ Game >> giveACardTo: aShip [
 	| aCard |
 	aCard := board pickACard.
 	aShip addA: aCard
-]
-
-{ #category : 'as yet unclassified' }
-Game >> incrementAllBoosters [
-	"pasado a CardSystem"
-	spaceShips do: [ :ship | ship incrementBooster ]
 ]
 
 { #category : 'initialization' }
@@ -334,12 +278,6 @@ Game >> returnEveryShipToTheBeguining [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> reverseTurns [
-	"pasado a CardSystem"
-	turnManager reverseTheTurns
-]
-
-{ #category : 'as yet unclassified' }
 Game >> rollTheDice [
 	"stay"
 	diceRoll := diceSet toss.
@@ -355,39 +293,19 @@ Game >> shieldOf: aSpaceShipID [
 		  ifNone: [ nil ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> stablish: helper on: aShip [
-	"pasado a CardSystem"
-
-	(relationshipsWithMercenaries at: aShip id) add: helper
-]
-
 { #category : 'accessing' }
 Game >> start [
 	"stay"
 	| aSpaceShip |
 	diceRoll := diceSet toss.
-	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
+	[ gameRules assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
 		aSpaceShip := turnManager grabAndUpdate.
 		aSpaceShip willPlayByTossing: diceRoll on: self ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> unStablish: helper on: aShip [
-	"pasado a CardSystem"
-	"relationshipsWithMercenaries valuesDo: [ :helpers |
-		helpers remove: helper ifAbsent: [  ] ]"
-]
-
 { #category : 'movingOut' }
 Game >> use: aCard on: aShipId [
+
 	cardSystem use: aCard on: aShipId.
 	self adjustPosition
-
-	"| ship |
-	ship := turnManager obtainShipById: aShipId.
-
-	ship assertItHas: aCard.
-	aCard playOn: ship in: self.
-	self adjustPosition"
 ]
