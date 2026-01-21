@@ -2,8 +2,8 @@ Class {
 	#name : 'DoubleTurnAction',
 	#superclass : 'CardAction',
 	#instVars : [
-		'game',
-		'ship'
+		'ship',
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,13 +18,13 @@ DoubleTurnAction class >> on: aShip in: aGame [
 { #category : 'private' }
 DoubleTurnAction >> apply [
 
-	game doubleTurnOn: ship
+	cardSystem doubleTurnOn: ship
 ]
 
 { #category : 'initialization' }
-DoubleTurnAction >> initializeOn: aShip in: aGame [
+DoubleTurnAction >> initializeOn: aShip in: aCardSystem [
 
-	game := aGame.
+	cardSystem := aCardSystem.
 	ship := aShip.
 	^ self
 ]

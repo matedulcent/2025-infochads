@@ -16,7 +16,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInLightYearsThenTheJumpsAreExpre
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -36,7 +36,6 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsecsAndLightYearsAndDontRel
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 200. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }. "15 10 5"
-
 	self
 		should: [
 			Board
@@ -60,7 +59,7 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsercsThenTheJumpsExpresedIn
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -86,7 +85,7 @@ LightYearsTests >> testWhenTheDistanceNeitherInParsecsOrLightYearsThenIsInvalid 
 			Board
 				withSize: 50
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
-				playedWith: (OrderedCollection with: WhiteCard new)
+				playedWith: (CardDeck withCards: {  })
 				andACellConfiguration: aConfigureDiceSet ]
 		raise: Error
 		withMessageText:
@@ -104,7 +103,7 @@ LightYearsTests >> testWhenTheDistanceOfTheGameIsExpresedInLightYearsAndParsecsT
 	aBoard := Board
 		          withSize: 50
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard

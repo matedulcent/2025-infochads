@@ -6,8 +6,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DoubleCard >> playOn: aShip in: aGame [
+DoubleCard >> playOn: aShip in: aCardSystem [
 
-	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aGame applyAction: (DoubleTurnAction on: aShip in: aGame)
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem applyAction: (DoubleTurnAction on: aShip in: aCardSystem)
 ]

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'targetCard',
 		'targetShip',
-		'game'
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,15 +19,15 @@ CancelationAction class >> to: aCard on: aShip in: aGame [
 { #category : 'private' }
 CancelationAction >> apply [
 
-	game cancel: targetCard on: targetShip
+	cardSystem cancel: targetCard on: targetShip
 ]
 
 { #category : 'initialization' }
-CancelationAction >> initializeTo: aCard on: aShipId in: aGame [
+CancelationAction >> initializeTo: aCard on: aShipId in: aCardSystem [
 
 	targetCard := aCard.
 	targetShip := aShipId.
-	game := aGame.
+	cardSystem := aCardSystem.
 ]
 
 { #category : 'accessing' }
@@ -36,6 +36,6 @@ CancelationAction >> prototype [
 	| card |
 	card := targetCard.
 
-	^ [ :redoShip :aGame :helperShip |
-	  self class to: card on: helperShip in: game ]
+	^ [ :redoShip :aCardSystem :helperShip |
+	  self class to: card on: helperShip in: cardSystem ]
 ]

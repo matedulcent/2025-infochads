@@ -26,12 +26,11 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 { #category : 'tests' }
 SpeedCardTest >> testWhenACardIsNotInDeckThenUsageFails [
 
-	| aGame aBoard deckOfCards |
-	deckOfCards := OrderedCollection with: WhiteCard new.
+	| aGame aBoard |
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: deckOfCards
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -47,12 +46,11 @@ SpeedCardTest >> testWhenACardIsNotInDeckThenUsageFails [
 { #category : 'tests' }
 SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
 
-	| aGame aBoard deckOfCards |
-	deckOfCards := OrderedCollection withAll: { WhiteCard new }.
+	| aGame aBoard |
 	aBoard := Board
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: deckOfCards
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

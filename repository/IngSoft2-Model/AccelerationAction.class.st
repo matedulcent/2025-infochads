@@ -3,7 +3,7 @@ Class {
 	#superclass : 'CardAction',
 	#instVars : [
 		'ship',
-		'game'
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,20 +18,20 @@ AccelerationAction class >> on: aShip in: aGame [
 { #category : 'private' }
 AccelerationAction >> apply [
 	
-	game incrementAllBoosters 
+	cardSystem incrementAllBoosters 
 ]
 
 { #category : 'initialization' }
-AccelerationAction >> initializeOn: aShip in: aGame [
+AccelerationAction >> initializeOn: aShip in: aCardSystem [
 
 	ship := aShip.
-	game := aGame.
+	cardSystem := aCardSystem.
 	^ self
 ]
 
 { #category : 'accessing' }
 AccelerationAction >> prototype [
 
-	^ [ :newShip :aGame :additional |
-	  self class on: newShip in: aGame ]
+	^ [ :newShip :aCardSystem :additional |
+	  self class on: newShip in: aCardSystem ]
 ]

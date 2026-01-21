@@ -7,8 +7,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 Normal >> applyOn: aShip in: aGame [
-	
-	"nada"
+	"   _   -   "
+	"\_(0 - 0)_/"
 ]
 
 { #category : 'accessing' }

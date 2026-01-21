@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'spaceShips',
 		'diceSet',
-		'nextSpaceShipToMove',
 		'numberOfSpaceShips',
 		'laps',
 		'board',
@@ -12,11 +11,13 @@ Class {
 		'stepOfNextSpaceShipToMove',
 		'listOfAlteredSteps',
 		'diceRoll',
-		'nextSpaceShip',
 		'activeCardHolder',
 		'relationshipsWithMercenaries',
 		'lastActionPrototype',
-		'lastEffectPrototype'
+		'lastEffectPrototype',
+		'turnManager',
+		'cardSystem',
+		'cellSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -59,15 +60,9 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 		  wonAfter: aNumberOfLaps
 ]
 
-{ #category : 'adding' }
-Game >> addActive: aShipId to: arg2 [
-	"??? borar?"
-	activeCardHolder addActive: aShipId to: arg2
-]
-
 { #category : 'as yet unclassified' }
 Game >> adjustPosition [
-
+	"stay ?"
 	spaceShips do: [ :ship |
 		manage sumAt: ship id with: (board
 				 limitAdjustment: (manage positions at: ship id)
@@ -77,74 +72,44 @@ Game >> adjustPosition [
 { #category : 'as yet unclassified' }
 Game >> applyAction: anAction [
 
-	lastActionPrototype := anAction prototype.
-	anAction apply
+	lastActionPrototype := anAction prototype
+]
+
+{ #category : 'as yet unclassified' }
+Game >> applyEffect: anEffect [
+
+	lastEffectPrototype := anEffect 
 ]
 
 { #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
-
-	| cell position effectPrototype anEffect |
-	position := manage at: aSpaceShip id.
-	cell := board cellInThe: position.
-	cell ifNil: [ ^ self ].
-
-	effectPrototype := cell percieveAction.
-	lastEffectPrototype := effectPrototype.
-
-	anEffect := effectPrototype value: aSpaceShip value: self.
-	anEffect applyOn: aSpaceShip in: self
+	"ver si puedo mover"
+	cellSystem applyPowerUpTo: aSpaceShip
 ]
 
 { #category : 'asserting' }
-Game >> assertItsTurnToPlayOf: aShip [
-
-	aShip = nextSpaceShip keepCurrentShip ifFalse: [
-		Error signal: 'Its not the ships turn to play' ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
-
-	(relationshipsWithMercenaries values anySatisfy: [ :mercenaries |
-		 mercenaries includes: aMercenaryId ]) ifTrue: [
-		Error signal: 'A mercenary cant help multiple ships.' ]
-]
-
-{ #category : 'whats left of race positions' }
 Game >> assertTheGameIsNotOver [
 
-	^ spaceShips anySatisfy: [ :aShip |
+	^ turnManager allShips anySatisfy: [ :aShip |
 		  (manage at: aShip id) isEqualTo:
 			  (Position at: board boardSize withLaps: laps) ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> cancel: targetCard on: targetShip [
+{ #category : 'initialization' }
+Game >> createRelationsWithMercenaries [
 
-	| aCard aShip |
-	aCard := activeCardHolder removeActive: targetCard from: targetShip.
-	aShip := self checkFor: targetShip.
-	aCard unplayOn: aShip in: self
-]
-
-{ #category : 'movingOut' }
-Game >> checkFor: aSpaceShipID [
-	"refactor para que use Turn Manager Quiza"
-	| aShip |
-	aShip := spaceShips
-		         detect: [ :ship | ship id = aSpaceShipID ]
-		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-	^ aShip
+	relationshipsWithMercenaries := OrderedDictionary new.
+	spaceShips do: [ :ship |
+		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
 ]
 
 { #category : 'whats left of race positions' }
-Game >> create: aNumberOfSpaceShips [
+Game >> createSpaceShips [
 
 	| shield |
 	shield := 3.
 	spaceShips := OrderedCollection new.
-	1 to: aNumberOfSpaceShips do: [ :id |
+	1 to: numberOfSpaceShips do: [ :id |
 		spaceShips add: (SpaceShip
 				 with: id
 				 startingWith: board pickACard
@@ -152,27 +117,9 @@ Game >> create: aNumberOfSpaceShips [
 				 with: shield) ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> decrementAllBoosters [
-
-	spaceShips do: [ :ship | ship decrementBooster ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> deductAShieldFromEveryShip [
-
-	spaceShips do: [ :ship | ship loseShield ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> doubleTurnOn: aShip [
-
-	nextSpaceShip doubleTurnOn: aShip
-]
-
 { #category : 'informationTest' }
 Game >> getRanking [
-
+	"stay"
 	| ranking |
 	self isOver ifFalse: [ ^ #(  ) ].
 
@@ -186,53 +133,44 @@ Game >> getRanking [
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> giveACardTo: aShip [
-
-	| aCard |
-	aCard := board pickACard.
-	aShip addA: aCard
-]
-
-{ #category : 'as yet unclassified' }
-Game >> incrementAllBoosters [
-
-	spaceShips do: [ :ship | ship incrementBooster ]
-]
-
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-
-	self create: aNumberOfSpaceShips.
-	manage := PositionManager of: spaceShips.
-
-	diceSet := aDiceSet.
-
-
 	numberOfSpaceShips := aNumberOfSpaceShips.
+	self createSpaceShips.
+	manage := PositionManager of: spaceShips.
+	diceSet := aDiceSet.
 	laps := aNumberOfLaps.
+	turnManager := TurnManager withThe: spaceShips.
+	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
+	self createRelationsWithMercenaries.
 
-	nextSpaceShip := TurnManager withThe: spaceShips.
+	cellSystem := CellSystem
+		              withBoard: board
+		              positionManager: manage
+		              turnManager: turnManager
+		              and: self.
 
-	activeCardHolder := CardHolderGlobal withPlayers: spaceShips.
-
-	relationshipsWithMercenaries := OrderedDictionary new.
-	spaceShips do: [ :ship |
-		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
+	cardSystem := CardSystem
+		              withTurnManager: turnManager
+		              positionManager: manage
+		              activeCardHolder: activeCardHolder
+		              andRelationships: relationshipsWithMercenaries
+		              withAdditional: cellSystem
+		              and: self
 ]
 
 { #category : 'testing' }
 Game >> isLockedUpInCell: aSpaceShipID [
 
-	self checkFor: aSpaceShipID.
+	turnManager obtainShipById: aSpaceShipID.
 	^ (spaceShips at: aSpaceShipID) isLockedUp
 ]
 
 { #category : 'informationTest' }
 Game >> isOver [
-	"testing"
+	"testing" "stay"
 	^ self assertTheGameIsNotOver
 ]
 
@@ -244,6 +182,7 @@ Game >> lapOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
+	"stay"
 
 	manage
 		sumAt: aSpaceShip id
@@ -270,24 +209,15 @@ Game >> move: aSpaceShip after: aDiceRoll [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> move: aShip by: backTrack [
-	
-	| actualPosition |
-	actualPosition := manage positions at: aShip id.
-	
-	manage positions
-		at: aShip id
-		put: ((manage positions at: aShip id) replacePositionWith:
-				 (Position at: (actualPosition position) + backTrack withLaps: 0))
+Game >> obtainLastCardActionPrototype [
+
+	^ lastActionPrototype 
 ]
 
 { #category : 'as yet unclassified' }
-Game >> moveEveryShipBut: aShip backBy: backTrack [
+Game >> obtainLastCellEffectPrototype [
 
-	| otherShips |
-	otherShips := spaceShips reject: [ :each | each id = aShip id ].
-
-	otherShips do: [ :ship | self move: ship by: backTrack ]
+	^ lastEffectPrototype 
 ]
 
 { #category : 'informationTest' }
@@ -297,43 +227,8 @@ Game >> positionOf: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> redoLastActionOn: aShip withAdditional: aHelperId [
-
-	lastActionPrototype ifNil: [ ^ self ].
-	self applyAction:
-		(lastActionPrototype value: aShip value: self value: aHelperId)
-]
-
-{ #category : 'as yet unclassified' }
-Game >> repeatLastCellEffectOn: aShipId [
-    | ship anEffect |
-
-    lastEffectPrototype ifNil: [ ^ self ].
-
-    ship := self checkFor: aShipId.
-
-    anEffect := lastEffectPrototype value: ship value: self.
-    anEffect applyOn: ship in: self
-]
-
-{ #category : 'as yet unclassified' }
-Game >> returnEveryShipToTheBeguining [
-
-	spaceShips do: [ :ship |
-		self
-			move: ship
-			by: (manage positions at: ship id) position negated + 1 ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> reverseTurns [
-
-	nextSpaceShip reverseTheTurns
-]
-
-{ #category : 'as yet unclassified' }
 Game >> rollTheDice [
-
+	"stay"
 	diceRoll := diceSet toss.
 ]
 
@@ -347,37 +242,19 @@ Game >> shieldOf: aSpaceShipID [
 		  ifNone: [ nil ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> stablish: helper on: aShip [
-	
-	(relationshipsWithMercenaries at: aShip id) add: helper
-]
-
 { #category : 'accessing' }
 Game >> start [
-
+	"stay"
 	| aSpaceShip |
 	diceRoll := diceSet toss.
 	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
-		aSpaceShip := nextSpaceShip grabAndUpdate.
+		aSpaceShip := turnManager grabAndUpdate.
 		aSpaceShip willPlayByTossing: diceRoll on: self ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> unStablish: helper on: aShip [
-
-	relationshipsWithMercenaries valuesDo: [ :helpers |
-		helpers remove: helper ifAbsent: [  ] ]
 ]
 
 { #category : 'movingOut' }
 Game >> use: aCard on: aShipId [
 
-	| ship |
-	ship := self checkFor: aShipId.
-
-	ship assertItHas: aCard.
-
-	aCard playOn: ship in: self.
+	cardSystem use: aCard on: aShipId.
 	self adjustPosition
 ]

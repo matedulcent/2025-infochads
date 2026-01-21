@@ -97,15 +97,14 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 { #category : 'tests' }
 PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatOnlyHasAWhiteCardsThenNothingHappens [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
+	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: { WhiteCard }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
+		          playedWith: (CardDeck withCards: { WhiteCard new })
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard

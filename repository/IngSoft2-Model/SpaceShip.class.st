@@ -5,7 +5,6 @@ Class {
 		'shield',
 		'spaceShipID',
 		'cards',
-		'pendingCards',
 		'state',
 		'skipState',
 		'boost'
@@ -125,7 +124,6 @@ SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: 
 	cards := OrderedCollection withAll: {
 			         aCard.
 			         anotherCard }.
-	pendingCards := OrderedCollection new.
 
 	state := Free new.
 	skipState := NoSkip withNext: NoSkip.

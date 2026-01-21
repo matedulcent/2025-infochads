@@ -24,6 +24,12 @@ TurnManager >> advanceTurn [
 	^ currentShipPlaying
 ]
 
+{ #category : 'as yet unclassified' }
+TurnManager >> allShips [
+
+	^ orderedShips "borrar ? "
+]
+
 { #category : 'accessing' }
 TurnManager >> currentShipPlaying [
 
@@ -39,7 +45,7 @@ TurnManager >> doubleTurnOn: aShip [
 { #category : 'as yet unclassified' }
 TurnManager >> grab [
 
-	^ orderedShips first 
+	^ orderedShips first "borrar ?"
 ]
 
 { #category : 'as yet unclassified' }
@@ -63,6 +69,16 @@ TurnManager >> keepCurrentShip [
 	grantExtraTurn := false.
 	currentShipPlaying ifNil: [ currentShipPlaying := orderedShips first ].
 	^ currentShipPlaying
+]
+
+{ #category : 'as yet unclassified' }
+TurnManager >> obtainShipById: aSpaceShipID [
+
+	| aShip |
+	aShip := orderedShips
+		         detect: [ :ship | ship id = aSpaceShipID ]
+		         ifNone: [ Error signal: 'The ship doesnt exist' ].
+	^ aShip
 ]
 
 { #category : 'as yet unclassified' }

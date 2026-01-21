@@ -15,12 +15,6 @@ CancelationCard class >> withObjective: aCard toShip: objective [
 	^ self new initializeWith: aCard and: objective
 ]
 
-{ #category : 'as yet unclassified' }
-CancelationCard >> cardObjective: aCard [
-
-	^ card
-]
-
 { #category : 'initialization' }
 CancelationCard >> initializeWith: aCard and: anObjective [
 
@@ -29,8 +23,8 @@ CancelationCard >> initializeWith: aCard and: anObjective [
 ]
 
 { #category : 'as yet unclassified' }
-CancelationCard >> playOn: aShip in: aGame [
+CancelationCard >> playOn: aShip in: aCardSystem [
 
-	aGame applyAction:
-		(CancelationAction to: card on: objective in: aGame)
+	aCardSystem applyAction:
+		(CancelationAction to: card on: objective in: aCardSystem)
 ]

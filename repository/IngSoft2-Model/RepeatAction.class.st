@@ -3,7 +3,8 @@ Class {
 	#superclass : 'CardAction',
 	#instVars : [
 		'game',
-		'targetShipId'
+		'targetShipId',
+		'cardSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,13 +19,13 @@ RepeatAction class >> on: aShip in: aGame [
 { #category : 'private' }
 RepeatAction >> apply [
 
-	game repeatLastCellEffectOn: targetShipId
+	cardSystem repeatLastCellEffectOn: targetShipId
 ]
 
 { #category : 'initialization' }
-RepeatAction >> initializeOn: aShipId in: aGame [
+RepeatAction >> initializeOn: aShipId in: aCardSystem [
 
-	game := aGame.
+	cardSystem := aCardSystem.
 	targetShipId := aShipId.
 	^ self
 ]
@@ -32,6 +33,6 @@ RepeatAction >> initializeOn: aShipId in: aGame [
 { #category : 'accessing' }
 RepeatAction >> prototype [
 
-	^ [ :aShip :aGame :additional |
-	  self class on: (additional ifNil: [ aShip id ]) in: aGame ]
+	^ [ :aShip :aCardSystem :additional |
+	  self class on: (additional ifNil: [ aShip id ]) in: aCardSystem ]
 ]

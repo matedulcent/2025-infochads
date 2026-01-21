@@ -34,11 +34,18 @@ CardDeck >> allPosibleCardsShuffled [
 ]
 
 { #category : 'as yet unclassified' }
+CardDeck >> grabCard [
+
+	^ self nextCard ifNil: [ WhiteCard new ]
+]
+
+{ #category : 'as yet unclassified' }
 CardDeck >> initializeWithCards: aSelectionOfCards [
 
 	allCards := false.
 	cardDeck := OrderedCollection new.
 	cardDeck := OrderedCollection newFrom: aSelectionOfCards.
+	"If the deck has no pre-charged cards, then it has one of each (Real deck of cards)"
 	aSelectionOfCards ifEmpty: [
 		allCards := true.
 		self allPosibleCardsShuffled ]
@@ -47,15 +54,32 @@ CardDeck >> initializeWithCards: aSelectionOfCards [
 { #category : 'testing' }
 CardDeck >> isEmpty [
 
-	^ cardDeck isEmpty 
+	^ allCards not and: [ cardDeck isEmpty ]
+]
+
+{ #category : 'as yet unclassified' }
+CardDeck >> nextCard [
+
+	allCards ifTrue: [ ^ self nextRealCard ].
+	cardDeck isEmpty ifTrue: [ ^ nil ].
+	^ cardDeck removeLast
+]
+
+{ #category : 'as yet unclassified' }
+CardDeck >> nextRealCard [
+
+	self shuffleTheCards.
+	^ cardDeck first deepCopy
 ]
 
 { #category : 'removing' }
 CardDeck >> removeLast [
+	"If the deck is real then it shuffles it every time a card is picked "
 
 	allCards ifTrue: [
 		self shuffleTheCards.
 		^ cardDeck first deepCopy ].
+
 	^ cardDeck removeLast
 ]
 

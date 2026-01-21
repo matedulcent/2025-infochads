@@ -6,8 +6,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-SkipCard >> playOn: aShip in: aGame [
+SkipCard >> playOn: aShip in: aCardSystem [
 
-	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aGame applyAction: (SkipAction on: aShip)
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem applyAction: (SkipAction on: aShip)
 ]

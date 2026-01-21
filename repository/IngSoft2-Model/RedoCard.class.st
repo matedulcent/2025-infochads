@@ -21,7 +21,7 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-RedoCard >> playOn: aShip in: aGame [
+RedoCard >> playOn: aShip in: aCardSystem [
 
-	aGame redoLastActionOn: aShip withAdditional: targetId
+	aCardSystem redoLastActionOn: aShip withAdditional: targetId
 ]

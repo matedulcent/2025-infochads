@@ -29,7 +29,7 @@ HyperGravityTest >> testWhenABoardIsCreatedThenItCanCreateAnUnlimitedNumberOfHyp
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 
 	aGame := Game
@@ -86,7 +86,7 @@ HyperGravityTest >> testWhenShipHasToRollADiceHigherThatTheMaximumProvidedByDice
 			Board
 				withSize: 100
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
-				playedWith: (OrderedCollection with: WhiteCard new)
+				playedWith: (CardDeck withCards: {  })
 				andACellConfiguration: aConfigureDiceSet ]
 		raise: Error
 		withMessageText:
@@ -106,7 +106,7 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsHigherThanTheNumb
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 
 	aGame := Game
@@ -133,7 +133,7 @@ HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsTheRightNumberToE
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
+		          playedWith: (CardDeck withCards: {  })
 		          andACellConfiguration: aConfigureDiceSet.
 
 	aGame := Game

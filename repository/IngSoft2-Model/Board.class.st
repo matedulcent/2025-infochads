@@ -5,7 +5,7 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'cardManager'
+		'deckOfCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -35,8 +35,6 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 	| cell |
 	gameBoard ifEmpty: [ ^ self ].
 	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
-
-	"cardManager lastCellPlayed: cell. ""raro"
 
 	cell
 		takeActionOver: aSpaceShip
@@ -69,16 +67,14 @@ Board >> checkForWormHole: aPosition [
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	cardManager := CardManager createWith: aDeckOfCards.
+	deckOfCards := aDeckOfCards.
 
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
-		             withComplementary: cardManager
-		             And: boardSize.
+		             withComplementary: boardSize.
 
 	wormHole := aWormHole.
-	wormHole mustBeWithInLimits: aBoardSize.
-
+	wormHole mustBeWithInLimits: aBoardSize
 ]
 
 { #category : 'as yet unclassified' }
@@ -101,15 +97,9 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> manageCards [
-
-	^ cardManager
-]
-
-{ #category : 'as yet unclassified' }
 Board >> pickACard [
-	
-	^ cardManager grabTopCard
+
+	^ deckOfCards grabCard
 ]
 
 { #category : 'as yet unclassified' }

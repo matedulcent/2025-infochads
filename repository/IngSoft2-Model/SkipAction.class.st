@@ -31,5 +31,5 @@ SkipAction >> initializeOn: aShip [
 { #category : 'accessing' }
 SkipAction >> prototype [
 
-	^ [ :newShip :aGame :additional | self class on: newShip ]
+	^ [ :newShip :aCardSystem :additional | self class on: newShip ]
 ]
