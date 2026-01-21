@@ -245,13 +245,13 @@ Game >> move: aSpaceShip after: aDiceRoll [
 Game >> move: aShip by: backTrack [
 	"en cellsystem"
 	"algo paso"
-	| actualPosition |
+	"| actualPosition |
 	actualPosition := manage positions at: aShip id.
 	
 	manage positions
 		at: aShip id
 		put: ((manage positions at: aShip id) replacePositionWith:
-				 (Position at: (actualPosition position) + backTrack withLaps: 0))
+				 (Position at: (actualPosition position) + backTrack withLaps: 0))"
 ]
 
 { #category : 'as yet unclassified' }
