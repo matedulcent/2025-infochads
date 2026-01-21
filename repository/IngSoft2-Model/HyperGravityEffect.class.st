@@ -25,7 +25,7 @@ HyperGravityEffect class >> with: aValueToEscape [
 ]
 
 { #category : 'as yet unclassified' }
-HyperGravityEffect >> applyOn: aShip in: aGame [
+HyperGravityEffect >> applyOn: aShip in: aCellSystem [
 
 	aShip changeStateToRetainedAndNeeds: valueToEscape
 ]
@@ -41,5 +41,5 @@ HyperGravityEffect >> prototype [
 
 	| value |
 	value := valueToEscape.
-	^ [ :ship :game | self class with: value ]
+	^ [ :ship :aCellSystem | self class with: value ]
 ]

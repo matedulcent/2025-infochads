@@ -27,9 +27,9 @@ MoonWalkEffect class >> withBackTrack: aDesplacement [
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> applyOn: aShip in: aGame [
+MoonWalkEffect >> applyOn: aShip in: aCellSystem [
 	
-	aGame moveEveryShipBut: aShip backBy: backTrack
+	aCellSystem moveEveryShipBut: aShip backBy: backTrack
 ]
 
 { #category : 'as yet unclassified' }
@@ -43,5 +43,5 @@ MoonWalkEffect >> prototype [
 
 	| n |
 	n := backTrack.
-	^ [ :ship :game | self class withBackTrack: n ]
+	^ [ :ship :aCellSystem | self class withBackTrack: n ]
 ]

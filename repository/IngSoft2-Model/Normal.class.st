@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Normal >> applyOn: aShip in: aGame [
+Normal >> applyOn: aShip in: aCellSystem [
 	"   _   -   "
 	"\_(0 - 0)_/"
 ]
@@ -14,5 +14,5 @@ Normal >> applyOn: aShip in: aGame [
 { #category : 'accessing' }
 Normal >> prototype [
 
-	^ [ :ship :game | self class new ]
+	^ [ :ship :aCellSystem | self class new ]
 ]

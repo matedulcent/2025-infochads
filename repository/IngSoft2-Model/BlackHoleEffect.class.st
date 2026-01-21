@@ -26,9 +26,9 @@ BlackHoleEffect class >> withBackTrack: aDesplacement [
 ]
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> applyOn: aShip in: aGame [
+BlackHoleEffect >> applyOn: aShip in: aCellSystem [
 	
-	aGame move: aShip by: backTrack
+	aCellSystem move: aShip by: backTrack
 ]
 
 { #category : 'as yet unclassified' }
@@ -42,5 +42,5 @@ BlackHoleEffect >> prototype [
 
 	| n |
 	n := backTrack.
-	^ [ :ship :game | self class withBackTrack: n ]
+	^ [ :ship :aCellSystem | self class withBackTrack: n ]
 ]

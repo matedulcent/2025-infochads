@@ -6,13 +6,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-CardEffect >> applyOn: aShip in: aGame [
+CardEffect >> applyOn: aShip in: aCellSystem [
 
-	aGame giveACardTo: aShip
+	aCellSystem giveACardTo: aShip
 ]
 
 { #category : 'accessing' }
 CardEffect >> prototype [
 
-	^ [ :ship :game | self class new ]
+	^ [ :ship :aCellSystem | self class new ]
 ]

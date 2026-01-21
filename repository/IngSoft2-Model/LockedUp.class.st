@@ -35,9 +35,13 @@ LockedUp >> isLockedUp [
 { #category : 'as yet unclassified' }
 LockedUp >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
 	"akward roll"
-	(self isFreeByTossing: aDiceRoll ) ifFalse: [ aGame rollTheDice.^ self ]. 
+	"(self isFreeByTossing: aDiceRoll ) ifFalse: [ aGame rollTheDice.^ self ]. 
 	aSpaceShip changeStateToFree.
-	aGame move: aSpaceShip after: aDiceRoll.
+	aGame move: aSpaceShip after: aDiceRoll."
+	(aDiceRoll = escapeValue)
+        ifFalse: [ aGame rollTheDice. ^ self ].
+    aSpaceShip state: Free new.
+    aGame move: aSpaceShip after: aDiceRoll
 ]
 
 { #category : 'initialization' }

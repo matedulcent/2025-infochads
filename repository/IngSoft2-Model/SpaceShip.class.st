@@ -153,7 +153,7 @@ SpaceShip >> loseShield [
 	shield := shield - 1.
 	shield = 0 ifTrue: [
 		self changeSkippingStateTo:
-			(SkipForShields withNext: SkipForSkipping) ]
+			(SkipForShields new initializeWithNext: NoSkip new) ]
 ]
 
 { #category : 'shield' }
@@ -164,11 +164,30 @@ SpaceShip >> rechargeShields [
 	shield := 3
 ]
 
+{ #category : 'accessing' }
+SpaceShip >> skipState: aSkipState [
+
+	skipState := aSkipState
+]
+
+{ #category : 'accessing' }
+SpaceShip >> state [
+
+	^ state
+]
+
+{ #category : 'accessing' }
+SpaceShip >> state: aState [
+
+	state := aState
+]
+
 { #category : 'as yet unclassified' }
 SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
-
-	| totalDiceRoll |
+	"| totalDiceRoll |
 	self if0WasTossed: aDiceRoll.
 	totalDiceRoll := aDiceRoll + boost.
-	skipState will: self skipAfter: totalDiceRoll on: aGame
+	skipState will: self skipAfter: totalDiceRoll on: aGame."
+
+	skipState playTurnFor: self with: aDiceRoll + boost in: aGame
 ]

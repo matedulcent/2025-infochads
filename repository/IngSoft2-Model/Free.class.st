@@ -1,6 +1,6 @@
 Class {
 	#name : 'Free',
-	#superclass : 'Object',
+	#superclass : 'ShipState',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
