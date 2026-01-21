@@ -99,6 +99,14 @@ Game >> applyPowerUpTo: aSpaceShip [
 	"anEffect applyOn: aSpaceShip in: self"
 ]
 
+{ #category : 'asserting' }
+Game >> assertTheGameIsNotOver [
+
+	^ turnManager allShips anySatisfy: [ :aShip |
+		  (manage at: aShip id) isEqualTo:
+			  (Position at: board boardSize withLaps: laps) ]
+]
+
 { #category : 'initialization' }
 Game >> createRelationsWithMercenaries [
 
@@ -125,7 +133,7 @@ Game >> createSpaceShips [
 Game >> deductAShieldFromEveryShip [
 	"en cellSystem "
 	"algo paso"
-	spaceShips do: [ :ship | ship loseShield ]
+	"spaceShips do: [ :ship | ship loseShield ]"
 ]
 
 { #category : 'informationTest' }
@@ -165,23 +173,24 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries.
 
+	"al pedo, volver a poner en game"
 	gameRules := GameRules
 		             withBoard: board
 		             positionManager: manage
 		             ships: turnManager
 		             laps: aNumberOfLaps.
+	cellSystem := CellSystem
+		              withBoard: board
+		              positionManager: manage
+		              turnManager: turnManager
+		              and: self.
+
 	cardSystem := CardSystem
 		              withTurnManager: turnManager
 		              positionManager: manage
 		              activeCardHolder: activeCardHolder
 		              andRelationships: relationshipsWithMercenaries
-		              withIn: gameRules
-		              and: self.
-
-	cellSystem := CellSystem
-		              withBoard: board
-		              positionManager: manage
-		              turnManager: turnManager
+		              withAdditional: cellSystem
 		              and: self
 ]
 
@@ -195,7 +204,7 @@ Game >> isLockedUpInCell: aSpaceShipID [
 { #category : 'informationTest' }
 Game >> isOver [
 	"testing" "stay"
-	^ gameRules assertTheGameIsNotOver
+	^ self assertTheGameIsNotOver
 ]
 
 { #category : 'informationTest' }
@@ -302,7 +311,7 @@ Game >> start [
 	"stay"
 	| aSpaceShip |
 	diceRoll := diceSet toss.
-	[ gameRules assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
+	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
 		aSpaceShip := turnManager grabAndUpdate.
 		aSpaceShip willPlayByTossing: diceRoll on: self ]
 ]

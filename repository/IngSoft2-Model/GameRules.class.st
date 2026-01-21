@@ -24,9 +24,9 @@ GameRules class >> withBoard: board positionManager: manage ships: turnManager l
 { #category : 'asserting' }
 GameRules >> assertTheGameIsNotOver [
 
-	^ turnManager allShips anySatisfy: [ :aShip |
+	"^ turnManager allShips anySatisfy: [ :aShip |
 		  (manage at: aShip id) isEqualTo:
-			  (Position at: board boardSize withLaps: laps) ]
+			  (Position at: board boardSize withLaps: laps) ]"
 ]
 
 { #category : 'initialization' }

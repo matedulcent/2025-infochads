@@ -7,21 +7,22 @@ Class {
 		'activeCardHolder',
 		'relationships',
 		'gameRules',
-		'game'
+		'game',
+		'cellSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: gameRules and: aGame [
+CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withAdditional: aCellSystem and: aGame [
 
 	^ self new
 		  initializeWithTurnManager: aTurnManager
 		  positionManager: aPositionManager
 		  activeCardHolder: anActiveCardHolder
 		  andRelationships: theRelationshipsWithMercenaries
-		  withIn: gameRules
+		  withAdditional: aCellSystem
 		  and: aGame
 ]
 
@@ -56,7 +57,7 @@ CardSystem >> assertMercenaryIsNotHelpingAnotherShip: aMercenaryId [
 { #category : 'asserting' }
 CardSystem >> assertTheGameIsNotOver [
 
-	^ gameRules assertTheGameIsNotOver
+	^ game assertTheGameIsNotOver
 ]
 
 { #category : 'as yet unclassified' }
@@ -87,13 +88,13 @@ CardSystem >> incrementAllBoosters [
 ]
 
 { #category : 'initialization' }
-CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: someGameRules and: aGame [
+CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withAdditional: aCellSystem and: aGame [
 
 	turnManager := aTurnManager.
 	positionManager := aPositionManager.
 	activeCardHolder := anActiveCardHolder.
 	relationships := theRelationshipsWithMercenaries.
-	gameRules := someGameRules.
+	cellSystem := aCellSystem.
 	game := aGame
 ]
 
@@ -117,7 +118,8 @@ CardSystem >> repeatLastCellEffectOn: aShipId [
 	ship := turnManager obtainShipById: aShipId.
 
 	anEffect := lastEffectPrototype value: ship value: self.
-	anEffect applyOn: ship in: game
+	anEffect applyOn: ship in: game "cambiar game por cellsystem"
+	"anEffect applyOn: ship in: cellSystem."
 ]
 
 { #category : 'as yet unclassified' }
