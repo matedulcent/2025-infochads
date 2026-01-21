@@ -6,6 +6,12 @@ Class {
 }
 
 { #category : 'testing' }
+Free >> canBattleWithShield: shield [
+
+	^ shield > 0
+]
+
+{ #category : 'testing' }
 Free >> isLockedUp [
 	"borrar"
 	^ false

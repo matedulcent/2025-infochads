@@ -14,6 +14,12 @@ Retained class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
+{ #category : 'testing' }
+Retained >> canBattleWithShield: shield [
+
+	^ false
+]
+
 { #category : 'initialization' }
 Retained >> initializeWith: anEscapeValue [
 

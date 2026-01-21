@@ -56,8 +56,8 @@ SpaceShip >> assertAndRemoveIfItHas: aCard [
 
 { #category : 'shield' }
 SpaceShip >> canBattle [
-	
-	^ shield > 0
+
+	^ state canBattleWithShield: shield
 ]
 
 { #category : 'states' }
@@ -160,9 +160,12 @@ SpaceShip >> state: aState [
 { #category : 'as yet unclassified' }
 SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
 
+	| roll |
+	roll := aDiceRoll + boost.
+
 	aDiceRoll = 0 ifTrue: [
 		self skipState: (SkipForShields new initializeWithNext: NoSkip new).
-		^ skipState playTurnFor: self with: aDiceRoll in: aGame ].
+		roll := aDiceRoll ].
 
-	skipState playTurnFor: self with: aDiceRoll + boost in: aGame
+	skipState playTurnFor: self with: roll in: aGame
 ]

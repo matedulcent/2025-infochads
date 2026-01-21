@@ -14,6 +14,12 @@ LockedUp class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
+{ #category : 'testing' }
+LockedUp >> canBattleWithShield: shield [
+
+	^ false
+]
+
 { #category : 'initialization' }
 LockedUp >> initializeWith: anEscapeValue [
 
