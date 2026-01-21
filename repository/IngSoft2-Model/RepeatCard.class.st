@@ -21,8 +21,8 @@ RepeatCard >> initializeWithObjective: anObjective [
 ]
 
 { #category : 'as yet unclassified' }
-RepeatCard >> playOn: aShip in: aGame [
+RepeatCard >> playOn: aShip in: aCardSystem [
 
-	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aGame applyAction: (RepeatAction on: target in: aGame)
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem applyAction: (RepeatAction on: target in: aCardSystem)
 ]

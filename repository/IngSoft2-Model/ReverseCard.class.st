@@ -6,8 +6,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ReverseCard >> playOn: aShip in: aGame [
+ReverseCard >> playOn: aShip in: aCardSystem [
 
-	aGame assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aGame applyAction: (ReverseAction in: aGame)
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem applyAction: (ReverseAction in: aCardSystem)
 ]

@@ -28,16 +28,16 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 ]
 
 { #category : 'as yet unclassified' }
-MercenaryCard >> playOn: aShip in: aGame [
+MercenaryCard >> playOn: aShip in: aCardSystem [
 
-	aGame assertItsTurnToPlayOf: aShip.
-	aGame addActive: self to: aShip.
-	aGame applyAction:
-		(MercenaryAction helper: helper on: aShip in: aGame)
+	aCardSystem assertItsTurnToPlayOf: aShip.
+	aCardSystem addActive: self to: aShip.
+	aCardSystem applyAction:
+		(MercenaryAction helper: helper on: aShip in: aCardSystem)
 ]
 
 { #category : 'as yet unclassified' }
-MercenaryCard >> unplayOn: aShip in: aGame [
+MercenaryCard >> unplayOn: aShip in: aCardSystem [
 
-	aGame unStablish: helper on: aShip
+	aCardSystem unStablish: helper on: aShip
 ]
