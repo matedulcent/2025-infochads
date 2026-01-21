@@ -381,13 +381,13 @@ Game >> unStablish: helper on: aShip [
 
 { #category : 'movingOut' }
 Game >> use: aCard on: aShipId [
-	"cardSystem use: aCard on: aShipId
-	self adjustPosition"
+	cardSystem use: aCard on: aShipId.
+	self adjustPosition
 
-	| ship |
+	"| ship |
 	ship := turnManager obtainShipById: aShipId.
 
 	ship assertItHas: aCard.
 	aCard playOn: ship in: self.
-	self adjustPosition
+	self adjustPosition"
 ]

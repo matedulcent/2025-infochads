@@ -124,11 +124,10 @@ CardSystem >> unStablish: helper on: aShip [
 
 { #category : 'movingOut' }
 CardSystem >> use: aCard on: aShipId [
-	"cardSystem use: aCard on: aShipId"
 
 	| ship |
 	ship := turnManager obtainShipById: aShipId.
 
 	ship assertItHas: aCard.
-	aCard playOn: ship in: self.
+	aCard playOn: ship in: self
 ]
