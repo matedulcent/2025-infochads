@@ -47,7 +47,7 @@ SpaceShip >> assertAndRemoveIfItHas: aCard [
 
 	| someCard |
 	someCard := cards
-		            detect: [ :card | card isKindOf: aCard class ]
+		            detect: [ :card | card class = aCard class ]
 		            ifNone: [
 		            Error signal: 'The card is not in the ships deck' ].
 
