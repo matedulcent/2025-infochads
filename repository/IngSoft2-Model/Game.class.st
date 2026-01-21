@@ -375,8 +375,8 @@ Game >> start [
 { #category : 'as yet unclassified' }
 Game >> unStablish: helper on: aShip [
 	"pasado a CardSystem"
-	relationshipsWithMercenaries valuesDo: [ :helpers |
-		helpers remove: helper ifAbsent: [  ] ]
+	"relationshipsWithMercenaries valuesDo: [ :helpers |
+		helpers remove: helper ifAbsent: [  ] ]"
 ]
 
 { #category : 'movingOut' }
