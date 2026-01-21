@@ -122,6 +122,7 @@ Game >> createSpaceShips [
 
 { #category : 'as yet unclassified' }
 Game >> deductAShieldFromEveryShip [
+	"en cellSystem "
 
 	spaceShips do: [ :ship | ship loseShield ]
 ]
@@ -144,7 +145,7 @@ Game >> getRanking [
 
 { #category : 'as yet unclassified' }
 Game >> giveACardTo: aShip [
-
+"en CellSystem"
 	| aCard |
 	aCard := board pickACard.
 	aShip addA: aCard
@@ -179,6 +180,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	cellSystem := CellSystem
 		              withBoard: board
 		              positionManager: manage
+		              turnManager: turnManager
 		              and: self
 ]
 
@@ -231,7 +233,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 
 { #category : 'as yet unclassified' }
 Game >> move: aShip by: backTrack [
-	
+	"en cellsystem"
 	| actualPosition |
 	actualPosition := manage positions at: aShip id.
 	
@@ -243,7 +245,7 @@ Game >> move: aShip by: backTrack [
 
 { #category : 'as yet unclassified' }
 Game >> moveEveryShipBut: aShip backBy: backTrack [
-
+"en CellSystem"
 	| otherShips |
 	otherShips := spaceShips reject: [ :each | each id = aShip id ].
 
@@ -270,7 +272,7 @@ Game >> positionOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> returnEveryShipToTheBeguining [
-
+"en cellsystem"
 	spaceShips do: [ :ship |
 		self
 			move: ship
