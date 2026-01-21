@@ -36,17 +36,22 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
-{ #category : 'cards' }
+{ #category : 'adding' }
 SpaceShip >> addA: aCard [
 
 	cards add: aCard
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip >> assertItHas: aCard [
+SpaceShip >> assertAndRemoveIfItHas: aCard [
 
-	(cards anySatisfy: [ :card | card isKindOf: aCard class ]) ifFalse: [
-		Error signal: 'The card is not in the ships deck' ]
+	| someCard |
+	someCard := cards
+		            detect: [ :card | card isKindOf: aCard class ]
+		            ifNone: [
+		            Error signal: 'The card is not in the ships deck' ].
+
+	cards remove: someCard
 ]
 
 { #category : 'shield' }

@@ -75,7 +75,9 @@ PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCar
 		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 }.
 	aDeckOfPosibleCards := CardDeck withCards: {
 			                       SpeedCard new.
-			                       RepeatCard new }.
+			                       RepeatCard new.
+			                       WhiteCard new.
+			                       WhiteCard new }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)

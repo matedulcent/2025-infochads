@@ -147,6 +147,6 @@ CardSystem >> use: aCard on: aShipId [
 	| ship |
 	ship := turnManager obtainShipById: aShipId.
 
-	ship assertItHas: aCard.
+	ship assertAndRemoveIfItHas: aCard.
 	aCard playOn: ship in: self
 ]
