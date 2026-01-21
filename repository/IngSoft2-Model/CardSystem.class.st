@@ -32,7 +32,7 @@ CardSystem >> addActive: aCard to: aShipId [
 
 { #category : 'as yet unclassified' }
 CardSystem >> applyAction: anAction [
-
+	"mandar a game"
 	lastActionPrototype := anAction prototype.
 	anAction apply
 ]
