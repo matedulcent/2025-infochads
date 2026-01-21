@@ -77,6 +77,12 @@ Game >> applyAction: anAction [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> applyEffect: anEffect [
+
+	lastEffectPrototype := anEffect 
+]
+
+{ #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
 	"cellSystem applyEffectTo: aSpaceShip"
 	| cell position effectPrototype anEffect |
@@ -170,7 +176,10 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 		              withIn: gameRules
 		              and: self.
 
-	cellSystem := CellSystem withBoard: board positionManager: manage
+	cellSystem := CellSystem
+		              withBoard: board
+		              positionManager: manage
+		              and: self
 ]
 
 { #category : 'testing' }
@@ -257,19 +266,6 @@ Game >> obtainLastCellEffect [
 Game >> positionOf: aSpaceShipID [
 
 	^ (manage positions at: aSpaceShipID) position
-]
-
-{ #category : 'as yet unclassified' }
-Game >> repeatLastCellEffectOn: aShipId [
-	"mandado a CardSystem"
-
-	"| ship anEffect |
-	lastEffectPrototype ifNil: [ ^ self ].
-
-	ship := turnManager obtainShipById: aShipId. "self checkFor: aShipId."
-
-	anEffect := lastEffectPrototype value: ship value: self.
-	anEffect applyOn: ship in: self"
 ]
 
 { #category : 'as yet unclassified' }

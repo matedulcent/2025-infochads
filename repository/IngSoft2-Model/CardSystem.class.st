@@ -87,16 +87,6 @@ CardSystem >> incrementAllBoosters [
 ]
 
 { #category : 'initialization' }
-CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: someGameRules [
-
-	turnManager := aTurnManager.
-	positionManager := aPositionManager.
-	activeCardHolder := anActiveCardHolder.
-	relationships := theRelationshipsWithMercenaries.
-	gameRules := someGameRules.
-]
-
-{ #category : 'initialization' }
 CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: someGameRules and: aGame [
 
 	turnManager := aTurnManager.
