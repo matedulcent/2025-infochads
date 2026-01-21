@@ -29,13 +29,13 @@ HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> applyOn: aShip in: aGame [
+HyperJumpEffect >> applyOn: aShip in: aCellSystem [
 
 	| aDisplacement |
 	aDisplacement := listOfJumps removeFirst.
 	listOfJumps add: aDisplacement.
 
-	aGame move: aShip by: aDisplacement / parsecsPerCell
+	aCellSystem move: aShip by: aDisplacement / parsecsPerCell
 ]
 
 { #category : 'as yet unclassified' }
@@ -51,5 +51,5 @@ HyperJumpEffect >> prototype [
 	| parsec jumps |
 	parsec := parsecsPerCell.
 	jumps := listOfJumps.
-	^ [ :ship :game | self class with: parsec andParsec: jumps ]
+	^ [ :ship :aCellSystem | self class with: parsec andParsec: jumps ]
 ]

@@ -9,14 +9,14 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect >> applyOn: aShip in: aGame [
+AtomicBombEffect >> applyOn: aShip in: aCellSystem [
 	
-	aGame returnEveryShipToTheBeguining.
-	aGame deductAShieldFromEveryShip.
+	aCellSystem returnEveryShipToTheBeguining.
+	aCellSystem deductAShieldFromEveryShip.
 ]
 
 { #category : 'accessing' }
 AtomicBombEffect >> prototype [
 
-	^ [ :ship :game | self class new ]
+	^ [ :ship :aCellSystem | self class new ]
 ]

@@ -1,9 +1,6 @@
 Class {
 	#name : 'NoSkip',
-	#superclass : 'Object',
-	#instVars : [
-		'nextSkipState'
-	],
+	#superclass : 'SkipState',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -15,13 +12,13 @@ NoSkip class >> withNext: aSkipState [
 ]
 
 { #category : 'initialization' }
-NoSkip >> initializeWithNext: aSkipState [
+NoSkip >> initialize [
 
-	nextSkipState := aSkipState.
+	nextSkipState := self
 ]
 
 { #category : 'as yet unclassified' }
-NoSkip >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
+NoSkip >> playTurnFor: aShip with: aDiceRoll in: aGame [
 
-	aSpaceShip isImprisionedByTossing: aDiceRoll on: aGame
+	aShip state playTurnFor: aShip with: aDiceRoll in: aGame
 ]

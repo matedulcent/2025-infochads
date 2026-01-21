@@ -1,14 +1,20 @@
 Class {
 	#name : 'SkipForShields',
-	#superclass : 'SkipForSkipping',
+	#superclass : 'SkipState',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-SkipForShields >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
+{ #category : 'initialization' }
+SkipForShields >> initializeWithNext: aSkipState [
 
-	aSpaceShip rechargeShields.
-	super will: aSpaceShip skipAfter: aDiceRoll on: aGame.
+	nextSkipState := aSkipState
+]
+
+{ #category : 'as yet unclassified' }
+SkipForShields >> playTurnFor: aShip with: aDiceRoll in: aGame [
+
+	aShip rechargeShields.
+	aShip skipState: nextSkipState.
 	aGame rollTheDice
 ]

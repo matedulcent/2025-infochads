@@ -18,7 +18,7 @@ JailEffect class >> with: aJailOutValue [
 ]
 
 { #category : 'as yet unclassified' }
-JailEffect >> applyOn: aShip in: aGame [
+JailEffect >> applyOn: aShip in: aCellSystem [
 
 	aShip changeStateToLockedUpAndNeeds: jailOutValue
 ]
@@ -34,5 +34,5 @@ JailEffect >> prototype [
 
 	| value |
 	value := jailOutValue.
-	^ [ :ship :game | self class with: value ]
+	^ [ :ship :aCellSystem | self class with: value ]
 ]

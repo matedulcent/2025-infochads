@@ -36,53 +36,40 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
-{ #category : 'cards' }
+{ #category : 'adding' }
 SpaceShip >> addA: aCard [
 
 	cards add: aCard
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip >> assertItHas: aCard [
+SpaceShip >> assertAndRemoveIfItHas: aCard [
 
-	(cards anySatisfy: [ :card | card isKindOf: aCard class ]) ifFalse: [
-		Error signal: 'The card is not in the ships deck' ]
+	| someCard |
+	someCard := cards
+		            detect: [ :card | card class = aCard class ]
+		            ifNone: [
+		            Error signal: 'The card is not in the ships deck' ].
+
+	cards remove: someCard
 ]
 
 { #category : 'shield' }
 SpaceShip >> canBattle [
-	
-	^ shield > 0
-]
 
-{ #category : 'as yet unclassified' }
-SpaceShip >> changeSkippingStateTo: nextSkipState [
-
-	skipState := nextSkipState 
-]
-
-{ #category : 'states' }
-SpaceShip >> changeStateToFree [
-
-	state := Free new
-]
-
-{ #category : 'states' }
-SpaceShip >> changeStateToFreeByCard [
-
-	state := state setFreeByCard.
+	^ state canBattleWithShield: shield
 ]
 
 { #category : 'states' }
 SpaceShip >> changeStateToLockedUpAndNeeds: aValueToEscape [
 
-	state := LockedUp withValue: aValueToEscape
+	state := LockedUp withValue: aValueToEscape.
 ]
 
 { #category : 'states' }
 SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
 
-	state := Retained withValue: aValueToEscape
+	state := Retained withValue: aValueToEscape.
 ]
 
 { #category : 'as yet unclassified' }
@@ -101,13 +88,6 @@ SpaceShip >> getShield [
 SpaceShip >> id [
 
 	^ spaceShipID
-]
-
-{ #category : 'shield' }
-SpaceShip >> if0WasTossed: aDiceRoll [
-
-	aDiceRoll = 0 ifTrue: [
-		self changeSkippingStateTo: (SkipForShields withNext: NoSkip) ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -147,8 +127,8 @@ SpaceShip >> loseShield [
 
 	shield := shield - 1.
 	shield = 0 ifTrue: [
-		self changeSkippingStateTo:
-			(SkipForShields withNext: SkipForSkipping) ]
+		self skipState: (SkipForSkipping new initializeWithNext:
+				 (SkipForShields new initializeWithNext: NoSkip new)) ]
 ]
 
 { #category : 'shield' }
@@ -159,11 +139,33 @@ SpaceShip >> rechargeShields [
 	shield := 3
 ]
 
+{ #category : 'accessing' }
+SpaceShip >> skipState: aSkipState [
+
+	skipState := aSkipState
+]
+
+{ #category : 'accessing' }
+SpaceShip >> state [
+
+	^ state
+]
+
+{ #category : 'accessing' }
+SpaceShip >> state: aState [
+
+	state := aState
+]
+
 { #category : 'as yet unclassified' }
 SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
 
-	| totalDiceRoll |
-	self if0WasTossed: aDiceRoll.
-	totalDiceRoll := aDiceRoll + boost.
-	skipState will: self skipAfter: totalDiceRoll on: aGame
+	| roll |
+	roll := aDiceRoll + boost.
+
+	aDiceRoll = 0 ifTrue: [
+		self skipState: (SkipForShields new initializeWithNext: NoSkip new).
+		roll := aDiceRoll ].
+
+	skipState playTurnFor: self with: roll in: aGame
 ]

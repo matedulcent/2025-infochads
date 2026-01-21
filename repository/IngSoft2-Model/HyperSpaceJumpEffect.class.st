@@ -26,9 +26,9 @@ HyperSpaceJumpEffect class >> withForwardTrack: aDesplacement [
 ]
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect >> applyOn: aShip in: aGame [
+HyperSpaceJumpEffect >> applyOn: aShip in: aCellSystem [
 
-	aGame move: aShip by: forwardTrack.
+	aCellSystem move: aShip by: forwardTrack.
 	aShip loseShield
 ]
 
@@ -43,5 +43,5 @@ HyperSpaceJumpEffect >> prototype [
 
 	| n |
 	n := forwardTrack .
-	^ [ :ship :game | self class withForwardTrack: n ]
+	^ [ :ship :aCellSystem | self class withForwardTrack: n ]
 ]

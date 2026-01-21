@@ -14,6 +14,12 @@ Retained class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
+{ #category : 'testing' }
+Retained >> canBattleWithShield: shield [
+
+	^ false
+]
+
 { #category : 'initialization' }
 Retained >> initializeWith: anEscapeValue [
 
@@ -34,11 +40,10 @@ Retained >> isLockedUp [
 
 { #category : 'as yet unclassified' }
 Retained >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
-	"akward roll"
 
-	(self isFreeByTossing: aDiceRoll) ifFalse: [
+	aDiceRoll < escapeValue ifTrue: [
 		aGame rollTheDice.
 		^ self ].
-	aSpaceShip changeStateToFree.
+	aSpaceShip state: Free new.
 	aGame move: aSpaceShip after: aDiceRoll
 ]
