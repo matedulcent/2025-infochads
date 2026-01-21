@@ -17,8 +17,7 @@ Class {
 		'lastEffectPrototype',
 		'turnManager',
 		'cardSystem',
-		'cellSystem',
-		'gameRules'
+		'cellSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -84,19 +83,8 @@ Game >> applyEffect: anEffect [
 
 { #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
-
+	"ver si puedo mover"
 	cellSystem applyPowerUpTo: aSpaceShip
-	"| cell position effectPrototype anEffect |
-	position := manage at: aSpaceShip id.
-	cell := board cellInThe: position.
-	cell ifNil: [ ^ self ].
-
-	effectPrototype := cell percieveAction.
-	lastEffectPrototype := effectPrototype.
-	
-	anEffect := effectPrototype value: aSpaceShip value: self.
-	anEffect applyOn: aSpaceShip in: cellSystem"
-	"anEffect applyOn: aSpaceShip in: self"
 ]
 
 { #category : 'asserting' }
@@ -129,13 +117,6 @@ Game >> createSpaceShips [
 				 with: shield) ]
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> deductAShieldFromEveryShip [
-	"en cellSystem "
-	"algo paso"
-	"spaceShips do: [ :ship | ship loseShield ]"
-]
-
 { #category : 'informationTest' }
 Game >> getRanking [
 	"stay"
@@ -152,14 +133,6 @@ Game >> getRanking [
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> giveACardTo: aShip [
-"en CellSystem"
-	"| aCard |
-	aCard := board pickACard.
-	aShip addA: aCard"
-]
-
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
@@ -173,12 +146,6 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries.
 
-	"al pedo, volver a poner en game"
-	gameRules := GameRules
-		             withBoard: board
-		             positionManager: manage
-		             ships: turnManager
-		             laps: aNumberOfLaps.
 	cellSystem := CellSystem
 		              withBoard: board
 		              positionManager: manage
@@ -242,35 +209,13 @@ Game >> move: aSpaceShip after: aDiceRoll [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> move: aShip by: backTrack [
-	"en cellsystem"
-	"algo paso"
-	"| actualPosition |
-	actualPosition := manage positions at: aShip id.
-	
-	manage positions
-		at: aShip id
-		put: ((manage positions at: aShip id) replacePositionWith:
-				 (Position at: (actualPosition position) + backTrack withLaps: 0))"
-]
-
-{ #category : 'as yet unclassified' }
-Game >> moveEveryShipBut: aShip backBy: backTrack [
-"en CellSystem"
-"	| otherShips |
-	otherShips := spaceShips reject: [ :each | each id = aShip id ].
-
-	otherShips do: [ :ship | self move: ship by: backTrack ]"
-]
-
-{ #category : 'as yet unclassified' }
-Game >> obtainLastCardAction [
+Game >> obtainLastCardActionPrototype [
 
 	^ lastActionPrototype 
 ]
 
 { #category : 'as yet unclassified' }
-Game >> obtainLastCellEffect [
+Game >> obtainLastCellEffectPrototype [
 
 	^ lastEffectPrototype 
 ]
@@ -279,15 +224,6 @@ Game >> obtainLastCellEffect [
 Game >> positionOf: aSpaceShipID [
 
 	^ (manage positions at: aSpaceShipID) position
-]
-
-{ #category : 'as yet unclassified' }
-Game >> returnEveryShipToTheBeguining [
-"en cellsystem"
-	"spaceShips do: [ :ship |
-		self
-			move: ship
-			by: (manage positions at: ship id) position negated + 1 ]"
 ]
 
 { #category : 'as yet unclassified' }

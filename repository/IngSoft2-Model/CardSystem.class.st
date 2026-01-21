@@ -102,7 +102,7 @@ CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPosition
 CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
 
 	| lastActionPrototype |
-	lastActionPrototype := game obtainLastCardAction.
+	lastActionPrototype := game obtainLastCardActionPrototype.
 	lastActionPrototype ifNil: [ ^ self ].
 	self applyAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId)
@@ -112,7 +112,7 @@ CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
 CardSystem >> repeatLastCellEffectOn: aShipId [
 
 	| ship anEffect lastEffectPrototype |
-	lastEffectPrototype := game obtainLastCellEffect.
+	lastEffectPrototype := game obtainLastCellEffectPrototype.
 	lastEffectPrototype ifNil: [ ^ self ].
 
 	ship := turnManager obtainShipById: aShipId.
