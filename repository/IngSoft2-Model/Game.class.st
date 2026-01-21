@@ -84,8 +84,9 @@ Game >> applyEffect: anEffect [
 
 { #category : 'as yet unclassified' }
 Game >> applyPowerUpTo: aSpaceShip [
-	"cellSystem applyEffectTo: aSpaceShip"
-	| cell position effectPrototype anEffect |
+
+	cellSystem applyPowerUpTo: aSpaceShip
+	"| cell position effectPrototype anEffect |
 	position := manage at: aSpaceShip id.
 	cell := board cellInThe: position.
 	cell ifNil: [ ^ self ].
@@ -94,8 +95,8 @@ Game >> applyPowerUpTo: aSpaceShip [
 	lastEffectPrototype := effectPrototype.
 	
 	anEffect := effectPrototype value: aSpaceShip value: self.
-	"anEffect applyOn: aSpaceShip in: cellSystem"
-	anEffect applyOn: aSpaceShip in: self
+	anEffect applyOn: aSpaceShip in: cellSystem"
+	"anEffect applyOn: aSpaceShip in: self"
 ]
 
 { #category : 'initialization' }
@@ -123,7 +124,7 @@ Game >> createSpaceShips [
 { #category : 'as yet unclassified' }
 Game >> deductAShieldFromEveryShip [
 	"en cellSystem "
-
+	"algo paso"
 	spaceShips do: [ :ship | ship loseShield ]
 ]
 
@@ -146,9 +147,9 @@ Game >> getRanking [
 { #category : 'as yet unclassified' }
 Game >> giveACardTo: aShip [
 "en CellSystem"
-	| aCard |
+	"| aCard |
 	aCard := board pickACard.
-	aShip addA: aCard
+	aShip addA: aCard"
 ]
 
 { #category : 'initialization' }
@@ -234,6 +235,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 { #category : 'as yet unclassified' }
 Game >> move: aShip by: backTrack [
 	"en cellsystem"
+	"algo paso"
 	| actualPosition |
 	actualPosition := manage positions at: aShip id.
 	
@@ -246,10 +248,10 @@ Game >> move: aShip by: backTrack [
 { #category : 'as yet unclassified' }
 Game >> moveEveryShipBut: aShip backBy: backTrack [
 "en CellSystem"
-	| otherShips |
+"	| otherShips |
 	otherShips := spaceShips reject: [ :each | each id = aShip id ].
 
-	otherShips do: [ :ship | self move: ship by: backTrack ]
+	otherShips do: [ :ship | self move: ship by: backTrack ]"
 ]
 
 { #category : 'as yet unclassified' }
@@ -273,10 +275,10 @@ Game >> positionOf: aSpaceShipID [
 { #category : 'as yet unclassified' }
 Game >> returnEveryShipToTheBeguining [
 "en cellsystem"
-	spaceShips do: [ :ship |
+	"spaceShips do: [ :ship |
 		self
 			move: ship
-			by: (manage positions at: ship id) position negated + 1 ]
+			by: (manage positions at: ship id) position negated + 1 ]"
 ]
 
 { #category : 'as yet unclassified' }
