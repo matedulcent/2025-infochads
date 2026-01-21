@@ -14,12 +14,6 @@ SkipState >> initializeWithNext: aSkipState [
 	nextSkipState := aSkipState
 ]
 
-{ #category : 'accessing' }
-SkipState >> next [
-
-	"^ nextSkipState"
-]
-
 { #category : 'as yet unclassified' }
 SkipState >> playTurnFor: aShip with: aDiceRoll in: aGame [
 

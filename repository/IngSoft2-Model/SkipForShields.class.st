@@ -18,11 +18,3 @@ SkipForShields >> playTurnFor: aShip with: aDiceRoll in: aGame [
 	aShip skipState: nextSkipState.
 	aGame rollTheDice
 ]
-
-{ #category : 'as yet unclassified' }
-SkipForShields >> will: aSpaceShip skipAfter: aDiceRoll on: aGame [
-
-	"aSpaceShip rechargeShields.
-	nextSkipState will: aSpaceShip skipAfter: aDiceRoll on: aGame.
-	aGame rollTheDice"
-]
