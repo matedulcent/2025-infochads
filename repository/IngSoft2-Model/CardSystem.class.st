@@ -6,15 +6,15 @@ Class {
 		'positionManager',
 		'activeCardHolder',
 		'relationships',
-		'lastActionPrototype',
-		'gameRules'
+		'gameRules',
+		'game'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: gameRules [
+CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: gameRules and: aGame [
 
 	^ self new
 		  initializeWithTurnManager: aTurnManager
@@ -22,6 +22,7 @@ CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionMana
 		  activeCardHolder: anActiveCardHolder
 		  andRelationships: theRelationshipsWithMercenaries
 		  withIn: gameRules
+		  and: aGame
 ]
 
 { #category : 'adding' }
@@ -32,8 +33,8 @@ CardSystem >> addActive: aCard to: aShipId [
 
 { #category : 'as yet unclassified' }
 CardSystem >> applyAction: anAction [
-	"mandar a game"
-	lastActionPrototype := anAction prototype.
+
+	game applyAction: anAction.
 	anAction apply
 ]
 
@@ -95,12 +96,38 @@ CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPosition
 	gameRules := someGameRules.
 ]
 
+{ #category : 'initialization' }
+CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withIn: someGameRules and: aGame [
+
+	turnManager := aTurnManager.
+	positionManager := aPositionManager.
+	activeCardHolder := anActiveCardHolder.
+	relationships := theRelationshipsWithMercenaries.
+	gameRules := someGameRules.
+	game := aGame
+]
+
 { #category : 'as yet unclassified' }
 CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
-	
+
+	| lastActionPrototype |
+	lastActionPrototype := game obtainLastCardAction.
 	lastActionPrototype ifNil: [ ^ self ].
 	self applyAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId)
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> repeatLastCellEffectOn: aShipId [
+
+	| ship anEffect lastEffectPrototype |
+	lastEffectPrototype := game obtainLastCellEffect.
+	lastEffectPrototype ifNil: [ ^ self ].
+
+	ship := turnManager obtainShipById: aShipId.
+
+	anEffect := lastEffectPrototype value: ship value: self.
+	anEffect applyOn: ship in: game
 ]
 
 { #category : 'as yet unclassified' }

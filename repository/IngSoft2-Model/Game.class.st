@@ -72,9 +72,8 @@ Game >> adjustPosition [
 
 { #category : 'as yet unclassified' }
 Game >> applyAction: anAction [
-	"pasado a CardSystem"
-	lastActionPrototype := anAction prototype.
-	anAction apply
+
+	lastActionPrototype := anAction prototype
 ]
 
 { #category : 'as yet unclassified' }
@@ -168,7 +167,8 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 		              positionManager: manage
 		              activeCardHolder: activeCardHolder
 		              andRelationships: relationshipsWithMercenaries
-		              withIn: gameRules.
+		              withIn: gameRules
+		              and: self.
 
 	cellSystem := CellSystem withBoard: board positionManager: manage
 ]
@@ -183,7 +183,7 @@ Game >> isLockedUpInCell: aSpaceShipID [
 { #category : 'informationTest' }
 Game >> isOver [
 	"testing" "stay"
-	^ self assertTheGameIsNotOver
+	^ gameRules assertTheGameIsNotOver
 ]
 
 { #category : 'informationTest' }
@@ -241,6 +241,18 @@ Game >> moveEveryShipBut: aShip backBy: backTrack [
 	otherShips do: [ :ship | self move: ship by: backTrack ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> obtainLastCardAction [
+
+	^ lastActionPrototype 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> obtainLastCellEffect [
+
+	^ lastEffectPrototype 
+]
+
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
@@ -257,7 +269,7 @@ Game >> redoLastActionOn: aShip withAdditional: aHelperId [
 
 { #category : 'as yet unclassified' }
 Game >> repeatLastCellEffectOn: aShipId [
-	"cellSystem repeatLastEffectOn: aShipId"
+	"mandado a CardSystem"
 
 	| ship anEffect |
 	lastEffectPrototype ifNil: [ ^ self ].

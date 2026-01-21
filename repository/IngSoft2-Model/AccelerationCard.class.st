@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AccelerationCard >> playOn: aShip in: aGame [
+AccelerationCard >> playOn: aShip in: aCardSystem [
 
-	aGame assertItsTurnToPlayOf: aShip.
-	aGame addActive: self to: aShip.
-	aGame applyAction: (AccelerationAction on: aShip in: aGame)
+	aCardSystem assertItsTurnToPlayOf: aShip.
+	aCardSystem addActive: self to: aShip.
+	aCardSystem applyAction: (AccelerationAction on: aShip in: aCardSystem)
 ]
 
 { #category : 'as yet unclassified' }
-AccelerationCard >> unplayOn: aShip in: aGame [
+AccelerationCard >> unplayOn: aShip in: aCardSystem [
 
-	aGame decrementAllBoosters
+	aCardSystem decrementAllBoosters
 ]

@@ -18,7 +18,7 @@ RepeatAction class >> on: aShip in: aGame [
 { #category : 'private' }
 RepeatAction >> apply [
 
-	game repeatLastCellEffectOn: targetShipId "ver"
+	game repeatLastCellEffectOn: targetShipId
 ]
 
 { #category : 'initialization' }
