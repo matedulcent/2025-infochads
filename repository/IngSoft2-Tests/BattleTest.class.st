@@ -1,9 +1,40 @@
 Class {
 	#name : 'BattleTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'board'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
+
+{ #category : 'tests' }
+BattleTest >> boardWithSize: aSize andDeck: aCardDeck [
+
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: aCardDeck
+		  andACellConfiguration: {  }
+]
+
+{ #category : 'tests' }
+BattleTest >> gameWithDice: dice players: amount [
+
+	^ Game
+		  playedIn: board
+		  by: amount
+		  throwing: dice
+		  wonAfter: 1
+]
+
+{ #category : 'tests' }
+BattleTest >> setUp [
+
+	super setUp.
+
+	board := self boardWithSize: 10 andDeck: (CardDeck withCards: {  })
+]
 
 { #category : 'asserting' }
 BattleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
@@ -19,19 +50,11 @@ BattleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMes
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2Turns [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith:
-		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith:
+				          { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -42,19 +65,13 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2TurnsAndThenItMoves1 [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith:
-		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1.  }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {  }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith:
+				          { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 })
+		         players: 2.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 2.
@@ -64,18 +81,11 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2ReturnsToStart [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 2. 5. 5. 2. 2. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 2. 5. 5. 2. 2. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -86,18 +96,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenShip2Toss0ToRecoverTo3Shields [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 })
+		         players: 2.
 
 	aGame start.
 
