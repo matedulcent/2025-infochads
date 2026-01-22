@@ -2,12 +2,12 @@ Class {
 	#name : 'Battle',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShip',
-		'spaceShips',
 		'positionManager',
 		'board',
 		'diceSet',
-		'relationWithMercenaries'
+		'turnManager',
+		'game',
+		'relations'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -23,6 +23,17 @@ Battle class >> between: aSpaceShip andOneOf: spaceShips with: positionManager o
 		  on: board
 		  with: aDiceSet
 		  andIts: relationshipsWithMercenaries
+]
+
+{ #category : 'comparing' }
+Battle class >> in: aGame and: aTurnManager with: aPositionManager on: aBoard with: aDiceSet [
+
+	^ self new
+		  initializeIn: aGame
+		  and: aTurnManager
+		  with: aPositionManager
+		  on: aBoard
+		  with: aDiceSet
 ]
 
 { #category : 'as yet unclassified' }
@@ -44,26 +55,25 @@ Battle >> battleBetween: aSpaceShip and: anOpponentShip [
 Battle >> checkForCamaraderieBetween: aSpaceShip and: anOpponentShip [
 
 	| mercenariesFromAShip mercenariesFromTheOpponentShip |
-	mercenariesFromAShip := relationWithMercenaries at: aSpaceShip id.
-	mercenariesFromTheOpponentShip := relationWithMercenaries at:
-		                                  anOpponentShip id.
+	mercenariesFromAShip := relations at: aSpaceShip id.
+	mercenariesFromTheOpponentShip := relations at: anOpponentShip id.
 
 	^ (mercenariesFromAShip includes: anOpponentShip id) or: [
 		  mercenariesFromTheOpponentShip includes: aSpaceShip id ]
 ]
 
 { #category : 'initialization' }
-Battle >> initializeBattleBetween: aSpaceShip andOneOf: theSpaceShips withPosition: aPositionManager on: aBoard with: aDiceSet andIts: relationshipsWothMercenaries [
+Battle >> initializeIn: aGame and: aTurnManager with: aPositionManager on: aBoard with: aDiceSet [
 
-	spaceShip := aSpaceShip.
-	spaceShips := theSpaceShips.
+	turnManager := aTurnManager.
 	positionManager := aPositionManager.
 	board := aBoard.
 	diceSet := aDiceSet.
-	relationWithMercenaries := relationshipsWothMercenaries.
-	
-	self lookForBattle: aSpaceShip.
-	^self
+	game := aGame.
+	relations := game obtainRelationsWithMercenaries.
+
+	self lookForBattle: turnManager currentShipPlaying.
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,13 +82,13 @@ Battle >> lookForBattle: aSpaceShip [
 	| anOpponentShip |
 	((positionManager at: aSpaceShip id) isPositionEqualTo:
 		 (Position at: 1 withLaps: 0)) ifTrue: [ ^ self ].
-	anOpponentShip := self obtainOpponentShip: aSpaceShip.
-	"correct"
+	anOpponentShip := self obtainOpponentShip: aSpaceShip .
+
 	aSpaceShip = anOpponentShip ifTrue: [ ^ self ].
-	"the oponent ship musnt be mercenary"
+
 	(self checkForCamaraderieBetween: aSpaceShip and: anOpponentShip)
 		ifTrue: [ ^ self ].
-	""
+
 	self battleBetween: aSpaceShip and: anOpponentShip
 ]
 
@@ -90,7 +100,7 @@ Battle >> lostBattle: aSpaceShip [
 	aSpaceShip loseShield.
 
 	self returnToBeguinningTheShips:
-		(relationWithMercenaries at: aSpaceShip id)
+		(relations at: aSpaceShip id)
 ]
 
 { #category : 'as yet unclassified' }
@@ -98,7 +108,7 @@ Battle >> mercenaryHelpTo: aShip [
 
 	| howManyExtraTosses totalToss |
 	totalToss := 0.
-	howManyExtraTosses := (relationWithMercenaries at: aShip id) size.
+	howManyExtraTosses := (relations at: aShip id) size.
 
 	1 to: howManyExtraTosses + 1 do: [ :i |
 	totalToss := totalToss + diceSet toss ].
@@ -110,14 +120,16 @@ Battle >> mercenaryHelpTo: aShip [
 Battle >> obtainOpponentShip: aSpaceShip [
 
 	| otherShips |
-	otherShips := spaceShips reject: [ :ship | ship = aSpaceShip ].
+	otherShips := turnManager allShips reject: [ :ship |
+		              ship = aSpaceShip ].
 
 	otherShips ifEmpty: [ ^ aSpaceShip ].
 
 	^ otherShips
 		  detect: [ :ship |
-			  (( positionManager at: ship id) isPositionEqualTo:
-				   (positionManager positions at: aSpaceShip id)) and: ship canBattle ]
+			  ((positionManager at: ship id) isPositionEqualTo:
+				   (positionManager positions at: aSpaceShip id)) and:
+				  ship canBattle ]
 		  ifNone: [ aSpaceShip ]
 ]
 
@@ -137,5 +149,6 @@ Battle >> returnToBeguinningTheShips: mercenaries [
 		positionManager sumAt: shipId with: (Position
 				 at: (positionManager positions at: shipId) position negated + 1
 				 withLaps: 0).
-		(spaceShips detect: [ :ship | ship id = shipId ]) loseShield ]
+		(turnManager allShips detect: [ :ship | ship id = shipId ])
+			loseShield ]
 ]

@@ -63,7 +63,8 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 { #category : 'as yet unclassified' }
 Game >> adjustPosition [
 	"stay ?"
-	spaceShips do: [ :ship |
+
+	turnManager allShips do: [ :ship |
 		manage sumAt: ship id with: (board
 				 limitAdjustment: (manage positions at: ship id)
 				 withTotalLaps: laps) ]
@@ -156,7 +157,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 		              withTurnManager: turnManager
 		              positionManager: manage
 		              activeCardHolder: activeCardHolder
-		              andRelationships: relationshipsWithMercenaries
+		              andRelationships: relationshipsWithMercenaries "dentro de game"
 		              withAdditional: cellSystem
 		              and: self
 ]
@@ -183,28 +184,33 @@ Game >> lapOf: aSpaceShipID [
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 	"stay"
-
 	manage
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
+		
 	self adjustPosition.
 
-
 	self applyPowerUpTo: aSpaceShip.
-
 
 	manage
 		at: aSpaceShip id
 		replacePositionWith:
 		(board checkForWormHole: (manage positions at: aSpaceShip id)).
 	self adjustPosition.
-	Battle
+	"Battle
 		between: aSpaceShip
 		andOneOf: spaceShips
 		with: manage
 		on: board
 		with: diceSet
-		andIts: relationshipsWithMercenaries.
+		andIts: relationshipsWithMercenaries."
+		
+	Battle
+		in: self
+		and: turnManager
+		with: manage
+		on: board
+		with: diceSet.
 	diceRoll := diceSet toss
 ]
 
@@ -218,6 +224,12 @@ Game >> obtainLastCardActionPrototype [
 Game >> obtainLastCellEffectPrototype [
 
 	^ lastEffectPrototype 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> obtainRelationsWithMercenaries [
+
+	^ relationshipsWithMercenaries deepCopy
 ]
 
 { #category : 'informationTest' }
