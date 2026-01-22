@@ -36,7 +36,8 @@ PowerCellInteractionTest >> setUp [
 	board := self
 		         boardWithSize: 10
 		         andConfig: (RiggedDice new initializeWith:
-				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10 })
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10 }).
+				
 ]
 
 { #category : 'asserting' }
