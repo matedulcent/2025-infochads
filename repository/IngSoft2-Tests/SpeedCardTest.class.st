@@ -72,17 +72,10 @@ SpeedCardTest >> testWhenACardIsNotInDeckThenUsageFails [
 { #category : 'tests' }
 SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: (RiggedDice new initializeWith: { 5. 6 })
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 2.
 	self
 		should: [ aGame use: SpeedCard new on: 1 ]
 		raise: Error
@@ -97,11 +90,9 @@ SpeedCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
 				          SpeedCard new.
 				          WhiteCard new }).
 
-	aGame := Game
-		         playedIn: board
-		         by: 1
-		         throwing: (RiggedDice new initializeWith: { 5. 6 })
-		         wonAfter: 1.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 1.
 
 	aGame use: SpeedCard new on: 1.
 	aGame start.
