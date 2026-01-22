@@ -15,13 +15,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withAdditional: aCellSystem and: aGame [
+CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder withAdditional: aCellSystem and: aGame [
 
 	^ self new
 		  initializeWithTurnManager: aTurnManager
 		  positionManager: aPositionManager
 		  activeCardHolder: anActiveCardHolder
-		  andRelationships: theRelationshipsWithMercenaries
 		  withAdditional: aCellSystem
 		  and: aGame
 ]
@@ -88,12 +87,12 @@ CardSystem >> incrementAllBoosters [
 ]
 
 { #category : 'initialization' }
-CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder andRelationships: theRelationshipsWithMercenaries withAdditional: aCellSystem and: aGame [
+CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPositionManager activeCardHolder: anActiveCardHolder withAdditional: aCellSystem and: aGame [
 
 	turnManager := aTurnManager.
 	positionManager := aPositionManager.
 	activeCardHolder := anActiveCardHolder.
-	relationships := theRelationshipsWithMercenaries.
+	relationships := aGame obtainRelationsWithMercenaries.
 	cellSystem := aCellSystem.
 	game := aGame
 ]

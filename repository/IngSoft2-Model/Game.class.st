@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'spaceShips',
 		'diceSet',
-		'numberOfSpaceShips',
 		'laps',
 		'board',
 		'manage',
@@ -105,12 +104,12 @@ Game >> createRelationsWithMercenaries [
 ]
 
 { #category : 'whats left of race positions' }
-Game >> createSpaceShips [
+Game >> createSpaceShipsWith: aNumberOfSpaceShips [
 
 	| shield |
 	shield := 3.
 	spaceShips := OrderedCollection new.
-	1 to: numberOfSpaceShips do: [ :id |
+	1 to: aNumberOfSpaceShips do: [ :id |
 		spaceShips add: (SpaceShip
 				 with: id
 				 startingWith: board pickACard
@@ -138,8 +137,7 @@ Game >> getRanking [
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-	numberOfSpaceShips := aNumberOfSpaceShips.
-	self createSpaceShips.
+	self createSpaceShipsWith: aNumberOfSpaceShips.
 	manage := PositionManager of: spaceShips.
 	diceSet := aDiceSet.
 	laps := aNumberOfLaps.
@@ -157,7 +155,6 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 		              withTurnManager: turnManager
 		              positionManager: manage
 		              activeCardHolder: activeCardHolder
-		              andRelationships: relationshipsWithMercenaries "dentro de game"
 		              withAdditional: cellSystem
 		              and: self
 ]
@@ -229,7 +226,7 @@ Game >> obtainLastCellEffectPrototype [
 { #category : 'as yet unclassified' }
 Game >> obtainRelationsWithMercenaries [
 
-	^ relationshipsWithMercenaries deepCopy
+	^ relationshipsWithMercenaries
 ]
 
 { #category : 'informationTest' }
