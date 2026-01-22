@@ -87,20 +87,16 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip3AndUsesMercenaryOn3ThenTheyDontBattle [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5. 1. 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         andDeck: (CardDeck withCards: { MercenaryCard new }).
 
-	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 1. 5 })
+		         players: 3.
+
+	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -110,21 +106,16 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip3AndUsesMercenaryOn3T
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn3 [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           MercenaryCard new.
-					           WhiteCard new.
-					           MercenaryCard new.
-					           WhiteCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5. 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          MercenaryCard new.
+				          WhiteCard new.
+				          MercenaryCard new.
+				          WhiteCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 5 })
+		         players: 3.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame start.
@@ -137,21 +128,17 @@ MercenaryCardTest >> testWhenSpaceShip1PlaysMercenaryOn3Then2CantPlayMercenaryOn
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWinThenSpaceShip2ReturnsToPosition1With2Shield [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing:
-		         (RiggedDice new initializeWith: { 5. 5. 10. 1. 1. 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         andDeck: (CardDeck withCards: { MercenaryCard new }).
 
-	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 10. 1. 1. 5 })
+		         players: 3.
+
+	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -162,20 +149,15 @@ MercenaryCardTest >> testWhenSpaceShip2CombatsSpaceShip1And3DueToMercenaryAndWin
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenCreationFails [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           SpeedCard new.
-					           WhiteCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: (RiggedDice new initializeWith: { 5. 6 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          SpeedCard new.
+				          WhiteCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 2.
 
 	aGame use: SpeedCard new on: 1.
 
@@ -188,23 +170,18 @@ MercenaryCardTest >> testWhenSpaceShip2UsesACardWhenItsNotItsTurnThenCreationFai
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShipThatDoesntExistTryesToUseACardThenProcedureFails [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           SpeedCard new.
-					           WhiteCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: (RiggedDice new initializeWith: { 5. 6 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          SpeedCard new.
+				          WhiteCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 2.
 
 	self
-		should: [ aGame use: (SpeedCard new) on: 10 ]
+		should: [ aGame use: SpeedCard new on: 10 ]
 		raise: Error
 		withMessageText: 'The ship doesnt exist'
 ]

@@ -117,7 +117,6 @@ CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCard
 	aGame := self
 		         gameWithDice: (RiggedDice new initializeWith: { 5 })
 		         players: 3.
-
 	self
 		should: [
 			aGame
