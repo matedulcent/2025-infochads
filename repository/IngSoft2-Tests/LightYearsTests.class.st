@@ -8,21 +8,16 @@ Class {
 { #category : 'tests' }
 LightYearsTests >> testWhenTheDistanceIsExpresedInLightYearsThenTheJumpsAreExpresedInLightYears [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 1 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 300. 3. 90. 60.
-		                     30. 6. 4. 2. 5. 7 }. "15 10 5"
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 300. 3. 90. 60. 30. 6.
+				          4. 2. 5. 7 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 1 })
+		         players: 1
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 17
@@ -51,21 +46,16 @@ LightYearsTests >> testWhenTheDistanceIsExpresedInParsecsAndLightYearsAndDontRel
 { #category : 'tests' }
 LightYearsTests >> testWhenTheDistanceIsExpresedInParsercsThenTheJumpsExpresedInParsecs [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 1 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
-		                     10. 6. 4. 2. 5. 7 }. "15 10 5"
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6.
+				          4. 2. 5. 7 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 1 })
+		         players: 1
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 17
@@ -95,21 +85,16 @@ LightYearsTests >> testWhenTheDistanceNeitherInParsecsOrLightYearsThenIsInvalid 
 { #category : 'tests' }
 LightYearsTests >> testWhenTheDistanceOfTheGameIsExpresedInLightYearsAndParsecsThenTheJumpsAreExpresedInParsecs [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 1 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 300. 3. 30.
-		                     20. 10. 6. 4. 2. 5. 7 }. "15 10 5"
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 300. 3. 30. 20. 10.
+				          6. 4. 2. 5. 7 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 1 })
+		         players: 1
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 17
