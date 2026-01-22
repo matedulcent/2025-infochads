@@ -1,9 +1,43 @@
 Class {
 	#name : 'PowerCellInteractionTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'board'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
+
+{ #category : 'tests' }
+PowerCellInteractionTest >> boardWithSize: aSize andConfig: aCellConfig [
+
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: (CardDeck withCards: {  })
+		  andACellConfiguration: aCellConfig
+]
+
+{ #category : 'tests' }
+PowerCellInteractionTest >> gameWithDice: dice players: amount laps: numberOfLaps [
+
+	^ Game
+		  playedIn: board
+		  by: amount
+		  throwing: dice
+		  wonAfter: numberOfLaps
+]
+
+{ #category : 'tests' }
+PowerCellInteractionTest >> setUp [
+
+	super setUp.
+
+	board := self
+		         boardWithSize: 10
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10 })
+]
 
 { #category : 'asserting' }
 PowerCellInteractionTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
@@ -19,21 +53,16 @@ PowerCellInteractionTest >> should: anErrorBlock raise: anErrorClass withMessage
 { #category : 'tests' }
 PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30JumpsAndCombatsWithFirstShip [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
-		                     10 }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 4
-		         throwing: aDiceSet
-		         wonAfter: 4.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10 }).
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 2. 2. 2. 2. 5 })
+		         players: 4
+		         laps: 4.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 33.
@@ -45,24 +74,18 @@ PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivi
 { #category : 'tests' }
 PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalCells [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
+	| aGame aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 50. 49 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 24. 20. 20. 8. 2. 10. 10. 1. 5. 100. 0. 3. 30.
 		                     20. 10. 6. 4. 2. 5. 7. 7. 7. 7. 7. 7. 10. 6. 4.
 		                     2. 5. 7. 7. 7. 7. 7. 0. 3 }.
 	aConfigureDiceSet setMaximumValueAs: 10.
-
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	board := self boardWithSize: 50 andConfig: aConfigureDiceSet.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 50. 49 })
+		         players: 2
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -72,21 +95,16 @@ PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositions
 { #category : 'tests' }
 PowerCellInteractionTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItThenTheNextPowerCellDoesNotAffect [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 37 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
-		                     10. 6. 4. 2. 5. 7 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 100. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6.
+				          4. 2. 5. 7 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 37 })
+		         players: 1
+		         laps: 2.
 
 
 	aGame start.
