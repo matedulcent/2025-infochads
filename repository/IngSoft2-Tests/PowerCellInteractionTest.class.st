@@ -114,21 +114,16 @@ PowerCellInteractionTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItTh
 { #category : 'tests' }
 PowerCellInteractionTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAnd30_20_10JumpsThenItMoves30Jumps [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 40 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 50. 0. 3. 30. 20.
-		                     10. 6. 4. 2. 5. 7 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 4
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 50. 0. 3. 30. 20. 10. 6. 4.
+				          2. 5. 7 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 40 })
+		         players: 4
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 21
@@ -137,21 +132,17 @@ PowerCellInteractionTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAn
 { #category : 'tests' }
 PowerCellInteractionTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves10Jumps [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 40. 40. 40 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
-		                     10. 6. 4. 2. 5. 7 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6.
+				          4. 2. 5. 7 }).
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 40. 40. 40 })
+		         players: 3
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -162,21 +153,16 @@ PowerCellInteractionTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivi
 { #category : 'tests' }
 PowerCellInteractionTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves20Jumps [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 40. 40 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
-		                     10. 6. 4. 2. 5. 7 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6.
+				          4. 2. 5. 7 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 40. 40 })
+		         players: 2
+		         laps: 2.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6.
