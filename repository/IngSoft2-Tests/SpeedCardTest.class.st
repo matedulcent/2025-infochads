@@ -37,11 +37,10 @@ SpeedCardTest >> readme [
 
 { #category : 'running' }
 SpeedCardTest >> setUp [
-    super setUp.
 
-    board := self
-        boardWithSize: 10
-        andDeck: (CardDeck withCards: { }).
+	super setUp.
+
+	board := self boardWithSize: 10 andDeck: (CardDeck withCards: {  })
 ]
 
 { #category : 'asserting' }

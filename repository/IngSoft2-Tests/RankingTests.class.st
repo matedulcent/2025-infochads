@@ -19,12 +19,12 @@ RankingTests >> setUp [
 { #category : 'tests' }
 RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
 
-	| aGame aDiceSet  |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3 }.
 
 	aGame := Game
 		         playedIn: aBoard
-		         by: 3
+		         by: 2
 		         throwing: aDiceSet
 		         wonAfter: 1.
 
