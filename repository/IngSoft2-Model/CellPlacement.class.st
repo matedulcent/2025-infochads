@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'rawCellDistribution'
+		'rawCellDistribution',
+		'sample'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -68,12 +69,14 @@ CellPlacement >> createBoardWith: aConfigDice withComplementary: aBoardSize [
 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
-	
+
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
-	
+
 	self generateUniverseWith: aConfigDice.
-	
-	^ self extractSample
+
+	self extractSample.
+
+	^ sample
 ]
 
 { #category : 'as yet unclassified' }
@@ -88,10 +91,10 @@ CellPlacement >> equal: aLightYearValue to: aParsecValue [
 CellPlacement >> extractSample [
 
 	| netCellDistibution |
-	
 	netCellDistibution := self randomCellPicking.
 
-	^ self addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution
+	sample := self addNormalCellAtBeguiningAndEndOfBoard:
+		          netCellDistibution
 ]
 
 { #category : 'as yet unclassified' }

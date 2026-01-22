@@ -17,8 +17,9 @@ Cell class >> has: anEffectPrototype [
 
 { #category : 'accessing' }
 Cell >> effect [
-	"borrar"
-	^ effect 
+	"for testing"
+
+	^ effect
 ]
 
 { #category : 'initialization' }
