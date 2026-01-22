@@ -1,15 +1,39 @@
 Class {
 	#name : 'SpeedCardTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'board'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
+
+{ #category : 'as yet unclassified' }
+SpeedCardTest >> gameWithDice: dice players: amount [
+
+	^ Game
+		  playedIn: board
+		  by: amount
+		  throwing: dice
+		  wonAfter: 1
+]
 
 { #category : 'as yet unclassified' }
 SpeedCardTest >> readme [
 	"The cards are withdrawn from the last included in the deck"
 
 	
+]
+
+{ #category : 'running' }
+SpeedCardTest >> setUp [
+    super setUp.
+
+    board := Board
+        withSize: 10
+        composedOf: (WormHole startingAt: 1 endingAt: 1)
+        playedWith: (CardDeck withCards: { })
+        andACellConfiguration: { }.
 ]
 
 { #category : 'asserting' }

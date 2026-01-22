@@ -5,16 +5,23 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
-RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
+{ #category : 'running' }
+RankingTests >> setUp [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3 }.
+	super setUp.
 	aBoard := Board
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+		          andACellConfiguration: {  }
+]
+
+{ #category : 'tests' }
+RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
+
+	| aGame aDiceSet  |
+	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3 }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 3
@@ -29,13 +36,9 @@ RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
 { #category : 'tests' }
 RankingTests >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
 
-	| aGame aDiceSet aBoard |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6. 9 }.
-	aBoard := Board
-		          withSize: 11
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
@@ -51,13 +54,9 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
 { #category : 'tests' }
 RankingTests >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
 
-	| aGame aDiceSet aBoard |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 6 }.
-	aBoard := Board
-		          withSize: 11
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 3
@@ -73,13 +72,9 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
 { #category : 'tests' }
 RankingTests >> testWhenGameIsOverAndSpaceShip2Wins [
 
-	| aGame aDiceSet aBoard |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 9 }.
-	aBoard := Board
-		          withSize: 11
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
@@ -95,13 +90,9 @@ RankingTests >> testWhenGameIsOverAndSpaceShip2Wins [
 { #category : 'tests' }
 RankingTests >> testWhenGameIsOverAndWinnerIsShip1 [
 
-	| aGame aDiceSet aBoard |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
-	aBoard := Board
-		          withSize: 11
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
@@ -117,13 +108,9 @@ RankingTests >> testWhenGameIsOverAndWinnerIsShip1 [
 { #category : 'tests' }
 RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 
-	| aGame aDiceSet aBoard |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
-	aBoard := Board
-		          withSize: 11
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 2
@@ -142,13 +129,9 @@ RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 { #category : 'tests' }
 RankingTests >> testWhenGameThereAre4ShipsTheRankingShowsAllTheShips [
 
-	| aGame aDiceSet aBoard |
+	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 7. 7 }.
-	aBoard := Board
-		          withSize: 11
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: {  }.
+
 	aGame := Game
 		         playedIn: aBoard
 		         by: 4
