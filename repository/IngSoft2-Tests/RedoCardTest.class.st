@@ -286,23 +286,21 @@ RedoCardTest >> testWhenShipPlaysSpeedAndARedoThenThePlayerHasTwoSpeed [
 { #category : 'tests' }
 RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBothHaveThePowerUpAgain [
 
-	| aGame aDiceSet aBoard aConfigureDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 19. 34 }.
+	| aGame aConfigureDiceSet |
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           RepeatCard new.
-					           RedoCard new })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	board := Board
+		         withSize: 50
+		         composedOf: (WormHole startingAt: 1 endingAt: 1)
+		         playedWith: (CardDeck withCards: {
+					          RepeatCard new.
+					          RedoCard new })
+		         andACellConfiguration: aConfigureDiceSet.
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 19. 34 })
+		         players: 2.
 	aGame start.
 	aGame use: (RepeatCard withObjective: 1) on: 1.
 	aGame use: (RedoCard withFillOut: 2) on: 1.
@@ -314,23 +312,20 @@ RedoCardTest >> testWhenSpaceShip1PlaysRepeatCardAndRedoCardOnSpaceShip2ThenBoth
 { #category : 'tests' }
 RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffectTwice [
 
-	| aGame aDiceSet aBoard aConfigureDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 19 }.
+	| aGame aConfigureDiceSet |
 	aConfigureDiceSet := RiggedDice new initializeWith:
 		                     { 0. 100. 0. 0. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20.
 		                     10. 6. 4. 2. 5. 7 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           RepeatCard new.
-					           RedoCard new })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	board := Board
+		         withSize: 50
+		         composedOf: (WormHole startingAt: 1 endingAt: 1)
+		         playedWith: (CardDeck withCards: {
+					          RepeatCard new.
+					          RedoCard new })
+		         andACellConfiguration: aConfigureDiceSet.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 19 })
+		         players: 1.
 	aGame start.
 	aGame use: (RepeatCard withObjective: 1) on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
@@ -341,21 +336,14 @@ RedoCardTest >> testWhenSpaceShipPlaysRepeatCardAndRedoCardThenItAppliesTheEffec
 { #category : 'tests' }
 RedoCardTest >> testWhenSpaceShipPlaysTwoRedoCardTogetherWithNoOtherCardToRedoThenNothingHappens [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 19 }.
+	| aGame |
+	board := self boardWithSize: 50 andDeck: (CardDeck withCards: {
+				          RedoCard new.
+				          RedoCard new }).
 
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           RedoCard new.
-					           RedoCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 19 })
+		         players: 1.
 
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
@@ -367,19 +355,14 @@ RedoCardTest >> testWhenSpaceShipPlaysTwoRedoCardTogetherWithNoOtherCardToRedoTh
 { #category : 'tests' }
 RedoCardTest >> testWhenTheOnlyCardPlayedIsRedoThenTheCardHasNoEffect [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 7 }.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         andDeck: (CardDeck withCards: { RedoCard new }).
 
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { RedoCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 7 })
+		         players: 1.
 	aGame use: (RedoCard withFillOut: 1) on: 1.
 	aGame start.
 
