@@ -19,24 +19,18 @@ MercenaryCardTest >> should: anErrorBlock raise: anErrorClass withMessageText: e
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndHasMercenaryWith3And4ThenTheyAllAttack2AndLoseThenAllLoseAShieldAndReturnToPosition0 [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           MercenaryCard new.
-					           MercenaryCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 4
-		         throwing:
-		         (RiggedDice new initializeWith: { 5. 5. 1. 1. 1. 10 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          MercenaryCard new.
+				          MercenaryCard new }).
 
-	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
-	aGame use: (MercenaryCard withHelpOf: 4) on: spaceShipID.
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 1. 1. 1. 10 })
+		         players: 4.
+
+	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
+	aGame use: (MercenaryCard withHelpOf: 4) on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -48,18 +42,15 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndHasMercenaryWith3
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3Then1And3Attack2AndLoseAShieldEach [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing:
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         andDeck: (CardDeck withCards: { MercenaryCard new }).
+
+	aGame := self
+		         gameWithDice:
 		         (RiggedDice new initializeWith: { 5. 5. 1. 2. 10 })
-		         wonAfter: 1.
+		         players: 3.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame start.
@@ -75,21 +66,17 @@ MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3T
 { #category : 'tests' }
 MercenaryCardTest >> testWhenSpaceShip1CombatsWithSpaceShip2AndUsesMercenaryOn3Then1And3Attack2AndWinAnd2ReturnsToPosition1 [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing:
-		         (RiggedDice new initializeWith: { 5. 5. 10. 2. 1 })
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         andDeck: (CardDeck withCards: { MercenaryCard new }).
 
-	aGame use: (MercenaryCard withHelpOf: 3) on: spaceShipID.
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 10. 2. 1 })
+		         players: 3.
+
+	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 6.

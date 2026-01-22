@@ -8,20 +8,15 @@ Class {
 { #category : 'tests' }
 CancelationCardTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMercenaryIsUnRelatedToCardOwner [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           MercenaryCard new.
-					           CancelationCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing:
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          MercenaryCard new.
+				          CancelationCard new }).
+
+	aGame := self
+		         gameWithDice:
 		         (RiggedDice new initializeWith: { 5. 5. 1. 2. 10 })
-		         wonAfter: 1.
+		         players: 3.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame
@@ -40,18 +35,15 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedAndTheCardIsCanceledThenTheMe
 { #category : 'tests' }
 CancelationCardTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasigned [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { MercenaryCard new. CancelationCard new})
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing:
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          MercenaryCard new.
+				          CancelationCard new }).
+
+	aGame := self
+		         gameWithDice:
 		         (RiggedDice new initializeWith: { 5. 5. 1. 2. 10 })
-		         wonAfter: 1.
+		         players: 3.
 
 	aGame use: (MercenaryCard withHelpOf: 3) on: 1.
 	aGame
@@ -70,49 +62,40 @@ CancelationCardTest >> testWhenAMercenaryIsAssignedThenWithCancelationIsDesasign
 { #category : 'tests' }
 CancelationCardTest >> testWhenItsNotTheShipsTurnToPlayButTheCancelationCardIsValidThenItCanBePlayed [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           WhiteCard new.
-					           WhiteCard new.
-					           WhiteCard new.
-					           CancelationCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          WhiteCard new.
+				          WhiteCard new.
+				          WhiteCard new.
+				          CancelationCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 3.
 
 	aGame use: SpeedCard new on: 1.
 	aGame
 		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 1.
 	aGame start.
+
 	self assert: (aGame positionOf: 1) equals: 6
 ]
 
 { #category : 'tests' }
 CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancelationBeforeTheGameStartsThenSpeedCardIsEnabled [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           WhiteCard new.
-					           WhiteCard new.
-					           SpeedCard new.
-					           CancelationCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          WhiteCard new.
+				          WhiteCard new.
+				          SpeedCard new.
+				          CancelationCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 3.
 
 	aGame use: SpeedCard new on: 1.
 	aGame
@@ -126,19 +109,14 @@ CancelationCardTest >> testWhenSpaceShip1PlaysASpeedCardAndSpaceShip2PlaysCancel
 { #category : 'tests' }
 CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCardsThenTheCardCantBePlayed [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           CancelationCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          CancelationCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 3.
 
 	self
 		should: [
@@ -153,21 +131,17 @@ CancelationCardTest >> testWhenSpaceShipCancelationCardWithNoActivePermanentCard
 { #category : 'tests' }
 CancelationCardTest >> testWhenSpaceShipCancelsAInmediateCardThenCreationFails [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           CancelationCard new.
-					           ReverseCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          CancelationCard new.
+				          ReverseCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 1.
 
 	aGame use: ReverseCard new on: 1.
+
 	self
 		should: [
 			aGame
@@ -181,19 +155,14 @@ CancelationCardTest >> testWhenSpaceShipCancelsAInmediateCardThenCreationFails [
 { #category : 'tests' }
 CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           CancelationCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          CancelationCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 3.
 
 	aGame use: SpeedCard new on: 1.
 	aGame
@@ -207,20 +176,14 @@ CancelationCardTest >> testWhenSpaceShipCancelsHisOwnPermanentCard [
 { #category : 'tests' }
 CancelationCardTest >> testWhenSpaceShipDoesntHaveTheCancelationCardInHisHandThenTheCadCantBePlayed [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           CancelationCard new.
-					           WhiteCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          CancelationCard new.
+				          WhiteCard new.
+				          SpeedCard new }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 3.
 
 	aGame use: SpeedCard new on: 1.
 

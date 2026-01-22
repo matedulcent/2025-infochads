@@ -8,19 +8,14 @@ Class {
 { #category : 'tests' }
 DoubleTurnCardTest >> testWhenThereAre3SpaceShipsAndOneDoubleTurnCardIsPlayedThenTheNextSpaceShipToMovePlaysTwice [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           DoubleCard new.
-					           WhiteCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 1. 2 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          DoubleCard new.
+				          WhiteCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 1. 2 })
+		         players: 3.
 
 	aGame use: DoubleCard new on: 1.
 	aGame start.
@@ -33,23 +28,19 @@ DoubleTurnCardTest >> testWhenThereAre3SpaceShipsAndOneDoubleTurnCardIsPlayedThe
 { #category : 'tests' }
 DoubleTurnCardTest >> testWhenThereAre3SpaceShipsAndOneDoubleTurnCardIsPlayedThenTheNextSpaceShipToMovePlaysTwiceAndTheRestPlayAfter [
 
-	| aGame aBoard |
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           DoubleCard new.
-					           WhiteCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: (RiggedDice new initializeWith: { 1. 2. 10. 11. })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {
+				          DoubleCard new.
+				          WhiteCard new }).
+
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 1. 2. 10. 11 })
+		         players: 3.
 
 	aGame use: DoubleCard new on: 1.
 	aGame start.
-	
+
 	self assert: (aGame positionOf: 3) equals: 12.
 	self assert: (aGame positionOf: 2) equals: 11.
 	self assert: (aGame positionOf: 1) equals: 4
