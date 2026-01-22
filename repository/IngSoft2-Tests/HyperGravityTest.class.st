@@ -5,6 +5,17 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'tests' }
+HyperGravityTest >> boardWithSize: aSize andConfig: aCellConfig [
+
+	aCellConfig setMaximumValueAs: 10.
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: (CardDeck withCards: {  })
+		  andACellConfiguration: aCellConfig
+]
+
 { #category : 'asserting' }
 HyperGravityTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
@@ -19,24 +30,16 @@ HyperGravityTest >> should: anErrorBlock raise: anErrorClass withMessageText: er
 { #category : 'tests' }
 HyperGravityTest >> testWhenABoardIsCreatedThenItCanCreateAnUnlimitedNumberOfHyperGravityCellsWithIndividualNumbers [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
-		                     0. 3. 4. 6. 10. 3. 2. 4 }. " 3. 4. 6. 10. 3. 2. 4."
-	aConfigureDiceSet setMaximumValueAs: 10.
-
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {  })
-		          andACellConfiguration: aConfigureDiceSet.
-
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1. 0. 3. 4.
+				          6. 10. 3. 2. 4 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10 })
+		         players: 1
+		         laps: 1.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 11
