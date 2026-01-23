@@ -51,7 +51,7 @@ CellProbabilities >> testWhenTheBoardIsGeneratedThenBlackHoleCellsAreApproximate
 ]
 
 { #category : 'tests' }
-CellProbabilities >> testWhenTheBoardIsGeneratedThenCardCellsAreApproximatelyTwentyTenPercent [
+CellProbabilities >> testWhenTheBoardIsGeneratedThenCardCellsAreApproximatelyTenPercent [
 
 	| numberOfCells |
 	numberOfCells := ProbabilityCounter new
