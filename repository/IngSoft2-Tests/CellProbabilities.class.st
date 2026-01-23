@@ -51,6 +51,28 @@ CellProbabilities >> testWhenTheBoardIsGeneratedThenBlackHoleCellsAreApproximate
 ]
 
 { #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenCardCellsAreApproximatelyTwentyTenPercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: CardEffect.
+
+	self assert: (numberOfCells between: 925 and: 1075)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenHyperGravityCellsAreApproximatelyFivePercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: HyperGravityEffect .
+
+	self assert: (numberOfCells between: 425 and: 575)
+]
+
+{ #category : 'tests' }
 CellProbabilities >> testWhenTheBoardIsGeneratedThenHyperJumpCellsAreApproximatelyEightPercent [
 
 	| numberOfCells |
@@ -70,6 +92,28 @@ CellProbabilities >> testWhenTheBoardIsGeneratedThenHyperSpaceJumpCellsAreApprox
 		                 theCellsThatHave: HyperSpaceJumpEffect .
 
 	self assert: (numberOfCells between: 1925 and: 2075)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenJailCellsAreApproximatelyOnePercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: JailEffect .
+
+	self assert: (numberOfCells between: 25 and: 175)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenMoonWalkCellsAreApproximatelyTenPercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: MoonWalkEffect .
+
+	self assert: (numberOfCells between: 925 and: 1075)
 ]
 
 { #category : 'tests' }
