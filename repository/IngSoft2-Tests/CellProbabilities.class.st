@@ -1,31 +1,84 @@
 Class {
 	#name : 'CellProbabilities',
 	#superclass : 'TestCase',
+	#instVars : [
+		'aConfigDiceSet',
+		'boardSize',
+		'aGameBoard'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
-CellProbabilities >> testA [
+{ #category : 'running' }
+CellProbabilities >> setUp [
 
-	| aConfigDiceSet boardSize numberOfCells anEffect aGameBoard |
+	super setUp.
+
 	aConfigDiceSet := RiggedDice new initializeWith:
 		                  { 24. 20. 20. 8. 2. 10. 10. 1. 5. 100. 0. 3. 30. 20.
 		                  10. 6. 4. 2. 5. 7. 7. 7. 7. 7. 7. 10. 6. 4. 2. 5. 7.
 		                  7. 7. 7. 7. 0. 3 }.
 	aConfigDiceSet setMaximumValueAs: 10.
-	
-	boardSize := 1002.
-	
+
+	boardSize := 10002.
+
 	aGameBoard := CellPlacement new
 		              createBoardWith: aConfigDiceSet
-		              withComplementary: boardSize.
-		
-	anEffect := BlackHoleEffect withBackTrack: -4.
+		              withComplementary: boardSize
+]
 
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenAtomicBombCellsAreApproximatelyTwoPercent [
+
+	| numberOfCells |
 	numberOfCells := ProbabilityCounter new
 		                 initializeToCountFrom: aGameBoard
-		                 theCellsThatHave: anEffect.
+		                 theCellsThatHave: AtomicBombEffect .
 
-	self assert: (numberOfCells between: 235 and: 245)
+	self assert: (numberOfCells between: 125 and: 275)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenBlackHoleCellsAreApproximatelyTwentyPercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: BlackHoleEffect.
+
+	self assert: (numberOfCells between: 1925 and: 2075)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenHyperJumpCellsAreApproximatelyEightPercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: HyperJumpEffect .
+
+	self assert: (numberOfCells between: 725 and: 875)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenHyperSpaceJumpCellsAreApproximatelyTwentyPercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: HyperSpaceJumpEffect .
+
+	self assert: (numberOfCells between: 1925 and: 2075)
+]
+
+{ #category : 'tests' }
+CellProbabilities >> testWhenTheBoardIsGeneratedThenNormalCellsAreApproximatelyTwentyFourPercent [
+
+	| numberOfCells |
+	numberOfCells := ProbabilityCounter new
+		                 initializeToCountFrom: aGameBoard
+		                 theCellsThatHave: Normal.
+
+	self assert: (numberOfCells between: 2325 and: 2475)
 ]

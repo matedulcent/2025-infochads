@@ -19,7 +19,7 @@ ProbabilityCounter >> count [
 
 	gameBoard do: [ :cell |
 		(cell percieveAction value: dummyShip value: dummyGame) class
-		= effectToCount class ifTrue: [
+		= effectToCount ifTrue: [
 			numberOfCellsOfCertainType := numberOfCellsOfCertainType + 1 ] ]
 ]
 
