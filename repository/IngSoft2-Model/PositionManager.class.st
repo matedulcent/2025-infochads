@@ -25,12 +25,14 @@ PositionManager >> adjustAllPositionsOn: aBoard totalLaps: laps [
 ]
 
 { #category : 'as yet unclassified' }
-PositionManager >> applyBoardEffectsOn: aShipId using: aBoard [
+PositionManager >> applyBoardEffectsOn: aShipId using: aBoard totalLaps: laps [
 
 	self
 		at: aShipId
 		replacePositionWith:
-		(aBoard applySpecialTilesTo: (positions at: aShipId))
+		(aBoard applySpecialTilesTo: (positions at: aShipId)).
+
+	self adjustAllPositionsOn: aBoard totalLaps: laps
 ]
 
 { #category : 'accessing' }

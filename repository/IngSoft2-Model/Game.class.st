@@ -6,7 +6,6 @@ Class {
 		'diceSet',
 		'laps',
 		'board',
-		'manage',
 		'stepOfNextSpaceShipToMove',
 		'listOfAlteredSteps',
 		'diceRoll',
@@ -16,7 +15,8 @@ Class {
 		'lastEffectPrototype',
 		'turnManager',
 		'cardSystem',
-		'cellSystem'
+		'cellSystem',
+		'positionManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -63,10 +63,10 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 Game >> adjustPosition [
 	"stay ?"
 
-	turnManager allShips do: [ :ship |
-		manage sumAt: ship id with: (board
-				 limitAdjustment: (manage positions at: ship id)
-				 withTotalLaps: laps) ]
+	"turnManager allShips do: [ :ship |
+		positionManager sumAt: ship id with: (board
+				 limitAdjustment: (positionManager positions at: ship id)
+				 withTotalLaps: laps) ]"
 ]
 
 { #category : 'as yet unclassified' }
@@ -91,7 +91,7 @@ Game >> applyPowerUpTo: aSpaceShip [
 Game >> assertTheGameIsNotOver [
 
 	^ turnManager allShips anySatisfy: [ :aShip |
-		  (manage at: aShip id) isEqualTo:
+		  (positionManager at: aShip id) isEqualTo:
 			  (Position at: board boardSize withLaps: laps) ]
 ]
 
@@ -124,11 +124,11 @@ Game >> getRanking [
 	self isOver ifFalse: [ ^ #(  ) ].
 
 	ranking := spaceShips sorted: [ :ship1 :ship2 |
-		           (manage at: ship1 id) lap
-		           -> (manage at: ship1 id) position
+		           (positionManager at: ship1 id) lap
+		           -> (positionManager at: ship1 id) position
 		           >
-		           ((manage at: ship2 id) lap
-		            -> (manage at: ship2 id) position) ].
+		           ((positionManager at: ship2 id) lap
+		            -> (positionManager at: ship2 id) position) ].
 
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
@@ -137,23 +137,25 @@ Game >> getRanking [
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-	self createSpaceShipsWith: aNumberOfSpaceShips.
-	manage := PositionManager of: spaceShips.
 	diceSet := aDiceSet.
 	laps := aNumberOfLaps.
+	
+	self createSpaceShipsWith: aNumberOfSpaceShips.
+	positionManager := PositionManager of: spaceShips.
+	
 	turnManager := TurnManager withThe: spaceShips.
 	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries.
 
 	cellSystem := CellSystem
 		              withBoard: board
-		              positionManager: manage
+		              positionManager: positionManager
 		              turnManager: turnManager
 		              and: self.
 
 	cardSystem := CardSystem
 		              withTurnManager: turnManager
-		              positionManager: manage
+		              positionManager: positionManager
 		              activeCardHolder: activeCardHolder
 		              withAdditional: cellSystem
 		              and: self
@@ -175,34 +177,30 @@ Game >> isOver [
 { #category : 'informationTest' }
 Game >> lapOf: aSpaceShipID [
 	"testing"
-	^ (manage at: aSpaceShipID) lap
+	^ (positionManager at: aSpaceShipID) lap
 ]
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
-	"   self advance: aSpaceShip by: aDiceRoll.
-   self resolveEffectsFor: aSpaceShip.
-   self resolveConflicts.
-   self prepareNextTurn."
-	manage move: aSpaceShip id by: aDiceRoll on: board totalLaps: laps. "new"
-	"manage
-		sumAt: aSpaceShip id
-		with: (Position at: aDiceRoll withLaps: 0).
-		
-	self adjustPosition."
+
+	positionManager
+		move: aSpaceShip id
+		by: aDiceRoll
+		on: board
+		totalLaps: laps.
 
 	self applyPowerUpTo: aSpaceShip.
-	manage applyBoardEffectsOn: aSpaceShip id using: board.
-	"manage
-		at: aSpaceShip id
-		replacePositionWith:
-		(board checkForWormHole: (manage positions at: aSpaceShip id))."
-	self adjustPosition.
-		
+	
+	positionManager
+		applyBoardEffectsOn: aSpaceShip id
+		using: board
+		totalLaps: laps.
+
+
 	Battle
 		in: self
 		and: turnManager
-		with: manage
+		with: positionManager
 		on: board
 		with: diceSet.
 	diceRoll := diceSet toss
@@ -229,7 +227,7 @@ Game >> obtainRelationsWithMercenaries [
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
-	^ (manage positions at: aSpaceShipID) position
+	^ (positionManager positions at: aSpaceShipID) position
 ]
 
 { #category : 'as yet unclassified' }
