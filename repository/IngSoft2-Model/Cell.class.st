@@ -15,12 +15,6 @@ Cell class >> has: anEffectPrototype [
 	^ self new initializeWith: anEffectPrototype
 ]
 
-{ #category : 'accessing' }
-Cell >> effect [
-
-	^ effectPrototype giveType
-]
-
 { #category : 'initialization' }
 Cell >> initializeWith: anEffectPrototype [
 

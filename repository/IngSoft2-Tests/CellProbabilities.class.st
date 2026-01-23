@@ -13,7 +13,8 @@ Class {
 { #category : 'documentation' }
 CellProbabilities >> README [ 
 
-	"The contemplated error is +-0.75%"
+	"The contemplated error is +-0.75%.
+	The tests were made under a board of 10.000 cells."
 ]
 
 { #category : 'running' }
