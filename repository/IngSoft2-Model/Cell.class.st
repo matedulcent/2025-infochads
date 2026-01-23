@@ -17,9 +17,8 @@ Cell class >> has: anEffectPrototype [
 
 { #category : 'accessing' }
 Cell >> effect [
-	"for testing"
 
-	^ effect
+	^ effectPrototype giveType
 ]
 
 { #category : 'initialization' }

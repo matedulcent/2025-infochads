@@ -11,6 +11,12 @@ Effect >> applyOn: aShip in: aGame [
 	self subclassResponsibility
 ]
 
+{ #category : 'as yet unclassified' }
+Effect >> giveType [
+
+	^ self class
+]
+
 { #category : 'accessing' }
 Effect >> prototype [
 
