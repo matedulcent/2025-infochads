@@ -42,6 +42,12 @@ Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShi
 		thatArePlaced: spaceShipPositions
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> applySpecialTilesTo: aPosition [
+
+	^ self checkForWormHole: aPosition
+]
+
 { #category : 'accessing' }
 Board >> boardSize [
 

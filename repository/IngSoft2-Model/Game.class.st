@@ -180,27 +180,24 @@ Game >> lapOf: aSpaceShipID [
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
-	"stay"
-	manage
+	"   self advance: aSpaceShip by: aDiceRoll.
+   self resolveEffectsFor: aSpaceShip.
+   self resolveConflicts.
+   self prepareNextTurn."
+	manage move: aSpaceShip id by: aDiceRoll on: board totalLaps: laps. "new"
+	"manage
 		sumAt: aSpaceShip id
 		with: (Position at: aDiceRoll withLaps: 0).
 		
-	self adjustPosition.
+	self adjustPosition."
 
 	self applyPowerUpTo: aSpaceShip.
-
-	manage
+	manage applyBoardEffectsOn: aSpaceShip id using: board.
+	"manage
 		at: aSpaceShip id
 		replacePositionWith:
-		(board checkForWormHole: (manage positions at: aSpaceShip id)).
+		(board checkForWormHole: (manage positions at: aSpaceShip id))."
 	self adjustPosition.
-	"Battle
-		between: aSpaceShip
-		andOneOf: spaceShips
-		with: manage
-		on: board
-		with: diceSet
-		andIts: relationshipsWithMercenaries."
 		
 	Battle
 		in: self
