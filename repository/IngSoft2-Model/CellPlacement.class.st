@@ -11,13 +11,16 @@ Class {
 }
 
 { #category : 'adding' }
-CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
+CellPlacement >> addNormalCellAtBeginningAndEndOfBoard: netCellDistribution [
 
-	| safeCell |
-	safeCell := Cell has: [ :ship :game | Normal new ].
-	netCellDistibution at: 1 put: safeCell.
-	netCellDistibution at: boardSize put: safeCell.
-	^ netCellDistibution
+	| mutable |
+	mutable := netCellDistribution asOrderedCollection.
+
+	mutable
+		addFirst: (Cell has: [ :ship :game | Normal new ]);
+		addLast: (Cell has: [ :ship :game | Normal new ]).
+
+	^ mutable
 ]
 
 { #category : 'creation' }
@@ -67,7 +70,7 @@ CellPlacement >> cardCellsWithProbabilities: aProbability [
 { #category : 'as yet unclassified' }
 CellPlacement >> createBoardWith: aConfigDice withComplementary: aBoardSize [
 
-	boardSize := aBoardSize.
+	boardSize := aBoardSize - 2. "to fill the first and last cells with normal effect"
 	rawCellDistribution := OrderedCollection new.
 
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
@@ -93,7 +96,7 @@ CellPlacement >> extractSample [
 	| netCellDistibution |
 	netCellDistibution := self randomCellPicking.
 
-	sample := self addNormalCellAtBeguiningAndEndOfBoard:
+	sample := self addNormalCellAtBeginningAndEndOfBoard:
 		          netCellDistibution
 ]
 

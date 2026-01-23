@@ -15,7 +15,7 @@ CellProbabilities >> testA [
 		                  7. 7. 7. 7. 0. 3 }.
 	aConfigDiceSet setMaximumValueAs: 10.
 	
-	boardSize := 1000.
+	boardSize := 1002.
 	
 	aGameBoard := CellPlacement new
 		              createBoardWith: aConfigDiceSet

@@ -29,7 +29,14 @@ ProbabilityCounter >> initializeToCountFrom: aGameBoard theCellsThatHave: anEffe
 	gameBoard := aGameBoard.
 	numberOfCellsOfCertainType := 0.
 	effectToCount := anEffect.
-	
+	self removeFirstAndLast.
 	self count.
 	^ numberOfCellsOfCertainType
+]
+
+{ #category : 'removing' }
+ProbabilityCounter >> removeFirstAndLast [
+
+	gameBoard removeFirst.
+	gameBoard removeLast
 ]
