@@ -10,6 +10,12 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'documentation' }
+CellProbabilities >> README [ 
+
+	"The contemplated error is +-0.75%"
+]
+
 { #category : 'running' }
 CellProbabilities >> setUp [
 
