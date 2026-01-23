@@ -60,16 +60,6 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
-Game >> adjustPosition [
-	"stay ?"
-
-	"turnManager allShips do: [ :ship |
-		positionManager sumAt: ship id with: (board
-				 limitAdjustment: (positionManager positions at: ship id)
-				 withTotalLaps: laps) ]"
-]
-
-{ #category : 'as yet unclassified' }
 Game >> applyAction: anAction [
 
 	lastActionPrototype := anAction prototype
@@ -79,12 +69,6 @@ Game >> applyAction: anAction [
 Game >> applyEffect: anEffect [
 
 	lastEffectPrototype := anEffect 
-]
-
-{ #category : 'as yet unclassified' }
-Game >> applyPowerUpTo: aSpaceShip [
-	"ver si puedo mover"
-	cellSystem applyPowerUpTo: aSpaceShip
 ]
 
 { #category : 'asserting' }
@@ -189,13 +173,12 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		on: board
 		totalLaps: laps.
 
-	self applyPowerUpTo: aSpaceShip.
-	
+	cellSystem applyPowerUpTo: aSpaceShip.
+
 	positionManager
 		applyBoardEffectsOn: aSpaceShip id
 		using: board
 		totalLaps: laps.
-
 
 	Battle
 		in: self
@@ -203,6 +186,7 @@ Game >> move: aSpaceShip after: aDiceRoll [
 		with: positionManager
 		on: board
 		with: diceSet.
+		
 	diceRoll := diceSet toss
 ]
 
@@ -260,5 +244,5 @@ Game >> start [
 Game >> use: aCard on: aShipId [
 
 	cardSystem use: aCard on: aShipId.
-	self adjustPosition
+	positionManager adjustAllPositionsOn: board totalLaps: laps
 ]
