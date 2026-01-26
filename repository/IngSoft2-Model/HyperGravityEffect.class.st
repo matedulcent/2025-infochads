@@ -41,5 +41,5 @@ HyperGravityEffect >> prototype [
 
 	| value |
 	value := valueToEscape.
-	^ [ :ship :aCellSystem | self class with: value ]
+	^ [ self class with: value ]
 ]

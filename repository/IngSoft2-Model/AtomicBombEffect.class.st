@@ -18,5 +18,5 @@ AtomicBombEffect >> applyOn: aShip in: aCellSystem [
 { #category : 'accessing' }
 AtomicBombEffect >> prototype [
 
-	^ [ :ship :aCellSystem | self class new ]
+	^ [ self class new ]
 ]

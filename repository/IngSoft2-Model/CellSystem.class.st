@@ -31,7 +31,7 @@ CellSystem >> applyPowerUpTo: aSpaceShip [
 
 	effectPrototype := cell percieveAction.
 	game applyEffect: effectPrototype.
-	anEffect := effectPrototype value: aSpaceShip value: self.
+	anEffect := effectPrototype value.
 	anEffect applyOn: aSpaceShip in: self
 ]
 

@@ -51,5 +51,5 @@ HyperJumpEffect >> prototype [
 	| parsec jumps |
 	parsec := parsecsPerCell.
 	jumps := listOfJumps.
-	^ [ :ship :aCellSystem | self class with: parsec andParsec: jumps ]
+	^ [ self class with: parsec andParsec: jumps ]
 ]

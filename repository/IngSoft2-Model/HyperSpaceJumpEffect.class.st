@@ -43,5 +43,5 @@ HyperSpaceJumpEffect >> prototype [
 
 	| n |
 	n := forwardTrack .
-	^ [ :ship :aCellSystem | self class withForwardTrack: n ]
+	^ [ self class withForwardTrack: n ]
 ]

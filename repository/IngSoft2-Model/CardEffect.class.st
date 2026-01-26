@@ -14,5 +14,5 @@ CardEffect >> applyOn: aShip in: aCellSystem [
 { #category : 'accessing' }
 CardEffect >> prototype [
 
-	^ [ :ship :aCellSystem | self class new ]
+	^ [ self class new ]
 ]

@@ -43,5 +43,5 @@ MoonWalkEffect >> prototype [
 
 	| n |
 	n := backTrack.
-	^ [ :ship :aCellSystem | self class withBackTrack: n ]
+	^ [ self class withBackTrack: n ]
 ]

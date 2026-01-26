@@ -14,5 +14,5 @@ Normal >> applyOn: aShip in: aCellSystem [
 { #category : 'accessing' }
 Normal >> prototype [
 
-	^ [ :ship :aCellSystem | self class new ]
+	^ [ self class new ]
 ]

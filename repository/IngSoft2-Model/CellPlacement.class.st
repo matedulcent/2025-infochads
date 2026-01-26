@@ -17,8 +17,8 @@ CellPlacement >> addNormalCellAtBeginningAndEndOfBoard: netCellDistribution [
 	mutable := netCellDistribution asOrderedCollection.
 
 	mutable
-		addFirst: (Cell has: [ :ship :game | Normal new ]);
-		addLast: (Cell has: [ :ship :game | Normal new ]).
+		addFirst: (Cell has: [ Normal new ]);
+		addLast: (Cell has: [ Normal new ]).
 
 	^ mutable
 ]
@@ -28,7 +28,7 @@ CellPlacement >> atomicBombCellsWithProbabilities: aProbability [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ :ship :game | AtomicBombEffect new ] ].
+		            Cell has: [ AtomicBombEffect new ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -37,7 +37,7 @@ CellPlacement >> blackHoleCellsWithProbabilities: aProbability andDesplacemets: 
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ :ship :game |
+		            Cell has: [
 			            BlackHoleEffect withBackTrack: aDesplacement ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
@@ -63,7 +63,7 @@ CellPlacement >> cardCellsWithProbabilities: aProbability [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ :ship :game | CardEffect new ] ].
+		            Cell has: [ CardEffect new ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -144,7 +144,7 @@ CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues
 			                     escapeValue nextPutAll: valuesToEscape ] ].
 
 	newCells := (1 to: aProbability) collect: [ :escapeValue |
-		            Cell has: [ :ship :game | HyperGravityEffect with: (allValuesToEscape at: escapeValue) ] ].
+		            Cell has: [ HyperGravityEffect with: (allValuesToEscape at: escapeValue) ] ].
 
 	rawCellDistribution := rawCellDistribution , newCells
 ]
@@ -164,7 +164,7 @@ CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aP
 
 
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ :ship :game |
+		            Cell has: [
 			            HyperJumpEffect with: relation andParsec: jumps ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
@@ -174,7 +174,7 @@ CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacem
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ :ship :game |
+		            Cell has: [ 
 			            HyperSpaceJumpEffect withForwardTrack: aDesplacement ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
@@ -184,7 +184,7 @@ CellPlacement >> jailCellsWithProbabilitites: aProbability and: anEscapeValue [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ :ship :game |
+		            Cell has: [ 
 			            JailEffect with: anEscapeValue ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
@@ -201,7 +201,7 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 			                    particular nextPutAll: stepBackwards ] ].
 
 	newCells := (1 to: aProbability) collect: [ :particular |
-		            Cell has: [ :ship :game |
+		            Cell has: [
 			            MoonWalkEffect withBackTrack:
 				            (allDisplacements at: particular) negated ] ].
 	rawCellDistribution := rawCellDistribution , newCells
@@ -211,7 +211,7 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 CellPlacement >> normalCellsWithProbabilitites: aProbability [
 
 	1 to: aProbability do: [ :cell |
-		rawCellDistribution add: (Cell has: [ :ship :game | Normal new ]) ]
+	rawCellDistribution add: (Cell has: [ Normal new ]) ]
 ]
 
 { #category : 'as yet unclassified' }

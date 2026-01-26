@@ -34,5 +34,5 @@ JailEffect >> prototype [
 
 	| value |
 	value := jailOutValue.
-	^ [ :ship :aCellSystem | self class with: value ]
+	^ [ self class with: value ]
 ]

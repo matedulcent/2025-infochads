@@ -116,9 +116,9 @@ CardSystem >> repeatLastCellEffectOn: aShipId [
 
 	ship := turnManager obtainShipById: aShipId.
 
-	anEffect := lastEffectPrototype value: ship value: self.
-	"anEffect applyOn: ship in: game" "cambiar game por cellsystem"
-	anEffect applyOn: ship in: cellSystem.
+	anEffect := lastEffectPrototype value.
+
+	anEffect applyOn: ship in: cellSystem
 ]
 
 { #category : 'as yet unclassified' }
