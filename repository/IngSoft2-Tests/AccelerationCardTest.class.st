@@ -17,6 +17,39 @@ AccelerationCardTest >> should: anErrorBlock raise: anErrorClass withMessageText
 ]
 
 { #category : 'tests' }
+AccelerationCardTest >> testWhenACardIsNotInDeckThenUsageFails [
+    | aGame |
+
+    aGame := self
+        gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+        players: 2.
+
+    self
+        should: [ aGame use: AccelerationCard new on: 1 ]
+        raise: Error
+        withMessageText: 'The card is not in the ships deck'
+
+]
+
+{ #category : 'tests' }
+AccelerationCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
+
+	| aGame |
+	board := self boardWithSize: 50 andDeck: (CardDeck withCards: {
+				          AccelerationCard new.
+				          WhiteCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 1.
+
+	aGame use: AccelerationCard new on: 1.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 14
+]
+
+{ #category : 'tests' }
 AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsTossIncrementsInOne [
     | aGame |
 
