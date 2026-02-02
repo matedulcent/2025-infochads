@@ -23,6 +23,14 @@ CellPlacement >> addNormalCellAtBeginningAndEndOfBoard: netCellDistribution [
 	^ mutable
 ]
 
+{ #category : 'asserting' }
+CellPlacement >> assertLightYears: aLightYearValue respectParsecs: aParsecValue [
+
+	aLightYearValue ~= (aParsecValue * 3) ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ]
+]
+
 { #category : 'creation' }
 CellPlacement >> atomicBombCellsWithProbabilities: aProbability [
 
@@ -47,13 +55,13 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 
 	| result |
 	result := aParsecValue + aLightYearValue.
-	
+
 	self equal: aLightYearValue to: aParsecValue.
 
 	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
 		^ result // boardSize ].
-	
-	self the: aLightYearValue doesntRespectProportionTo: aParsecValue.
+
+	self assertLightYears: aLightYearValue respectParsecs: aParsecValue.
 
 	^ aParsecValue // boardSize
 ]
@@ -174,7 +182,7 @@ CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacem
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: [ 
+		            Cell has: [
 			            HyperSpaceJumpEffect withForwardTrack: aDesplacement ] ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
@@ -238,14 +246,6 @@ CellPlacement >> randomCellPicking [
 
     ^ (1 to: boardSize) collect: [ :cell |
           rawCellDistribution at: ((1 to: 100) atRandom) ]
-]
-
-{ #category : 'as yet unclassified' }
-CellPlacement >> the: aLightYearValue doesntRespectProportionTo: aParsecValue [
-
-	aLightYearValue // aParsecValue ~= 3 ifTrue: [
-		Error signal:
-			'The ratio 1 parsec = 3 light years is not being respected' ]
 ]
 
 { #category : 'as yet unclassified' }
