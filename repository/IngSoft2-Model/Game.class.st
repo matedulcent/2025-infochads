@@ -232,7 +232,7 @@ Game >> shieldOf: aSpaceShipID [
 
 { #category : 'accessing' }
 Game >> start [
-	"stay"
+	
 	| aSpaceShip |
 	diceRoll := diceSet toss.
 	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
