@@ -6,8 +6,6 @@ Class {
 		'diceSet',
 		'laps',
 		'board',
-		'stepOfNextSpaceShipToMove',
-		'listOfAlteredSteps',
 		'diceRoll',
 		'activeCardHolder',
 		'relationshipsWithMercenaries',

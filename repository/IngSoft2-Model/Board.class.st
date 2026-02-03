@@ -30,19 +30,6 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
-
-	| cell |
-	gameBoard ifEmpty: [ ^ self ].
-	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
-
-	cell
-		takeActionOver: aSpaceShip
-		or: spaceShips
-		thatArePlaced: spaceShipPositions
-]
-
-{ #category : 'as yet unclassified' }
 Board >> applySpecialTilesTo: aPosition [
 
 	^ self checkForWormHole: aPosition

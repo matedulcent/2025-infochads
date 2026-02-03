@@ -16,7 +16,7 @@ ActiveCardHolder class >> withPlayers: arg1 [
 
 { #category : 'adding' }
 ActiveCardHolder >> addActive: aCard to: aShip [
-	"no se porque me salta en amarillo"
+	
 	(activeCards at: aShip id) add: aCard
 ]
 
