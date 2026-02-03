@@ -14,7 +14,8 @@ AccelerationCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
 	aCardSystem addActive: self to: aShip.
-	aCardSystem applyAction: (AccelerationAction on: aShip in: aCardSystem)
+	aCardSystem registerLastCardAction:
+		(AccelerationAction on: aShip in: aCardSystem)
 ]
 
 { #category : 'as yet unclassified' }

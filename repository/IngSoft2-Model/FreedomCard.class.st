@@ -9,5 +9,5 @@ Class {
 FreedomCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aCardSystem applyAction: (FreedomAction on: aShip)
+	aCardSystem registerLastCardAction: (FreedomAction on: aShip)
 ]

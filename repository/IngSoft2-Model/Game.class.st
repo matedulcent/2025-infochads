@@ -57,12 +57,6 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 		  wonAfter: aNumberOfLaps
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> applyAction: anAction [
-
-	lastActionPrototype := anAction prototype
-]
-
 { #category : 'asserting' }
 Game >> assertTheGameIsNotOver [
 
@@ -204,6 +198,12 @@ Game >> obtainRelationsWithMercenaries [
 Game >> positionOf: aSpaceShipID [
 
 	^ (positionManager positions at: aSpaceShipID) position
+]
+
+{ #category : 'as yet unclassified' }
+Game >> registerLastCardAction: anAction [
+
+	lastActionPrototype := anAction prototype
 ]
 
 { #category : 'as yet unclassified' }

@@ -25,6 +25,6 @@ CancelationCard >> initializeWith: aCard and: anObjective [
 { #category : 'as yet unclassified' }
 CancelationCard >> playOn: aShip in: aCardSystem [
 
-	aCardSystem applyAction:
+	aCardSystem registerLastCardAction:
 		(CancelationAction to: card on: objective in: aCardSystem)
 ]

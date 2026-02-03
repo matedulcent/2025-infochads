@@ -31,13 +31,6 @@ CardSystem >> addActive: aCard to: aShipId [
 	activeCardHolder addActive: aCard to: aShipId
 ]
 
-{ #category : 'as yet unclassified' }
-CardSystem >> applyAction: anAction [
-
-	game applyAction: anAction.
-	anAction apply
-]
-
 { #category : 'asserting' }
 CardSystem >> assertItsTurnToPlayOf: aShip [
 	
@@ -103,8 +96,15 @@ CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
 	| lastActionPrototype |
 	lastActionPrototype := game obtainLastCardActionPrototype.
 	lastActionPrototype ifNil: [ ^ self ].
-	self applyAction:
+	self registerLastCardAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId)
+]
+
+{ #category : 'as yet unclassified' }
+CardSystem >> registerLastCardAction: anAction [
+
+	game registerLastCardAction: anAction.
+	anAction apply
 ]
 
 { #category : 'as yet unclassified' }

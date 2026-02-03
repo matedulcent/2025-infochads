@@ -9,5 +9,5 @@ Class {
 SkipCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aCardSystem applyAction: (SkipAction on: aShip)
+	aCardSystem registerLastCardAction: (SkipAction on: aShip)
 ]

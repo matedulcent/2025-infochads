@@ -9,5 +9,5 @@ Class {
 ReverseCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aCardSystem applyAction: (ReverseAction in: aCardSystem)
+	aCardSystem registerLastCardAction: (ReverseAction in: aCardSystem)
 ]
