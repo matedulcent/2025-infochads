@@ -13,7 +13,7 @@ Free >> canBattleWithShield: shield [
 
 { #category : 'testing' }
 Free >> isLockedUp [
-	"borrar"
+	
 	^ false
 ]
 

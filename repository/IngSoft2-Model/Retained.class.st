@@ -34,7 +34,7 @@ Retained >> isFreeByTossing: aDiceToss [
 
 { #category : 'testing' }
 Retained >> isLockedUp [
-	"borrar"
+	
 	^ true
 ]
 

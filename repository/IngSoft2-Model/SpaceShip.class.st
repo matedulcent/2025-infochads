@@ -164,8 +164,7 @@ SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
 	roll := aDiceRoll + boost.
 
 	aDiceRoll = 0 ifTrue: [
-		self skipState: (SkipForShields new initializeWithNext: NoSkip new).
-		roll := aDiceRoll ].
+		self skipState: (SkipForShields new initializeWithNext: NoSkip new) ].
 
 	skipState playTurnFor: self with: roll in: aGame
 ]
