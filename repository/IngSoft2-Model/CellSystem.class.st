@@ -24,7 +24,7 @@ CellSystem class >> withBoard: board positionManager: aPositionManager turnManag
 { #category : 'as yet unclassified' }
 CellSystem >> applyPowerUpTo: aSpaceShip [
 
-	| cell position "effectPrototype" anEffect |
+	| cell position anEffect |
 	position := positionManager at: aSpaceShip id.
 	cell := board cellInThe: position.
 	cell ifNil: [ ^ self ].
@@ -32,9 +32,6 @@ CellSystem >> applyPowerUpTo: aSpaceShip [
 	anEffect := cell percieveAction.
 	game registerLastEffect: anEffect.
 	anEffect applyOn: aSpaceShip in: self
-	"game registerLastEffect: effectPrototype.
-	anEffect := effectPrototype value.
-	anEffect applyOn: aSpaceShip in: self"
 ]
 
 { #category : 'as yet unclassified' }
