@@ -17,7 +17,6 @@ SkipAction class >> on: aShip [
 
 { #category : 'private' }
 SkipAction >> apply [
-	"ship changeSkippingStateTo: (SkipForSkipping new initializeWithNext: NoSkip new)"
 
 	ship skipState: (SkipForSkipping new initializeWithNext: NoSkip new)
 ]

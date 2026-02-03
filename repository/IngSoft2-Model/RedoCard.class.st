@@ -23,5 +23,6 @@ RedoCard >> initializeWithTarget: aSpaceShipID [
 { #category : 'as yet unclassified' }
 RedoCard >> playOn: aShip in: aCardSystem [
 
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
 	aCardSystem redoLastActionOn: aShip withAdditional: targetId
 ]

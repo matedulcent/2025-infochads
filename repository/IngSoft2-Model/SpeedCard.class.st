@@ -14,8 +14,8 @@ SpeedCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
 	aCardSystem addActive: self to: aShip.
-
-	aCardSystem registerLastCardAction: (SpeedAction on: aShip in: aCardSystem)
+	aCardSystem registerLastCardAction:
+		(SpeedAction on: aShip in: aCardSystem)
 ]
 
 { #category : 'as yet unclassified' }

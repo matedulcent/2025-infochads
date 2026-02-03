@@ -17,8 +17,7 @@ FreedomAction class >> on: aShip [
 { #category : 'private' }
 FreedomAction >> apply [
 
-	"ship changeStateToFreeByCard"
-	ship state: (ship state setFreeByCard)
+	ship state: ship state setFreeByCard
 ]
 
 { #category : 'initialization' }
