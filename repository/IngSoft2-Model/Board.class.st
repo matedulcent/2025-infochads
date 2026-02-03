@@ -58,7 +58,7 @@ Board >> boardSize [
 Board >> cellInThe: position [
 
 	| cell |
-	gameBoard ifEmpty: [ ^ nil ].
+	gameBoard ifEmpty: [ ^ nil ]. 
 	cell := gameBoard at: (position position).
 	^ cell
 ]

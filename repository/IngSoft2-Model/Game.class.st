@@ -65,12 +65,6 @@ Game >> applyAction: anAction [
 	lastActionPrototype := anAction prototype
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> applyEffect: anEffect [
-
-	lastEffectPrototype := anEffect 
-]
-
 { #category : 'asserting' }
 Game >> assertTheGameIsNotOver [
 
@@ -212,6 +206,12 @@ Game >> obtainRelationsWithMercenaries [
 Game >> positionOf: aSpaceShipID [
 
 	^ (positionManager positions at: aSpaceShipID) position
+]
+
+{ #category : 'as yet unclassified' }
+Game >> registerLastEffectPrototype: anEffect [
+
+	lastEffectPrototype := anEffect 
 ]
 
 { #category : 'as yet unclassified' }
