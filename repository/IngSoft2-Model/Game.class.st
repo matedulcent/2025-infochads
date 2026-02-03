@@ -209,9 +209,9 @@ Game >> positionOf: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> registerLastEffectPrototype: anEffect [
+Game >> registerLastEffect: anEffect [
 
-	lastEffectPrototype := anEffect 
+	lastEffectPrototype := anEffect prototype 
 ]
 
 { #category : 'as yet unclassified' }
