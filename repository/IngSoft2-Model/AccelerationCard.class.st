@@ -13,7 +13,7 @@ Class {
 AccelerationCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
-	aCardSystem addActive: self to: aShip.
+	aCardSystem add: self to: aShip.
 	aCardSystem registerLastCardAction:
 		(AccelerationAction on: aShip in: aCardSystem)
 ]

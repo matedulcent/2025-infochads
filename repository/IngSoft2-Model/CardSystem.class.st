@@ -26,9 +26,9 @@ CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionMana
 ]
 
 { #category : 'adding' }
-CardSystem >> addActive: aCard to: aShipId [
+CardSystem >> add: aCard to: aShipId [
 
-	activeCardHolder addActive: aCard to: aShipId
+	activeCardHolder add: aCard to: aShipId
 ]
 
 { #category : 'asserting' }
@@ -98,7 +98,7 @@ CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
 	lastActionPrototype ifNil: [ ^ self ].
 	self registerLastCardAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId).
-	activeCardHolder addLastPermanentCardTo: aShip.
+	activeCardHolder addLastCardTo: aShip.
 ]
 
 { #category : 'as yet unclassified' }

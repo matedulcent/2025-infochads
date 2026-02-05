@@ -31,7 +31,7 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 MercenaryCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
-	aCardSystem addActive: self to: aShip.
+	aCardSystem add: self to: aShip.
 	aCardSystem registerLastCardAction:
 		(MercenaryAction helper: helper on: aShip in: aCardSystem)
 ]

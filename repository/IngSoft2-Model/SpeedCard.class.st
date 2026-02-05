@@ -13,7 +13,7 @@ Class {
 SpeedCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
-	aCardSystem addActive: self to: aShip.
+	aCardSystem add: self to: aShip.
 	aCardSystem registerLastCardAction:
 		(SpeedAction on: aShip in: aCardSystem)
 ]

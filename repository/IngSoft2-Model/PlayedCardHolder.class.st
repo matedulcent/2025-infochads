@@ -1,53 +1,53 @@
 Class {
-	#name : 'ActiveCardHolder',
+	#name : 'PlayedCardHolder',
 	#superclass : 'Object',
 	#instVars : [
-		'activeCards',
-		'lastCardActivated'
+		'lastCardActivated',
+		'playedCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-ActiveCardHolder class >> withPlayers: arg1 [
+PlayedCardHolder class >> withPlayers: arg1 [
 
 	^ self new initializeWithPlayers: arg1
 ]
 
 { #category : 'adding' }
-ActiveCardHolder >> addActive: aCard to: aShip [
+PlayedCardHolder >> add: aCard to: aShip [
 
 	lastCardActivated := aCard.
-	(activeCards at: aShip id) add: aCard
+	(playedCards at: aShip id) add: aCard
 ]
 
 { #category : 'adding' }
-ActiveCardHolder >> addLastPermanentCardTo: aShip [
+PlayedCardHolder >> addLastCardTo: aShip [
 
-	self addActive: lastCardActivated to: aShip
+	self add: lastCardActivated to: aShip
 ]
 
 { #category : 'initialization' }
-ActiveCardHolder >> createCardPositionsOf: spaceShips [
+PlayedCardHolder >> createCardPositionsOf: spaceShips [
 
 	spaceShips do: [ :ship |
-		activeCards at: ship id put: OrderedCollection new ]
+		playedCards at: ship id put: OrderedCollection new ]
 ]
 
 { #category : 'initialization' }
-ActiveCardHolder >> initializeWithPlayers: spaceShips [
+PlayedCardHolder >> initializeWithPlayers: spaceShips [
 
-	activeCards := Dictionary new.
+	playedCards := Dictionary new.
 	lastCardActivated := WhiteCard new.
 	self createCardPositionsOf: spaceShips
 ]
 
 { #category : 'removing' }
-ActiveCardHolder >> removeActive: aCard from: aShipId [
+PlayedCardHolder >> removeActive: aCard from: aShipId [
 
 	| cards removedCard |
-	cards := activeCards at: aShipId ifAbsent: [ ^ self ].
+	cards := playedCards at: aShipId ifAbsent: [ ^ self ].
 
 	removedCard := cards
 		               detect: [ :each |

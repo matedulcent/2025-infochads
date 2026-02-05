@@ -114,7 +114,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	positionManager := PositionManager of: spaceShips.
 	
 	turnManager := TurnManager withThe: spaceShips.
-	activeCardHolder := ActiveCardHolder withPlayers: spaceShips.
+	activeCardHolder := PlayedCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries.
 
 	cellSystem := CellSystem
