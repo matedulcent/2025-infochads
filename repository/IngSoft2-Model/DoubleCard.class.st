@@ -9,6 +9,7 @@ Class {
 DoubleCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem addActive: (WhiteCard new) to: aShip.
 	aCardSystem registerLastCardAction:
 		(DoubleTurnAction on: aShip in: aCardSystem)
 ]

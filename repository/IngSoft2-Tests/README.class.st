@@ -13,7 +13,6 @@ README >> readmeCardDistribution [
 			
 	"RULES FOR TESTING:
 	The cards manage a stack distribution (The First card poped is the last card pushed).
-	The cards are first assigned to the Card Cell. The Card Manager withdraws the asignated number of cards from the deck. 
 	Two cards for every spaceShip are then picked using the same logic, starting with spaceShip 1 , then 2 , finishing with spaceShip N.
 	In any circumstance, if the deck runs out of cards, it will start dealing an infinite number of WhiteCards (Polimorphic to other cards with Null behaviour).
 	The ship can use the card only if it has the card on its deck

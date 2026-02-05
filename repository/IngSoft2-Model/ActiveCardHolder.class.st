@@ -2,7 +2,8 @@ Class {
 	#name : 'ActiveCardHolder',
 	#superclass : 'Object',
 	#instVars : [
-		'activeCards'
+		'activeCards',
+		'lastCardActivated'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -16,8 +17,15 @@ ActiveCardHolder class >> withPlayers: arg1 [
 
 { #category : 'adding' }
 ActiveCardHolder >> addActive: aCard to: aShip [
-	
+
+	lastCardActivated := aCard.
 	(activeCards at: aShip id) add: aCard
+]
+
+{ #category : 'adding' }
+ActiveCardHolder >> addLastPermanentCardTo: aShip [
+
+	self addActive: lastCardActivated to: aShip
 ]
 
 { #category : 'initialization' }
@@ -31,7 +39,7 @@ ActiveCardHolder >> createCardPositionsOf: spaceShips [
 ActiveCardHolder >> initializeWithPlayers: spaceShips [
 
 	activeCards := Dictionary new.
-	
+	lastCardActivated := WhiteCard new.
 	self createCardPositionsOf: spaceShips
 ]
 

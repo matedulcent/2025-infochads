@@ -97,7 +97,8 @@ CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
 	lastActionPrototype := game obtainLastCardActionPrototype.
 	lastActionPrototype ifNil: [ ^ self ].
 	self registerLastCardAction:
-		(lastActionPrototype value: aShip value: self value: aHelperId)
+		(lastActionPrototype value: aShip value: self value: aHelperId).
+	activeCardHolder addLastPermanentCardTo: aShip.
 ]
 
 { #category : 'as yet unclassified' }
