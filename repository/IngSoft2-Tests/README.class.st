@@ -25,7 +25,7 @@ README >> readmeCardDistribution [
 { #category : 'as yet unclassified' }
 README >> readmeTestingCellPlacementAndDistribution [
 	"aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { %Normal. %BH. %HSJ. %HJ. %Atomic. %MoonW. %Card. %Jail. %HGrav. NumberOfCardsTakenFromDeck. DistanceInParsecs. DistanceInLightYears. LenghtOfArrayOfHJ. Jump1. Jump2. JumpN. MoonWDesplacement1. MoonWDesplacement2. MoonWDesplacementN. 0. HGravDisplacement1. HGravDisplacement2. HGravDisplacementN.}."
+		                     { %Normal. %BH. %HSJ. %HJ. %Atomic. %MoonW. %Card. %Jail. %HGrav. DistanceInParsecs. DistanceInLightYears. LenghtOfArrayOfHJ. Jump1. Jump2. JumpN. MoonWDesplacement1. MoonWDesplacement2. MoonWDesplacementN. 0. HGravDisplacement1. HGravDisplacement2. HGravDisplacementN.}."
 		
 		"RULES FOR TESTING:
 			% Must sum 100.
