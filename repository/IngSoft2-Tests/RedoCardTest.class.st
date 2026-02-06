@@ -184,7 +184,6 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndRedoAndShip2PlaysCancelTwiceAndShip3Pl
 				          CancelationCard new.
 				          RedoCard new.
 				          SpeedCard new }).
-
 	aGame := self
 		         gameWithDice: (RiggedDice new initializeWith: { 9 })
 		         players: 3.
@@ -198,7 +197,6 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndRedoAndShip2PlaysCancelTwiceAndShip3Pl
 	aGame
 		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
 		on: 2.
-
 
 	self
 		should: [
