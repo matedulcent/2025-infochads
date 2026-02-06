@@ -4,11 +4,11 @@ Class {
 	#instVars : [
 		'turnManager',
 		'positionManager',
-		'activeCardHolder',
 		'relationships',
 		'gameRules',
 		'game',
-		'cellSystem'
+		'cellSystem',
+		'playedCardHolder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,7 +28,7 @@ CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionMana
 { #category : 'adding' }
 CardSystem >> add: aCard to: aShipId [
 
-	activeCardHolder add: aCard to: aShipId
+	playedCardHolder add: aCard to: aShipId
 ]
 
 { #category : 'asserting' }
@@ -56,7 +56,7 @@ CardSystem >> assertTheGameIsNotOver [
 CardSystem >> cancel: targetCard on: targetShip [
 	
 	| aCard aShip |
-	aCard := activeCardHolder removeActive: targetCard from: targetShip.
+	aCard := playedCardHolder removeActive: targetCard from: targetShip.
 	aShip := turnManager obtainShipById: targetShip.
 	aCard unplayOn: aShip in: self
 ]
@@ -84,7 +84,7 @@ CardSystem >> initializeWithTurnManager: aTurnManager positionManager: aPosition
 
 	turnManager := aTurnManager.
 	positionManager := aPositionManager.
-	activeCardHolder := anActiveCardHolder.
+	playedCardHolder := anActiveCardHolder.
 	relationships := aGame obtainRelationsWithMercenaries.
 	cellSystem := aCellSystem.
 	game := aGame
@@ -98,7 +98,7 @@ CardSystem >> redoLastActionOn: aShip withAdditional: aHelperId [
 	lastActionPrototype ifNil: [ ^ self ].
 	self registerLastCardAction:
 		(lastActionPrototype value: aShip value: self value: aHelperId).
-	activeCardHolder addLastCardTo: aShip.
+	playedCardHolder addLastCardTo: aShip.
 ]
 
 { #category : 'as yet unclassified' }
