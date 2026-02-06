@@ -174,6 +174,67 @@ RedoCardTest >> testWhenShip1PlaysSpeedAndAccelerationThenShip2CancelsAndRedoThe
 ]
 
 { #category : 'tests' }
+RedoCardTest >> testWhenShip1PlaysSpeedAndRedoAndShip2PlaysCancelTwiceAndShip3PlaysCancelationOnSpeedThenLastCancelationFails [
+
+	| aGame |
+	board := self boardWithSize: 50 andDeck: (CardDeck withCards: {
+				          WhiteCard new.
+				          CancelationCard new.
+				          CancelationCard new.
+				          CancelationCard new.
+				          RedoCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 9 })
+		         players: 3.
+
+	aGame use: SpeedCard new on: 1.
+	aGame use: (RedoCard withFillOut: 1) on: 1.
+
+	aGame
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
+		on: 2.
+	aGame
+		use: (CancelationCard withObjective: SpeedCard new toShip: 1)
+		on: 2.
+
+
+	self
+		should: [
+			aGame
+				use: (CancelationCard withObjective: SpeedCard new toShip: 1)
+				on: 3 ]
+		raise: Error
+		withMessageText:
+		'This card cant be played if the card to be canceled is not active.'
+]
+
+{ #category : 'tests' }
+RedoCardTest >> testWhenShip1PlaysSpeedAndRedoAndShip2PlaysCancelTwiceOnSpeedThenShip1HasNoMoreSpeed [
+
+	| aGame |
+	board := self boardWithSize: 50 andDeck: (CardDeck withCards: {
+				          CancelationCard new.
+				          CancelationCard new.
+				          RedoCard new.
+				          SpeedCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 9 })
+		         players: 2.
+
+	aGame use: SpeedCard new on: 1.
+	aGame use: (RedoCard withFillOut: 1) on: 1.
+
+	aGame use: (CancelationCard withObjective: SpeedCard new toShip: 1) on: 2.
+	aGame use: (CancelationCard withObjective: SpeedCard new toShip: 1) on: 2.
+	aGame start.
+
+	self assert: (aGame positionOf: 1) equals: 10
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testWhenShip1PlaysSpeedAndaShip2RedoThenTheShip2AlsoHasASpeed [
 
 	| aGame |

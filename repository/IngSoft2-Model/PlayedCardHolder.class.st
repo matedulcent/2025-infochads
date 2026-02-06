@@ -44,27 +44,24 @@ PlayedCardHolder >> initializeWithPlayers: spaceShips [
 ]
 
 { #category : 'removing' }
+PlayedCardHolder >> obtainRemoved: aCard from: cards [
+
+	^ cards
+		  detect: [ :each |
+			  (each isKindOf: aCard class) and: [
+				  each helper = aCard helper and: [
+					  (each isKindOf: WhiteCard class) not ] ] ]
+		  ifNone: [
+			  Error signal:
+				  'This card cant be played if the card to be canceled is not active.' ]
+]
+
+{ #category : 'removing' }
 PlayedCardHolder >> removeActive: aCard from: aShipId [
 
 	| cards removedCard |
 	cards := playedCards at: aShipId ifAbsent: [ ^ self ].
-	removedCard := cards
-		               detect: [ :each |
-			               (each isKindOf: aCard class) and: [
-				               each helper = aCard helper and: [
-					               (each isKindOf: WhiteCard class) not ] ] ]
-		               ifNone: [
-			               Error signal:
-				               'This card cant be played if the card to be canceled is not active.' ].
-
-	"removedCard := cards
-		               detect: [ :each |
-			               (each isKindOf: aCard class) and:
-				               (each helper = aCard helper ) ]
-		               ifNone: [
-			               Error signal:
-				               'This card cant be played if the card to be canceled is not active.' ]."
-
+	removedCard := self obtainRemoved: aCard from: cards.
 
 	cards remove: removedCard.
 	^ removedCard
