@@ -7,14 +7,14 @@ Class {
 		'laps',
 		'board',
 		'diceRoll',
-		'activeCardHolder',
 		'relationshipsWithMercenaries',
 		'lastActionPrototype',
 		'lastEffectPrototype',
 		'turnManager',
 		'cardSystem',
 		'cellSystem',
-		'positionManager'
+		'positionManager',
+		'playedCardHolder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -114,7 +114,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	positionManager := PositionManager of: spaceShips.
 	
 	turnManager := TurnManager withThe: spaceShips.
-	activeCardHolder := PlayedCardHolder withPlayers: spaceShips.
+	playedCardHolder := PlayedCardHolder withPlayers: spaceShips.
 	self createRelationsWithMercenaries.
 
 	cellSystem := CellSystem
@@ -126,7 +126,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	cardSystem := CardSystem
 		              withTurnManager: turnManager
 		              positionManager: positionManager
-		              activeCardHolder: activeCardHolder
+		              activeCardHolder: playedCardHolder
 		              withAdditional: cellSystem
 		              and: self
 ]
