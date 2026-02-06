@@ -50,7 +50,7 @@ PlayedCardHolder >> obtainRemoved: aCard from: cards [
 		  detect: [ :each |
 			  (each isKindOf: aCard class) and: [
 				  each helper = aCard helper and: [
-					  (each isKindOf: WhiteCard class) not ] ] ]
+					  (each isKindOf: WhiteCard class) not ] ] ] 
 		  ifNone: [
 			  Error signal:
 				  'This card cant be played if the card to be canceled is not active.' ]
