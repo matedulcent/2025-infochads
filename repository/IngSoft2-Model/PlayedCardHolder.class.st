@@ -48,15 +48,22 @@ PlayedCardHolder >> removeActive: aCard from: aShipId [
 
 	| cards removedCard |
 	cards := playedCards at: aShipId ifAbsent: [ ^ self ].
-	"cards := playedCards at: aShipId ifAbsent: [ WhiteCard new ]."
-	"card class isKindOf: WhiteCard ifTrue: [Error signal: 'That card cant be removed']"
 	removedCard := cards
 		               detect: [ :each |
-			               (each isKindOf: aCard class) and:
-				               each helper = aCard helper ]
+			               (each isKindOf: aCard class) and: [
+				               each helper = aCard helper and: [
+					               (each isKindOf: WhiteCard class) not ] ] ]
 		               ifNone: [
 			               Error signal:
 				               'This card cant be played if the card to be canceled is not active.' ].
+
+	"removedCard := cards
+		               detect: [ :each |
+			               (each isKindOf: aCard class) and:
+				               (each helper = aCard helper ) ]
+		               ifNone: [
+			               Error signal:
+				               'This card cant be played if the card to be canceled is not active.' ]."
 
 
 	cards remove: removedCard.
