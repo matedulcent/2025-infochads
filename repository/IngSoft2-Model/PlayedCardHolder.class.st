@@ -16,16 +16,9 @@ PlayedCardHolder class >> withPlayers: arg1 [
 ]
 
 { #category : 'adding' }
-PlayedCardHolder >> add: aCard to: aShip [
-
-	lastCardActivated := aCard.
-	(playedCards at: aShip id) add: aCard
-]
-
-{ #category : 'adding' }
 PlayedCardHolder >> addLastCardTo: aShip [
 
-	self add: lastCardActivated to: aShip
+	self registerPlayOf: lastCardActivated by: aShip
 ]
 
 { #category : 'initialization' }
@@ -54,6 +47,13 @@ PlayedCardHolder >> obtainRemoved: aCard from: cards [
 		  ifNone: [
 			  Error signal:
 				  'This card cant be played if the card to be canceled is not active.' ]
+]
+
+{ #category : 'adding' }
+PlayedCardHolder >> registerPlayOf: aCard by: aShip [
+
+	lastCardActivated := aCard.
+	(playedCards at: aShip id) add: aCard
 ]
 
 { #category : 'removing' }

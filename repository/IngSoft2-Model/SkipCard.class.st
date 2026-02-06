@@ -9,6 +9,6 @@ Class {
 SkipCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
-	aCardSystem add: (WhiteCard new) to: aShip.
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
 	aCardSystem registerLastCardAction: (SkipAction on: aShip)
 ]

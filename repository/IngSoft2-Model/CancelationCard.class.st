@@ -26,6 +26,7 @@ CancelationCard >> initializeWith: aCard and: anObjective [
 CancelationCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
 	aCardSystem registerLastCardAction:
 		(CancelationAction to: card on: objective in: aCardSystem)
 ]

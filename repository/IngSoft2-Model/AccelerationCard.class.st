@@ -13,9 +13,15 @@ Class {
 AccelerationCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
-	aCardSystem add: self to: aShip.
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
 	aCardSystem registerLastCardAction:
 		(AccelerationAction on: aShip in: aCardSystem)
+]
+
+{ #category : 'as yet unclassified' }
+AccelerationCard >> playedRepresentation [
+
+	^ self
 ]
 
 { #category : 'as yet unclassified' }

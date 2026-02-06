@@ -25,12 +25,6 @@ CardSystem class >> withTurnManager: aTurnManager positionManager: aPositionMana
 		  and: aGame
 ]
 
-{ #category : 'adding' }
-CardSystem >> add: aCard to: aShipId [
-
-	playedCardHolder add: aCard to: aShipId
-]
-
 { #category : 'asserting' }
 CardSystem >> assertItsTurnToPlayOf: aShip [
 	
@@ -108,6 +102,12 @@ CardSystem >> registerLastCardAction: anAction [
 	anAction apply
 ]
 
+{ #category : 'adding' }
+CardSystem >> registerPlayOf: aCard by: aShipId [
+
+	playedCardHolder registerPlayOf: aCard by: aShipId
+]
+
 { #category : 'as yet unclassified' }
 CardSystem >> repeatLastCellEffectOn: aShipId [
 
@@ -146,6 +146,6 @@ CardSystem >> use: aCard on: aShipId [
 
 	| ship |
 	ship := turnManager obtainShipById: aShipId.
-
+	
 	ship assertAndRemoveIfItHas: aCard andPlayOn: self.
 ]

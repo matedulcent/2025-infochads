@@ -13,9 +13,15 @@ Class {
 SpeedCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
-	aCardSystem add: self to: aShip.
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
 	aCardSystem registerLastCardAction:
 		(SpeedAction on: aShip in: aCardSystem)
+]
+
+{ #category : 'as yet unclassified' }
+SpeedCard >> playedRepresentation [
+
+	^ self
 ]
 
 { #category : 'as yet unclassified' }

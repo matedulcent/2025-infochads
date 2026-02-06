@@ -31,9 +31,15 @@ MercenaryCard >> initializeWithHelpOf: aHelper [
 MercenaryCard >> playOn: aShip in: aCardSystem [
 
 	aCardSystem assertItsTurnToPlayOf: aShip.
-	aCardSystem add: self to: aShip.
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
 	aCardSystem registerLastCardAction:
 		(MercenaryAction helper: helper on: aShip in: aCardSystem)
+]
+
+{ #category : 'as yet unclassified' }
+MercenaryCard >> playedRepresentation [
+
+	^ self
 ]
 
 { #category : 'as yet unclassified' }

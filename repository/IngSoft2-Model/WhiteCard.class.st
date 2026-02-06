@@ -18,3 +18,9 @@ WhiteCard >> playOn: aShip in: aGame [
 	"\_(0 - 0)_/"
 	
 ]
+
+{ #category : 'as yet unclassified' }
+WhiteCard >> playedRepresentation [
+
+	^ WhiteCard new
+]
