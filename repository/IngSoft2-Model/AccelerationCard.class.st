@@ -11,7 +11,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 AccelerationCard >> playOn: aShip in: aCardSystem [
-
+	
 	aCardSystem assertItsTurnToPlayOf: aShip.
 	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
 	aCardSystem registerLastCardAction:
