@@ -54,6 +54,20 @@ SpaceShip >> assertAndRemoveIfItHas: aCard [
 	cards remove: someCard
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> assertAndRemoveIfItHas: aCard andPlayOn: cardSystem [
+
+	| someCard |
+	someCard := cards
+		            detect: [ :card | card class = aCard class ]
+		            ifNone: [
+		            Error signal: 'The card is not in the ships deck' ].
+
+	cards remove: someCard.
+	
+	aCard playOn: self in: cardSystem.
+]
+
 { #category : 'shield' }
 SpaceShip >> canBattle [
 
