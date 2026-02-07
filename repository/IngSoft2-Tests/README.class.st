@@ -28,7 +28,6 @@ README >> readmeTestingCellPlacementAndDistribution [
 		
 		"RULES FOR TESTING:
 			% Must sum 100.
-			If NumberOfCardsTakenFromDeck == 0 Then A complete Deck is shuffled and assigns random cards to every cell.
 			Distance in Light years must fullfill the proportion with Distance in parsecs (3:1).
 			If distance in parsecs == 0 Then the jumps are light years.
 			If distance in years == 0 Then the jumps are in parsecs.
