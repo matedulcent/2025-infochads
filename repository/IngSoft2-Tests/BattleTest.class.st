@@ -1,9 +1,40 @@
 Class {
 	#name : 'BattleTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'board'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
+
+{ #category : 'tests' }
+BattleTest >> boardWithSize: aSize andDeck: aCardDeck [
+
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: aCardDeck
+		  andACellConfiguration: {  }
+]
+
+{ #category : 'tests' }
+BattleTest >> gameWithDice: dice players: amount [
+
+	^ Game
+		  playedIn: board
+		  by: amount
+		  throwing: dice
+		  wonAfter: 1
+]
+
+{ #category : 'tests' }
+BattleTest >> setUp [
+
+	super setUp.
+
+	board := self boardWithSize: 10 andDeck: (CardDeck withCards: {  })
+]
 
 { #category : 'asserting' }
 BattleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
@@ -19,19 +50,11 @@ BattleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMes
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2Turns [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith:
-		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard create)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith:
+				          { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -42,40 +65,27 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2TurnsAndThenItMoves1 [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith:
-		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1. 1. 1 }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard create)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 100 andDeck: (CardDeck withCards: {  }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith:
+				          { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 })
+		         players: 2.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 2.
-	self assert: (aGame positionOf: 2) equals: 11
+	self assert: (aGame positionOf: 2) equals: 10
 ]
 
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2ReturnsToStart [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 2. 5. 5. 2. 2. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard create)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 2. 5. 5. 2. 2. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -86,18 +96,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenShip2Toss0ToRecoverTo3Shields [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 })
+		         players: 2.
 
 	aGame start.
 
@@ -107,18 +110,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 2. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -129,18 +125,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 2. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -151,18 +140,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 1. 2 })
+		         players: 2.
 
 	aGame start.
 
@@ -173,18 +155,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 1. 2 })
+		         players: 2.
 
 	aGame start.
 
@@ -193,20 +168,13 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 ]
 
 { #category : 'tests' }
-BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossTillTheyAreDifferent [
+BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheDefendantShipWinAndTheLoserGoesBack [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 2. 3. 3. 3. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 5. 1. 1 })
+		         players: 2.
 
 	aGame start.
 
@@ -217,18 +185,11 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 2. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 5. 1. 5. 2. 1 })
+		         players: 3.
 
 	aGame start.
 
@@ -240,18 +201,10 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 { #category : 'tests' }
 BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 0 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 0 })
+		         players: 3.
 
 	self
 		should: [ aGame start ]

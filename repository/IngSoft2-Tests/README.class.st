@@ -13,7 +13,6 @@ README >> readmeCardDistribution [
 			
 	"RULES FOR TESTING:
 	The cards manage a stack distribution (The First card poped is the last card pushed).
-	The cards are first assigned to the Card Cell. The Card Manager withdraws the asignated number of cards from the deck. 
 	Two cards for every spaceShip are then picked using the same logic, starting with spaceShip 1 , then 2 , finishing with spaceShip N.
 	In any circumstance, if the deck runs out of cards, it will start dealing an infinite number of WhiteCards (Polimorphic to other cards with Null behaviour).
 	The ship can use the card only if it has the card on its deck
@@ -25,11 +24,10 @@ README >> readmeCardDistribution [
 { #category : 'as yet unclassified' }
 README >> readmeTestingCellPlacementAndDistribution [
 	"aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { %Normal. %BH. %HSJ. %HJ. %Atomic. %MoonW. %Card. %Jail. %HGrav. NumberOfCardsTakenFromDeck. DistanceInParsecs. DistanceInLightYears. LenghtOfArrayOfHJ. Jump1. Jump2. JumpN. MoonWDesplacement1. MoonWDesplacement2. MoonWDesplacementN. 0. HGravDisplacement1. HGravDisplacement2. HGravDisplacementN.}."
+		                     { %Normal. %BH. %HSJ. %HJ. %Atomic. %MoonW. %Card. %Jail. %HGrav. DistanceInParsecs. DistanceInLightYears. LenghtOfArrayOfHJ. Jump1. Jump2. JumpN. MoonWDesplacement1. MoonWDesplacement2. MoonWDesplacementN. 0. HGravDisplacement1. HGravDisplacement2. HGravDisplacementN.}."
 		
 		"RULES FOR TESTING:
 			% Must sum 100.
-			If NumberOfCardsTakenFromDeck == 0 Then A complete Deck is shuffled and assigns random cards to every cell.
 			Distance in Light years must fullfill the proportion with Distance in parsecs (3:1).
 			If distance in parsecs == 0 Then the jumps are light years.
 			If distance in years == 0 Then the jumps are in parsecs.

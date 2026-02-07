@@ -1,25 +1,43 @@
 Class {
 	#name : 'WinningConditionTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'aBoard',
+		'board'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'as yet unclassified' }
+WinningConditionTest >> gameWithDice: dice players: amount [
+
+	^ Game
+		  playedIn: board
+		  by: amount
+		  throwing: dice
+		  wonAfter: 1
+]
+
+{ #category : 'running' }
+WinningConditionTest >> setUp [
+
+	super setUp.
+	board := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          playedWith: (CardDeck withCards: {  })
+		          andACellConfiguration: {  }
+]
+
 { #category : 'tests' }
 WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3. 9 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 1. 2. 3. 9 })
+		         players: 3.
 
 	aGame start.
 
@@ -29,18 +47,11 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 { #category : 'tests' }
 WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSpaceShip2And3Position [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 8. 3. 7. 1 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice:
+		         (RiggedDice new initializeWith: { 8. 3. 7. 1 })
+		         players: 3.
 
 	aGame start.
 
@@ -52,18 +63,10 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 { #category : 'tests' }
 WinningConditionTest >> testWhenDiceRollIsHigherThanBoardSizeThenSpaceShipMovesToTheFinishLineTheGameIsOver [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 12 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 12 })
+		         players: 3.
 
 	aGame start.
 
@@ -73,18 +76,10 @@ WinningConditionTest >> testWhenDiceRollIsHigherThanBoardSizeThenSpaceShipMovesT
 { #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip1HasMovedToTheEndOfThenGameIsOver [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10 })
+		         players: 3.
 
 	aGame start.
 	self assert: aGame isOver.
@@ -94,18 +89,10 @@ WinningConditionTest >> testWhenSpaceShip1HasMovedToTheEndOfThenGameIsOver [
 { #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 1.
 
 	aGame start.
 
@@ -115,18 +102,10 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues 
 { #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsSpaceShip1Position [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 3. 10 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 3. 10 })
+		         players: 2.
 
 	aGame start.
 
@@ -137,18 +116,10 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsS
 { #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 3. 10 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 3. 10 })
+		         players: 2.
 
 	aGame start.
 
@@ -158,18 +129,10 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 { #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Positions [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10 })
+		         players: 3.
 
 	aGame start.
 
@@ -182,18 +145,10 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 { #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And2Positions [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 1. 2. 10 }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 3
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 1. 2. 10 })
+		         players: 3.
 
 	aGame start.
 

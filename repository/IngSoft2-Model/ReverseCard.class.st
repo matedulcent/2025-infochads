@@ -6,7 +6,9 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ReverseCard >> invertOrder: step [
+ReverseCard >> playOn: aShip in: aCardSystem [
 
-	^ -1 * step
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
+	aCardSystem registerLastCardAction: (ReverseAction in: aCardSystem)
 ]

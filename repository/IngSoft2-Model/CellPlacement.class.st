@@ -3,29 +3,40 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'rawCellDistribution'
+		'rawCellDistribution',
+		'sample'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'adding' }
-CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
+CellPlacement >> addNormalCellAtBeginningAndEndOfBoard: netCellDistribution [
 
-	| safeCell |
-	safeCell := Cell has: NoEffect new.
-	netCellDistibution at: 1 put: safeCell.
-	netCellDistibution at: boardSize put: safeCell.
-	^ netCellDistibution
+	| mutable |
+	mutable := netCellDistribution asOrderedCollection.
+
+	mutable
+		addFirst: (Cell has: Normal new);
+		addLast: (Cell has: Normal new).
+
+	^ mutable
+]
+
+{ #category : 'asserting' }
+CellPlacement >> assertLightYears: aLightYearValue respectParsecs: aParsecValue [
+
+	aLightYearValue ~= (aParsecValue * 3) ifTrue: [
+		Error signal:
+			'The ratio 1 parsec = 3 light years is not being respected' ]
 ]
 
 { #category : 'creation' }
-CellPlacement >> atomicBombCellsWithProbabilities: aProbability and: aDesplacement [
+CellPlacement >> atomicBombCellsWithProbabilities: aProbability [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has:
-			            (AtomicBombEffect with: aDesplacement) ].
+		            Cell has: AtomicBombEffect new ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -34,8 +45,7 @@ CellPlacement >> blackHoleCellsWithProbabilities: aProbability andDesplacemets: 
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has:
-			            (BlackHoleEffect withBackTrack: aDesplacement) ].
+		            Cell has: (BlackHoleEffect withBackTrack: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -44,42 +54,39 @@ CellPlacement >> calculateRelationBetween: aParsecValue and: aLightYearValue [
 
 	| result |
 	result := aParsecValue + aLightYearValue.
-	
+
 	self equal: aLightYearValue to: aParsecValue.
 
 	(result = aParsecValue or: result = aLightYearValue) ifTrue: [
 		^ result // boardSize ].
-	
-	self the: aLightYearValue doesntRespectProportionTo: aParsecValue.
+
+	self assertLightYears: aLightYearValue respectParsecs: aParsecValue.
 
 	^ aParsecValue // boardSize
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> cardCellsWithProbabilities: aProbability picking: aConfigDice from: aCardManager [ 
+CellPlacement >> cardCellsWithProbabilities: aProbability [
 
-	| newCells numberOfCards cards |
-	numberOfCards := aConfigDice toss.
-
-	cards := OrderedCollection new.
-	1 to: numberOfCards do: [ :card | cards add: (aCardManager grabTopCard) ] .
-
+	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: (CardEffect with: cards deepCopy) ].
+		            Cell has: CardEffect new ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> createBoardWith: aConfigDice withComplementary: aCardManager And: aBoardSize [
+CellPlacement >> createBoardWith: aConfigDice withComplementary: aBoardSize [
 
-	boardSize := aBoardSize.
+	boardSize := aBoardSize - 2. "to fill the first and last cells with normal effect"
 	rawCellDistribution := OrderedCollection new.
-	
+
 	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
-	
-	self generateUniverseWith: aConfigDice and: aCardManager.
-	
-	^ self extractSample
+
+	self generateUniverseWith: aConfigDice.
+
+	self extractSample.
+
+	^ sample
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,25 +101,23 @@ CellPlacement >> equal: aLightYearValue to: aParsecValue [
 CellPlacement >> extractSample [
 
 	| netCellDistibution |
-	
 	netCellDistibution := self randomCellPicking.
 
-	^ self addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution
+	sample := self addNormalCellAtBeginningAndEndOfBoard:
+		          netCellDistibution
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
+CellPlacement >> generateUniverseWith: aConfigDice [
 
 	| probabilities |
 	probabilities := self obtainProbabilities: aConfigDice.
 	self theProbabilitiesMustSum100: probabilities.
-	self
-		cardCellsWithProbabilities: (probabilities at: 7)
-		picking: aConfigDice from: aCardManager.
+	self cardCellsWithProbabilities: (probabilities at: 7).
 	self normalCellsWithProbabilitites: (probabilities at: 1).
 	self
 		blackHoleCellsWithProbabilities: (probabilities at: 2)
-		andDesplacemets: 4.
+		andDesplacemets: -4.
 	self
 		hyperSpaceJumpCellsWithProbabilities: (probabilities at: 3)
 		andDesplacements: 4.
@@ -121,16 +126,16 @@ CellPlacement >> generateUniverseWith: aConfigDice and: aCardManager [
 		andParsecValue: aConfigDice toss
 		andLightYearValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self atomicBombCellsWithProbabilities: (probabilities at: 5) and: 0.
+	self atomicBombCellsWithProbabilities: (probabilities at: 5).
 	self
 		moonWalkCellsWithProbabilites: (probabilities at: 6)
 		andDisplacements: aConfigDice.
 	self
 		jailCellsWithProbabilitites: (probabilities at: 8)
-		and: (aConfigDice maxValue).
+		and: aConfigDice maxValue.
 	self
 		hyperGravityCellsWithProbabilitites: (probabilities at: 9)
-		andExitValues: aConfigDice.
+		andExitValues: aConfigDice
 ]
 
 { #category : 'as yet unclassified' }
@@ -145,11 +150,12 @@ CellPlacement >> hyperGravityCellsWithProbabilitites: aProbability andExitValues
 		                     repeat timesRepeat: [
 			                     escapeValue nextPutAll: valuesToEscape ] ].
 
-	newCells := (1 to: aProbability) collect: [ :escapeValue |
-		            Cell has:
-			            (HyperGravityEffect with:
-				             (allValuesToEscape at: escapeValue)) ].
+	newCells := (1 to: aProbability) collect: [ :index |
+		            | value |
+		            value := allValuesToEscape at:
+			                     index - 1 \\ allValuesToEscape size + 1.
 
+		            Cell has: (HyperGravityEffect with: value) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -159,27 +165,27 @@ CellPlacement >> hyperJumpCellsWithProbabilites: aProbability andParsecValue: aP
 	| jumps amountOfJumps newCells relation |
 	amountOfJumps := aConfigDice toss.
 	jumps := OrderedCollection new: amountOfJumps.
-	
-	relation := self calculateRelationBetween: aParsecValue and: aLightYearValue.
+
+	relation := self
+		            calculateRelationBetween: aParsecValue
+		            and: aLightYearValue.
 
 	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
 
 	newCells := (1 to: aProbability) collect: [ :cell |
 		            Cell has:
-			            (HyperJumpEffect
-				             with: relation
-				             andParsec: jumps) ].
+			            (HyperJumpEffect with: relation andParsec: jumps) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacements: aDesplacement [ 
+CellPlacement >> hyperSpaceJumpCellsWithProbabilities: aProbability andDesplacements: aDesplacement [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: (HyperSpaceJumpEffect
-				             with: aDesplacement) ].
+		            Cell has:
+			            (HyperSpaceJumpEffect withForwardTrack: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -188,7 +194,8 @@ CellPlacement >> jailCellsWithProbabilitites: aProbability and: anEscapeValue [
 
 	| newCells |
 	newCells := (1 to: aProbability) collect: [ :cell |
-		            Cell has: (JailEffect with: anEscapeValue) ].
+		            Cell has:  
+			            (JailEffect with: anEscapeValue)  ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -204,8 +211,8 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 			                    particular nextPutAll: stepBackwards ] ].
 
 	newCells := (1 to: aProbability) collect: [ :particular |
-		            Cell has:
-			            (MoonWalkEffect with: (allDisplacements at: particular)) ].
+		            Cell has: (MoonWalkEffect withBackTrack:
+				             (allDisplacements at: particular) negated) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -213,7 +220,7 @@ CellPlacement >> moonWalkCellsWithProbabilites: aProbability andDisplacements: a
 CellPlacement >> normalCellsWithProbabilitites: aProbability [
 
 	1 to: aProbability do: [ :cell |
-	rawCellDistribution add: (Cell has: NoEffect new) ]
+	rawCellDistribution add: (Cell has: Normal new) ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -240,14 +247,6 @@ CellPlacement >> randomCellPicking [
 
     ^ (1 to: boardSize) collect: [ :cell |
           rawCellDistribution at: ((1 to: 100) atRandom) ]
-]
-
-{ #category : 'as yet unclassified' }
-CellPlacement >> the: aLightYearValue doesntRespectProportionTo: aParsecValue [
-
-	aLightYearValue // aParsecValue ~= 3 ifTrue: [
-		Error signal:
-			'The ratio 1 parsec = 3 light years is not being respected' ]
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,9 +1,8 @@
 Class {
 	#name : 'LockedUp',
-	#superclass : 'Object',
+	#superclass : 'Free',
 	#instVars : [
-		'escapeValue',
-		'freedomCondition'
+		'escapeValue'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -15,23 +14,16 @@ LockedUp class >> withValue: anEscapeValue [
 	^ self new initializeWith: anEscapeValue
 ]
 
-{ #category : 'adding' }
-LockedUp >> addFreedomCardCondition [
-	
-	freedomCondition := true.
-]
-
 { #category : 'testing' }
-LockedUp >> canBeFreed [
+LockedUp >> canBattleWithShield: shield [
 
-	^ freedomCondition
+	^ false
 ]
 
 { #category : 'initialization' }
 LockedUp >> initializeWith: anEscapeValue [
 
-	escapeValue := anEscapeValue.
-	freedomCondition := false.
+	escapeValue := anEscapeValue
 ]
 
 { #category : 'testing' }
@@ -42,6 +34,22 @@ LockedUp >> isFreeByTossing: aDiceToss [
 
 { #category : 'testing' }
 LockedUp >> isLockedUp [
-
+	
 	^ true
+]
+
+{ #category : 'as yet unclassified' }
+LockedUp >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
+
+	aDiceRoll = escapeValue ifFalse: [
+		aGame rollTheDice.
+		^ self ].
+	aSpaceShip state: Free new.
+	aGame move: aSpaceShip after: aDiceRoll
+]
+
+{ #category : 'initialization' }
+LockedUp >> setFreeByCard [
+
+	^ Free new
 ]

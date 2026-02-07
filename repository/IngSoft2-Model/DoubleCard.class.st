@@ -6,11 +6,10 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DoubleCard >> playTwice: listOfAlteredSteps [
+DoubleCard >> playOn: aShip in: aCardSystem [
 
-	| result |
-	result := listOfAlteredSteps asOrderedCollection copy.
-	result add: 0.
-	result add: 0.
-	^ result
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
+	aCardSystem registerLastCardAction:
+		(DoubleTurnAction on: aShip in: aCardSystem)
 ]

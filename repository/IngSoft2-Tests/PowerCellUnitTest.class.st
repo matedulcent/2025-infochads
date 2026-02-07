@@ -17,24 +17,6 @@ PowerCellUnitTest >> should: anErrorBlock raise: anErrorClass withMessageText: e
 ]
 
 { #category : 'tests' }
-PowerCellUnitTest >> testWhenAtomicBombDoesntReceiveADesplacementNotAsIntegerThenCreationFails [
-
-	self
-		should: [ AtomicBombEffect with: 'a' ]
-		raise: Error
-		withMessageText: 'The desplacement must be 0.'
-]
-
-{ #category : 'tests' }
-PowerCellUnitTest >> testWhenAtomicBombReceiveADesplacementOtherThan0ThenCreationFails [
-
-	self
-		should: [ AtomicBombEffect with: 10 ]
-		raise: Error
-		withMessageText: 'The desplacement must be 0.'
-]
-
-{ #category : 'tests' }
 PowerCellUnitTest >> testWhenBlackHoleDoesntReceiveADesplacementNotAsIntegerThenCreationFails [
 
 	self
@@ -80,28 +62,19 @@ PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveAtLeastOneJumpValueThenCreati
 ]
 
 { #category : 'tests' }
-PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveTheJumpsInOrderThenCreationFails [
-
-	self
-		should: [ HyperJumpEffect with: 100 andParsec: #(4 5 3) ]
-		raise: Error
-		withMessageText: 'The Jump list must be in order.'
-]
-
-{ #category : 'tests' }
 PowerCellUnitTest >> testWhenHyperSpaceJumpDoesntReceiveADesplacementNotAsIntegerThenCreationFails [
 
 	self
-		should: [ HyperSpaceJumpEffect with: 'a' ]
+		should: [ HyperSpaceJumpEffect withForwardTrack: 'a' ]
 		raise: Error
 		withMessageText: 'The desplacement must be 4.'
 ]
 
 { #category : 'tests' }
-PowerCellUnitTest >> testWhenHyperSpaceJumpReceiveADesplacementOtherThan0ThenCreationFails [
+PowerCellUnitTest >> testWhenHyperSpaceJumpReceiveADesplacementOtherThan4ThenCreationFails [
 
 	self
-		should: [ HyperSpaceJumpEffect with: 10 ]
+		should: [ HyperSpaceJumpEffect withForwardTrack: 10 ]
 		raise: Error
 		withMessageText: 'The desplacement must be 4.'
 ]
@@ -125,28 +98,19 @@ PowerCellUnitTest >> testWhenJailCellHasAZeroJailOutValueThenCreationFails [
 ]
 
 { #category : 'tests' }
-PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementNegativeThenCreationFails [
-
-	self
-		should: [ MoonWalkEffect with: -1 ]
-		raise: Error
-		withMessageText: 'The desplacement must be a posible value.'
-]
-
-{ #category : 'tests' }
 PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementOf0ThenCreationFails [
 
 	self
-		should: [ MoonWalkEffect with: 0 ]
+		should: [ MoonWalkEffect withBackTrack: 0 ]
 		raise: Error
-		withMessageText: 'The desplacement must be a posible value.'
+		withMessageText: 'The desplacement must be a number different from 0.'
 ]
 
 { #category : 'tests' }
 PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementOfNotAnIntegerThenCreationFails [
 
 	self
-		should: [ MoonWalkEffect with: 'a' ]
+		should: [ MoonWalkEffect withBackTrack: 'a' ]
 		raise: Error
-		withMessageText: 'The desplacement must be a posible value.'
+		withMessageText: 'The desplacement must be a number different from 0.'
 ]

@@ -1,0 +1,68 @@
+Class {
+	#name : 'PlayedCardHolder',
+	#superclass : 'Object',
+	#instVars : [
+		'lastCardActivated',
+		'playedCards'
+	],
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
+}
+
+{ #category : 'as yet unclassified' }
+PlayedCardHolder class >> withPlayers: arg1 [
+
+	^ self new initializeWithPlayers: arg1
+]
+
+{ #category : 'adding' }
+PlayedCardHolder >> addLastCardTo: aShip [
+
+	self registerPlayOf: lastCardActivated by: aShip
+]
+
+{ #category : 'initialization' }
+PlayedCardHolder >> createCardPositionsOf: spaceShips [
+
+	spaceShips do: [ :ship |
+		playedCards at: ship id put: OrderedCollection new ]
+]
+
+{ #category : 'initialization' }
+PlayedCardHolder >> initializeWithPlayers: spaceShips [
+
+	playedCards := Dictionary new.
+	lastCardActivated := WhiteCard new.
+	self createCardPositionsOf: spaceShips
+]
+
+{ #category : 'removing' }
+PlayedCardHolder >> obtainRemoved: aCard from: cards [
+
+	^ cards
+		  detect: [ :each |
+			  (each isKindOf: aCard class) and: [
+				  each helper = aCard helper and: [
+					  (each isKindOf: WhiteCard class) not ] ] ] 
+		  ifNone: [
+			  Error signal:
+				  'This card cant be played if the card to be canceled is not active.' ]
+]
+
+{ #category : 'adding' }
+PlayedCardHolder >> registerPlayOf: aCard by: aShip [
+
+	lastCardActivated := aCard.
+	(playedCards at: aShip id) add: aCard
+]
+
+{ #category : 'removing' }
+PlayedCardHolder >> removeActive: aCard from: aShipId [
+
+	| cards removedCard |
+	cards := playedCards at: aShipId ifAbsent: [ ^ self ].
+	removedCard := self obtainRemoved: aCard from: cards.
+
+	cards remove: removedCard.
+	^ removedCard
+]

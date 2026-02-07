@@ -2,41 +2,30 @@ Class {
 	#name : 'AccelerationCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'increment'
+		'increment',
+		'holder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-AccelerationCard class >> mustBeOne: aTossIncrement [
-
-	(aTossIncrement isInteger not or: [ aTossIncrement ~= 1 ]) ifTrue: [
-		Error signal: 'The increment in the dice toss must be one.' ]
-]
-
-{ #category : 'instance creation' }
-AccelerationCard class >> with: aTossIncrement [
-
-	self mustBeOne: aTossIncrement.
-	^ self new initializeWith: aTossIncrement
+AccelerationCard >> playOn: aShip in: aCardSystem [
+	
+	aCardSystem assertItsTurnToPlayOf: aShip.
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
+	aCardSystem registerLastCardAction:
+		(AccelerationAction on: aShip in: aCardSystem)
 ]
 
 { #category : 'as yet unclassified' }
-AccelerationCard >> effectAll [
+AccelerationCard >> playedRepresentation [
 
-	^ Position at: increment withLaps: 0
+	^ self
 ]
 
-{ #category : 'initialization' }
-AccelerationCard >> initializeWith: aTossIncrement [
+{ #category : 'as yet unclassified' }
+AccelerationCard >> unplayOn: aShip in: aCardSystem [
 
-	super initializes.
-	increment := aTossIncrement.
-]
-
-{ #category : 'testing' }
-AccelerationCard >> isPermanent [
-
-	^ true
+	aCardSystem decrementAllBoosters
 ]

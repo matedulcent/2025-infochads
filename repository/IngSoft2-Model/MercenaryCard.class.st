@@ -2,30 +2,19 @@ Class {
 	#name : 'MercenaryCard',
 	#superclass : 'WhiteCard',
 	#instVars : [
-		'helper',
-		'fixHelper'
+		'helper'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-MercenaryCard class >> withHelpOf: aSpaceShipID [
+MercenaryCard class >> withHelpOf: aHelperId [
 
-	^ self new initializeWithHelpOf: aSpaceShipID
+	^ self new initializeWithHelpOf: aHelperId
 ]
 
 { #category : 'as yet unclassified' }
-MercenaryCard >> activateMercenaryOn [
-
-	fixHelper ifFalse: [
-		fixHelper := true.
-		^ true ].
-
-	^ false
-]
-
-{ #category : 'accessing' }
 MercenaryCard >> helper [
 
 	^ helper
@@ -34,26 +23,27 @@ MercenaryCard >> helper [
 { #category : 'initialization' }
 MercenaryCard >> initializeWithHelpOf: aHelper [
 
-	super initializes.
 	helper := aHelper.
-	fixHelper := false.
-]
-
-{ #category : 'testing' }
-MercenaryCard >> isMercenary [
-
-	^ true
-]
-
-{ #category : 'testing' }
-MercenaryCard >> isPermanent [
-
-	^ true
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
-MercenaryCard >> putHelperAs: targetID [
+MercenaryCard >> playOn: aShip in: aCardSystem [
 
-	helper := targetID.
-	fixHelper := false
+	aCardSystem assertItsTurnToPlayOf: aShip.
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
+	aCardSystem registerLastCardAction:
+		(MercenaryAction helper: helper on: aShip in: aCardSystem)
+]
+
+{ #category : 'as yet unclassified' }
+MercenaryCard >> playedRepresentation [
+
+	^ self
+]
+
+{ #category : 'as yet unclassified' }
+MercenaryCard >> unplayOn: aShip in: aCardSystem [
+
+	aCardSystem unStablish: helper on: aShip
 ]

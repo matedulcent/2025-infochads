@@ -17,73 +17,74 @@ AccelerationCardTest >> should: anErrorBlock raise: anErrorClass withMessageText
 ]
 
 { #category : 'tests' }
-AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsTossIncrementsInOne [
+AccelerationCardTest >> testWhenACardIsNotInDeckThenUsageFails [
+    | aGame |
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { AccelerationCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+    aGame := self
+        gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+        players: 2.
 
-	aGame use: (AccelerationCard with: 1) on: spaceShipID.
+    self
+        should: [ aGame use: AccelerationCard new on: 1 ]
+        raise: Error
+        withMessageText: 'The card is not in the ships deck'
+
+]
+
+{ #category : 'tests' }
+AccelerationCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
+
+	| aGame |
+	board := self boardWithSize: 50 andDeck: (CardDeck withCards: {
+				          AccelerationCard new.
+				          WhiteCard new }).
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 1.
+
+	aGame use: AccelerationCard new on: 1.
 	aGame start.
 
-	self assert: (aGame positionOf: 1) equals: 7
+	self assert: (aGame positionOf: 1) equals: 14
+]
+
+{ #category : 'tests' }
+AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenAllSpaceShipsTossIncrementsInOne [
+    | aGame |
+
+    board := self
+        boardWithSize: 10
+        andDeck: (CardDeck withCards: { AccelerationCard new }).
+
+    aGame := self
+        gameWithDice: (RiggedDice new initializeWith: { 5 })
+        players: 1.
+
+    aGame use: AccelerationCard new on: 1.
+    aGame start.
+
+    self assert: (aGame positionOf: 1) equals: 7
+
 ]
 
 { #category : 'tests' }
 AccelerationCardTest >> testWhenASpaceShipUsesAccelerationCardThenItsTossIncrementsInOne [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { AccelerationCard new})
-		          andACellConfiguration: {  }.
+	| aGame |
+	board := self
+		         boardWithSize: 10
+		         andDeck: (CardDeck withCards: { AccelerationCard new }).
+
 	aGame := Game
-		         playedIn: aBoard
+		         playedIn: board
 		         by: 2
 		         throwing: (RiggedDice new initializeWith: { 5. 6 })
 		         wonAfter: 1.
 
-	aGame use: (AccelerationCard with: 1) on: spaceShipID.
+	aGame use: AccelerationCard new on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7.
 	self assert: (aGame positionOf: 2) equals: 8
-]
-
-{ #category : 'tests' }
-AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNegativeThenCreationFails [
-
-	self
-		should: [ AccelerationCard with: -1 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNot1ThenCreationFails [
-
-	self
-		should: [ AccelerationCard with: 10 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-AccelerationCardTest >> testWhenTheIncrementInTheDiceTossIsNotAnIntThenCreationFails [
-
-	self
-		should: [ AccelerationCard with: 'a' ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
 ]

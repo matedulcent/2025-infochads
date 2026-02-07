@@ -4,13 +4,17 @@ Class {
 	#instVars : [
 		'spaceShips',
 		'diceSet',
-		'nextSpaceShipToMove',
-		'numberOfSpaceShips',
 		'laps',
 		'board',
-		'manage',
-		'stepOfNextSpaceShipToMove',
-		'listOfAlteredSteps'
+		'diceRoll',
+		'relationshipsWithMercenaries',
+		'lastActionPrototype',
+		'lastEffectPrototype',
+		'turnManager',
+		'cardSystem',
+		'cellSystem',
+		'positionManager',
+		'playedCardHolder'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -53,66 +57,48 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 		  wonAfter: aNumberOfLaps
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> adjustPosition [
+{ #category : 'asserting' }
+Game >> assertTheGameIsNotOver [
 
+	^ turnManager allShips anySatisfy: [ :aShip |
+		  (positionManager at: aShip id) isEqualTo:
+			  (Position at: board boardSize withLaps: laps) ]
+]
+
+{ #category : 'initialization' }
+Game >> createRelationsWithMercenaries [
+
+	relationshipsWithMercenaries := OrderedDictionary new.
 	spaceShips do: [ :ship |
-		manage sumAt: ship id with: (board
-				 limitAdjustment: (manage positions at: ship id)
-				 withTotalLaps: laps) ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> affectTheShipOrder: aCard [
-	"Reverse Card"
-	stepOfNextSpaceShipToMove := aCard invertOrder:
-		                             stepOfNextSpaceShipToMove.
-	"Skip Card"
-	aCard skip ifTrue: [ self updateNextShipToMove ].
-
-	"Double Card"
-	listOfAlteredSteps := aCard playTwice:
-		                             listOfAlteredSteps.
-]
-
-{ #category : 'movingOut' }
-Game >> checkFor: aSpaceShipID [
-
-	| aShip |
-	aShip := spaceShips
-		         detect: [ :ship | ship id = aSpaceShipID ]
-		         ifNone: [ Error signal: 'The ship doesnt exist' ].
-	^ aShip
+		relationshipsWithMercenaries at: ship id put: OrderedCollection new ]
 ]
 
 { #category : 'whats left of race positions' }
-Game >> create: aNumberOfSpaceShips [
+Game >> createSpaceShipsWith: aNumberOfSpaceShips [
 
-	| aShield |
-	aShield := 3.
+	| shield |
+	shield := 3.
 	spaceShips := OrderedCollection new.
-
 	1 to: aNumberOfSpaceShips do: [ :id |
 		spaceShips add: (SpaceShip
 				 with: id
 				 startingWith: board pickACard
 				 and: board pickACard
-				 with: aShield).
-		board manageCards addNew: id ]
+				 with: shield) ]
 ]
 
 { #category : 'informationTest' }
 Game >> getRanking [
-
+	"stay"
 	| ranking |
 	self isOver ifFalse: [ ^ #(  ) ].
 
 	ranking := spaceShips sorted: [ :ship1 :ship2 |
-		           (manage at: ship1 id) lap
-		           -> (manage at: ship1 id) position
+		           (positionManager at: ship1 id) lap
+		           -> (positionManager at: ship1 id) position
 		           >
-		           ((manage at: ship2 id) lap
-		            -> (manage at: ship2 id) position) ].
+		           ((positionManager at: ship2 id) lap
+		            -> (positionManager at: ship2 id) position) ].
 
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
@@ -121,202 +107,140 @@ Game >> getRanking [
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-
-	self create: aNumberOfSpaceShips.
-	manage := PositionManager of: spaceShips.
-
 	diceSet := aDiceSet.
-	
-	stepOfNextSpaceShipToMove := 1.
-	listOfAlteredSteps := OrderedCollection new.
-	nextSpaceShipToMove := 1.
-	
-	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
 	
-]
+	self createSpaceShipsWith: aNumberOfSpaceShips.
+	positionManager := PositionManager of: spaceShips.
+	
+	turnManager := TurnManager withThe: spaceShips.
+	playedCardHolder := PlayedCardHolder withPlayers: spaceShips.
+	self createRelationsWithMercenaries.
 
-{ #category : 'whats left of race positions' }
-Game >> isGameOver [
+	cellSystem := CellSystem
+		              withBoard: board
+		              positionManager: positionManager
+		              turnManager: turnManager
+		              and: self.
 
-	^ spaceShips anySatisfy: [ :aShip |
-		  (manage at: aShip id) isEqualTo:
-			  (Position at: board boardSize withLaps: laps) ]
+	cardSystem := CardSystem
+		              withTurnManager: turnManager
+		              positionManager: positionManager
+		              activeCardHolder: playedCardHolder
+		              withAdditional: cellSystem
+		              and: self
 ]
 
 { #category : 'testing' }
 Game >> isLockedUpInCell: aSpaceShipID [
 
-	self checkFor: aSpaceShipID.
+	turnManager obtainShipById: aSpaceShipID.
 	^ (spaceShips at: aSpaceShipID) isLockedUp
 ]
 
 { #category : 'informationTest' }
 Game >> isOver [
-
-	^ self isGameOver
+	"testing" "stay"
+	^ self assertTheGameIsNotOver
 ]
 
 { #category : 'informationTest' }
 Game >> lapOf: aSpaceShipID [
-
-	^ (manage at: aSpaceShipID) lap
-]
-
-{ #category : 'accessing' }
-Game >> modifyOrderDueToPreviousCards [
-
-	"If the first player inverts the order then the last starts "
-	stepOfNextSpaceShipToMove = -1 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ].
-	
-	"If the player to play plays double turn then it plays again, not twice more"
-	(listOfAlteredSteps isNotEmpty and: [ listOfAlteredSteps first = 0 ])
-		ifTrue: [ listOfAlteredSteps removeFirst ]
+	"testing"
+	^ (positionManager at: aSpaceShipID) lap
 ]
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 
-	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
+	positionManager
+		move: aSpaceShip id
+		by: aDiceRoll
+		on: board
+		totalLaps: laps.
 
-	(aSpaceShip hasRolled: aDiceRoll) ifFalse: [ ^ self ].
+	cellSystem applyPowerUpTo: aSpaceShip.
 
-	manage
-		sumAt: aSpaceShip id
-		with: (Position at: aDiceRoll withLaps: 0).
-	self adjustPosition.
-
-	self playPendingCardsOn: aSpaceShip.
-
-	board manageCards
-		applyCardEffectsOver: aSpaceShip
-		or: spaceShips
-		dependingOn: manage.
-	self adjustPosition.
-
-	board
-		applyPowerUpEffectUponA: aSpaceShip
-		andAll: spaceShips
-		andIts: manage positions.
-	self adjustPosition.
-
-	manage
-		at: aSpaceShip id
-		replacePositionWith:
-		(board checkForWormHole: (manage positions at: aSpaceShip id)).
+	positionManager
+		applyBoardEffectsOn: aSpaceShip id
+		using: board
+		totalLaps: laps.
 
 	Battle
-		between: aSpaceShip
-		andOneOf: spaceShips
-		with: manage
+		in: self
+		and: turnManager
+		with: positionManager
 		on: board
 		with: diceSet.
-]
-
-{ #category : 'movingOut' }
-Game >> noPermanent: aCard [
-
-	(self isGameOver and: aCard isPermanent not) ifTrue: [
-		Error signal:
-			'Instantaneous cards cant be played after the game is over.' ]
+		
+	diceRoll := diceSet toss
 ]
 
 { #category : 'as yet unclassified' }
-Game >> obtainStep [
+Game >> obtainLastCardActionPrototype [
 
-	^ listOfAlteredSteps isEmpty
-		  ifFalse: [ listOfAlteredSteps removeFirst ]
-		  ifTrue: [ stepOfNextSpaceShipToMove ]
+	^ lastActionPrototype 
 ]
 
 { #category : 'as yet unclassified' }
-Game >> playPendingCardsOn: aSpaceShip [
+Game >> obtainLastCellEffectPrototype [
 
-	aSpaceShip pendingCard do: [ :card |
-		self use: card on: aSpaceShip id ]
+	^ lastEffectPrototype 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> obtainRelationsWithMercenaries [
+
+	^ relationshipsWithMercenaries
 ]
 
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
-	^ (manage positions at: aSpaceShipID) position
+	^ (positionManager positions at: aSpaceShipID) position
+]
+
+{ #category : 'as yet unclassified' }
+Game >> registerLastCardAction: anAction [
+
+	lastActionPrototype := anAction prototype
+]
+
+{ #category : 'as yet unclassified' }
+Game >> registerLastEffect: anEffect [
+
+	lastEffectPrototype := anEffect prototype 
+]
+
+{ #category : 'as yet unclassified' }
+Game >> rollTheDice [
+	"stay"
+	diceRoll := diceSet toss.
 ]
 
 { #category : 'informationTest' }
 Game >> shieldOf: aSpaceShipID [
+	"for testing"
 
-	^ (spaceShips at: aSpaceShipID) getShield
-]
-
-{ #category : 'as yet unclassified' }
-Game >> skippingTurn: aSpaceShip after: aDiceRoll [
-
-	^ aSpaceShip skipTurns or: (aSpaceShip skipATurn: aDiceRoll)
+	^ spaceShips
+		  detect: [ :ship | ship id = aSpaceShipID ]
+		  ifFound: [ :ship | ship getShield ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'accessing' }
 Game >> start [
-
-	| aDiceRoll spaceShip |
-	aDiceRoll := diceSet toss.
-	self modifyOrderDueToPreviousCards.
 	
-	"-1 allows to stop the rigged dice"
-	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
-		spaceShip := spaceShips at: nextSpaceShipToMove.
-
-		self move: spaceShip after: aDiceRoll.
-
-		self updateNextShipToMove.
-		
-		aDiceRoll := diceSet toss ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> theNextSpaceShipToMoveIsOverTheLimit [
-
-	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
-		nextSpaceShipToMove := 1 ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> theNextSpaceShipToMoveIsUnderTheLimit [
-
-	nextSpaceShipToMove <= 0 ifTrue: [
-		nextSpaceShipToMove := numberOfSpaceShips ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> updateNextShipToMove [
-
-	| sum |
-	sum := self obtainStep.
-
-	nextSpaceShipToMove := nextSpaceShipToMove + sum.
-	
-	self theNextSpaceShipToMoveIsOverTheLimit.
-	
-	self theNextSpaceShipToMoveIsUnderTheLimit
+	| aSpaceShip |
+	diceRoll := diceSet toss.
+	[ self assertTheGameIsNotOver or: diceRoll =  -1 ] whileFalse: [
+		aSpaceShip := turnManager grabAndUpdate.
+		aSpaceShip willPlayByTossing: diceRoll on: self ]
 ]
 
 { #category : 'movingOut' }
-Game >> use: aCard on: aSpaceShipID [
+Game >> use: aCard on: aShipId [
 
-	| aShip |
-	aShip := self checkFor: aSpaceShipID.
-
-	self noPermanent: aCard.
-
-	board manageCards
-		play: aCard
-		on: aShip
-		thatIsIn: spaceShips
-		with: nextSpaceShipToMove
-		modifiedBy: stepOfNextSpaceShipToMove
-		and: manage positions.
-
-	self affectTheShipOrder: aCard.
-
-	self adjustPosition
+	cardSystem use: aCard on: aShipId.
+	positionManager adjustAllPositionsOn: board totalLaps: laps
 ]

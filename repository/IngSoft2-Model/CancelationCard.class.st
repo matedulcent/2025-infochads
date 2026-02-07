@@ -15,22 +15,18 @@ CancelationCard class >> withObjective: aCard toShip: objective [
 	^ self new initializeWith: aCard and: objective
 ]
 
-{ #category : 'as yet unclassified' }
-CancelationCard >> cardObjective: aCard [
-
-	^ card
-]
-
 { #category : 'initialization' }
 CancelationCard >> initializeWith: aCard and: anObjective [
 
-	super initializes.
 	card := aCard.
 	objective := anObjective.
 ]
 
 { #category : 'as yet unclassified' }
-CancelationCard >> objective: aSpaceShipId [
+CancelationCard >> playOn: aShip in: aCardSystem [
 
-	^ objective 
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
+	aCardSystem registerLastCardAction:
+		(CancelationAction to: card on: objective in: aCardSystem)
 ]

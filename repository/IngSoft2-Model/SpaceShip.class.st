@@ -4,12 +4,10 @@ Class {
 	#instVars : [
 		'shield',
 		'spaceShipID',
-		'loseTurn',
 		'cards',
-		'helperOf',
-		'pendingCards',
-		'helpingOthers',
-		'state'
+		'state',
+		'skipState',
+		'boost'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -38,71 +36,54 @@ SpaceShip class >> with: anId startingWith: aCard and: anotherCard with: aShield
 	^ self new initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard
 ]
 
-{ #category : 'testing' }
-SpaceShip >> a: pickedCardFromCards isTheSameAs: pickedCardFromPending [
-
-	pickedCardFromCards == pickedCardFromPending ifTrue: [
-		Error signal: 'The card is not in the ships deck' ]
-]
-
 { #category : 'adding' }
-SpaceShip >> addA: card [
+SpaceShip >> addA: aCard [
 
-	cards add: card
-]
-
-{ #category : 'testing' }
-SpaceShip >> canBattle [
-
-	^ shield > 0 and: loseTurn = 0
-]
-
-{ #category : 'testing' }
-SpaceShip >> canBeFreed [
-
-	^ state canBeFreed
+	cards add: aCard
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip >> deMercenarize [
+SpaceShip >> assertAndRemoveIfItHas: aCard andPlayOn: cardSystem [
 
-	helperOf := spaceShipID.
-	helpingOthers := false
-]
+	| someCard |
+	someCard := cards
+		            detect: [ :card | card class = aCard class ]
+		            ifNone: [
+		            Error signal: 'The card is not in the ships deck' ].
 
-{ #category : 'initialize-release' }
-SpaceShip >> free [
-
-	state := Free new.
-	^ self
-]
-
-{ #category : 'getters' }
-SpaceShip >> getShield [
-
-	^ shield
-]
-
-{ #category : 'testing' }
-SpaceShip >> has: aCard [
-
-	| pickedCardFromCards pickedCardFromPending |
-	pickedCardFromPending := self remove: aCard from: pendingCards.
-
-	pickedCardFromCards := self remove: aCard from: cards.
+	cards remove: someCard.
 	
-	self a: pickedCardFromCards isTheSameAs: pickedCardFromPending.
-
-	^ aCard
+	aCard playOn: self in: cardSystem.
 ]
 
-{ #category : 'testing' }
-SpaceShip >> hasRolled: aDiceToss [
+{ #category : 'shield' }
+SpaceShip >> canBattle [
 
-	(state isFreeByTossing: aDiceToss) ifTrue: [
-		self free.
-		^ true ].
-	^ false
+	^ state canBattleWithShield: shield
+]
+
+{ #category : 'states' }
+SpaceShip >> changeStateToLockedUpAndNeeds: aValueToEscape [
+
+	state := LockedUp withValue: aValueToEscape.
+]
+
+{ #category : 'states' }
+SpaceShip >> changeStateToRetainedAndNeeds: aValueToEscape [
+
+	state := Retained withValue: aValueToEscape.
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> decrementBooster [
+
+	boost := boost - 1
+]
+
+{ #category : 'shield' }
+SpaceShip >> getShield [
+	"needed for testing"
+	^ shield
 ]
 
 { #category : 'getters' }
@@ -111,119 +92,81 @@ SpaceShip >> id [
 	^ spaceShipID
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> incrementBooster [
+
+	boost := boost + 1
+]
+
 { #category : 'initialization' }
 SpaceShip >> initializeWith: aShield indentifiedBy: anId andHolding: aCard and: anotherCard [
 
 	spaceShipID := anId.
-	shield := aShield.
-	loseTurn := 0.
+	shield := 3.
 	cards := OrderedCollection withAll: {
 			         aCard.
 			         anotherCard }.
-	pendingCards := OrderedCollection new.
-	helperOf := spaceShipID.
-	helpingOthers := false.
+
 	state := Free new.
+	skipState := NoSkip withNext: NoSkip.
+	boost := 0
 ]
 
-{ #category : 'testing' }
-SpaceShip >> isHelpingOthers [
+{ #category : 'states' }
+SpaceShip >> isImprisionedByTossing: aDiceRoll on: aGame [
 
-	(helpingOthers = false) ifTrue: [
-		helpingOthers := true.
-		^ false ].
-	^ true
+	state playTurnFor: self with: aDiceRoll in: aGame
 ]
 
-{ #category : 'testing' }
+{ #category : 'states' }
 SpaceShip >> isLockedUp [
-
+	"needed for testing"
 	^ state isLockedUp
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> lockedUpAndNeeds: aValueToEscape [
-
-	state := LockedUp withValue: aValueToEscape
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> lockedUpAndNeedsFreedomOr: aValueToEscape [
-
-	self lockedUpAndNeeds: aValueToEscape.
-	state addFreedomCardCondition
 ]
 
 { #category : 'shield' }
 SpaceShip >> loseShield [
 
 	shield := shield - 1.
-	shield = 0 ifTrue: [ loseTurn := 2 ]
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> pending: aCard [
-
-	pendingCards add: aCard
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> pendingCard [
-
-	^ pendingCards
+	shield = 0 ifTrue: [
+		self skipState: (SkipForSkipping new initializeWithNext:
+				 (SkipForShields new initializeWithNext: NoSkip new)) ]
 ]
 
 { #category : 'shield' }
-SpaceShip >> rechargableShield: aDiceRoll [
+SpaceShip >> rechargeShields [
 
-	(shield = 3 and: aDiceRoll = 0) ifTrue: [
-		Error signal: 
-			'The Shield is already full, it cant be recharged.' ]
-]
-
-{ #category : 'removing' }
-SpaceShip >> remove: aCard from: aDeck [
-
-	| pickedCard |
-	pickedCard := aDeck
-		              detect: [ :card | card class = aCard class] 
-		              ifNone: [ ^ aCard ].
-
-	aDeck remove: pickedCard.
-
-	^ pickedCard
-]
-
-{ #category : 'initialization' }
-SpaceShip >> setAsHelperOf: aSpaceShip [
-
-	helperOf = spaceShipID ifFalse: [
-		Error signal: 'A mercenary cant help multiple ships.' ].
-
-	helperOf := aSpaceShip id.
-	aSpaceShip addMercenary: spaceShipID
+	shield = 3 ifTrue: [
+		Error signal: 'The Shield is already full, it cant be recharged.' ].
+	shield := 3
 ]
 
 { #category : 'accessing' }
-SpaceShip >> skipATurn: aDiceRoll [
+SpaceShip >> skipState: aSkipState [
 
-	| doSkip |
-	self rechargableShield: aDiceRoll.
+	skipState := aSkipState
+]
 
-	doSkip := false.
+{ #category : 'accessing' }
+SpaceShip >> state [
+
+	^ state
+]
+
+{ #category : 'accessing' }
+SpaceShip >> state: aState [
+
+	state := aState
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> willPlayByTossing: aDiceRoll on: aGame [
+
+	| roll |
+	roll := aDiceRoll + boost.
+
 	aDiceRoll = 0 ifTrue: [
-		shield := 3.
-		doSkip := true ].
+		self skipState: (SkipForShields new initializeWithNext: NoSkip new) ].
 
-	^ doSkip
-]
-
-{ #category : 'accessing' }
-SpaceShip >> skipTurns [
-
-	loseTurn ~= 0
-		ifTrue: [
-			loseTurn := loseTurn - 1.
-			^ true ]
-		ifFalse: [ ^ false ]
+	skipState playTurnFor: self with: roll in: aGame
 ]

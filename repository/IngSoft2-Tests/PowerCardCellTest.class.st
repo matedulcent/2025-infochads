@@ -1,151 +1,90 @@
 Class {
 	#name : 'PowerCardCellTest',
 	#superclass : 'PowerCellInteractionTest',
+	#instVars : [
+		'game'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'tests' }
-PowerCardCellTest >> testWhenMultipleShipsLandOnMultipleCardCellsThenTheyAllAquireTheCardOnIt [
+PowerCardCellTest >> boardWithSize: aSize with: aCardDeck [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
-	aDiceSet := RiggedDice new initializeWith: { 2. 10 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: {
-			                       WhiteCard new.
-			                       WhiteCard new.
-			                       WhiteCard new.
-			                       SpeedCard new.
-			                       SpeedCard new }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 4.
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: aCardDeck
+		  andACellConfiguration: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 100. 0. 0. 10. 0. 1. 1 })
+]
 
-	aGame start.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 2.
+{ #category : 'as yet unclassified' }
+PowerCardCellTest >> gameAndBoardWithCards: aCardConfig [
 
-	self assert: (aGame positionOf: 1) equals: 3.
-	self assert: (aGame positionOf: 2) equals: 11
+	board := self boardWithSize: 100 with: (aCardConfig).
+	game := self
+		         gameWithDice: (RiggedDice new initializeWith: { 2 })
+		         players: 1
+		         laps: 4.
 ]
 
 { #category : 'tests' }
 PowerCardCellTest >> testWhenTheCardCellGrabsTheFirstCardFromTheDeckThenTheSecondAndThirdAreAssignedToTheShip [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
-	aDiceSet := RiggedDice new initializeWith: { 2 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: {
-			                       SpeedCard new.
-			                       SpeedCard new.
-			                       SpeedCard new }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 4.
+	self gameAndBoardWithCards: (CardDeck withCards: {
+				 SpeedCard new.
+				 SpeedCard new.
+				 SpeedCard new }).
+				
+	game use: SpeedCard new on: 1.
+	game use: SpeedCard new on: 1.
+	game start.
+	game use: SpeedCard new on: 1.
 
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
-	aGame start.
-	aGame use: (SpeedCard with: 1) on: 1.
-
-	self assert: (aGame positionOf: 1) equals: 5
+	self assert: (game positionOf: 1) equals: 5
 ]
 
 { #category : 'tests' }
 PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatDistributesCardsAndObtainsASpeedCardThenItUsesIt [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
-	aDiceSet := RiggedDice new initializeWith: { 2 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: {
-			                       AccelerationCard new.
-			                       CancelationCard new.
-			                       MercenaryCard new.
-			                       RedoCard new.
-			                       RepeatCard new.
-			                       SpeedCard new }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 4.
+	self gameAndBoardWithCards: (CardDeck withCards: {
+				 AccelerationCard new.
+				 CancelationCard new.
+				 MercenaryCard new.
+				 RedoCard new.
+				 RepeatCard new.
+				 SpeedCard new }).
 
-	aGame start.
-	aGame use: (SpeedCard with: 1) on: 1.
+	game start.
+	game use: SpeedCard new on: 1.
 
-	self assert: (aGame positionOf: 1) equals: 3
+	self assert: (game positionOf: 1) equals: 3
 ]
 
 { #category : 'tests' }
 PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatHasRepeteCardAndASpeedCardThenItGainsTwoCardsAfterPlayingTheRepete [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
-	aDiceSet := RiggedDice new initializeWith: { 2 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 2. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: {
-			                       SpeedCard new. 
-			                       RepeatCard new}.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 4.
-	aGame use: WhiteCard new on: 1.
-	aGame use: WhiteCard new on: 1.
-	aGame start.
-	aGame use: (RepeatCard withObjective: 1) on: 1.
-	aGame use: (SpeedCard with: 1) on: 1.
-	self assert: (aGame positionOf: 1) equals: 3
+	self gameAndBoardWithCards: (CardDeck withCards: {
+				 SpeedCard new.
+				 RepeatCard new.
+				 WhiteCard new.
+				 WhiteCard new }).
+
+	game use: WhiteCard new on: 1.
+	game use: WhiteCard new on: 1.
+	game start.
+	game use: (RepeatCard withObjective: 1) on: 1.
+	game use: SpeedCard new on: 1.
+	self assert: (game positionOf: 1) equals: 3
 ]
 
 { #category : 'tests' }
 PowerCardCellTest >> testWhenTheShipWithWhiteCardsLandsOnTheCellThatOnlyHasAWhiteCardsThenNothingHappens [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard aDeckOfPosibleCards |
-	aDiceSet := RiggedDice new initializeWith: { 2 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 0. 0. 1. 10. 0. 1. 1 }.
-	aDeckOfPosibleCards := CardDeck withCards: { WhiteCard }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: aDeckOfPosibleCards
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 4.
+	self gameAndBoardWithCards: (CardDeck withCards: { WhiteCard new }).
 
-	aGame start.
+	game start.
 
-	self assert: (aGame positionOf: 1) equals: 3
+	self assert: (game positionOf: 1) equals: 3
 ]

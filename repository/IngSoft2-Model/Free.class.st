@@ -1,24 +1,30 @@
 Class {
 	#name : 'Free',
-	#superclass : 'Object',
+	#superclass : 'ShipState',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'testing' }
-Free >> canBeFreed [
+Free >> canBattleWithShield: shield [
 
-	^ false
-]
-
-{ #category : 'testing' }
-Free >> isFreeByTossing: aDiceRoll [
-
-	^ true
+	^ shield > 0
 ]
 
 { #category : 'testing' }
 Free >> isLockedUp [
-
+	
 	^ false
+]
+
+{ #category : 'as yet unclassified' }
+Free >> playTurnFor: aSpaceShip with: aDiceRoll in: aGame [
+
+	aGame move: aSpaceShip after: aDiceRoll.
+]
+
+{ #category : 'as yet unclassified' }
+Free >> setFreeByCard [
+
+	^ self
 ]

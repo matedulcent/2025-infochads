@@ -6,7 +6,9 @@ Class {
 }
 
 { #category : 'instance creation' }
-FreedomCard >> free: aSpaceShip [
+FreedomCard >> playOn: aShip in: aCardSystem [
 
-	aSpaceShip free.
+	aCardSystem assertTheGameIsNotOver ifTrue: [ ^ self ].
+	aCardSystem registerPlayOf: self playedRepresentation by: aShip.
+	aCardSystem registerLastCardAction: (FreedomAction on: aShip)
 ]

@@ -5,7 +5,7 @@ Class {
 		'boardSize',
 		'wormHole',
 		'gameBoard',
-		'cardManager'
+		'deckOfCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -30,18 +30,9 @@ Board class >> withSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCar
 ]
 
 { #category : 'as yet unclassified' }
-Board >> applyPowerUpEffectUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+Board >> applySpecialTilesTo: aPosition [
 
-	| cell |
-	gameBoard ifEmpty: [ ^ self ].
-	cell := gameBoard at: (spaceShipPositions at: aSpaceShip id) position.
-
-	cardManager lastCellPlayed: cell.
-
-	cell
-		takeActionOver: aSpaceShip
-		or: spaceShips
-		thatArePlaced: spaceShipPositions
+	^ self checkForWormHole: aPosition
 ]
 
 { #category : 'accessing' }
@@ -51,35 +42,32 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForWormHole: aPosition [
+Board >> cellInThe: position [
 
-	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
+	| cell |
+	gameBoard ifEmpty: [ ^ nil ]. 
+	cell := gameBoard at: (position position).
+	^ cell
 ]
 
 { #category : 'as yet unclassified' }
-Board >> does: mercenaryId appearsInOther: spaceShipCards [
+Board >> checkForWormHole: aPosition [
 
-	spaceShipCards associationsDo: [ :shipCard |
-		(shipCard value collect: [ :card | card helper = mercenaryId ]) size
-		> 1 ifTrue: [ ^ true ] ].
-
-	^ false
+	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
 ]
 
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole playedWith: aDeckOfCards andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	cardManager := CardManager createWith: aDeckOfCards.
+	deckOfCards := aDeckOfCards.
 
 	gameBoard := CellPlacement new
 		             createBoardWith: aConfigDiceSet
-		             withComplementary: cardManager
-		             And: boardSize.
+		             withComplementary: boardSize.
 
 	wormHole := aWormHole.
-	wormHole mustBeWithInLimits: aBoardSize.
-
+	wormHole mustBeWithInLimits: aBoardSize
 ]
 
 { #category : 'as yet unclassified' }
@@ -102,15 +90,9 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> manageCards [
-
-	^ cardManager
-]
-
-{ #category : 'as yet unclassified' }
 Board >> pickACard [
-	
-	^ cardManager grabTopCard
+
+	^ deckOfCards grabCard
 ]
 
 { #category : 'as yet unclassified' }

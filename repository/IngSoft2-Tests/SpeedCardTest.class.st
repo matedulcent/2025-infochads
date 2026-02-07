@@ -1,15 +1,46 @@
 Class {
 	#name : 'SpeedCardTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'board'
+	],
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
+
+{ #category : 'as yet unclassified' }
+SpeedCardTest >> boardWithSize: aSize andDeck: aCardDeck [
+
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: aCardDeck
+		  andACellConfiguration: {  }
+]
+
+{ #category : 'as yet unclassified' }
+SpeedCardTest >> gameWithDice: dice players: amount [
+
+	^ Game
+		  playedIn: board
+		  by: amount
+		  throwing: dice
+		  wonAfter: 1
+]
 
 { #category : 'as yet unclassified' }
 SpeedCardTest >> readme [
 	"The cards are withdrawn from the last included in the deck"
 
 	
+]
+
+{ #category : 'running' }
+SpeedCardTest >> setUp [
+
+	super setUp.
+
+	board := self boardWithSize: 10 andDeck: (CardDeck withCards: {  })
 ]
 
 { #category : 'asserting' }
@@ -25,42 +56,28 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 
 { #category : 'tests' }
 SpeedCardTest >> testWhenACardIsNotInDeckThenUsageFails [
+    | aGame |
 
-	| aGame aBoard deckOfCards |
-	deckOfCards := OrderedCollection with: WhiteCard new.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: deckOfCards
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: (RiggedDice new initializeWith: { 5. 6 })
-		         wonAfter: 1.
-	self
-		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
-		raise: Error
-		withMessageText: 'The card is not in the ships deck'
+    aGame := self
+        gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+        players: 2.
+
+    self
+        should: [ aGame use: SpeedCard new on: 1 ]
+        raise: Error
+        withMessageText: 'The card is not in the ships deck'
+
 ]
 
 { #category : 'tests' }
 SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
 
-	| aGame aBoard deckOfCards |
-	deckOfCards := OrderedCollection withAll: { WhiteCard new }.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: deckOfCards
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: (RiggedDice new initializeWith: { 5. 6 })
-		         wonAfter: 1.
+	| aGame |
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 2.
 	self
-		should: [ aGame use: (SpeedCard with: 1) on: 1 ]
+		should: [ aGame use: SpeedCard new on: 1 ]
 		raise: Error
 		withMessageText: 'The card is not in the ships deck'
 ]
@@ -68,65 +85,59 @@ SpeedCardTest >> testWhenACardIsNotInTheShipDeckThenUsageFails [
 { #category : 'tests' }
 SpeedCardTest >> testWhenAShipToss5AndLater6ThenTheShipMovesToPosition14 [
 
-	| aGame aDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 5. 6 }.
+	| aGame |
+	board := self boardWithSize: 50 andDeck: (CardDeck withCards: {
+				          SpeedCard new.
+				          WhiteCard new }).
 
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { SpeedCard new. WhiteCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 2.
-	aGame use: (SpeedCard with: 1) on: 1.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5. 6 })
+		         players: 1.
+
+	aGame use: SpeedCard new on: 1.
 	aGame start.
+
 	self assert: (aGame positionOf: 1) equals: 14
 ]
 
 { #category : 'tests' }
 SpeedCardTest >> testWhenAShipWithSpeedCardMovesPlusOneToAHyperJumpWith50ParsecDivisionAnd10JumpsThenItMoves10JumpsOverThePlusOne [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10 }.
+	| aGame aConfigureDiceSet |
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 0. 50. 0. 1. 10. 6 }.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           SpeedCard new.
-					           WhiteCard new })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 2.
-	aGame use: (SpeedCard with: 1) on: 1.
+		                     { 0. 0. 0. 100. 0. 0. 0. 0. 0. 50. 0. 1. 10. 6 }.
+
+	board := Board
+		         withSize: 50
+		         composedOf: (WormHole startingAt: 1 endingAt: 1)
+		         playedWith: (CardDeck withCards: {
+					          SpeedCard new.
+					          WhiteCard new })
+		         andACellConfiguration: aConfigureDiceSet.
+
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10 })
+		         players: 1.
+
+	aGame use: SpeedCard new on: 1.
 	aGame start.
+
 	self assert: (aGame positionOf: 1) equals: 22
 ]
 
 { #category : 'tests' }
 SpeedCardTest >> testWhenASpaceShipUsesASpeedCardThenItsTossIncrementsInOne [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: { SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 10
+		         andDeck: (CardDeck withCards: { SpeedCard new }).
 
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 1.
+
+	aGame use: SpeedCard new on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7
@@ -135,53 +146,20 @@ SpeedCardTest >> testWhenASpaceShipUsesASpeedCardThenItsTossIncrementsInOne [
 { #category : 'tests' }
 SpeedCardTest >> testWhenASpaceShipUsesASpeedCardTwiceThenItsTossIncrementsInTwo [
 
-	| aGame aBoard spaceShipID |
-	spaceShipID := 1.
-	aBoard := Board
-		          withSize: 10
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           SpeedCard new.
-					           SpeedCard new.
-					           SpeedCard new.
-					           SpeedCard new })
-		          andACellConfiguration: {  }.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: (RiggedDice new initializeWith: { 5 })
-		         wonAfter: 1.
+	| aGame |
+	board := self boardWithSize: 10 andDeck: (CardDeck withCards: {
+				          SpeedCard new.
+				          SpeedCard new.
+				          SpeedCard new.
+				          SpeedCard new }).
 
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
-	aGame use: (SpeedCard with: 1) on: spaceShipID.
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 5 })
+		         players: 1.
+
+	aGame use: SpeedCard new on: 1.
+	aGame use: SpeedCard new on: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 8
-]
-
-{ #category : 'tests' }
-SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNegativeThenCreationFails [
-
-	self
-		should: [ SpeedCard with: -1 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNot1ThenCreationFails [
-
-	self
-		should: [ SpeedCard with: 10 ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
-]
-
-{ #category : 'tests' }
-SpeedCardTest >> testWhenTheIncrementInTheDiceTossIsNotAnIntThenCreationFails [
-
-	self
-		should: [ SpeedCard with: 'a' ]
-		raise: Error
-		withMessageText: 'The increment in the dice toss must be one.'
 ]

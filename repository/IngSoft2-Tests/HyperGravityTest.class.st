@@ -5,6 +5,17 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'tests' }
+HyperGravityTest >> boardWithSize: aSize with: aCardDeck andConfig: aCellConfig [
+
+	aCellConfig setMaximumValueAs: 10.
+	^ Board
+		  withSize: aSize
+		  composedOf: (WormHole startingAt: 1 endingAt: 1)
+		  playedWith: aCardDeck
+		  andACellConfiguration: aCellConfig
+]
+
 { #category : 'asserting' }
 HyperGravityTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
@@ -19,24 +30,17 @@ HyperGravityTest >> should: anErrorBlock raise: anErrorClass withMessageText: er
 { #category : 'tests' }
 HyperGravityTest >> testWhenABoardIsCreatedThenItCanCreateAnUnlimitedNumberOfHyperGravityCellsWithIndividualNumbers [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 3. 4. 6. 10. 3. 2. 4 }. " 3. 4. 6. 10. 3. 2. 4."
-	aConfigureDiceSet setMaximumValueAs: 10.
-
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: aConfigureDiceSet.
-
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         with: (CardDeck withCards: {  })
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1. 0. 3. 4.
+				          6. 10. 3. 2. 4 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10 })
+		         players: 1
+		         laps: 1.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 11
@@ -45,24 +49,18 @@ HyperGravityTest >> testWhenABoardIsCreatedThenItCanCreateAnUnlimitedNumberOfHyp
 { #category : 'tests' }
 HyperGravityTest >> testWhenASpaceShipIsLockedInHyperGravityAndUsesFreedomThenNothingHappens [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 10. 0. 1. 10. 1. 0. 2 }.
-	aConfigureDiceSet setMaximumValueAs: 10.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           FreedomCard new.
-					           WhiteCard new })
-		          andACellConfiguration: aConfigureDiceSet.
-
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         with: (CardDeck withCards: {
+					          FreedomCard new.
+					          WhiteCard new })
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 0. 0. 100. 10. 0. 1. 10. 1. 0. 2 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10 })
+		         players: 1
+		         laps: 1.
 
 	aGame start.
 	aGame use: FreedomCard new on: 1.
@@ -76,8 +74,8 @@ HyperGravityTest >> testWhenShipHasToRollADiceHigherThatTheMaximumProvidedByDice
 	| aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 10. 3 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 11 }. "3"
+		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1.
+		                     0. 11 }. "3"
 	aConfigureDiceSet setMaximumValueAs: 10.
 
 	self
@@ -85,7 +83,7 @@ HyperGravityTest >> testWhenShipHasToRollADiceHigherThatTheMaximumProvidedByDice
 			Board
 				withSize: 100
 				composedOf: (WormHole startingAt: 1 endingAt: 1)
-				playedWith: (OrderedCollection with: WhiteCard new)
+				playedWith: (CardDeck withCards: {  })
 				andACellConfiguration: aConfigureDiceSet ]
 		raise: Error
 		withMessageText:
@@ -93,80 +91,57 @@ HyperGravityTest >> testWhenShipHasToRollADiceHigherThatTheMaximumProvidedByDice
 ]
 
 { #category : 'tests' }
-HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndDoesntRollTheRightNumberToEscapeThenItDoesntMove [
+HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsHigherThanTheNumberToEscapeThenItEscapes [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10. 10 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 3 }. "3"
-	aConfigureDiceSet setMaximumValueAs: 10.
-
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: aConfigureDiceSet.
-
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         with: (CardDeck withCards: {  })
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1. 0. 3 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10. 10 })
+		         players: 1
+		         laps: 1.
 
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 11.
+	self assert: (aGame positionOf: 1) equals: 21.
 	self assert: (aGame isLockedUpInCell: 1)
 ]
 
 { #category : 'tests' }
 HyperGravityTest >> testWhenShipMovesToHyperGravityCellAndRollsTheRightNumberToEscapeThenItEscapes [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 10. 3 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 1. 100. 0. 1. 30.
-		                     1. 0. 3 }. "3"
-	aConfigureDiceSet setMaximumValueAs: 10.
-
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (OrderedCollection with: WhiteCard new)
-		          andACellConfiguration: aConfigureDiceSet.
-
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1.
-
+	| aGame |
+	board := self
+		         boardWithSize: 100
+		         with: (CardDeck withCards: {  })
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1. 0. 3 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 10. 3 })
+		         players: 1
+		         laps: 1.
 	aGame start.
-	self assert: (aGame positionOf: 1) equals: 14.
+	self assert: (aGame positionOf: 1) equals: 14
 ]
 
 { #category : 'tests' }
 HyperGravityTest >> testWhenTheHyperGravityCellWasLastActivatedAndTheRepeatIsPlayedThenItTrapsTheShipInItsPlaceUntilItThrowsTheEscapeValue [
 
-	| aGame aDiceSet aConfigureDiceSet aBoard |
-	aDiceSet := RiggedDice new initializeWith: { 49. 20 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 0. 0. 100. 0. 100. 0. 1. 30.
-		                     1. 0. 3. 3 }. "3"
-	aConfigureDiceSet setMaximumValueAs: 10.
-	aBoard := Board
-		          withSize: 50
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          playedWith: (CardDeck withCards: {
-					           RepeatCard new.
-					           WhiteCard new.
-					           RepeatCard new })
-		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
-		         playedIn: aBoard
-		         by: 2
-		         throwing: aDiceSet
-		         wonAfter: 2.
+	| aGame |
+	board := self
+		         boardWithSize: 50
+		         with: (CardDeck withCards: {
+					          RepeatCard new.
+					          WhiteCard new.
+					          RepeatCard new })
+		         andConfig: (RiggedDice new initializeWith:
+				          { 0. 0. 0. 0. 0. 0. 0. 0. 100. 100. 0. 1. 30. 1. 0. 3. 3 }).
+	aGame := self
+		         gameWithDice: (RiggedDice new initializeWith: { 49. 20 })
+		         players: 2
+		         laps: 2.
 
 	aGame start.
 	aGame use: (RepeatCard withObjective: 1) on: 2.
